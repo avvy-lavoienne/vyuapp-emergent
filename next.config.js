@@ -1,5 +1,4 @@
 const nextConfig = {
-  output: 'standalone',
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'avatars.githubusercontent.com', pathname: '/**' },
@@ -19,11 +18,6 @@ const nextConfig = {
         'localhost:3000',
       ],
     },
-  },
-  turbopack: {},
-  onDemandEntries: {
-    maxInactiveAge: 10000,
-    pagesBufferLength: 2,
   },
   async headers() {
     return [
