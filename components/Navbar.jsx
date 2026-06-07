@@ -26,9 +26,7 @@ export default function Navbar() {
     <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${scrolled ? 'bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-900' : 'bg-transparent border-b border-transparent'}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group">
-          <span className="w-7 h-7 rounded-md bg-emerald-400/10 ring-1 ring-emerald-400/40 flex items-center justify-center">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-vyu-pulse" />
-          </span>
+          <img src="/images/vyu-removebg.png" alt="VyuApp" className="h-8 w-auto" />
           <span className="font-[var(--font-outfit)] font-bold text-lg tracking-tight">Vyu<span className="text-emerald-400">App</span></span>
         </Link>
 

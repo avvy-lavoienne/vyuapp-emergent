@@ -10,7 +10,8 @@ import ShareButton from '@/components/ShareButton';
 export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({ params }) {
-  const article = await getArticleBySlug(params.slug);
+  const { slug } = await params;
+  const article = await getArticleBySlug(slug);
   if (!article) return { title: 'Artikel tidak ditemukan' };
   return {
     title: `${article.title} — VyuApp Insights`,
@@ -46,7 +47,8 @@ function splitHTMLByParagraphs(html) {
 }
 
 export default async function ArticlePage({ params }) {
-  const article = await getArticleBySlug(params.slug);
+  const { slug } = await params;
+  const article = await getArticleBySlug(slug);
   if (!article || article.status !== 'published') notFound();
   const all = await getPublishedArticles({ limit: 8 });
   const related = all.filter(a => a.id !== article.id).slice(0, 3);

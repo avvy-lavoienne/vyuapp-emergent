@@ -10,7 +10,7 @@ export async function loginAction(prevState, formData) {
 
   if (!email || !password) return { error: 'Email dan password wajib diisi.' };
 
-  const supabase = getServerSupabase();
+  const supabase = await getServerSupabase();
   const { error } = await supabase.auth.signInWithPassword({
     email: String(email), password: String(password),
   });
@@ -21,7 +21,7 @@ export async function loginAction(prevState, formData) {
 }
 
 export async function logoutAction() {
-  const supabase = getServerSupabase();
+  const supabase = await getServerSupabase();
   await supabase.auth.signOut();
   revalidatePath('/admin', 'layout');
   redirect('/admin/login');
