@@ -31,6 +31,9 @@ function Capability({ icon: Icon, title, items }) {
 }
 
 function ProductCard({ name, tagline, description, features, stack, href, ctaLabel, accent }) {
+  const isExternal = href.startsWith('http');
+  const Tag = isExternal ? 'a' : Link;
+  const extraProps = isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
   return (
     <div className="vyu-card p-8 md:p-10 flex flex-col">
       <div className="flex items-center justify-between mb-6">
@@ -56,7 +59,7 @@ function ProductCard({ name, tagline, description, features, stack, href, ctaLab
         {stack.map((s) => <span key={s} className="vyu-chip">{s}</span>)}
       </div>
       <div className="mt-auto">
-        <Link href={href} className="vyu-btn-primary text-sm">{ctaLabel} <ArrowRight className="w-4 h-4" /></Link>
+        <Tag href={href} className="vyu-btn-primary text-sm" {...extraProps}>{ctaLabel} <ArrowRight className="w-4 h-4" /></Tag>
       </div>
     </div>
   );
@@ -230,7 +233,7 @@ export default function HomePage() {
                 'Excalibur Engine: Inovasi pipa data yang mampu menembus enkripsi platform e-commerce guna menyelamatkan metrik-metrik krusial yang tersembunyi menjadi estimasi total omset pasar (GMV) yang akurat',
               ]}
               stack={['FastAPI (Python)', 'Supabase (PostgreSQL)', 'Next.js', 'Tailwind CSS', 'Docker']}
-              href="/portfolio"
+              href="https://avalon.vyuapp.my.id/"
               ctaLabel="Jelajahi Avalon"
               accent="border-sky-400/40 text-sky-300 bg-sky-400/10"
             />
