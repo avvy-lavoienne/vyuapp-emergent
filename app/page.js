@@ -145,7 +145,7 @@ export default function HomePage() {
           <div className="lg:col-span-7 space-y-5 text-zinc-400 text-base leading-relaxed">
             <p>VyuApp adalah studio independen yang berbasis di Garut, Jawa Barat. Kami melayani klien yang sistem digitalnya harus berfungsi sebagai infrastruktur — bukan brosur online. Setiap proyek kami diperlakukan sebagai produk yang harus bertanggung jawab atas keberlangsungan operasionalnya sendiri.</p>
             <p>Kami tidak menjual jam. Kami menjual sistem yang dapat dipertanggungjawabkan dalam produksi. Insinyur yang mendesain arsitektur adalah orang yang sama yang mendeploy, memonitor, dan memelihara. Tidak ada handoff yang merusak konteks. Tidak ada layer manajer akun antara Anda dan keputusan teknis.</p>
-            <p>Dua produk inti kami — <span className="text-emerald-400">Sellica</span> (mesin intelijen pasar untuk trader aset digital) dan <span className="text-emerald-400">The Avalon Project</span> (market intelligence & price surveillance untuk enterprise e-commerce) — adalah demonstrasi praktis bagaimana kami bekerja: presisi tinggi, observabilitas penuh, ketahanan terhadap kebisingan data.</p>
+            <p>Dua produk inti kami — <span className="text-emerald-400">Sellica</span> (sistem tata kelola & evaluasi kinerja internal berbasis Scrum dan AI) dan <span className="text-emerald-400">The Avalon Project</span> (market intelligence & price surveillance untuk enterprise e-commerce) — adalah demonstrasi praktis bagaimana kami bekerja: presisi tinggi, observabilitas penuh, ketahanan terhadap kebisingan data.</p>
           </div>
         </div>
       </section>
@@ -208,15 +208,14 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-7">
             <ProductCard
               name="Sellica"
-              tagline="// FINANCIAL INTELLIGENCE ENGINE"
-              description="Platform intelijen pasar untuk trader aset digital serius. Menyatukan data on-chain, sentimen, dan model harga ke dalam satu lapisan analitis yang dapat dipertanggungjawabkan."
+              tagline="// PROJEK SELLICA: TATA KELOLA & EVALUASI KINERJA INTERNAL"
+              description="Birokrasi dan pelaporan internal sering kali menjadi penghambat kecepatan organisasi. Sellica hadir sebagai sistem manajemen kinerja modern yang mengintegrasikan metodologi kerja Scrum dengan teknologi kecerdasan buatan (AI). Kami menyederhanakan alur penyusunan draf, memantau catatan aktivitas harian secara transparan, dan melakukan pra-audit laporan secara otomatis sebelum diajukan ke sistem peninjau eksternal."
               features={[
-                'Pipeline data real-time multi-exchange',
-                'Model statistik divergensi harga / volume',
-                'UI tenang — sinyal sudah difilter berlapis',
-                'Observability penuh, uptime 99.9%+',
+                'Scrum Framework Management: Transformasi beban kerja tim melalui dasbor sprint dan manajemen tugas yang transparan dan terukur secara real-time',
+                'Automated Activity Logging: Pendataan laporan lengkap individu dan catatan aktivitas harian yang terstruktur, meminimalisir manipulasi data dokumen',
+                'Embedded AI Pre-Auditor: Integrasi asisten AI yang secara cerdas mendeteksi ketidaksinkronan berkas laporan, merangkum capaian kerja, dan memotong waktu koreksi manual hingga 80%',
               ]}
-              stack={['Next.js 14', 'PostgreSQL', 'TimescaleDB', 'Cloudflare Workers', 'Bun']}
+              stack={['Next.js', 'React', 'Tailwind CSS', 'Python Backend', 'LLM API']}
               href="/portfolio"
               ctaLabel="Pelajari Sellica"
               accent="border-emerald-400/40 text-emerald-300 bg-emerald-400/10"
