@@ -126,9 +126,9 @@ const DEFAULT_MAIN = [
 ];
 
 export default async function PortfolioPage() {
-  const items = await getPublishedPortfolio();
-  const hasData = items.length > 0;
-  const [main1, main2, ...rest] = hasData ? items : DEFAULT_MAIN;
+  const [main1, main2] = DEFAULT_MAIN;
+  const dbItems = await getPublishedPortfolio();
+  const rest = dbItems.length > 0 ? dbItems : FALLBACK_OTHER;
 
   const breadcrumbItems = [
     { name: 'Beranda', url: `${baseUrl}/` },
