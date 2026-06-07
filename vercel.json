@@ -1,9 +1,5 @@
 {
   "framework": "nextjs",
-  "buildCommand": "next build",
-  "outputDirectory": ".next",
-  "installCommand": "npm install",
-  "regions": ["sin1", "hkg1"],
   "github": {
     "silent": true
   }
