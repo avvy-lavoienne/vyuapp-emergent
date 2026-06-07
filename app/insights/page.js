@@ -2,15 +2,32 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SectionHeader from '@/components/SectionHeader';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { getPublishedArticles } from '@/lib/data';
+import { BreadcrumbJsonLd } from '@/components/JsonLd';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+
 export const metadata = {
   title: 'Insights — VyuApp',
   description: 'Esai panjang tentang rekayasa web bespoke, intelijen data, dan filosofi studio dari tim VyuApp.',
+  openGraph: {
+    title: 'Insights — VyuApp',
+    description: 'Esai panjang tentang rekayasa web bespoke, intelijen data, dan filosofi studio dari tim VyuApp.',
+    images: [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Insights — VyuApp',
+    description: 'Esai panjang tentang rekayasa web bespoke, intelijen data, dan filosofi studio dari tim VyuApp.',
+  },
+  alternates: {
+    canonical: `${baseUrl}/insights`,
+  },
 };
 
 function formatDate(ts) {
@@ -23,8 +40,7 @@ function ArticleCard({ a, featured = false }) {
     <Link href={`/insights/${a.slug}`} className={`vyu-card overflow-hidden flex flex-col group ${featured ? 'lg:col-span-2' : ''}`}>
       <div className={`relative ${featured ? 'h-72' : 'h-52'} overflow-hidden bg-zinc-900`}>
         {a.cover && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={a.cover} alt={a.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition duration-700" />
+          <Image src={a.cover} alt={a.title} fill className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition duration-700" sizes={featured ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'} />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
         <div className="absolute top-4 left-4 flex items-center gap-2">
@@ -56,8 +72,14 @@ function ArticleCard({ a, featured = false }) {
 
 export default async function InsightsPage() {
   const articles = await getPublishedArticles();
+  const breadcrumbItems = [
+    { name: 'Beranda', url: `${baseUrl}/` },
+    { name: 'Insights', url: `${baseUrl}/insights` },
+  ];
+
   return (
     <main className="min-h-screen">
+      <BreadcrumbJsonLd items={breadcrumbItems} />
       <Navbar />
       <section className="relative pt-32 pb-12 overflow-hidden">
         <div className="absolute inset-0 vyu-grid-bg" />

@@ -2,7 +2,7 @@ import { getServerSupabase } from '@/lib/supabase/server';
 import AdminClient from './AdminClient';
 
 export const dynamic = 'force-dynamic';
-export const metadata = { title: 'Dashboard Admin' };
+export const metadata = { title: 'Dashboard Admin', robots: { index: false, follow: false } };
 
 export default async function AdminPage() {
   // Proxy already guarantees user is authenticated here, but we still

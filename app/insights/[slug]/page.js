@@ -1,18 +1,23 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Calendar, ArrowLeft, Clock } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import { getArticleBySlug, getPublishedArticles } from '@/lib/data';
 import AdSenseSlot from '@/components/AdSenseSlot';
 import ShareButton from '@/components/ShareButton';
+import { BreadcrumbJsonLd, ArticleJsonLd } from '@/components/JsonLd';
 
 export const dynamic = 'force-dynamic';
+
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
   if (!article) return { title: 'Artikel tidak ditemukan' };
+  const url = `${baseUrl}/insights/${article.slug}`;
   return {
     title: `${article.title} — VyuApp Insights`,
     description: article.excerpt,
@@ -20,9 +25,12 @@ export async function generateMetadata({ params }) {
       title: article.title,
       description: article.excerpt,
       type: 'article',
+      url,
       publishedTime: article.published_at,
+      images: article.cover ? [{ url: article.cover, width: 1200, height: 630 }] : [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
     },
-    twitter: { card: 'summary_large_image', title: article.title, description: article.excerpt },
+    twitter: { card: 'summary_large_image', title: article.title, description: article.excerpt, images: article.cover ? [article.cover] : [`${baseUrl}/opengraph-image.png`] },
+    alternates: { canonical: url },
   };
 }
 
@@ -59,8 +67,25 @@ export default async function ArticlePage({ params }) {
   const SLOT_MID = process.env.NEXT_PUBLIC_ADSENSE_SLOT_MID;
   const SLOT_END = process.env.NEXT_PUBLIC_ADSENSE_SLOT_END;
 
+  const articleUrl = `${baseUrl}/insights/${article.slug}`;
+  const breadcrumbItems = [
+    { name: 'Beranda', url: `${baseUrl}/` },
+    { name: 'Insights', url: `${baseUrl}/insights` },
+    { name: article.title, url: articleUrl },
+  ];
+
   return (
     <main className="min-h-screen">
+      <BreadcrumbJsonLd items={breadcrumbItems} />
+      <ArticleJsonLd
+        title={article.title}
+        description={article.excerpt}
+        url={articleUrl}
+        image={article.cover}
+        datePublished={article.published_at}
+        dateModified={article.updated_at}
+        authorName="VyuApp Studio"
+      />
       <Navbar />
       <article className="relative pt-32 pb-20">
         <div className="absolute inset-0 vyu-grid-bg opacity-40" />
@@ -78,9 +103,8 @@ export default async function ArticlePage({ params }) {
             {(article.tags || []).slice(0, 4).map(t => <span key={t}>#{t}</span>)}
           </div>
           {article.cover && (
-            <div className="mt-10 rounded-2xl overflow-hidden border border-zinc-800">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={article.cover} alt={article.title} className="w-full h-auto" />
+            <div className="mt-10 rounded-2xl overflow-hidden border border-zinc-800 relative aspect-video">
+              <Image src={article.cover} alt={article.title} fill className="object-cover" priority />
             </div>
           )}
           <div className="mt-12 vyu-prose" dangerouslySetInnerHTML={{ __html: c1 }} />

@@ -1,6 +1,7 @@
 import { Outfit, Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import AdSenseScript from '@/components/AdSenseScript';
+import { OrganizationJsonLd, WebSiteJsonLd } from '@/components/JsonLd';
 
 const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', display: 'swap' });
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
@@ -16,7 +17,7 @@ export const metadata = {
     template: '%s — VyuApp',
   },
   description: 'Studio rekayasa web premium dari Garut. Kami membangun produk digital presisi tinggi: Sellica (financial intelligence) dan The Avalon Project.',
-  keywords: ['VyuApp', 'Sellica', 'Avalon', 'web engineering Indonesia', 'data intelligence', 'Next.js studio', 'Garut'],
+  keywords: ['VyuApp', 'Sellica', 'Avalon', 'web engineering Indonesia', 'data intelligence', 'Next.js studio', 'Garut', 'bespoke web development'],
   authors: [{ name: 'VyuApp Studio' }],
   openGraph: {
     type: 'website',
@@ -24,9 +25,15 @@ export const metadata = {
     url: baseUrl,
     siteName: 'VyuApp',
     title: 'VyuApp — Bespoke Web Engineering & Market Intelligence',
-    description: 'Studio rekayasa web premium dari Garut.',
+    description: 'Studio rekayasa web premium dari Garut. Kami membangun produk digital presisi tinggi: Sellica (financial intelligence) dan The Avalon Project.',
+    images: [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'VyuApp — Bespoke Web Engineering & Market Intelligence',
+    description: 'Studio rekayasa web premium dari Garut.',
+    images: [`${baseUrl}/opengraph-image.png`],
+  },
   icons: {
     icon: [
       { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
@@ -38,13 +45,31 @@ export const metadata = {
     shortcut: { url: '/favicon/favicon.ico', type: 'image/x-icon' },
   },
   manifest: '/favicon/site.webmanifest',
-  other: adsenseClient ? { 'google-adsense-account': adsenseClient } : {},
+  other: {
+    ...(adsenseClient ? { 'google-adsense-account': adsenseClient } : {}),
+    'theme-color': '#09090b',
+  },
+  alternates: {
+    canonical: baseUrl,
+    languages: {
+      'id-ID': baseUrl,
+    },
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="id" className={`${outfit.variable} ${inter.variable} ${mono.variable}`}>
+      <head>
+        <meta name="theme-color" content="#09090b" />
+        <meta name="format-detection" content="telephone=no, email=no" />
+        <link rel="canonical" href={baseUrl} />
+        {adsenseClient && <link rel="preconnect" href="https://pagead2.googlesyndication.com" />}
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body className="bg-zinc-950 text-zinc-100 antialiased font-sans selection:bg-emerald-400/30 selection:text-emerald-50">
+        <OrganizationJsonLd />
+        <WebSiteJsonLd />
         <AdSenseScript />
         {children}
       </body>

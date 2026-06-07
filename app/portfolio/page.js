@@ -4,11 +4,28 @@ import SectionHeader from '@/components/SectionHeader';
 import Link from 'next/link';
 import { CheckCircle2, ArrowRight, Hexagon, Sparkles, LineChart, ShieldCheck, Cpu, Layers } from 'lucide-react';
 import { getPublishedPortfolio } from '@/lib/data';
+import { BreadcrumbJsonLd, SoftwareAppJsonLd } from '@/components/JsonLd';
 
 export const dynamic = 'force-dynamic';
+
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+
 export const metadata = {
-  title: 'Portfolio',
-  description: 'Dua produk hidup yang dipelihara oleh tangan yang sama — Sellica dan The Avalon Project.',
+  title: 'Portfolio — VyuApp',
+  description: 'Dua produk hidup yang dipelihara oleh tangan yang sama — Sellica (financial intelligence engine) dan The Avalon Project (bespoke design system).',
+  openGraph: {
+    title: 'Portfolio — VyuApp',
+    description: 'Dua produk hidup yang dipelihara oleh tangan yang sama — Sellica dan The Avalon Project.',
+    images: [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Portfolio — VyuApp',
+    description: 'Dua produk hidup yang dipelihara oleh tangan yang sama — Sellica dan The Avalon Project.',
+  },
+  alternates: {
+    canonical: `${baseUrl}/portfolio`,
+  },
 };
 
 function DetailedProduct({ item }) {
@@ -76,8 +93,26 @@ export default async function PortfolioPage() {
   const items = await getPublishedPortfolio();
   const [main1, main2, ...rest] = items;
 
+  const breadcrumbItems = [
+    { name: 'Beranda', url: `${baseUrl}/` },
+    { name: 'Portfolio', url: `${baseUrl}/portfolio` },
+  ];
+
   return (
     <main className="min-h-screen">
+      <BreadcrumbJsonLd items={breadcrumbItems} />
+      {main1 && <SoftwareAppJsonLd
+        name={main1.name}
+        description={main1.description}
+        url={baseUrl}
+        applicationCategory="BusinessApplication"
+      />}
+      {main2 && <SoftwareAppJsonLd
+        name={main2.name}
+        description={main2.description}
+        url={baseUrl}
+        applicationCategory="BusinessApplication"
+      />}
       <Navbar />
       <section className="relative pt-32 pb-12 overflow-hidden">
         <div className="absolute inset-0 vyu-grid-bg" />

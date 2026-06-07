@@ -21,5 +21,16 @@ export default async function sitemap() {
     }));
   } catch {}
 
-  return [...staticRoutes, ...articleRoutes];
+  let portfolioRoutes = [];
+  try {
+    const items = await getPublishedPortfolio();
+    portfolioRoutes = items.map(item => ({
+      url: `${base}/portfolio#${item.slug || item.id}`,
+      lastModified: new Date(item.updated_at || now),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    }));
+  } catch {}
+
+  return [...staticRoutes, ...articleRoutes, ...portfolioRoutes];
 }
