@@ -1,8 +1,12 @@
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseHostname = supabaseUrl ? new URL(supabaseUrl).hostname : '*.supabase.co';
+
 const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'avatars.githubusercontent.com', pathname: '/**' },
       { protocol: 'https', hostname: 'images.unsplash.com', pathname: '/**' },
+      { protocol: 'https', hostname: supabaseHostname, pathname: '/**' },
     ],
   },
   serverExternalPackages: ['mongodb'],
