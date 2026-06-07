@@ -145,7 +145,7 @@ export default function HomePage() {
           <div className="lg:col-span-7 space-y-5 text-zinc-400 text-base leading-relaxed">
             <p>VyuApp adalah studio independen yang berbasis di Garut, Jawa Barat. Kami melayani klien yang sistem digitalnya harus berfungsi sebagai infrastruktur — bukan brosur online. Setiap proyek kami diperlakukan sebagai produk yang harus bertanggung jawab atas keberlangsungan operasionalnya sendiri.</p>
             <p>Kami tidak menjual jam. Kami menjual sistem yang dapat dipertanggungjawabkan dalam produksi. Insinyur yang mendesain arsitektur adalah orang yang sama yang mendeploy, memonitor, dan memelihara. Tidak ada handoff yang merusak konteks. Tidak ada layer manajer akun antara Anda dan keputusan teknis.</p>
-            <p>Dua produk inti kami — <span className="text-emerald-400">Sellica</span> (mesin intelijen pasar untuk trader aset digital) dan <span className="text-emerald-400">The Avalon Project</span> (design system bespoke yang juga menjadi bahasa visual studio) — adalah demonstrasi praktis bagaimana kami bekerja: presisi tinggi, observabilitas penuh, estetika sebagai strategi.</p>
+            <p>Dua produk inti kami — <span className="text-emerald-400">Sellica</span> (mesin intelijen pasar untuk trader aset digital) dan <span className="text-emerald-400">The Avalon Project</span> (market intelligence & price surveillance untuk enterprise e-commerce) — adalah demonstrasi praktis bagaimana kami bekerja: presisi tinggi, observabilitas penuh, ketahanan terhadap kebisingan data.</p>
           </div>
         </div>
       </section>
@@ -223,15 +223,14 @@ export default function HomePage() {
             />
             <ProductCard
               name="The Avalon Project"
-              tagline="// BESPOKE DESIGN SYSTEM"
-              description="Design system internal VyuApp — Swiss minimalism bertemu cyberpunk utility. Bahasa visual yang kami terapkan pada setiap produk, landing page, dan dokumen klien."
+              tagline="// NEXT-GEN MARKET INTELLIGENCE"
+              description="Data adalah liabilitas jika tidak dimurnikan. Avalon secara otonom mengintersep, menyaring, dan menstandardisasi jutaan pergerakan data di e-commerce secara real-time. Kami mengubah kebisingan pasar yang kotor menjadi informasi intelijen yang murni untuk mengungkap titik buta kompetitor, menghentikan perang harga ilegal, dan mengamankan profit margin perusahaan Anda secara absolut."
               features={[
-                'Token-based color, typography, spacing',
-                'Animasi CSS murni — tanpa framer-motion',
-                'Molekul reusable: vyu-card, overline, chips',
-                'Sinyal kualitas teknis sebelum kode pertama',
+                'HET Guard (Reseller Watchdog): Perlindungan 24/7 yang melacak dan memberi sinyal darurat jika ada reseller tidak resmi yang membanting harga produk di bawah kesepakatan pasar',
+                'Merlin Data Purification: Algoritma Semantic Regex yang secara agresif membersihkan polusi data iklan, merek palsu, dan teks kosmetik pasar untuk menyajikan kebenaran pasar yang murni',
+                'Excalibur Engine: Inovasi pipa data yang mampu menembus enkripsi platform e-commerce guna menyelamatkan metrik-metrik krusial yang tersembunyi menjadi estimasi total omset pasar (GMV) yang akurat',
               ]}
-              stack={['Tailwind v3', 'Design Tokens', 'Outfit + Inter + JetBrains', 'CSS-only animation']}
+              stack={['FastAPI (Python)', 'Supabase (PostgreSQL)', 'Next.js', 'Tailwind CSS', 'Docker']}
               href="/portfolio"
               ctaLabel="Jelajahi Avalon"
               accent="border-sky-400/40 text-sky-300 bg-sky-400/10"

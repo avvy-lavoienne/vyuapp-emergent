@@ -12,16 +12,16 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE
 
 export const metadata = {
   title: 'Portfolio — VyuApp',
-  description: 'Dua produk hidup yang dipelihara oleh tangan yang sama — Sellica (financial intelligence engine) dan The Avalon Project (bespoke design system).',
+  description: 'Produk inti VyuApp: Sellica (financial intelligence untuk trader aset digital) dan The Avalon Project (enterprise market intelligence & price surveillance untuk e-commerce).',
   openGraph: {
     title: 'Portfolio — VyuApp',
-    description: 'Dua produk hidup yang dipelihara oleh tangan yang sama — Sellica dan The Avalon Project.',
+    description: 'Produk inti VyuApp: Sellica dan The Avalon Project — dua produk hidup yang dipelihara oleh tangan yang sama.',
     images: [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Portfolio — VyuApp',
-    description: 'Dua produk hidup yang dipelihara oleh tangan yang sama — Sellica dan The Avalon Project.',
+    description: 'Produk inti VyuApp: Sellica dan The Avalon Project — dua produk hidup yang dipelihara oleh tangan yang sama.',
   },
   alternates: {
     canonical: `${baseUrl}/portfolio`,
@@ -89,9 +89,45 @@ const FALLBACK_OTHER = [
   { id: 'f3', name: 'Editorial Platform — Stealth', category: 'BRAND ENGINEERING', description: 'Platform editorial untuk publikasi premium, menggabungkan headless CMS, RSC, dan typography engine kustom.' },
 ];
 
+const DEFAULT_MAIN = [
+  {
+    id: 'default-sellica',
+    name: 'Sellica',
+    tagline: '// FINANCIAL INTELLIGENCE ENGINE',
+    description: 'Platform intelijen pasar untuk trader aset digital serius. Menyatukan data on-chain, sentimen, dan model harga ke dalam satu lapisan analitis yang dapat dipertanggungjawabkan.',
+    long_description: 'Sellica adalah mesin intelijen pasar yang dirancang untuk trader aset digital profesional. Dengan pipeline data real-time multi-exchange, model statistik divergensi harga/volume, dan UI yang sengaja dibuat tenang — sinyal yang muncul sudah lolos beberapa filter kualitas. Observability penuh dengan uptime 99.9%+.',
+    category: 'Financial Intelligence',
+    stack: ['Next.js', 'PostgreSQL', 'TimescaleDB', 'Cloudflare Workers', 'Bun'],
+    value_props: [
+      'Pipeline data real-time multi-exchange',
+      'Model statistik divergensi harga / volume',
+      'UI tenang — sinyal sudah difilter berlapis',
+      'Observability penuh, uptime 99.9%+',
+    ],
+    slug: 'sellica',
+  },
+  {
+    id: 'default-avalon',
+    name: 'The Avalon Project',
+    tagline: '// ENTERPRISE MARKET INTELLIGENCE & PRICE SURVEILLANCE',
+    description: 'Platform Market Intelligence berskala enterprise yang dirancang untuk mengatasi masalah manipulasi data dan pelanggaran harga di pasar e-commerce Indonesia.',
+    long_description: 'The Avalon Project adalah platform Market Intelligence berskala perusahaan (Enterprise) yang dirancang khusus untuk mengatasi masalah manipulasi data dan pelanggaran harga (price dumping) di pasar e-commerce Indonesia (Shopee). Banyak perusahaan besar mengambil keputusan bisnis berdasarkan data mentah yang kotor akibat polusi produk aksesoris yang salah kategori, produk iklan manipulatif berharga Rp 0, dan judul kosmetik pedagang. Avalon hadir sebagai solusi hibrida: menggabungkan kekuatan mesin ekstraksi data otonom yang tangguh di backend dengan dasbor kokpit visual yang sangat minimalis dan elegan di frontend untuk jajaran eksekutif C-Level.',
+    category: 'Market Intelligence',
+    stack: ['FastAPI (Python)', 'Supabase (PostgreSQL)', 'Next.js', 'Tailwind CSS', 'Docker'],
+    value_props: [
+      'HET Guard (Reseller Watchdog): Perlindungan 24/7 yang melacak dan memberi sinyal darurat (Red Alert) jika ada reseller tidak resmi yang membanting harga produk Anda di bawah kesepakatan pasar',
+      'Merlin Data Purification: Algoritma Semantic Regex canggih yang secara agresif membersihkan polusi data iklan, merek palsu, dan teks kosmetik pasar untuk menyajikan kebenaran pasar yang murni',
+      'Excalibur Engine: Inovasi pipa data yang mampu menembus enkripsi platform e-commerce guna menyelamatkan metrik-metrik krusial yang tersembunyi menjadi estimasi total omset pasar (GMV) yang akurat',
+      'Arsitektur ETL kebal blokir dengan akurasi data hingga 99.8%',
+    ],
+    slug: 'avalon',
+  },
+];
+
 export default async function PortfolioPage() {
   const items = await getPublishedPortfolio();
-  const [main1, main2, ...rest] = items;
+  const hasData = items.length > 0;
+  const [main1, main2, ...rest] = hasData ? items : DEFAULT_MAIN;
 
   const breadcrumbItems = [
     { name: 'Beranda', url: `${baseUrl}/` },
