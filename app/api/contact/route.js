@@ -18,7 +18,7 @@ export async function POST(request) {
     const resend = new Resend(apiKey);
 
     const { error } = await resend.emails.send({
-      from: 'VyuApp Contact <onboarding@resend.dev>',
+      from: 'VyuApp Contact <noreply@vyuapp.my.id>',
       to: 'vyuapp@proton.me',
       replyTo: email,
       subject: `[VyuApp Contact] ${projectType} — ${name}`,
