@@ -1,11 +1,31 @@
 'use client';
 import { useState } from 'react';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Loader2, AlertCircle } from 'lucide-react';
 
 export default function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', company: '', projectType: '', message: '' });
-  const [sent, setSent] = useState(false);
-  const onSubmit = (e) => { e.preventDefault(); setSent(true); setTimeout(() => setSent(false), 5000); setForm({ name: '', email: '', company: '', projectType: '', message: '' }); };
+  const [status, setStatus] = useState('idle');
+  const [error, setError] = useState('');
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('loading');
+    setError('');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) { setError(data.error || 'Terjadi kesalahan.'); setStatus('error'); return; }
+      setStatus('sent');
+      setForm({ name: '', email: '', company: '', projectType: '', message: '' });
+      setTimeout(() => setStatus('idle'), 6000);
+    } catch {
+      setError('Gagal mengirim. Periksa koneksi Anda.');
+      setStatus('error');
+    }
+  };
   const onChange = (k) => (e) => setForm({ ...form, [k]: e.target.value });
   const inputCls = 'w-full bg-zinc-900/60 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-emerald-400/60 transition';
   return (
@@ -42,11 +62,19 @@ export default function ContactForm() {
       </div>
       <div className="flex items-center justify-between gap-4 pt-2">
         <p className="text-xs text-zinc-500">Kami merespons brief serius dalam &lt; 48 jam.</p>
-        <button type="submit" className="vyu-btn-primary">Kirim Brief <ArrowRight className="w-4 h-4" /></button>
+        <button type="submit" disabled={status === 'loading'} className="vyu-btn-primary">
+          {status === 'loading' ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4" />}
+          {status === 'loading' ? 'Mengirim...' : 'Kirim Brief'}
+        </button>
       </div>
-      {sent && (
+      {status === 'sent' && (
         <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-emerald-400/10 border border-emerald-400/30 text-emerald-300 text-sm">
           <CheckCircle2 className="w-5 h-5" /> Terima kasih. Brief Anda telah masuk antrian — kami akan merespons dari vyuapp@proton.me.
+        </div>
+      )}
+      {status === 'error' && (
+        <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-red-400/10 border border-red-400/30 text-red-300 text-sm">
+          <AlertCircle className="w-5 h-5" /> {error}
         </div>
       )}
     </form>
