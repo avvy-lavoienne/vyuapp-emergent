@@ -7,8 +7,7 @@ import { Calendar, ArrowRight } from 'lucide-react';
 import { getPublishedArticles } from '@/lib/data';
 import { BreadcrumbJsonLd } from '@/components/JsonLd';
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 3600;
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 

@@ -16,19 +16,50 @@ export default function Hero() {
       {/* grid background */}
       <div className="absolute inset-0 vyu-grid-bg" />
       {/* glow orbs */}
-      <div aria-hidden className="absolute -top-32 -left-32 w-[520px] h-[520px] rounded-full bg-emerald-500/20 blur-[120px] animate-vyu-glow-orb" />
-      <div aria-hidden className="absolute top-1/3 -right-32 w-[480px] h-[480px] rounded-full bg-sky-500/15 blur-[120px] animate-vyu-glow-orb" style={{ animationDelay: '2s' }} />
-      <div aria-hidden className="absolute bottom-0 left-1/3 w-[420px] h-[420px] rounded-full bg-teal-500/15 blur-[120px] animate-vyu-glow-orb" style={{ animationDelay: '4s' }} />
+      <div
+        aria-hidden
+        className="absolute -top-32 -left-32 w-[520px] h-[520px] rounded-full bg-emerald-500/20 blur-[120px] animate-vyu-glow-orb"
+      />
+      <div
+        aria-hidden
+        className="absolute top-1/3 -right-32 w-[480px] h-[480px] rounded-full bg-sky-500/15 blur-[120px] animate-vyu-glow-orb"
+        style={{ animationDelay: "2s" }}
+      />
+      <div
+        aria-hidden
+        className="absolute bottom-0 left-1/3 w-[420px] h-[420px] rounded-full bg-teal-500/15 blur-[120px] animate-vyu-glow-orb"
+        style={{ animationDelay: "4s" }}
+      />
       {/* scanline */}
       <div className="vyu-scanline" aria-hidden />
 
       {/* animated SVG node network (right side, desktop) */}
-      <svg className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[720px] h-[440px] opacity-60" viewBox="0 0 720 440" fill="none">
-        {edges.map(([a,b], i) => (
-          <line key={i} x1={nodes[a].x} y1={nodes[a].y} x2={nodes[b].x} y2={nodes[b].y} stroke="#34d399" strokeOpacity="0.18" strokeWidth="1" />
+      <svg
+        className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[720px] h-[440px] opacity-60"
+        viewBox="0 0 720 440"
+        fill="none"
+      >
+        {edges.map(([a, b], i) => (
+          <line
+            key={i}
+            x1={nodes[a].x}
+            y1={nodes[a].y}
+            x2={nodes[b].x}
+            y2={nodes[b].y}
+            stroke="#34d399"
+            strokeOpacity="0.18"
+            strokeWidth="1"
+          />
         ))}
         {nodes.map((n, i) => (
-          <g key={i} style={{ animation: `vyu-pulse 2.6s ease-in-out infinite`, animationDelay: `${(i * 0.18).toFixed(2)}s`, transformOrigin: `${n.x}px ${n.y}px` }}>
+          <g
+            key={i}
+            style={{
+              animation: `vyu-pulse 2.6s ease-in-out infinite`,
+              animationDelay: `${(i * 0.18).toFixed(2)}s`,
+              transformOrigin: `${n.x}px ${n.y}px`,
+            }}
+          >
             <circle cx={n.x} cy={n.y} r="3" fill="#34d399" />
             <circle cx={n.x} cy={n.y} r="8" fill="#34d399" fillOpacity="0.15" />
           </g>
@@ -39,11 +70,15 @@ export default function Hero() {
         <div className="lg:col-span-7 animate-vyu-reveal">
           <p className="vyu-overline">// VYUAPP — GARUT, JAWA BARAT</p>
           <h1 className="mt-5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold leading-[1.05] tracking-tight text-zinc-50">
-            Rekayasa web bespoke<br className="hidden sm:block" /> untuk operator yang<br className="hidden sm:block" />
+            Rekayasa web bespoke
+            <br className="hidden sm:block" /> untuk operator yang
+            <br className="hidden sm:block" />
             <span className="text-gradient-emerald">menolak template.</span>
           </h1>
           <p className="mt-7 text-zinc-400 text-base md:text-lg max-w-2xl leading-relaxed">
-            VyuApp adalah studio kecil yang membangun produk digital presisi tinggi — dari platform intelijen pasar Sellica hingga sistem editorial premium Avalon. Kami menjual hasil, bukan jam.
+            VyuApp adalah studio kecil yang membangun produk digital presisi
+            tinggi — dari platform pelaporan kinerja Sellica hingga sistem
+            market intelligence premium Avalon. Kami menjual hasil, bukan jam.
           </p>
 
           <div className="mt-9 flex flex-col sm:flex-row gap-4">
@@ -56,9 +91,16 @@ export default function Hero() {
           </div>
 
           <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 text-xs text-zinc-500">
-            <div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-vyu-pulse" /> 2 produk aktif di produksi</div>
-            <div className="flex items-center gap-2 font-[var(--font-mono)]">// SISTEM ONLINE 99.97%</div>
-            <div className="flex items-center gap-2 font-[var(--font-mono)]">// MENERIMA KOLABORASI</div>
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-vyu-pulse" />{" "}
+              2 produk aktif di produksi
+            </div>
+            <div className="flex items-center gap-2 font-[var(--font-mono)]">
+              // SISTEM ONLINE 99.97%
+            </div>
+            <div className="flex items-center gap-2 font-[var(--font-mono)]">
+              // MENERIMA KOLABORASI
+            </div>
           </div>
         </div>
 
@@ -68,7 +110,9 @@ export default function Hero() {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <TerminalSquare className="w-4 h-4 text-emerald-400" />
-                <span className="font-[var(--font-mono)] text-xs text-zinc-400">vyu@studio:~$</span>
+                <span className="font-[var(--font-mono)] text-xs text-zinc-400">
+                  vyu@studio:~$
+                </span>
               </div>
               <div className="flex gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-zinc-700" />
@@ -81,20 +125,40 @@ export default function Hero() {
               <p className="text-emerald-400">✓ sellica.io — operational</p>
               <p className="text-emerald-400">✓ avalon.design — operational</p>
               <p className="text-zinc-500">$ vyu metrics --24h</p>
-              <p className="text-zinc-300">  uptime: <span className="text-emerald-400">99.97%</span></p>
-              <p className="text-zinc-300">  p95 latency: <span className="text-emerald-400">87ms</span></p>
-              <p className="text-zinc-300">  requests: <span className="text-emerald-400">2.4M</span></p>
-              <p className="text-zinc-500 pt-2">$ <span className="inline-block w-1.5 h-3 bg-emerald-400 animate-vyu-pulse align-middle" /></p>
+              <p className="text-zinc-300">
+                {" "}
+                uptime: <span className="text-emerald-400">99.97%</span>
+              </p>
+              <p className="text-zinc-300">
+                {" "}
+                p95 latency: <span className="text-emerald-400">87ms</span>
+              </p>
+              <p className="text-zinc-300">
+                {" "}
+                requests: <span className="text-emerald-400">2.4M</span>
+              </p>
+              <p className="text-zinc-500 pt-2">
+                ${" "}
+                <span className="inline-block w-1.5 h-3 bg-emerald-400 animate-vyu-pulse align-middle" />
+              </p>
             </div>
           </div>
-          <div className="absolute -bottom-6 -right-6 w-32 h-32 rounded-full bg-emerald-500/20 blur-3xl" aria-hidden />
-          <div className="absolute -top-6 -left-6 w-24 h-24 rounded-full bg-sky-500/20 blur-3xl" aria-hidden />
+          <div
+            className="absolute -bottom-6 -right-6 w-32 h-32 rounded-full bg-emerald-500/20 blur-3xl"
+            aria-hidden
+          />
+          <div
+            className="absolute -top-6 -left-6 w-24 h-24 rounded-full bg-sky-500/20 blur-3xl"
+            aria-hidden
+          />
         </div>
       </div>
 
       {/* scroll hint */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-600">
-        <span className="font-[var(--font-mono)] text-[10px] tracking-widest">// SCROLL</span>
+        <span className="font-[var(--font-mono)] text-[10px] tracking-widest">
+          // SCROLL
+        </span>
         <span className="w-px h-8 bg-gradient-to-b from-emerald-400 to-transparent" />
       </div>
     </section>

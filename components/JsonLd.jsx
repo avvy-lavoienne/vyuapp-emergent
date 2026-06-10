@@ -5,6 +5,7 @@ export function OrganizationJsonLd() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': `${url}/#organization`,
     name: 'VyuApp',
     url,
     logo: `${url}/favicon/android-chrome-512x512.png`,
@@ -34,8 +35,10 @@ export function WebSiteJsonLd() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
+    '@id': `${url}/#website`,
     name: 'VyuApp',
     url,
+    publisher: { '@id': `${url}/#organization` },
     description: 'Studio rekayasa web bespoke & market intelligence.',
     inLanguage: 'id',
     potentialAction: {
@@ -78,14 +81,7 @@ export function ArticleJsonLd({ title, description, url, image, datePublished, d
       '@type': 'Person',
       name: authorName || 'VyuApp Studio',
     },
-    publisher: {
-      '@type': 'Organization',
-      name: 'VyuApp',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${baseUrl()}/favicon/android-chrome-512x512.png`,
-      },
-    },
+    publisher: { '@id': `${baseUrl()}/#organization` },
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': url,

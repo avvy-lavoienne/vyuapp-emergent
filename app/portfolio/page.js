@@ -2,11 +2,12 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SectionHeader from '@/components/SectionHeader';
 import Link from 'next/link';
-import { CheckCircle2, ArrowRight, Hexagon, Sparkles, LineChart, ShieldCheck, Cpu, Layers } from 'lucide-react';
-import { getPublishedPortfolio } from '@/lib/data';
+import { ArrowRight, Hexagon, Sparkles, LineChart, ShieldCheck, Cpu, Layers } from 'lucide-react';
+import { getPublishedPortfolio, DEFAULT_MAIN, FALLBACK_OTHER } from '@/lib/data';
 import { BreadcrumbJsonLd, SoftwareAppJsonLd } from '@/components/JsonLd';
+import DetailedProduct from '@/components/DetailedProduct';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600;
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
@@ -28,43 +29,6 @@ export const metadata = {
   },
 };
 
-function DetailedProduct({ item }) {
-  return (
-    <div className="vyu-card p-8 md:p-12">
-      <div className="grid lg:grid-cols-12 gap-8">
-        <div className="lg:col-span-7">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="vyu-icon-container"><Hexagon className="w-5 h-5" /></span>
-            <p className="vyu-overline">// PRODUK · {(item.category || 'Produk').toUpperCase()}</p>
-          </div>
-          <h3 className="text-3xl md:text-4xl font-semibold text-zinc-50 tracking-tight">{item.name}</h3>
-          <p className="mt-3 text-emerald-400 font-[var(--font-mono)] text-xs uppercase tracking-widest">{item.tagline}</p>
-          <p className="mt-6 text-zinc-400 text-base leading-relaxed">{item.long_description || item.description}</p>
-          <div className="mt-7 flex flex-wrap gap-2">
-            {(item.stack || []).map(s => <span key={s} className="vyu-chip">{s}</span>)}
-          </div>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href="/#kontak" className="vyu-btn-primary">Request Collaboration <ArrowRight className="w-4 h-4" /></a>
-            <a href="/#kapabilitas" className="vyu-btn-secondary">Lihat stack penuh</a>
-          </div>
-        </div>
-        <div className="lg:col-span-5">
-          <div className="h-full rounded-2xl border border-emerald-400/30 p-7 bg-zinc-950/40">
-            <p className="vyu-overline mb-4">// VALUE PROPOSITION</p>
-            <ul className="space-y-3">
-              {(item.value_props || item.features || []).map(v => (
-                <li key={v} className="flex items-start gap-2 text-sm text-zinc-200">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" /> {v}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function OtherProject({ item }) {
   return (
     <div className="vyu-card p-6">
@@ -83,48 +47,6 @@ function OtherProject({ item }) {
   );
 }
 
-const FALLBACK_OTHER = [
-  { id: 'f1', name: 'Ingestion Service — NDA Client A', category: 'DATA PIPELINE', description: 'Pipeline data 24/7 multi-sumber untuk klien fintech regional. Idempotent worker, dead-letter queue, dan dashboard observability internal.' },
-  { id: 'f2', name: 'Custom SSO — NDA Client B', category: 'AUTH PLATFORM', description: 'Layer otentikasi bespoke untuk B2B SaaS, mengintegrasikan SAML, OIDC, dan session management dengan kebijakan keamanan kustom.' },
-  { id: 'f3', name: 'Editorial Platform — Stealth', category: 'BRAND ENGINEERING', description: 'Platform editorial untuk publikasi premium, menggabungkan headless CMS, RSC, dan typography engine kustom.' },
-];
-
-const DEFAULT_MAIN = [
-  {
-    id: 'default-sellica',
-    name: 'Sellica',
-    tagline: '// SISTEM EVALUASI LAPORAN LENGKAP INDIVIDU DAN CATATAN AKTIVITAS',
-    description: 'Platform tata kelola administrasi internal yang dirancang untuk menjembatani standarisasi laporan formal dengan fleksibilitas metodologi kerja modern.',
-    long_description: 'Sellica adalah platform tata kelola administrasi internal yang dirancang untuk menjembatani standarisasi laporan formal dengan fleksibilitas metodologi kerja modern. Dibangun khusus untuk instansi dan organisasi yang memiliki volume pelaporan harian yang padat, Sellica memotong rantai birokrasi yang lambat dengan memperkenalkan sistem automasi pengisian draf berbasis AI. Platform ini memastikan setiap aparatur atau anggota tim memiliki akuntabilitas yang tinggi melalui catatan aktivitas yang terverifikasi, sekaligus memberikan visualisasi metrik performa kelayakan kerja langsung kepada pihak manajemen/auditor internal.',
-    category: 'Tata Kelola & Kinerja',
-    stack: ['Next.js', 'React', 'Tailwind CSS', 'Python Backend', 'LLM API'],
-    value_props: [
-      'Scrum Framework Management: Transformasi beban kerja tim melalui dasbor sprint dan manajemen tugas yang transparan dan terukur secara real-time',
-      'Automated Activity Logging: Pendataan laporan lengkap individu dan catatan aktivitas harian yang terstruktur, meminimalisir manipulasi data dokumen',
-      'Embedded AI Pre-Auditor: Integrasi asisten AI yang secara cerdas mendeteksi ketidaksinkronan berkas laporan, merangkum capaian kerja, dan memotong waktu koreksi manual hingga 80%',
-      'AI-Driven Document Validation: Modul NLP untuk pengecekan kepatuhan teks laporan terhadap aturan formal organisasi secara otomatis',
-      'Lightweight Scrum Dashboard: Manajemen tugas berbasis Next.js App Router yang sangat responsif dengan performa instan',
-    ],
-    slug: 'sellica',
-  },
-  {
-    id: 'default-avalon',
-    name: 'The Avalon Project',
-    tagline: '// ENTERPRISE MARKET INTELLIGENCE & PRICE SURVEILLANCE',
-    description: 'Platform Market Intelligence berskala enterprise yang dirancang untuk mengatasi masalah manipulasi data dan pelanggaran harga di pasar e-commerce Indonesia.',
-    long_description: 'The Avalon Project adalah platform Market Intelligence berskala perusahaan (Enterprise) yang dirancang khusus untuk mengatasi masalah manipulasi data dan pelanggaran harga (price dumping) di pasar e-commerce Indonesia (Shopee). Banyak perusahaan besar mengambil keputusan bisnis berdasarkan data mentah yang kotor akibat polusi produk aksesoris yang salah kategori, produk iklan manipulatif berharga Rp 0, dan judul kosmetik pedagang. Avalon hadir sebagai solusi hibrida: menggabungkan kekuatan mesin ekstraksi data otonom yang tangguh di backend dengan dasbor kokpit visual yang sangat minimalis dan elegan di frontend untuk jajaran eksekutif C-Level.',
-    category: 'Market Intelligence',
-    stack: ['FastAPI (Python)', 'Supabase (PostgreSQL)', 'Next.js', 'Tailwind CSS', 'Docker'],
-    value_props: [
-      'HET Guard (Reseller Watchdog): Perlindungan 24/7 yang melacak dan memberi sinyal darurat (Red Alert) jika ada reseller tidak resmi yang membanting harga produk Anda di bawah kesepakatan pasar',
-      'Merlin Data Purification: Algoritma Semantic Regex canggih yang secara agresif membersihkan polusi data iklan, merek palsu, dan teks kosmetik pasar untuk menyajikan kebenaran pasar yang murni',
-      'Excalibur Engine: Inovasi pipa data yang mampu menembus enkripsi platform e-commerce guna menyelamatkan metrik-metrik krusial yang tersembunyi menjadi estimasi total omset pasar (GMV) yang akurat',
-      'Arsitektur ETL kebal blokir dengan akurasi data hingga 99.8%',
-    ],
-    slug: 'avalon',
-  },
-];
-
 export default async function PortfolioPage() {
   const [main1, main2] = DEFAULT_MAIN;
   const dbItems = await getPublishedPortfolio();
@@ -135,19 +57,22 @@ export default async function PortfolioPage() {
     { name: 'Portfolio', url: `${baseUrl}/portfolio` },
   ];
 
+  const sellicaUrl = `${baseUrl}/portfolio/sellica`;
+  const avalonUrl = 'https://avalon.vyuapp.my.id';
+
   return (
     <main className="min-h-screen">
       <BreadcrumbJsonLd items={breadcrumbItems} />
       {main1 && <SoftwareAppJsonLd
         name={main1.name}
         description={main1.description}
-        url={baseUrl}
+        url={sellicaUrl}
         applicationCategory="BusinessApplication"
       />}
       {main2 && <SoftwareAppJsonLd
         name={main2.name}
         description={main2.description}
-        url={baseUrl}
+        url={avalonUrl}
         applicationCategory="BusinessApplication"
       />}
       <Navbar />

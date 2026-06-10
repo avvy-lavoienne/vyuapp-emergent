@@ -1,4 +1,4 @@
-import { getPublishedArticles, getPublishedPortfolio } from '@/lib/data';
+import { getPublishedArticles, getPublishedPortfolio, DEFAULT_MAIN } from '@/lib/data';
 
 export default async function sitemap() {
   const base = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://localhost:3000';
@@ -23,13 +23,20 @@ export default async function sitemap() {
 
   let portfolioRoutes = [];
   try {
-    const items = await getPublishedPortfolio();
-    portfolioRoutes = items.map(item => ({
-      url: `${base}/portfolio#${item.slug || item.id}`,
-      lastModified: new Date(item.updated_at || now),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    }));
+    const dbItems = await getPublishedPortfolio();
+    const seen = new Set();
+    const allItems = [
+      ...DEFAULT_MAIN.filter(item => item.slug),
+      ...dbItems.filter(item => item.slug),
+    ];
+    portfolioRoutes = allItems
+      .filter(item => { if (seen.has(item.slug)) return false; seen.add(item.slug); return true; })
+      .map(item => ({
+        url: `${base}/portfolio/${item.slug}`,
+        lastModified: new Date(item.updated_at || now),
+        changeFrequency: 'monthly',
+        priority: 0.6,
+      }));
   } catch {}
 
   return [...staticRoutes, ...articleRoutes, ...portfolioRoutes];
