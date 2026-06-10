@@ -2,7 +2,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
 import SectionHeader from '@/components/SectionHeader';
-import ContactForm from '@/components/ContactForm';
+import DiscoveryForm from '@/components/DiscoveryForm';
 import Link from 'next/link';
 import {
   Code2, Database, Cloud, Cpu, GitBranch, Layers, Shield, Zap,
@@ -340,7 +340,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="lg:col-span-7">
-            <ContactForm />
+            <DiscoveryForm />
           </div>
         </div>
       </section>
