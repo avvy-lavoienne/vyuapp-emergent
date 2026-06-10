@@ -11,15 +11,6 @@ import { BreadcrumbJsonLd, ArticleJsonLd } from '@/components/JsonLd';
 
 export const revalidate = 3600;
 
-export async function generateStaticParams() {
-  try {
-    const articles = await getPublishedArticles({ limit: 1000 });
-    return articles.map(article => ({ slug: article.slug }));
-  } catch {
-    return [];
-  }
-}
-
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
 
 export async function generateMetadata({ params }) {
