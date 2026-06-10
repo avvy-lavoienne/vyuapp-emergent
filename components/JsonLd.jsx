@@ -24,7 +24,8 @@ export function OrganizationJsonLd() {
       availableLanguage: ['Indonesian', 'English'],
     },
     sameAs: [
-      url,
+      'https://github.com/avvy-lavoienne',
+      'https://www.linkedin.com/in/frmnfird',
     ],
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;

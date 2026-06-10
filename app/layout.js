@@ -64,6 +64,8 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#09090b" />
         <meta name="format-detection" content="telephone=no, email=no" />
         <link rel="canonical" href={baseUrl} />
+        <link rel="me" href="https://github.com/avvy-lavoienne" />
+        <link rel="me" href="https://www.linkedin.com/in/frmnfird" />
         {adsenseClient && <link rel="preconnect" href="https://pagead2.googlesyndication.com" />}
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
