@@ -19,6 +19,11 @@ export default function Navbar() {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
     window.addEventListener('scroll', onScroll);
+
+    if (!window.location.hash) {
+      window.scrollTo(0, 0);
+    }
+
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
