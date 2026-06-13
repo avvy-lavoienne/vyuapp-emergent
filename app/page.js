@@ -1,351 +1,271 @@
+'use client';
+import { useState } from 'react';
+import { LocaleProvider, useLocale } from '@/components/LocaleProvider';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
 import SectionHeader from '@/components/SectionHeader';
-import DiscoveryForm from '@/components/DiscoveryForm';
 import Link from 'next/link';
-import {
-  Code2, Database, Cloud, Cpu, GitBranch, Layers, Shield, Zap,
-  CheckCircle2, ArrowRight, LineChart, Palette, Mail, Building2,
-  Sparkles, Compass, Target, Hexagon
-} from 'lucide-react';
+import { ArrowRight, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 
-function Capability({ icon: Icon, title, items }) {
+function Capability({ title, description }) {
   return (
-    <div className="vyu-card p-7 group">
-      <div className="flex items-center gap-3 mb-5">
-        <span className="vyu-icon-container"><Icon className="w-5 h-5" /></span>
-        <h3 className="text-lg font-semibold text-zinc-50">{title}</h3>
-      </div>
-      <ul className="space-y-2.5">
-        {items.map((it) => (
-          <li key={it} className="flex items-start gap-2 text-sm text-zinc-400">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-            <span>{it}</span>
-          </li>
-        ))}
-      </ul>
+    <div className="p-8 md:p-10 rounded-2xl border border-[#E5E4E0] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9]">
+      <h3 className="text-lg font-semibold text-[#141413] tracking-[-0.01em]">{title}</h3>
+      <p className="mt-3 text-sm text-[#4A4A48] leading-relaxed">{description}</p>
     </div>
   );
 }
 
-function ProductCard({ name, tagline, description, features, stack, href, ctaLabel, accent }) {
+function ProductCard({ name, tagline, description, features, href, ctaLabel }) {
   const isExternal = href.startsWith('http');
   const Tag = isExternal ? 'a' : Link;
   const extraProps = isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
   return (
-    <div className="vyu-card p-8 md:p-10 flex flex-col">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <span className="vyu-icon-container"><Hexagon className="w-5 h-5" /></span>
-          <div>
-            <p className="vyu-overline">// PRODUK</p>
-            <h3 className="text-2xl font-semibold text-zinc-50 mt-1">{name}</h3>
-          </div>
-        </div>
-        <span className={`px-3 py-1 rounded-full text-[10px] font-[var(--font-mono)] tracking-widest border ${accent}`}>LIVE</span>
-      </div>
-      <p className="text-emerald-400/90 font-[var(--font-mono)] text-xs uppercase tracking-widest mb-3">{tagline}</p>
-      <p className="text-zinc-400 text-sm leading-relaxed mb-6">{description}</p>
-      <ul className="space-y-2 mb-6">
+    <div className="p-8 md:p-10 rounded-2xl border border-[#E5E4E0] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] flex flex-col">
+      <p className="text-xs text-[#6D5BA0] font-medium uppercase tracking-[0.12em]">{tagline}</p>
+      <h3 className="mt-2 text-xl font-semibold text-[#141413] tracking-[-0.02em]">{name}</h3>
+      <p className="mt-3 text-sm text-[#4A4A48] leading-relaxed">{description}</p>
+      <ul className="mt-6 space-y-2">
         {features.map((f) => (
-          <li key={f} className="flex items-start gap-2 text-sm text-zinc-300">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" /> {f}
+          <li key={f} className="flex items-start gap-2.5 text-sm text-[#4A4A48]">
+            <span className="w-1 h-1 rounded-full bg-[#6D5BA0] mt-2 flex-shrink-0" />
+            {f}
           </li>
         ))}
       </ul>
-      <div className="flex flex-wrap gap-2 mb-7">
-        {stack.map((s) => <span key={s} className="vyu-chip">{s}</span>)}
-      </div>
-      <div className="mt-auto">
-        <Tag href={href} className="vyu-btn-primary text-sm" {...extraProps}>{ctaLabel} <ArrowRight className="w-4 h-4" /></Tag>
+      <div className="mt-8">
+        <Tag
+          href={href}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#6D5BA0] text-white text-sm font-semibold hover:bg-[#574886] transition-all duration-200 hover:-translate-y-0.5"
+          {...extraProps}
+        >
+          {ctaLabel} <ArrowRight className="w-4 h-4" />
+        </Tag>
       </div>
     </div>
   );
 }
 
-function PhilosophyItem({ icon: Icon, title, description }) {
+function PhilosophyItem({ title, description }) {
   return (
-    <div className="vyu-card p-7">
-      <div className="flex items-center gap-3 mb-4">
-        <span className="vyu-icon-container"><Icon className="w-5 h-5" /></span>
-        <h3 className="text-base font-semibold text-zinc-50">{title}</h3>
-      </div>
-      <p className="text-sm text-zinc-400 leading-relaxed">{description}</p>
+    <div className="p-8 rounded-2xl border border-[#E5E4E0] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9]">
+      <h3 className="text-base font-semibold text-[#141413] tracking-[-0.01em]">{title}</h3>
+      <p className="mt-3 text-sm text-[#4A4A48] leading-relaxed">{description}</p>
     </div>
   );
 }
 
-
-export default function HomePage() {
+function SimpleContactForm({ t }) {
+  const [form, setForm] = useState({ name: '', email: '', company: '', projectType: '', message: '' });
+  const [status, setStatus] = useState('idle');
+  const [err, setErr] = useState('');
+  const onChange = (k) => (e) => setForm(f => ({ ...f, [k]: e.target.value }));
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('loading');
+    setErr('');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (!res.ok) { setErr(data.error || t.contact.form.error); setStatus('error'); return; }
+      setStatus('sent');
+      setForm({ name: '', email: '', company: '', projectType: '', message: '' });
+      setTimeout(() => setStatus('idle'), 6000);
+    } catch {
+      setErr(t.contact.form.error);
+      setStatus('error');
+    }
+  };
+  const inputCls = 'w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-3 text-sm text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all';
   return (
-    <main className="min-h-screen">
+    <div className="p-8 md:p-10 rounded-2xl border border-[#E5E4E0] bg-white">
+      <form onSubmit={onSubmit} className="space-y-5">
+        <div className="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label className="block font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.15em] font-medium mb-2">{t.contact.form.name_label}</label>
+            <input required value={form.name} onChange={onChange('name')} className={inputCls} placeholder={t.contact.form.name_placeholder} />
+          </div>
+          <div>
+            <label className="block font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.15em] font-medium mb-2">{t.contact.form.email_label}</label>
+            <input required type="email" value={form.email} onChange={onChange('email')} className={inputCls} placeholder={t.contact.form.email_placeholder} />
+          </div>
+        </div>
+        <div className="grid sm:grid-cols-2 gap-5">
+          <div>
+            <label className="block font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.15em] font-medium mb-2">{t.contact.form.company_label}</label>
+            <input value={form.company} onChange={onChange('company')} className={inputCls} placeholder={t.contact.form.company_placeholder} />
+          </div>
+          <div>
+            <label className="block font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.15em] font-medium mb-2">{t.contact.form.type_label}</label>
+            <select required value={form.projectType} onChange={onChange('projectType')} className={inputCls}>
+              <option value="">Pilih...</option>
+              {t.contact.form.types.map(t => <option key={t}>{t}</option>)}
+            </select>
+          </div>
+        </div>
+        <div>
+          <label className="block font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.15em] font-medium mb-2">{t.contact.form.message_label}</label>
+          <textarea required value={form.message} onChange={onChange('message')} rows={4} placeholder={t.contact.form.message_placeholder}
+            className="w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-3 text-sm text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all resize-y min-h-[100px]" />
+        </div>
+        <button type="submit" disabled={status === 'loading'}
+          className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#6D5BA0] text-white text-sm font-semibold hover:bg-[#574886] transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-60">
+          {status === 'loading' ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+          {status === 'loading' ? t.contact.form.sending : t.contact.form.submit}
+        </button>
+        {status === 'sent' && (
+          <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#6D5BA0]/10 border border-[#6D5BA0]/30 text-[#6D5BA0] text-sm">
+            <CheckCircle2 className="w-5 h-5" /> {t.contact.form.sent}
+          </div>
+        )}
+        {status === 'error' && (
+          <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
+            <AlertCircle className="w-5 h-5" /> {err}
+          </div>
+        )}
+        <p className="text-xs text-[#B0AFAA] text-center">
+          {t.contact.form.or_email}{' '}
+          <a href="mailto:vyuapp@proton.me" className="text-[#6D5BA0] hover:text-[#574886] transition-colors">vyuapp@proton.me</a>
+        </p>
+      </form>
+    </div>
+  );
+}
+
+function HomeContent() {
+  const { t } = useLocale();
+
+  return (
+    <main>
       <Navbar />
       <Hero />
 
-      {/* Executive Summary */}
-      <section className="vyu-section" id="tentang">
-        <div className="absolute inset-0 vyu-grid-bg opacity-40" />
-        <div className="vyu-container grid lg:grid-cols-12 gap-12">
-          <div className="lg:col-span-5">
-            <SectionHeader
-              overline="EXECUTIVE SUMMARY"
-              title="Studio rekayasa untuk"
-              gradientWord="hasil yang dapat diaudit."
-            />
-          </div>
-          <div className="lg:col-span-7 space-y-5 text-zinc-400 text-base leading-relaxed">
-            <p>
-              VyuApp adalah studio independen yang berbasis di Garut, Jawa
-              Barat. Kami melayani klien yang sistem digitalnya harus berfungsi
-              sebagai infrastruktur — bukan brosur online. Setiap proyek kami
-              diperlakukan sebagai produk yang harus bertanggung jawab atas
-              keberlangsungan operasionalnya sendiri.
-            </p>
-            <p>
-              Kami tidak menjual jam. Kami menjual sistem yang dapat
-              dipertanggungjawabkan dalam produksi. Insinyur yang mendesain
-              arsitektur adalah orang yang sama yang mendeploy, memonitor, dan
-              memelihara. Tidak ada handoff yang merusak konteks. Tidak ada
-              layer manajer akun antara Anda dan keputusan teknis.
-            </p>
-            <p>
-              Dua produk inti kami —{" "}
-              <span className="text-emerald-400">Sellica</span> (Sistem Evaluasi
-              Laporan Individu dan Catatan aktivitas) dan{" "}
-              <span className="text-emerald-400">The Avalon Project</span>{" "}
-              (market intelligence & price surveillance untuk enterprise
-              e-commerce) — adalah demonstrasi praktis bagaimana kami bekerja:
-              presisi tinggi, observabilitas penuh, ketahanan terhadap
-              kebisingan data.
-            </p>
-          </div>
+      <section className="py-24 md:py-32" id="tentang">
+        <div className="max-w-4xl mx-auto px-6 md:px-10">
+          <p className="text-[#4A4A48] text-base md:text-lg leading-relaxed text-center max-w-3xl mx-auto">
+            {t.summary}
+          </p>
         </div>
       </section>
 
-      {/* Core Capabilities */}
-      <section className="vyu-section" id="kapabilitas">
-        <div
-          aria-hidden
-          className="absolute top-20 left-1/2 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-emerald-500/10 blur-[120px]"
-        />
-        <div className="vyu-container">
+      <section className="py-24 md:py-32 bg-[#F8F7F4]" id="kapabilitas">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
           <SectionHeader
-            overline="CORE CAPABILITIES"
-            title="Stack yang dikurasi,"
-            gradientWord="bukan dikumpulkan."
-            description="Setiap teknologi yang kami gunakan harus lulus kriteria yang sama: terbukti di produksi nyata, didukung ekosistem matang, dan menghasilkan keuntungan teknis yang dapat dijelaskan kepada klien."
+            overline={t.capabilities.overline}
+            title={t.capabilities.title}
+            description={t.capabilities.description}
+            align="center"
           />
           <div className="mt-14 grid md:grid-cols-3 gap-6">
-            <Capability
-              icon={Code2}
-              title="Frontend Engineering"
-              items={[
-                "Next.js 14/15 App Router + RSC",
-                "TypeScript strict mode",
-                "Tailwind + design tokens custom",
-                "Accessibility & performance budget",
-                "Animasi CSS murni, tanpa bloat",
-              ]}
-            />
-            <Capability
-              icon={Database}
-              title="Backend & Data"
-              items={[
-                "Node.js / Bun edge workers",
-                "PostgreSQL + TimescaleDB",
-                "Pipeline data 24/7 idempoten",
-                "Supabase, Prisma, Drizzle ORM",
-                "API kontrak dengan Zod schema",
-              ]}
-            />
-            <Capability
-              icon={Cloud}
-              title="Cloud & Infra"
-              items={[
-                "Cloudflare Workers & R2",
-                "Hetzner / Fly.io untuk compute",
-                "Vercel untuk edge frontend",
-                "Observability: Prometheus + Grafana",
-                "CI/CD GitHub Actions + preview",
-              ]}
-            />
-          </div>
-
-          {/* secondary capabilities */}
-          <div className="mt-10 grid md:grid-cols-4 gap-4">
-            {[
-              { icon: Layers, label: "Design Systems" },
-              { icon: LineChart, label: "Data Intelligence" },
-              { icon: Shield, label: "Security & Auth" },
-              { icon: Zap, label: "Performance Tuning" },
-            ].map(({ icon: Icon, label }) => (
-              <div
-                key={label}
-                className="vyu-card px-5 py-4 flex items-center gap-3"
-              >
-                <span
-                  className="vyu-icon-container"
-                  style={{ width: 36, height: 36 }}
-                >
-                  <Icon className="w-4 h-4" />
-                </span>
-                <span className="text-sm text-zinc-300">{label}</span>
-              </div>
-            ))}
+            <Capability title={t.capabilities.frontend.title} description={t.capabilities.frontend.desc} />
+            <Capability title={t.capabilities.backend.title} description={t.capabilities.backend.desc} />
+            <Capability title={t.capabilities.product.title} description={t.capabilities.product.desc} />
           </div>
         </div>
       </section>
 
-      {/* Portfolio teaser */}
-      <section className="vyu-section" id="portfolio">
-        <div className="vyu-container">
+      <section className="py-24 md:py-32" id="portfolio">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
             <SectionHeader
-              overline="PORTFOLIO"
-              title="Produk yang kami bangun"
-              gradientWord="dan operasikan."
-              description="Bukan studi kasus pemasaran — ini adalah produk hidup yang kami jaga uptime-nya hari ini."
+              overline={t.portfolio.overline}
+              title={t.portfolio.title}
+              description={t.portfolio.description}
             />
             <Link
               href="/portfolio"
-              className="vyu-btn-secondary self-start md:self-auto"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-transparent text-[#141413] font-semibold text-sm border border-[#D1D0C9] hover:border-[#B0AFAA] hover:bg-black/[0.02] transition-all duration-200 hover:-translate-y-0.5 shrink-0 self-start md:self-auto"
             >
-              Lihat semua proyek <ArrowRight className="w-4 h-4" />
+              {t.portfolio.view_all} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
           <div className="grid lg:grid-cols-2 gap-7">
             <ProductCard
               name="Sellica"
-              tagline="// SELLICA: Sistem Evaluasi Laporan Lengkap Individu dan Catatan Aktivitas"
-              description="Birokrasi dan pelaporan internal sering kali menjadi penghambat kecepatan organisasi. Sellica hadir sebagai sistem manajemen kinerja modern yang mengintegrasikan metodologi kerja Scrum dengan teknologi kecerdasan buatan (AI). Kami menyederhanakan alur penyusunan draf, memantau catatan aktivitas harian secara transparan, dan melakukan pra-audit laporan secara otomatis sebelum diajukan ke sistem peninjau eksternal."
-              features={[
-                "Scrum Framework Management: Transformasi beban kerja tim melalui dasbor sprint dan manajemen tugas yang transparan dan terukur secara real-time",
-                "Automated Activity Logging: Pendataan laporan lengkap individu dan catatan aktivitas harian yang terstruktur, meminimalisir manipulasi data dokumen",
-                "Embedded AI Pre-Auditor: Integrasi asisten AI yang secara cerdas mendeteksi ketidaksinkronan berkas laporan, merangkum capaian kerja, dan memotong waktu koreksi manual hingga 80%",
-              ]}
-              stack={[
-                "Next.js",
-                "React",
-                "Tailwind CSS",
-                "Python Backend",
-                "LLM API",
-              ]}
+              tagline={t.portfolio.sellica.tagline}
+              description={t.portfolio.sellica.desc}
+              features={t.portfolio.sellica.features}
               href="/portfolio"
-              ctaLabel="Pelajari Sellica"
-              accent="border-emerald-400/40 text-emerald-300 bg-emerald-400/10"
+              ctaLabel={t.portfolio.sellica.cta}
             />
             <ProductCard
               name="The Avalon Project"
-              tagline="// NEXT-GEN MARKET INTELLIGENCE"
-              description="Data adalah liabilitas jika tidak dimurnikan. Avalon secara otonom mengintersep, menyaring, dan menstandardisasi jutaan pergerakan data di e-commerce secara real-time. Kami mengubah kebisingan pasar yang kotor menjadi informasi intelijen yang murni untuk mengungkap titik buta kompetitor, menghentikan perang harga ilegal, dan mengamankan profit margin perusahaan Anda secara absolut."
-              features={[
-                "HET Guard (Reseller Watchdog): Perlindungan 24/7 yang melacak dan memberi sinyal darurat jika ada reseller tidak resmi yang membanting harga produk di bawah kesepakatan pasar",
-                "Merlin Data Purification: Algoritma Semantic Regex yang secara agresif membersihkan polusi data iklan, merek palsu, dan teks kosmetik pasar untuk menyajikan kebenaran pasar yang murni",
-                "Excalibur Engine: Inovasi pipa data yang mampu menembus enkripsi platform e-commerce guna menyelamatkan metrik-metrik krusial yang tersembunyi menjadi estimasi total omset pasar (GMV) yang akurat",
-              ]}
-              stack={[
-                "FastAPI (Python)",
-                "Supabase (PostgreSQL)",
-                "Next.js",
-                "Tailwind CSS",
-                "Docker",
-              ]}
+              tagline={t.portfolio.avalon.tagline}
+              description={t.portfolio.avalon.desc}
+              features={t.portfolio.avalon.features}
               href="https://avalon.vyuapp.my.id/"
-              ctaLabel="Jelajahi Avalon"
-              accent="border-sky-400/40 text-sky-300 bg-sky-400/10"
+              ctaLabel={t.portfolio.avalon.cta}
             />
           </div>
         </div>
       </section>
 
-      {/* Philosophy */}
-      <section className="vyu-section" id="filosofi">
-        <div
-          aria-hidden
-          className="absolute -top-32 right-1/4 w-[500px] h-[500px] rounded-full bg-teal-500/10 blur-[140px]"
-        />
-        <div className="vyu-container">
+      <section className="py-24 md:py-32 bg-[#F8F7F4]" id="filosofi">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
           <SectionHeader
-            overline="PHILOSOPHY"
-            title="Kami tidak menjual kode mentah."
-            gradientWord="Kami menjual sistem."
-            description="Tiga prinsip operasional yang membentuk setiap keputusan teknis dan komersial kami."
+            overline={t.philosophy.overline}
+            title={t.philosophy.title}
+            align="center"
           />
           <div className="mt-14 grid md:grid-cols-3 gap-6">
-            <PhilosophyItem
-              icon={Compass}
-              title="Kontinuitas Kognitif"
-              description="Insinyur yang sama membangun, men-deploy, dan memelihara. Konteks tidak hilang di handoff antar tim, dan akuntabilitas tetap jelas dari hari pertama hingga tahun ketiga."
-            />
-            <PhilosophyItem
-              icon={Target}
-              title="Hasil Sebagai Kontrak"
-              description="Kami menyepakati hasil yang dapat diaudit, bukan jam yang dapat ditagih. Sukses didefinisikan sebelum kode pertama ditulis, dan diverifikasi di metrik produksi nyata."
-            />
-            <PhilosophyItem
-              icon={Sparkles}
-              title="Estetika Sebagai Strategi"
-              description="Kualitas visual yang terkurasi adalah sinyal tercepat tentang kualitas teknis di baliknya. Kami menghabiskan jam yang sama pada design system dan pada arsitektur backend."
-            />
+            {t.philosophy.items.map((item, i) => (
+              <PhilosophyItem key={i} title={item.title} description={item.desc} />
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Contact */}
-      <section className="vyu-section" id="kontak">
-        <div aria-hidden className="absolute inset-0 vyu-grid-bg opacity-30" />
-        <div className="vyu-container grid lg:grid-cols-12 gap-12 relative">
-          <div className="lg:col-span-5">
-            <SectionHeader
-              overline="KONTAK"
-              title="Mulai dari brief."
-              gradientWord="Bukan dari estimasi."
-              description="Ceritakan masalahnya. Kami akan menjawab apakah ini sesuai dengan studio kami, dan jika ya, bagaimana kami akan mendekatinya."
-            />
-            <div className="mt-8 space-y-4 text-sm">
-              <div className="flex items-center gap-3 text-zinc-300">
-                <span
-                  className="vyu-icon-container"
-                  style={{ width: 36, height: 36 }}
-                >
-                  <Mail className="w-4 h-4" />
-                </span>
-                <a
-                  href="mailto:vyuapp@proton.me"
-                  className="hover:text-emerald-400"
-                >
-                  vyuapp@proton.me
-                </a>
-              </div>
-              <div className="flex items-center gap-3 text-zinc-300">
-                <span
-                  className="vyu-icon-container"
-                  style={{ width: 36, height: 36 }}
-                >
-                  <Building2 className="w-4 h-4" />
-                </span>{" "}
-                Jl. Ratu Intan Dewata, Perumahan Griya Mutiara Rancabango Blok.
-                C40, Garut, Indonesia.
-              </div>
-              <div className="flex items-center gap-3 text-zinc-300">
-                <span
-                  className="vyu-icon-container"
-                  style={{ width: 36, height: 36 }}
-                >
-                  <Palette className="w-4 h-4" />
-                </span>{" "}
-                Menerima 2–3 kolaborasi baru per kuartal
+      <section className="py-24 md:py-32 bg-[#F8F7F4]" id="kontak">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <div className="grid lg:grid-cols-12 gap-12">
+            <div className="lg:col-span-5">
+              <SectionHeader
+                overline={t.contact.overline}
+                title={t.contact.title}
+                description={t.contact.description}
+              />
+              <div className="mt-8 space-y-4 text-sm">
+                <div className="flex items-center gap-3 text-[#4A4A48]">
+                  <span className="w-9 h-9 rounded-lg bg-white border border-[#E5E4E0] flex items-center justify-center text-[#6D5BA0]">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                  </span>
+                  <a href="mailto:vyuapp@proton.me" className="hover:text-[#6D5BA0] transition-colors">vyuapp@proton.me</a>
+                </div>
+                <div className="flex items-center gap-3 text-[#4A4A48]">
+                  <span className="w-9 h-9 rounded-lg bg-white border border-[#E5E4E0] flex items-center justify-center text-[#6D5BA0]">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                  </span>
+                  Jl. Ratu Intan Dewata, Perumahan Griya Mutiara Rancabango Blok. C40, Garut
+                </div>
+                <div className="flex items-center gap-3 text-[#4A4A48]">
+                  <span className="w-9 h-9 rounded-lg bg-white border border-[#E5E4E0] flex items-center justify-center text-[#6D5BA0]">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  </span>
+                  Menerima 2&ndash;3 kolaborasi baru per kuartal
+                </div>
               </div>
             </div>
-          </div>
-          <div className="lg:col-span-7">
-            <DiscoveryForm />
+            <div className="lg:col-span-7">
+              <SimpleContactForm t={t} />
+            </div>
           </div>
         </div>
       </section>
 
       <Footer />
     </main>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <LocaleProvider>
+      <HomeContent />
+    </LocaleProvider>
   );
 }

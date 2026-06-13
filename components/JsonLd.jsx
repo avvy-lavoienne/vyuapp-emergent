@@ -75,7 +75,14 @@ export function ArticleJsonLd({ title, description, url, image, datePublished, d
     headline: title,
     description,
     url,
-    ...(image ? { image } : {}),
+    ...(image ? {
+      image: {
+        '@type': 'ImageObject',
+        url: image,
+        width: 1200,
+        height: 630,
+      },
+    } : {}),
     datePublished,
     ...(dateModified ? { dateModified } : {}),
     author: {

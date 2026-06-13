@@ -1,10 +1,8 @@
-import { Outfit, Inter, JetBrains_Mono } from 'next/font/google';
+import { JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import AdSenseScript from '@/components/AdSenseScript';
 import { OrganizationJsonLd, WebSiteJsonLd } from '@/components/JsonLd';
 
-const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit', display: 'swap' });
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', display: 'swap' });
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
@@ -47,29 +45,29 @@ export const metadata = {
   manifest: '/favicon/site.webmanifest',
   other: {
     ...(adsenseClient ? { 'google-adsense-account': adsenseClient } : {}),
-    'theme-color': '#09090b',
+    'theme-color': '#FAFAF8',
   },
   alternates: {
     canonical: baseUrl,
-    languages: {
-      'id-ID': baseUrl,
-    },
+    languages: { 'id-ID': baseUrl },
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id" className={`${outfit.variable} ${inter.variable} ${mono.variable}`}>
+    <html lang="id" className={`${mono.variable}`}>
       <head>
-        <meta name="theme-color" content="#09090b" />
+        <meta name="theme-color" content="#FAFAF8" />
         <meta name="format-detection" content="telephone=no, email=no" />
         <link rel="canonical" href={baseUrl} />
         <link rel="me" href="https://github.com/avvy-lavoienne" />
         <link rel="me" href="https://www.linkedin.com/in/frmnfird" />
         {adsenseClient && <link rel="preconnect" href="https://pagead2.googlesyndication.com" />}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" />
+        <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" />
       </head>
-      <body className="bg-zinc-950 text-zinc-100 antialiased font-sans selection:bg-emerald-400/30 selection:text-emerald-50">
+      <body className="bg-[#FAFAF8] text-[#141413] antialiased font-sans selection:bg-[#6D5BA0]/20 selection:text-[#141413]">
         <OrganizationJsonLd />
         <WebSiteJsonLd />
         <AdSenseScript />

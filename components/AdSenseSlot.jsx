@@ -5,30 +5,36 @@ export default function AdSenseSlot({ slot, format = 'auto', responsive = true, 
   const clientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
   const ref = useRef(null);
   const pushed = useRef(false);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
     if (!clientId || !slot || pushed.current) return;
-    // Wait until adsbygoogle script is available
     let attempts = 0;
-    const t = setInterval(() => {
+    intervalRef.current = setInterval(() => {
       attempts += 1;
       if (window.adsbygoogle) {
         try { (window.adsbygoogle = window.adsbygoogle || []).push({}); pushed.current = true; } catch {}
-        clearInterval(t);
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
       } else if (attempts > 30) {
-        clearInterval(t);
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
     }, 200);
-    return () => clearInterval(t);
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
   }, [clientId, slot]);
 
-  // Fallback placeholder if no client id
   if (!clientId || !slot) {
     return (
       <div className="my-10">
-        <div className="rounded-xl border border-dashed border-zinc-800 bg-zinc-900/30 flex flex-col items-center justify-center text-center px-6 py-12" style={style}>
-          <p className="vyu-overline">// {label}</p>
-          <p className="text-xs text-zinc-600 mt-2 font-[var(--font-mono)]">AdSense placeholder — set NEXT_PUBLIC_ADSENSE_CLIENT_ID</p>
+        <div className="rounded-xl border border-dashed border-[#E5E4E0] bg-[#F8F7F4] flex flex-col items-center justify-center text-center px-6 py-12" style={style}>
+          <p className="font-mono text-xs text-[#B0AFAA] uppercase tracking-[0.15em]">// {label}</p>
+          <p className="text-xs text-[#B0AFAA] mt-2">AdSense placeholder — set NEXT_PUBLIC_ADSENSE_CLIENT_ID</p>
         </div>
       </div>
     );
@@ -36,7 +42,7 @@ export default function AdSenseSlot({ slot, format = 'auto', responsive = true, 
 
   return (
     <div className="my-10">
-      <p className="vyu-overline text-center mb-3 opacity-60">// {label}</p>
+      <p className="font-mono text-xs text-[#B0AFAA] uppercase tracking-[0.15em] text-center mb-3 opacity-60">// {label}</p>
       <ins
         ref={ref}
         className="adsbygoogle block"

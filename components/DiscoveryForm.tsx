@@ -63,6 +63,8 @@ const timelineOptions = [
 
 type FormStatus = 'idle' | 'loading' | 'sent' | 'error';
 
+const iconBox = 'w-9 h-9 rounded-lg bg-terracotta-50 border border-terracotta-100 flex items-center justify-center text-terracotta-500';
+
 export default function DiscoveryForm() {
   const [answers, setAnswers] = useState<DiscoveryFormData>(initialAnswers);
   const [step, setStep] = useState(0);
@@ -174,8 +176,8 @@ export default function DiscoveryForm() {
     }
   };
 
-  const inputClass = 'w-full bg-zinc-900/60 border border-zinc-800 rounded-lg px-4 py-3 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-emerald-400/60 transition';
-  const errClass = 'text-red-400 text-xs mt-1.5 flex items-center gap-1';
+  const inputClass = 'w-full bg-white border border-sand-200 rounded-xl px-4 py-3 text-sm text-sand-900 placeholder:text-sand-400 focus:border-terracotta-500 focus:ring-2 focus:ring-terracotta-500/10 transition';
+  const errClass = 'text-red-500 text-xs mt-1.5 flex items-center gap-1';
 
   const isStepValid = Object.keys(validateStep(step, answers)).length === 0;
 
@@ -199,7 +201,7 @@ export default function DiscoveryForm() {
 
     return (
       <div>
-        <label className="block vyu-overline mb-2">// {label}</label>
+        <label className="block anth-overline mb-2">{label}</label>
         {type === 'textarea' ? (
           <textarea
             {...common}
@@ -232,18 +234,18 @@ export default function DiscoveryForm() {
 
   if (status === 'sent') {
     return (
-      <div className="vyu-card p-8 md:p-10 animate-vyu-reveal border-emerald-400/30">
+      <div className="anth-card p-8 md:p-10 animate-fade-in-up border-terracotta-200">
         <div className="flex flex-col items-center text-center py-6">
-          <span className="vyu-icon-container w-14 h-14 mb-5">
+          <span className={`${iconBox} w-14 h-14 mb-5`}>
             <CheckCircle2 className="w-7 h-7" />
           </span>
-          <h3 className="text-xl font-semibold text-zinc-50 mb-2">
+          <h3 className="text-xl font-semibold text-sand-900 mb-2">
             Discovery Brief Terkirim
           </h3>
-          <p className="text-sm text-zinc-400 max-w-md">
+          <p className="text-sm text-sand-500 max-w-md">
             Terima kasih, {answers.fullName}. Tim kami akan meninjau brief Anda
             dan merespon ke{' '}
-            <strong className="text-zinc-300">{answers.businessEmail}</strong>{' '}
+            <strong className="text-sand-700">{answers.businessEmail}</strong>{' '}
             dalam 1x24 jam.
           </p>
         </div>
@@ -256,7 +258,7 @@ export default function DiscoveryForm() {
   const timelineLabel = timelineOptions.find((o) => o.value === answers.timeline)?.label || answers.timeline;
 
   return (
-    <div className="vyu-card p-8 md:p-10">
+    <div className="anth-card p-8 md:p-10">
       {/* step circles */}
       <div className="flex items-center justify-center gap-1 mb-8">
         {[0, 1, 2, 3].map((i) => (
@@ -264,10 +266,10 @@ export default function DiscoveryForm() {
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold transition-all duration-300 ${
                 i < step
-                  ? 'bg-emerald-400 text-black'
+                  ? 'bg-terracotta-500 text-white'
                   : i === step
-                    ? 'bg-emerald-400 text-black ring-2 ring-emerald-400/30'
-                    : 'bg-zinc-800 text-zinc-500'
+                    ? 'bg-terracotta-500 text-white ring-2 ring-terracotta-500/30'
+                    : 'bg-sand-100 text-sand-400'
               }`}
             >
               {i < step ? <CheckCircle2 className="w-4 h-4" /> : i + 1}
@@ -275,7 +277,7 @@ export default function DiscoveryForm() {
             {i < 3 && (
               <div
                 className={`w-8 sm:w-12 h-0.5 mx-1 transition-colors duration-300 ${
-                  i < step ? 'bg-emerald-400' : 'bg-zinc-800'
+                  i < step ? 'bg-terracotta-400' : 'bg-sand-200'
                 }`}
               />
             )}
@@ -286,22 +288,22 @@ export default function DiscoveryForm() {
       {/* Radix progress bar */}
       <Progress.Root
         value={progressValue}
-        className="relative h-1.5 w-full rounded-full bg-zinc-800 mb-8 overflow-hidden"
+        className="relative h-1.5 w-full rounded-full bg-sand-200 mb-8 overflow-hidden"
       >
         <Progress.Indicator
-          className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-emerald-500 transition-all duration-500 ease-out"
+          className="h-full rounded-full bg-terracotta-500 transition-all duration-500 ease-out"
           style={{ width: `${progressValue}%` }}
         />
       </Progress.Root>
 
       {/* step heading */}
       <div className="mb-6">
-        <p className="vyu-overline text-xs mb-1">LANGKAH {step + 1} DARI 4</p>
-        <h3 className="text-xl font-semibold text-zinc-50">{stepLabels[step]}</h3>
+        <p className="anth-overline text-xs mb-1">LANGKAH {step + 1} DARI 4</p>
+        <h3 className="text-xl font-semibold text-sand-900">{stepLabels[step]}</h3>
       </div>
 
       {/* animated step body */}
-      <div key={step} className="animate-vyu-reveal space-y-5">
+      <div key={step} className="animate-fade-in-up space-y-5">
         {step === 0 && (
           <>
             {renderField('fullName', 'Nama Lengkap', 'input', undefined, 'Budi Santoso')}
@@ -312,7 +314,7 @@ export default function DiscoveryForm() {
 
         {step === 1 && (
           <>
-            {renderField('coreGoal', 'Tujuan Utama Proyek', 'textarea', undefined, 'Ceritakan tujuan utama proyek ini \u2014 masalah bisnis apa yang ingin diselesaikan?')}
+            {renderField('coreGoal', 'Tujuan Utama Proyek', 'textarea', undefined, 'Ceritakan tujuan utama proyek ini — masalah bisnis apa yang ingin diselesaikan?')}
             {renderField('targetAudience', 'Target Audiens', 'textarea', undefined, 'Siapa pengguna utama dari sistem ini? Jelaskan demografi dan kebutuhan mereka.')}
           </>
         )}
@@ -341,13 +343,13 @@ export default function DiscoveryForm() {
             ].map((item) => (
               <div
                 key={item.label}
-                className="flex flex-col sm:flex-row sm:gap-4 py-2 border-b border-zinc-800 last:border-0"
+                className="flex flex-col sm:flex-row sm:gap-4 py-2 border-b border-sand-200 last:border-0"
               >
-                <span className="vyu-overline text-[0.65rem] sm:w-40 flex-shrink-0">
+                <span className="anth-overline text-[0.65rem] sm:w-40 flex-shrink-0">
                   {item.label}
                 </span>
-                <span className="text-sm text-zinc-300">
-                  {item.value || <span className="text-zinc-600">&mdash;</span>}
+                <span className="text-sm text-sand-700">
+                  {item.value || <span className="text-sand-300">&mdash;</span>}
                 </span>
               </div>
             ))}
@@ -357,19 +359,19 @@ export default function DiscoveryForm() {
 
       {/* error banner */}
       {status === 'error' && (
-        <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-red-400/10 border border-red-400/30 text-red-300 text-sm mt-6">
+        <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm mt-6">
           <AlertCircle className="w-5 h-5 flex-shrink-0" /> {errorMessage}
         </div>
       )}
 
       {/* navigation */}
-      <div className="flex items-center justify-between gap-4 mt-8 pt-4 border-t border-zinc-800">
+      <div className="flex items-center justify-between gap-4 mt-8 pt-4 border-t border-sand-200">
         {step > 0 ? (
           <button
             type="button"
             onClick={handlePrev}
             disabled={status === 'loading'}
-            className="vyu-btn-secondary text-sm"
+            className="anth-btn-secondary text-sm !py-2.5 !px-5"
           >
             <ChevronLeft className="w-4 h-4" /> Sebelumnya
           </button>
@@ -382,7 +384,7 @@ export default function DiscoveryForm() {
             type="button"
             onClick={handleNext}
             disabled={!isStepValid}
-            className={`vyu-btn-primary text-sm ${!isStepValid ? 'opacity-50 cursor-not-allowed' : ''}`}
+            className={`anth-btn-primary text-sm !py-2.5 !px-5 ${!isStepValid ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             Lanjut <ChevronRight className="w-4 h-4" />
           </button>
@@ -391,7 +393,7 @@ export default function DiscoveryForm() {
             type="button"
             onClick={handleSubmit}
             disabled={status === 'loading'}
-            className={`vyu-btn-primary text-sm ${status === 'loading' ? 'opacity-70 cursor-not-allowed' : ''}`}
+            className={`anth-btn-primary text-sm !py-2.5 !px-5 ${status === 'loading' ? 'opacity-70 cursor-not-allowed' : ''}`}
           >
             {status === 'loading' ? (
               <>

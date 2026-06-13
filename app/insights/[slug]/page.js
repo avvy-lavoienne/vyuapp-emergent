@@ -75,7 +75,7 @@ export default async function ArticlePage({ params }) {
   ];
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-[#FAFAF8]">
       <BreadcrumbJsonLd items={breadcrumbItems} />
       <ArticleJsonLd
         title={article.title}
@@ -87,38 +87,43 @@ export default async function ArticlePage({ params }) {
         authorName="VyuApp Studio"
       />
       <Navbar />
-      <article className="relative pt-32 pb-20">
-        <div className="absolute inset-0 vyu-grid-bg opacity-40" />
-        <div aria-hidden className="absolute -top-32 left-1/3 w-[500px] h-[500px] rounded-full bg-emerald-500/10 blur-[120px]" />
-        <div className="relative max-w-4xl mx-auto px-6 md:px-10">
-          <Link href="/insights" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-emerald-400 mb-8">
+      <article className="pt-32 pb-20">
+        <div className="max-w-4xl mx-auto px-6 md:px-10">
+          <Link
+            href="/insights"
+            className="inline-flex items-center gap-2 text-sm text-[#6B6B68] hover:text-[#6D5BA0] transition-colors mb-8"
+          >
             <ArrowLeft className="w-4 h-4" /> Semua artikel
           </Link>
-          <p className="vyu-overline">// {article.category}</p>
-          <h1 className="mt-4 text-3xl md:text-5xl font-semibold leading-tight tracking-tight text-zinc-50">{article.title}</h1>
-          <p className="mt-5 text-lg text-zinc-400 leading-relaxed">{article.excerpt}</p>
-          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-zinc-500 font-[var(--font-mono)]">
+          <p className="font-mono text-xs text-[#6D5BA0] uppercase tracking-[0.15em] font-medium">
+            {article.category}
+          </p>
+          <h1 className="mt-4 text-3xl md:text-5xl font-sans font-semibold leading-tight tracking-[-0.025em] text-[#141413]">
+            {article.title}
+          </h1>
+          <p className="mt-5 text-lg text-[#4A4A48] leading-relaxed">{article.excerpt}</p>
+          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-[#8F8E8A] font-mono">
             <span className="flex items-center gap-1.5"><Calendar className="w-3 h-3" /> {formatDate(article.published_at || article.updated_at)}</span>
             <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> {readMin} min read</span>
             {(article.tags || []).slice(0, 4).map(t => <span key={t}>#{t}</span>)}
           </div>
           {article.cover && (
-            <div className="mt-10 rounded-2xl overflow-hidden border border-zinc-800 relative aspect-video">
+            <div className="mt-10 rounded-2xl overflow-hidden border border-[#E5E4E0] relative aspect-video bg-[#F4F3EE]">
               <Image src={article.cover} alt={article.title} fill className="object-cover" priority />
             </div>
           )}
-          <div className="mt-12 vyu-prose" dangerouslySetInnerHTML={{ __html: c1 }} />
+          <div className="mt-12 prose-light" dangerouslySetInnerHTML={{ __html: c1 }} />
           <AdSenseSlot slot={SLOT_TOP} format="auto" />
-          <div className="vyu-prose" dangerouslySetInnerHTML={{ __html: c2 }} />
+          <div className="prose-light" dangerouslySetInnerHTML={{ __html: c2 }} />
           <AdSenseSlot slot={SLOT_MID} format="rectangle" style={{ display: 'block', minHeight: 250, maxWidth: 336, margin: '0 auto' }} />
-          <div className="vyu-prose" dangerouslySetInnerHTML={{ __html: c3 }} />
+          <div className="prose-light" dangerouslySetInnerHTML={{ __html: c3 }} />
           <AdSenseSlot slot={SLOT_END} format="auto" />
-          <div className="mt-12 vyu-card p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="mt-12 p-6 rounded-2xl border border-[#E5E4E0] bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <span className="w-12 h-12 rounded-full bg-emerald-400/10 ring-1 ring-emerald-400/40 flex items-center justify-center text-emerald-400 font-semibold">V</span>
+              <span className="w-12 h-12 rounded-full bg-[#6D5BA0]/10 border border-[#6D5BA0]/20 flex items-center justify-center text-[#6D5BA0] font-semibold">V</span>
               <div>
-                <p className="text-sm text-zinc-200 font-medium">VyuApp Studio</p>
-                <p className="text-xs text-zinc-500">Bespoke web engineering — Garut, ID</p>
+                <p className="text-sm text-[#141413] font-medium">VyuApp Studio</p>
+                <p className="text-xs text-[#6B6B68]">Bespoke web engineering — Garut, ID</p>
               </div>
             </div>
             <ShareButton title={article.title} />
@@ -127,16 +132,26 @@ export default async function ArticlePage({ params }) {
       </article>
 
       {related.length > 0 && (
-        <section className="vyu-section">
-          <div className="vyu-container">
-            <p className="vyu-overline">// RELATED</p>
-            <h2 className="mt-3 text-2xl md:text-3xl font-semibold">Artikel lain yang mungkin <span className="text-gradient-emerald">relevan</span></h2>
+        <section className="py-24 md:py-32 border-t border-[#E5E4E0]">
+          <div className="max-w-7xl mx-auto px-6 md:px-10">
+            <p className="font-mono text-xs text-[#8F8E8A] uppercase tracking-[0.15em] font-medium">Artikel terkait</p>
+            <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">
+              Lanjutkan membaca
+            </h2>
             <div className="mt-10 grid md:grid-cols-3 gap-6">
               {related.map(r => (
-                <Link key={r.id} href={`/insights/${r.slug}`} className="vyu-card p-6 group">
-                  <p className="vyu-overline">// {r.category}</p>
-                  <h3 className="mt-3 text-base font-semibold text-zinc-50 group-hover:text-emerald-300 transition leading-snug">{r.title}</h3>
-                  <p className="mt-3 text-xs text-zinc-500 line-clamp-2">{r.excerpt}</p>
+                <Link
+                  key={r.id}
+                  href={`/insights/${r.slug}`}
+                  className="p-6 rounded-2xl border border-[#E5E4E0] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] group"
+                >
+                  <p className="font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.15em] font-medium">
+                    {r.category}
+                  </p>
+                  <h3 className="mt-3 text-base font-sans font-semibold text-[#141413] group-hover:text-[#6D5BA0] transition leading-snug tracking-[-0.01em]">
+                    {r.title}
+                  </h3>
+                  <p className="mt-3 text-xs text-[#6B6B68] line-clamp-2 leading-relaxed">{r.excerpt}</p>
                 </Link>
               ))}
             </div>

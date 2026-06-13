@@ -35,21 +35,21 @@ function RichEditor({ value, onChange }) {
     { cmd: 'formatBlock', val: 'blockquote', icon: Quote, label: 'Quote' },
   ];
   return (
-    <div className="vyu-card overflow-hidden">
-      <div className="flex flex-wrap items-center gap-1 px-3 py-2 border-b border-zinc-800 bg-zinc-900/60">
+    <div className="rounded-2xl border border-[#E5E4E0] bg-white overflow-hidden">
+      <div className="flex flex-wrap items-center gap-1 px-3 py-2 border-b border-[#E5E4E0] bg-[#F8F7F4]">
         {tools.map((t, i) => (
-          <button key={i} type="button" title={t.label} onClick={() => exec(t.cmd, t.val)} className="p-2 rounded hover:bg-emerald-400/10 text-zinc-400 hover:text-emerald-400 transition">
+          <button key={i} type="button" title={t.label} onClick={() => exec(t.cmd, t.val)} className="p-2 rounded hover:bg-[#6D5BA0]/10 text-[#6B6B68] hover:text-[#6D5BA0] transition">
             <t.icon className="w-4 h-4" />
           </button>
         ))}
-        <span className="w-px h-5 bg-zinc-800 mx-1" />
-        <button type="button" onClick={() => { const u = prompt('URL link:'); if (u) exec('createLink', u); }} className="p-2 rounded hover:bg-emerald-400/10 text-zinc-400 hover:text-emerald-400" title="Link"><LinkIcon className="w-4 h-4" /></button>
-        <button type="button" onClick={() => exec('formatBlock', 'p')} className="p-2 rounded hover:bg-emerald-400/10 text-zinc-400 hover:text-emerald-400" title="Paragraph"><X className="w-4 h-4" /></button>
+        <span className="w-px h-5 bg-[#E5E4E0] mx-1" />
+        <button type="button" onClick={() => { const u = prompt('URL link:'); if (u) exec('createLink', u); }} className="p-2 rounded hover:bg-[#6D5BA0]/10 text-[#6B6B68] hover:text-[#6D5BA0]" title="Link"><LinkIcon className="w-4 h-4" /></button>
+        <button type="button" onClick={() => exec('formatBlock', 'p')} className="p-2 rounded hover:bg-[#6D5BA0]/10 text-[#6B6B68] hover:text-[#6D5BA0]" title="Paragraph"><X className="w-4 h-4" /></button>
       </div>
       <div ref={ref} contentEditable suppressContentEditableWarning
         data-placeholder="Mulai tulis konten artikel di sini… gunakan toolbar di atas untuk format."
         onInput={(e) => onChange(e.currentTarget.innerHTML)}
-        className="vyu-editor vyu-prose px-6 py-6 bg-zinc-950/40 max-h-[600px] overflow-y-auto" />
+        className="min-h-[360px] outline-none vyu-prose px-6 py-6 max-h-[600px] overflow-y-auto" />
     </div>
   );
 }
@@ -99,17 +99,17 @@ function ArticleEditor({ article, onClose, onSaved }) {
     setTagInput('');
   };
 
-  const inputCls = 'w-full bg-zinc-900/60 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-emerald-400/60';
+  const inputCls = 'w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-2.5 text-sm text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all';
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <button onClick={onClose} className="text-xs text-zinc-500 hover:text-emerald-400 mb-2 inline-flex items-center gap-1.5">
+          <button onClick={onClose} className="text-xs text-[#6B6B68] hover:text-[#6D5BA0] mb-2 inline-flex items-center gap-1.5 transition-colors">
             <ChevronRight className="w-3 h-3 rotate-180" /> Kembali ke daftar
           </button>
-          <h1 className="text-2xl font-semibold">{isNew ? 'Artikel Baru' : 'Edit Artikel'}</h1>
-          <p className="text-xs text-zinc-500 font-[var(--font-mono)] mt-1">// status: <span className={form.status === 'published' ? 'text-emerald-400' : 'text-amber-400'}>{form.status}</span></p>
+          <h1 className="text-2xl font-sans font-semibold text-[#141413]">{isNew ? 'Artikel Baru' : 'Edit Artikel'}</h1>
+          <p className="text-xs text-[#8F8E8A] font-mono mt-1">status: <span className={form.status === 'published' ? 'text-[#6D5BA0]' : 'text-amber-500'}>{form.status}</span></p>
         </div>
         <div className="flex flex-wrap gap-2">
           {!isNew && form.status === 'published' && (
@@ -122,7 +122,7 @@ function ArticleEditor({ article, onClose, onSaved }) {
       </div>
 
       {toast && (
-        <div className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm ${toast.type === 'ok' ? 'bg-emerald-400/10 border border-emerald-400/30 text-emerald-300' : 'bg-red-500/10 border border-red-500/30 text-red-300'}`}>
+        <div className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm ${toast.type === 'ok' ? 'bg-[#6D5BA0]/10 border border-[#6D5BA0]/30 text-[#6D5BA0]' : 'bg-red-50 border border-red-200 text-red-600'}`}>
           {toast.type === 'ok' ? <CheckCircle2 className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />} {toast.msg}
         </div>
       )}
@@ -159,7 +159,7 @@ function ArticleEditor({ article, onClose, onSaved }) {
               <div className="flex flex-wrap gap-2 mb-2">
                 {form.tags.map(t => (
                   <span key={t} className="vyu-chip flex items-center gap-1.5">
-                    #{t} <button onClick={() => set('tags', form.tags.filter(x => x !== t))} className="hover:text-red-400"><X className="w-3 h-3" /></button>
+                    #{t} <button onClick={() => set('tags', form.tags.filter(x => x !== t))} className="hover:text-red-500"><X className="w-3 h-3" /></button>
                   </span>
                 ))}
               </div>
@@ -181,16 +181,16 @@ function ArticleEditor({ article, onClose, onSaved }) {
             <div className="vyu-card overflow-hidden">
               {form.cover && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={form.cover} alt="" className="w-full h-44 object-cover opacity-80" />
+                <img src={form.cover} alt="" className="w-full h-44 object-cover opacity-90" />
               )}
               <div className="p-6">
                 <p className="vyu-overline">// {form.category}</p>
-                <h2 className="mt-3 text-2xl font-semibold leading-tight">{form.title || 'Judul artikel akan muncul di sini'}</h2>
-                {form.excerpt && <p className="mt-3 text-zinc-400 text-sm">{form.excerpt}</p>}
+                <h2 className="mt-3 text-2xl font-sans font-semibold text-[#141413] leading-tight">{form.title || 'Judul artikel akan muncul di sini'}</h2>
+                {form.excerpt && <p className="mt-3 text-[#6B6B68] text-sm">{form.excerpt}</p>}
                 <div className="mt-4 flex flex-wrap gap-1.5">
-                  {form.tags.map(t => <span key={t} className="text-[10px] font-[var(--font-mono)] text-zinc-500 uppercase">#{t}</span>)}
+                  {form.tags.map(t => <span key={t} className="text-[10px] font-mono text-[#8F8E8A] uppercase">#{t}</span>)}
                 </div>
-                <div className="mt-6 vyu-prose !text-sm" dangerouslySetInnerHTML={{ __html: form.content || '<p class="text-zinc-600 italic">Konten akan muncul di sini…</p>' }} />
+                <div className="mt-6 vyu-prose !text-sm" dangerouslySetInnerHTML={{ __html: form.content || '<p class="text-[#B0AFAA] italic">Konten akan muncul di sini…</p>' }} />
               </div>
             </div>
           </div>
@@ -210,14 +210,14 @@ function ArrayEditor({ label, value, onChange, placeholder }) {
       <div className="space-y-1.5 mb-2">
         {value.map((it, i) => (
           <div key={i} className="flex items-center gap-2 vyu-chip w-full justify-between">
-            <span className="text-zinc-300 text-xs flex-1 truncate">{it}</span>
-            <button onClick={() => onChange(value.filter((_,j) => j !== i))} className="hover:text-red-400 flex-shrink-0"><X className="w-3 h-3" /></button>
+            <span className="text-[#4A4A48] text-xs flex-1 truncate">{it}</span>
+            <button onClick={() => onChange(value.filter((_,j) => j !== i))} className="hover:text-red-500 flex-shrink-0"><X className="w-3 h-3" /></button>
           </div>
         ))}
       </div>
       <div className="flex gap-2">
         <input value={v} onChange={(e) => setV(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); add(); } }}
-          className="w-full bg-zinc-900/60 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-100" placeholder={placeholder} />
+          className="w-full bg-white border border-[#E5E4E0] rounded-lg px-3 py-2 text-xs text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] outline-none transition-all" placeholder={placeholder} />
         <button type="button" onClick={add} className="vyu-btn-secondary text-xs whitespace-nowrap">+</button>
       </div>
     </div>
@@ -261,17 +261,17 @@ function PortfolioEditor({ item, onClose, onSaved }) {
     setTimeout(() => onSaved(res.data), 600);
   };
 
-  const inputCls = 'w-full bg-zinc-900/60 border border-zinc-800 rounded-lg px-4 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-emerald-400/60';
+  const inputCls = 'w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-2.5 text-sm text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all';
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <button onClick={onClose} className="text-xs text-zinc-500 hover:text-emerald-400 mb-2 inline-flex items-center gap-1.5">
+          <button onClick={onClose} className="text-xs text-[#6B6B68] hover:text-[#6D5BA0] mb-2 inline-flex items-center gap-1.5 transition-colors">
             <ChevronRight className="w-3 h-3 rotate-180" /> Kembali ke daftar
           </button>
-          <h1 className="text-2xl font-semibold">{isNew ? 'Portfolio Baru' : 'Edit Portfolio'}</h1>
-          <p className="text-xs text-zinc-500 font-[var(--font-mono)] mt-1">// status: <span className={form.status === 'published' ? 'text-emerald-400' : 'text-amber-400'}>{form.status}</span></p>
+          <h1 className="text-2xl font-sans font-semibold text-[#141413]">{isNew ? 'Portfolio Baru' : 'Edit Portfolio'}</h1>
+          <p className="text-xs text-[#8F8E8A] font-mono mt-1">status: <span className={form.status === 'published' ? 'text-[#6D5BA0]' : 'text-amber-500'}>{form.status}</span></p>
         </div>
         <div className="flex flex-wrap gap-2">
           <button disabled={busy} onClick={() => save('draft')} className="vyu-btn-secondary text-sm">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} Save Draft</button>
@@ -280,7 +280,7 @@ function PortfolioEditor({ item, onClose, onSaved }) {
       </div>
 
       {toast && (
-        <div className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm ${toast.type === 'ok' ? 'bg-emerald-400/10 border border-emerald-400/30 text-emerald-300' : 'bg-red-500/10 border border-red-500/30 text-red-300'}`}>
+        <div className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm ${toast.type === 'ok' ? 'bg-[#6D5BA0]/10 border border-[#6D5BA0]/30 text-[#6D5BA0]' : 'bg-red-50 border border-red-200 text-red-600'}`}>
           {toast.type === 'ok' ? <CheckCircle2 className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />} {toast.msg}
         </div>
       )}
@@ -299,8 +299,8 @@ function PortfolioEditor({ item, onClose, onSaved }) {
               </div>
             </div>
             <div>
-              <label className="block vyu-overline mb-2">// Tagline (overline style)</label>
-              <input value={form.tagline} onChange={(e) => set('tagline', e.target.value)} className={inputCls} placeholder="// FINANCIAL INTELLIGENCE ENGINE" />
+              <label className="block vyu-overline mb-2">// Tagline</label>
+              <input value={form.tagline} onChange={(e) => set('tagline', e.target.value)} className={inputCls} placeholder="Sistem Evaluasi Kinerja & Aktivitas" />
             </div>
             <div>
               <label className="block vyu-overline mb-2">// Deskripsi Singkat</label>
@@ -350,16 +350,16 @@ function PortfolioEditor({ item, onClose, onSaved }) {
           <div className="vyu-card overflow-hidden">
             {form.cover && (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={form.cover} alt="" className="w-full h-40 object-cover opacity-80" />
+              <img src={form.cover} alt="" className="w-full h-40 object-cover opacity-90" />
             )}
             <div className="p-6">
               <p className="vyu-overline">// {form.category}</p>
-              <h2 className="mt-3 text-2xl font-semibold leading-tight">{form.name || 'Nama produk'}</h2>
-              {form.tagline && <p className="mt-2 text-emerald-400 text-xs font-[var(--font-mono)] uppercase tracking-widest">{form.tagline}</p>}
-              {form.description && <p className="mt-3 text-zinc-400 text-sm leading-relaxed">{form.description}</p>}
+              <h2 className="mt-3 text-2xl font-sans font-semibold text-[#141413] leading-tight">{form.name || 'Nama produk'}</h2>
+              {form.tagline && <p className="mt-2 text-[#6D5BA0] text-xs font-mono uppercase tracking-widest">{form.tagline}</p>}
+              {form.description && <p className="mt-3 text-[#6B6B68] text-sm leading-relaxed">{form.description}</p>}
               {form.features.length > 0 && (
                 <ul className="mt-4 space-y-1.5">
-                  {form.features.map((f, i) => <li key={i} className="flex items-start gap-2 text-xs text-zinc-300"><CheckCircle2 className="w-3 h-3 text-emerald-400 mt-0.5" /> {f}</li>)}
+                  {form.features.map((f, i) => <li key={i} className="flex items-start gap-2 text-xs text-[#4A4A48]"><CheckCircle2 className="w-3 h-3 text-[#6D5BA0] mt-0.5" /> {f}</li>)}
                 </ul>
               )}
               {form.stack.length > 0 && (
@@ -422,59 +422,59 @@ export default function AdminClient({ user }) {
 
   const handleLogout = async () => {
     setLoggingOut(true);
-    // Browser-side signOut clears local session...
     const supabase = getBrowserSupabase();
     await supabase.auth.signOut();
-    // ...then server action clears HttpOnly cookies + redirects
     await logoutAction();
   };
 
   return (
-    <div className="min-h-screen flex">
-      <aside className="hidden lg:flex flex-col w-64 border-r border-zinc-900 bg-zinc-950/80 backdrop-blur-xl sticky top-0 h-screen">
-        <Link href="/" className="flex items-center gap-2 px-6 h-16 border-b border-zinc-900">
-          <span className="w-7 h-7 rounded-md bg-emerald-400/10 ring-1 ring-emerald-400/40 flex items-center justify-center">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-vyu-pulse" />
+    <div className="min-h-screen flex bg-[#FAFAF8]">
+      <aside className="hidden lg:flex flex-col w-64 border-r border-[#E5E4E0] bg-white sticky top-0 h-screen">
+        <Link href="/" className="flex items-center gap-3 px-6 h-16 border-b border-[#E5E4E0]">
+          <span className="w-9 h-9 rounded-lg bg-white border border-[#E5E4E0] flex items-center justify-center overflow-hidden p-1">
+            <img src="/images/vyu-removebg.png" alt="VyuApp" className="w-full h-full object-contain" />
           </span>
-          <span className="font-[var(--font-outfit)] font-bold">Vyu<span className="text-emerald-400">App</span></span>
+          <span className="font-sans font-bold text-lg tracking-tight text-[#141413]">
+            Vyu<span className="text-[#6D5BA0]">App</span>
+          </span>
         </Link>
         <nav className="flex-1 p-4 space-y-1">
-          <button onClick={() => { setTab('articles'); setView({ mode: 'list' }); }} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition ${tab === 'articles' && view.mode === 'list' ? 'bg-emerald-400/10 text-emerald-400' : 'text-zinc-400 hover:text-zinc-100'}`}>
+          <button onClick={() => { setTab('articles'); setView({ mode: 'list' }); }} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition ${tab === 'articles' && view.mode === 'list' ? 'bg-[#6D5BA0]/10 text-[#6D5BA0] font-medium' : 'text-[#6B6B68] hover:text-[#141413] hover:bg-[#F8F7F4]'}`}>
             <FileText className="w-4 h-4" /> Articles
           </button>
-          <button onClick={() => { setTab('articles'); setView({ mode: 'edit', item: null }); }} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition ${view.mode === 'edit' && tab === 'articles' && !view.item ? 'bg-emerald-400/10 text-emerald-400' : 'text-zinc-400 hover:text-zinc-100'}`}>
+          <button onClick={() => { setTab('articles'); setView({ mode: 'edit', item: null }); }} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition ${view.mode === 'edit' && tab === 'articles' && !view.item ? 'bg-[#6D5BA0]/10 text-[#6D5BA0] font-medium' : 'text-[#6B6B68] hover:text-[#141413] hover:bg-[#F8F7F4]'}`}>
             <Plus className="w-4 h-4" /> New Article
           </button>
-          <div className="h-px bg-zinc-900 my-2" />
-          <button onClick={() => { setTab('portfolio'); setView({ mode: 'list' }); }} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition ${tab === 'portfolio' && view.mode === 'list' ? 'bg-emerald-400/10 text-emerald-400' : 'text-zinc-400 hover:text-zinc-100'}`}>
+          <div className="h-px bg-[#E5E4E0] my-2" />
+          <button onClick={() => { setTab('portfolio'); setView({ mode: 'list' }); }} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition ${tab === 'portfolio' && view.mode === 'list' ? 'bg-[#6D5BA0]/10 text-[#6D5BA0] font-medium' : 'text-[#6B6B68] hover:text-[#141413] hover:bg-[#F8F7F4]'}`}>
             <Folder className="w-4 h-4" /> Portfolio
           </button>
-          <button onClick={() => { setTab('portfolio'); setView({ mode: 'edit', item: null }); }} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition ${view.mode === 'edit' && tab === 'portfolio' && !view.item ? 'bg-emerald-400/10 text-emerald-400' : 'text-zinc-400 hover:text-zinc-100'}`}>
+          <button onClick={() => { setTab('portfolio'); setView({ mode: 'edit', item: null }); }} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition ${view.mode === 'edit' && tab === 'portfolio' && !view.item ? 'bg-[#6D5BA0]/10 text-[#6D5BA0] font-medium' : 'text-[#6B6B68] hover:text-[#141413] hover:bg-[#F8F7F4]'}`}>
             <Plus className="w-4 h-4" /> New Portfolio Item
           </button>
-          <div className="h-px bg-zinc-900 my-2" />
-          <Link href="/" className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-zinc-400 hover:text-zinc-100">
+          <div className="h-px bg-[#E5E4E0] my-2" />
+          <Link href="/" className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#6B6B68] hover:text-[#141413] hover:bg-[#F8F7F4]">
             <LayoutDashboard className="w-4 h-4" /> Lihat Situs
           </Link>
         </nav>
-        <div className="p-4 border-t border-zinc-900">
-          <p className="text-xs text-zinc-500 mb-2 font-[var(--font-mono)] truncate">// {user?.email}</p>
-          <button onClick={handleLogout} disabled={loggingOut} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-zinc-400 hover:text-red-400">
+        <div className="p-4 border-t border-[#E5E4E0]">
+          <p className="text-xs text-[#8F8E8A] mb-2 font-mono truncate">{user?.email}</p>
+          <button onClick={handleLogout} disabled={loggingOut} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#6B6B68] hover:text-red-500 hover:bg-red-50 transition">
             {loggingOut ? <Loader2 className="w-4 h-4 animate-spin" /> : <LogOut className="w-4 h-4" />} {loggingOut ? 'Logging out…' : 'Logout'}
           </button>
         </div>
       </aside>
 
       <div className="flex-1 min-w-0">
-        <div className="lg:hidden border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-xl sticky top-0 z-10">
+        <div className="lg:hidden border-b border-[#E5E4E0] bg-white sticky top-0 z-10">
           <div className="h-16 px-6 flex items-center justify-between">
-            <Link href="/" className="font-[var(--font-outfit)] font-bold">Vyu<span className="text-emerald-400">App</span> Admin</Link>
-            <button onClick={handleLogout} disabled={loggingOut} className="text-xs text-zinc-400 hover:text-red-400 flex items-center gap-1.5">{loggingOut ? <Loader2 className="w-4 h-4 animate-spin" /> : <LogOut className="w-4 h-4" />} Logout</button>
+            <Link href="/" className="font-sans font-bold text-lg tracking-tight text-[#141413]">Vyu<span className="text-[#6D5BA0]">App</span> Admin</Link>
+            <button onClick={handleLogout} disabled={loggingOut} className="text-xs text-[#6B6B68] hover:text-red-500 flex items-center gap-1.5 transition">{loggingOut ? <Loader2 className="w-4 h-4 animate-spin" /> : <LogOut className="w-4 h-4" />} Logout</button>
           </div>
           <div className="px-6 pb-3 flex gap-2 overflow-x-auto">
-            <button onClick={() => { setTab('articles'); setView({ mode: 'list' }); }} className={`text-xs px-3 py-1.5 rounded-full border ${tab === 'articles' ? 'bg-emerald-400 text-black border-emerald-400' : 'border-zinc-800 text-zinc-300'}`}>Articles</button>
-            <button onClick={() => { setTab('portfolio'); setView({ mode: 'list' }); }} className={`text-xs px-3 py-1.5 rounded-full border ${tab === 'portfolio' ? 'bg-emerald-400 text-black border-emerald-400' : 'border-zinc-800 text-zinc-300'}`}>Portfolio</button>
-            <button onClick={() => setView({ mode: 'edit', item: null })} className="text-xs px-3 py-1.5 rounded-full bg-emerald-400/10 text-emerald-300 border border-emerald-400/40">+ New</button>
+            <button onClick={() => { setTab('articles'); setView({ mode: 'list' }); }} className={`text-xs px-3 py-1.5 rounded-full border transition ${tab === 'articles' ? 'bg-[#6D5BA0] text-white border-[#6D5BA0]' : 'border-[#E5E4E0] text-[#6B6B68]'}`}>Articles</button>
+            <button onClick={() => { setTab('portfolio'); setView({ mode: 'list' }); }} className={`text-xs px-3 py-1.5 rounded-full border transition ${tab === 'portfolio' ? 'bg-[#6D5BA0] text-white border-[#6D5BA0]' : 'border-[#E5E4E0] text-[#6B6B68]'}`}>Portfolio</button>
+            <button onClick={() => setView({ mode: 'edit', item: null })} className="text-xs px-3 py-1.5 rounded-full bg-[#6D5BA0]/10 text-[#6D5BA0] border border-[#6D5BA0]/30">+ New</button>
           </div>
         </div>
 
@@ -491,33 +491,34 @@ export default function AdminClient({ user }) {
               <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
                 <div>
                   <p className="vyu-overline">// DASHBOARD</p>
-                  <h1 className="mt-2 text-3xl font-semibold">Manajemen Artikel</h1>
-                  <p className="mt-1 text-sm text-zinc-500">Kelola konten editorial publik VyuApp Insights.</p>
+                  <h1 className="mt-2 text-3xl font-sans font-semibold text-[#141413]">Manajemen Artikel</h1>
+                  <p className="mt-1 text-sm text-[#6B6B68]">Kelola konten editorial publik VyuApp Insights.</p>
                 </div>
                 <button onClick={() => setView({ mode: 'edit', item: null })} className="vyu-btn-primary"><Plus className="w-4 h-4" /> Artikel Baru</button>
               </div>
 
               <div className="grid sm:grid-cols-3 gap-4 mb-8">
                 {[
-                  { label: 'Total Artikel', value: stats.total, accent: 'text-zinc-100' },
-                  { label: 'Published', value: stats.published, accent: 'text-emerald-400' },
-                  { label: 'Drafts', value: stats.drafts, accent: 'text-amber-400' },
+                  { label: 'Total Artikel', value: stats.total, accent: 'text-[#141413]' },
+                  { label: 'Published', value: stats.published, accent: 'text-[#6D5BA0]' },
+                  { label: 'Drafts', value: stats.drafts, accent: 'text-amber-500' },
                 ].map(s => (
                   <div key={s.label} className="vyu-card p-6">
                     <p className="vyu-overline">// {s.label}</p>
-                    <p className={`mt-3 text-4xl font-semibold ${s.accent}`}>{loading ? '–' : s.value}</p>
+                    <p className={`mt-3 text-4xl font-sans font-semibold ${s.accent}`}>{loading ? '–' : s.value}</p>
                   </div>
                 ))}
               </div>
 
               <div className="mb-6 relative max-w-md">
-                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
-                <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Cari judul atau kategori…" className="w-full bg-zinc-900/60 border border-zinc-800 rounded-lg pl-9 pr-4 py-2.5 text-sm focus:border-emerald-400/60" />
+                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8F8E8A]" />
+                <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Cari judul atau kategori…"
+                  className="w-full bg-white border border-[#E5E4E0] rounded-lg pl-9 pr-4 py-2.5 text-sm text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] outline-none transition-all" />
               </div>
 
               <div className="vyu-card overflow-hidden">
                 <table className="w-full text-sm">
-                  <thead className="bg-zinc-900/60 border-b border-zinc-800">
+                  <thead className="bg-[#F8F7F4] border-b border-[#E5E4E0]">
                     <tr className="text-left">
                       <th className="px-5 py-3 vyu-overline">// Judul</th>
                       <th className="px-5 py-3 vyu-overline hidden md:table-cell">// Kategori</th>
@@ -528,27 +529,27 @@ export default function AdminClient({ user }) {
                   </thead>
                   <tbody>
                     {loading ? (
-                      <tr><td colSpan={5} className="px-5 py-12 text-center text-zinc-500"><Loader2 className="w-5 h-5 animate-spin inline" /></td></tr>
+                      <tr><td colSpan={5} className="px-5 py-12 text-center text-[#8F8E8A]"><Loader2 className="w-5 h-5 animate-spin inline" /></td></tr>
                     ) : filteredArticles.length === 0 ? (
-                      <tr><td colSpan={5} className="px-5 py-12 text-center text-zinc-500">Belum ada artikel. Klik &quot;Artikel Baru&quot;.</td></tr>
+                      <tr><td colSpan={5} className="px-5 py-12 text-center text-[#8F8E8A]">Belum ada artikel. Klik &quot;Artikel Baru&quot;.</td></tr>
                     ) : filteredArticles.map(a => (
-                      <tr key={a.id} className="border-t border-zinc-900 hover:bg-zinc-900/30">
+                      <tr key={a.id} className="border-t border-[#E5E4E0] hover:bg-[#F8F7F4]">
                         <td className="px-5 py-4">
-                          <p className="font-medium text-zinc-100 line-clamp-1">{a.title}</p>
-                          <p className="text-xs text-zinc-500 mt-1 line-clamp-1 font-[var(--font-mono)]">/{a.slug}</p>
+                          <p className="font-medium text-[#141413] line-clamp-1">{a.title}</p>
+                          <p className="text-xs text-[#8F8E8A] mt-1 line-clamp-1 font-mono">/{a.slug}</p>
                         </td>
-                        <td className="px-5 py-4 hidden md:table-cell text-zinc-400">{a.category}</td>
+                        <td className="px-5 py-4 hidden md:table-cell text-[#4A4A48]">{a.category}</td>
                         <td className="px-5 py-4">
-                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-[var(--font-mono)] tracking-widest uppercase border ${a.status === 'published' ? 'bg-emerald-400/10 border-emerald-400/30 text-emerald-300' : 'bg-amber-400/10 border-amber-400/30 text-amber-300'}`}>{a.status}</span>
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-widest uppercase border ${a.status === 'published' ? 'bg-[#6D5BA0]/10 border-[#6D5BA0]/30 text-[#6D5BA0]' : 'bg-amber-50 border-amber-200 text-amber-600'}`}>{a.status}</span>
                         </td>
-                        <td className="px-5 py-4 hidden lg:table-cell text-zinc-500 text-xs font-[var(--font-mono)]">{new Date(a.updated_at).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
+                        <td className="px-5 py-4 hidden lg:table-cell text-[#8F8E8A] text-xs font-mono">{new Date(a.updated_at).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
                         <td className="px-5 py-4 text-right">
                           <div className="inline-flex gap-1">
                             {a.status === 'published' && (
-                              <a href={`/insights/${a.slug}`} target="_blank" rel="noreferrer" className="p-2 rounded hover:bg-emerald-400/10 text-zinc-400 hover:text-emerald-400" title="Preview"><Eye className="w-4 h-4" /></a>
+                              <a href={`/insights/${a.slug}`} target="_blank" rel="noreferrer" className="p-2 rounded hover:bg-[#6D5BA0]/10 text-[#6B6B68] hover:text-[#6D5BA0]" aria-label="Preview artikel"><Eye className="w-4 h-4" /></a>
                             )}
-                            <button onClick={() => setView({ mode: 'edit', item: a })} className="p-2 rounded hover:bg-emerald-400/10 text-zinc-400 hover:text-emerald-400"><Edit3 className="w-4 h-4" /></button>
-                            <button onClick={() => deleteArticle(a.id)} className="p-2 rounded hover:bg-red-500/10 text-zinc-400 hover:text-red-400"><Trash2 className="w-4 h-4" /></button>
+                            <button onClick={() => setView({ mode: 'edit', item: a })} className="p-2 rounded hover:bg-[#6D5BA0]/10 text-[#6B6B68] hover:text-[#6D5BA0]" aria-label="Edit artikel"><Edit3 className="w-4 h-4" /></button>
+                            <button onClick={() => deleteArticle(a.id)} className="p-2 rounded hover:bg-red-50 text-[#6B6B68] hover:text-red-500" aria-label="Hapus artikel"><Trash2 className="w-4 h-4" /></button>
                           </div>
                         </td>
                       </tr>
@@ -564,48 +565,49 @@ export default function AdminClient({ user }) {
               <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
                 <div>
                   <p className="vyu-overline">// PORTFOLIO CMS</p>
-                  <h1 className="mt-2 text-3xl font-semibold">Manajemen Portfolio</h1>
-                  <p className="mt-1 text-sm text-zinc-500">Kelola produk dan proyek yang muncul di halaman /portfolio publik.</p>
+                  <h1 className="mt-2 text-3xl font-sans font-semibold text-[#141413]">Manajemen Portfolio</h1>
+                  <p className="mt-1 text-sm text-[#6B6B68]">Kelola produk dan proyek yang muncul di halaman /portfolio publik.</p>
                 </div>
                 <button onClick={() => setView({ mode: 'edit', item: null })} className="vyu-btn-primary"><Plus className="w-4 h-4" /> Portfolio Baru</button>
               </div>
 
               <div className="grid sm:grid-cols-3 gap-4 mb-8">
-                <div className="vyu-card p-6"><p className="vyu-overline">// Total Items</p><p className="mt-3 text-4xl font-semibold text-zinc-100">{loading ? '–' : stats.portfolio}</p></div>
-                <div className="vyu-card p-6"><p className="vyu-overline">// Published</p><p className="mt-3 text-4xl font-semibold text-emerald-400">{loading ? '–' : portfolio.filter(p => p.status === 'published').length}</p></div>
-                <div className="vyu-card p-6"><p className="vyu-overline">// Drafts</p><p className="mt-3 text-4xl font-semibold text-amber-400">{loading ? '–' : portfolio.filter(p => p.status === 'draft').length}</p></div>
+                <div className="vyu-card p-6"><p className="vyu-overline">// Total Items</p><p className="mt-3 text-4xl font-sans font-semibold text-[#141413]">{loading ? '–' : stats.portfolio}</p></div>
+                <div className="vyu-card p-6"><p className="vyu-overline">// Published</p><p className="mt-3 text-4xl font-sans font-semibold text-[#6D5BA0]">{loading ? '–' : portfolio.filter(p => p.status === 'published').length}</p></div>
+                <div className="vyu-card p-6"><p className="vyu-overline">// Drafts</p><p className="mt-3 text-4xl font-sans font-semibold text-amber-500">{loading ? '–' : portfolio.filter(p => p.status === 'draft').length}</p></div>
               </div>
 
               <div className="mb-6 relative max-w-md">
-                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
-                <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Cari nama produk…" className="w-full bg-zinc-900/60 border border-zinc-800 rounded-lg pl-9 pr-4 py-2.5 text-sm focus:border-emerald-400/60" />
+                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8F8E8A]" />
+                <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Cari nama produk…"
+                  className="w-full bg-white border border-[#E5E4E0] rounded-lg pl-9 pr-4 py-2.5 text-sm text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] outline-none transition-all" />
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {loading ? (
-                  <div className="col-span-full text-center py-12 text-zinc-500"><Loader2 className="w-5 h-5 animate-spin inline" /></div>
+                  <div className="col-span-full text-center py-12 text-[#8F8E8A]"><Loader2 className="w-5 h-5 animate-spin inline" /></div>
                 ) : filteredPortfolio.length === 0 ? (
-                  <div className="col-span-full vyu-card p-12 text-center text-zinc-500">Belum ada portfolio. Klik &quot;Portfolio Baru&quot;.</div>
+                  <div className="col-span-full vyu-card p-12 text-center text-[#8F8E8A]">Belum ada portfolio. Klik &quot;Portfolio Baru&quot;.</div>
                 ) : filteredPortfolio.map(p => (
                   <div key={p.id} className="vyu-card overflow-hidden flex flex-col">
                     {p.cover ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={p.cover} alt={p.name} className="w-full h-32 object-cover opacity-80" />
+                      <img src={p.cover} alt={p.name} className="w-full h-32 object-cover opacity-90" />
                     ) : (
-                      <div className="w-full h-32 bg-gradient-to-br from-zinc-900 to-zinc-950 flex items-center justify-center text-zinc-700"><ImageLucide className="w-8 h-8" /></div>
+                      <div className="w-full h-32 bg-[#F4F3EE] flex items-center justify-center text-[#B0AFAA]"><ImageLucide className="w-8 h-8" /></div>
                     )}
                     <div className="p-5 flex flex-col flex-1">
                       <div className="flex items-center justify-between mb-2">
-                        <p className="vyu-overline">// {p.category}</p>
-                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-[var(--font-mono)] uppercase ${p.status === 'published' ? 'bg-emerald-400/10 text-emerald-300 border border-emerald-400/30' : 'bg-amber-400/10 text-amber-300 border border-amber-400/30'}`}>{p.status}</span>
+                        <p className="vyu-overline text-[10px]">// {p.category}</p>
+                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-mono uppercase ${p.status === 'published' ? 'bg-[#6D5BA0]/10 text-[#6D5BA0] border border-[#6D5BA0]/30' : 'bg-amber-50 text-amber-600 border border-amber-200'}`}>{p.status}</span>
                       </div>
-                      <h3 className="text-lg font-semibold text-zinc-50">{p.name}</h3>
-                      <p className="text-xs text-zinc-500 mt-1 line-clamp-2">{p.description}</p>
-                      <div className="mt-auto pt-4 flex items-center justify-between text-xs text-zinc-500">
-                        <span className="font-[var(--font-mono)]">// pos: {p.position}</span>
+                      <h3 className="text-base font-sans font-semibold text-[#141413]">{p.name}</h3>
+                      <p className="text-xs text-[#6B6B68] mt-1 line-clamp-2 leading-relaxed">{p.description}</p>
+                      <div className="mt-auto pt-4 flex items-center justify-between text-xs text-[#8F8E8A]">
+                        <span className="font-mono">pos: {p.position}</span>
                         <div className="flex gap-1">
-                          <button onClick={() => setView({ mode: 'edit', item: p })} className="p-1.5 rounded hover:bg-emerald-400/10 text-zinc-400 hover:text-emerald-400"><Edit3 className="w-4 h-4" /></button>
-                          <button onClick={() => deletePortfolio(p.id)} className="p-1.5 rounded hover:bg-red-500/10 text-zinc-400 hover:text-red-400"><Trash2 className="w-4 h-4" /></button>
+                          <button onClick={() => setView({ mode: 'edit', item: p })} className="p-1.5 rounded hover:bg-[#6D5BA0]/10 text-[#6B6B68] hover:text-[#6D5BA0]" aria-label="Edit portfolio"><Edit3 className="w-4 h-4" /></button>
+                          <button onClick={() => deletePortfolio(p.id)} className="p-1.5 rounded hover:bg-red-50 text-[#6B6B68] hover:text-red-500" aria-label="Hapus portfolio"><Trash2 className="w-4 h-4" /></button>
                         </div>
                       </div>
                     </div>

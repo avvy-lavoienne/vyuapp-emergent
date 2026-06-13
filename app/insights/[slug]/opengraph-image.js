@@ -20,122 +20,102 @@ export default async function OGImage({ params }) {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          background: '#09090b',
-          color: '#fafafa',
+          background: '#FAFAF8',
+          color: '#141413',
           position: 'relative',
           fontFamily: 'sans-serif',
           padding: '72px',
         }}
       >
-        {/* glow orbs */}
         <div
           style={{
             position: 'absolute',
-            top: -160,
-            left: -160,
-            width: 520,
-            height: 520,
+            top: -200,
+            right: -120,
+            width: 480,
+            height: 480,
             borderRadius: 9999,
-            background: 'radial-gradient(circle, rgba(52,211,153,0.45), rgba(52,211,153,0) 70%)',
+            background: 'radial-gradient(circle, rgba(109,91,160,0.15), rgba(109,91,160,0) 70%)',
             display: 'flex',
           }}
         />
         <div
           style={{
             position: 'absolute',
-            bottom: -200,
-            right: -160,
-            width: 540,
-            height: 540,
+            bottom: -160,
+            left: -120,
+            width: 400,
+            height: 400,
             borderRadius: 9999,
-            background: 'radial-gradient(circle, rgba(56,189,248,0.30), rgba(56,189,248,0) 70%)',
+            background: 'radial-gradient(circle, rgba(109,91,160,0.08), rgba(109,91,160,0) 70%)',
             display: 'flex',
           }}
         />
-        <div
-          style={{
-            position: 'absolute',
-            top: 180,
-            right: 60,
-            width: 320,
-            height: 320,
-            borderRadius: 9999,
-            background: 'radial-gradient(circle, rgba(45,212,191,0.25), rgba(45,212,191,0) 70%)',
-            display: 'flex',
-          }}
-        />
-
-        {/* Logo */}
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div
             style={{
               width: 42,
               height: 42,
               borderRadius: 10,
-              background: 'rgba(52,211,153,0.12)',
-              border: '1px solid rgba(52,211,153,0.5)',
+              background: '#6D5BA0',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               marginRight: 14,
             }}
           >
-            <div style={{ width: 14, height: 14, borderRadius: 9999, background: '#34d399', display: 'flex' }} />
+            <div style={{ width: 14, height: 14, borderRadius: 9999, background: '#FFFFFF', display: 'flex' }} />
           </div>
-          <div style={{ display: 'flex', fontSize: 32, fontWeight: 800, letterSpacing: -0.5, color: '#fafafa' }}>
+          <div style={{ display: 'flex', fontSize: 32, fontWeight: 700, letterSpacing: -0.5, color: '#141413' }}>
             <span>Vyu</span>
-            <span style={{ color: '#34d399' }}>App</span>
+            <span style={{ color: '#6D5BA0' }}>App</span>
           </div>
         </div>
 
-        {/* overline */}
         <div
           style={{
             display: 'flex',
-            marginTop: 60,
-            fontSize: 20,
-            color: '#34d399',
+            marginTop: 52,
+            fontSize: 18,
+            color: '#6D5BA0',
             textTransform: 'uppercase',
             letterSpacing: 4,
             fontFamily: 'monospace',
           }}
         >
-          // {category}
+          {category}
         </div>
 
-        {/* title */}
         <div
           style={{
             display: 'flex',
-            marginTop: 22,
-            fontSize: 66,
-            fontWeight: 700,
+            marginTop: 20,
+            fontSize: 64,
+            fontWeight: 600,
             lineHeight: 1.08,
             letterSpacing: -1.5,
-            color: '#fafafa',
+            color: '#141413',
             maxWidth: 1056,
           }}
         >
-          {title.length > 110 ? title.slice(0, 107) + '…' : title}
+          {title.length > 110 ? title.slice(0, 107) + '\u2026' : title}
         </div>
 
-        {/* excerpt */}
         {excerpt && (
           <div
             style={{
               display: 'flex',
-              marginTop: 32,
-              fontSize: 26,
-              color: '#a1a1aa',
+              marginTop: 28,
+              fontSize: 24,
+              color: '#4A4A48',
               lineHeight: 1.4,
               maxWidth: 980,
             }}
           >
-            {excerpt}{excerpt.length >= 180 ? '…' : ''}
+            {excerpt}{excerpt.length >= 180 ? '\u2026' : ''}
           </div>
         )}
 
-        {/* footer */}
         <div
           style={{
             position: 'absolute',
@@ -146,19 +126,19 @@ export default async function OGImage({ params }) {
             justifyContent: 'space-between',
             alignItems: 'center',
             fontFamily: 'monospace',
-            fontSize: 18,
-            color: '#71717a',
+            fontSize: 16,
+            color: '#B0AFAA',
           }}
         >
           <div style={{ display: 'flex' }}>vyuapp.com/insights</div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div
               style={{
-                width: 9,
-                height: 9,
+                width: 8,
+                height: 8,
                 borderRadius: 9999,
-                background: '#34d399',
-                marginRight: 12,
+                background: '#6D5BA0',
+                marginRight: 10,
                 display: 'flex',
               }}
             />

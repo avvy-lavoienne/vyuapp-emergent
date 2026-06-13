@@ -14,7 +14,6 @@ export default function ImageUpload({ value, onChange, bucket = 'featured-images
     if (!file) return;
     setErr(''); setBusy(true); setProgress(20);
     try {
-      // Compress
       const compressed = await imageCompression(file, {
         maxSizeMB: 1.5, maxWidthOrHeight: 1800, useWebWorker: true,
       });
@@ -48,34 +47,36 @@ export default function ImageUpload({ value, onChange, bucket = 'featured-images
         onChange={(e) => upload(e.target.files?.[0])} />
 
       {value ? (
-        <div className="relative rounded-lg overflow-hidden border border-zinc-800">
+        <div className="relative rounded-lg overflow-hidden border border-[#E5E4E0]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={value} alt="featured" className="w-full h-40 object-cover" />
-          <button type="button" onClick={() => onChange?.('')} className="absolute top-2 right-2 p-1.5 rounded-full bg-zinc-950/80 text-zinc-200 hover:text-red-400 border border-zinc-800">
+          <button type="button" onClick={() => onChange?.('')} className="absolute top-2 right-2 p-1.5 rounded-full bg-white/80 text-[#6B6B68] hover:text-red-500 border border-[#E5E4E0]">
             <X className="w-4 h-4" />
           </button>
         </div>
       ) : (
         <button type="button" onClick={() => inputRef.current?.click()} disabled={busy}
-          className="w-full h-40 rounded-lg border border-dashed border-zinc-800 hover:border-emerald-400/50 hover:bg-emerald-400/5 transition flex flex-col items-center justify-center gap-2 text-zinc-500 hover:text-emerald-300">
-          {busy ? <Loader2 className="w-6 h-6 animate-spin text-emerald-400" /> : <ImageIcon className="w-6 h-6" />}
-          <span className="text-xs font-[var(--font-mono)]">{busy ? 'MENGUNGGAH…' : '+ UPLOAD GAMBAR'}</span>
-          <span className="text-[10px] text-zinc-600">JPG / PNG / WebP · maks 8MB</span>
+          className="w-full h-40 rounded-lg border border-dashed border-[#E5E4E0] hover:border-[#6D5BA0]/50 hover:bg-[#6D5BA0]/5 transition flex flex-col items-center justify-center gap-2 text-[#8F8E8A] hover:text-[#6D5BA0]">
+          {busy ? <Loader2 className="w-6 h-6 animate-spin text-[#6D5BA0]" /> : <ImageIcon className="w-6 h-6" />}
+          <span className="text-xs font-mono">{busy ? 'MENGUNGGAH…' : '+ UPLOAD GAMBAR'}</span>
+          <span className="text-[10px] text-[#B0AFAA]">JPG / PNG / WebP · maks 8MB</span>
         </button>
       )}
 
       <div className="flex items-center gap-2">
         <button type="button" onClick={() => inputRef.current?.click()} disabled={busy}
-          className="vyu-btn-secondary text-xs"><Upload className="w-3.5 h-3.5" /> Pilih file</button>
-        {value && <span className="text-[10px] text-zinc-500 font-[var(--font-mono)] truncate">{value}</span>}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#141413] border border-[#D1D0C9] hover:border-[#B0AFAA] hover:bg-black/[0.02] transition-all duration-200 disabled:opacity-50">
+          <Upload className="w-3.5 h-3.5" /> Pilih file
+        </button>
+        {value && <span className="text-[10px] text-[#8F8E8A] font-mono truncate">{value}</span>}
       </div>
 
       {busy && (
-        <div className="w-full h-1 bg-zinc-900 rounded-full overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 transition-all" style={{ width: `${progress}%` }} />
+        <div className="w-full h-1 bg-[#E5E4E0] rounded-full overflow-hidden">
+          <div className="h-full bg-[#6D5BA0] transition-all" style={{ width: `${progress}%` }} />
         </div>
       )}
-      {err && <p className="text-xs text-red-400">{err}</p>}
+      {err && <p className="text-xs text-red-500">{err}</p>}
     </div>
   );
 }

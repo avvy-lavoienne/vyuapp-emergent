@@ -57,10 +57,9 @@ export default async function PortfolioDetailPage({ params }) {
   ];
 
   const productUrl = item.slug === 'avalon' ? 'https://avalon.vyuapp.my.id' : url;
-  const accent = item.slug === 'avalon' ? 'bg-sky-500/10' : 'bg-emerald-500/15';
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-[#FAFAF8]">
       <BreadcrumbJsonLd items={breadcrumbItems} />
       <SoftwareAppJsonLd
         name={item.name}
@@ -69,16 +68,19 @@ export default async function PortfolioDetailPage({ params }) {
         applicationCategory="BusinessApplication"
       />
       <Navbar />
-      <section className="relative pt-32 pb-20 overflow-hidden">
-        <div className="absolute inset-0 vyu-grid-bg opacity-40" />
-        <div aria-hidden className={`absolute -top-32 left-1/4 w-[500px] h-[500px] rounded-full blur-[120px] ${accent}`} />
-        <div className="vyu-container relative">
-          <Link href="/portfolio" className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-emerald-400 mb-8">
+
+      <section className="pt-32 pb-20">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <Link
+            href="/portfolio"
+            className="inline-flex items-center gap-2 text-sm text-[#6B6B68] hover:text-[#6D5BA0] transition-colors mb-8"
+          >
             <ArrowLeft className="w-4 h-4" /> Semua proyek
           </Link>
           <DetailedProduct item={item} />
         </div>
       </section>
+
       <Footer />
     </main>
   );
