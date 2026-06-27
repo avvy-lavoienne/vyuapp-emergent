@@ -1,5 +1,6 @@
-// One-time bootstrap endpoint. Idempotent. Hit it ONCE after running the SUPABASE_SETUP.sql
-// in the Supabase SQL editor. It will:
+// One-time bootstrap endpoint. Idempotent. Requires SETUP_TOKEN header.
+// Hit it ONCE after running the SUPABASE_SETUP.sql in the Supabase SQL editor.
+// It will:
 //   1. Create the 'featured-images' storage bucket (public)
 //   2. Create / ensure the admin auth user (with default password)
 //   3. Seed sample articles + portfolio items if tables are empty
@@ -9,10 +10,19 @@ import { SEED_ARTICLES_FOR_SUPABASE, SEED_PORTFOLIO } from '@/lib/seed';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+export async function POST(request) {
+  const setupToken = request.headers.get('x-setup-token');
+  const expectedToken = process.env.SETUP_TOKEN;
+
+  if (!expectedToken) {
+    return NextResponse.json({ error: 'Setup not configured. Set SETUP_TOKEN env var.' }, { status: 503 });
+  }
+  if (!setupToken || setupToken !== expectedToken) {
+    return NextResponse.json({ error: 'Unauthorized.' }, { status: 401 });
+  }
+
   const supabase = getAdminSupabase();
   const log = [];
-
   try {
     // 1. Bucket
     const { data: buckets } = await supabase.storage.listBuckets();
@@ -33,16 +43,13 @@ export async function GET() {
     const password = process.env.SUPABASE_ADMIN_DEFAULT_PASSWORD;
     let adminUserId = null;
     if (email && password) {
-      // List users and check if exists
       const { data: list } = await supabase.auth.admin.listUsers({ page: 1, perPage: 200 });
       const found = (list?.users || []).find(u => (u.email || '').toLowerCase() === email.toLowerCase());
       if (found) {
         adminUserId = found.id;
         log.push(`admin user exists: ${email}`);
       } else {
-        const { data, error } = await supabase.auth.admin.createUser({
-          email, password, email_confirm: true,
-        });
+        const { data, error } = await supabase.auth.admin.createUser({ email, password, email_confirm: true });
         if (error) log.push(`createUser error: ${error.message}`);
         else { adminUserId = data.user.id; log.push(`admin user created: ${email}`); }
       }
@@ -77,11 +84,7 @@ export async function GET() {
       log.push(`portfolio already has ${pCount} rows — skipping seed`);
     }
 
-    return NextResponse.json({
-      ok: true,
-      log,
-      next_step: `Login at /admin with: ${email} / ${password}`,
-    });
+    return NextResponse.json({ ok: true, log });
   } catch (err) {
     return NextResponse.json({ ok: false, error: String(err?.message || err), log }, { status: 500 });
   }

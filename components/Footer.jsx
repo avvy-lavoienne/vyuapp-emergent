@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLocale } from '@/components/LocaleProvider';
 import { usePathname } from 'next/navigation';
 
@@ -14,7 +15,7 @@ export default function Footer() {
         <div>
           <Link href="/" className="flex items-center gap-3">
             <span className="w-9 h-9 rounded-lg bg-white border border-[#E5E4E0] flex items-center justify-center overflow-hidden p-1">
-              <img src="/images/vyu-removebg.png" alt="VyuApp" className="w-full h-full object-contain" />
+              <Image src="/images/vyu-removebg.png" alt="VyuApp" width={36} height={36} className="w-full h-full object-contain" />
             </span>
             <span className="font-sans font-bold text-lg tracking-tight text-[#141413]">
               Vyu<span className="text-[#6D5BA0]">App</span>
