@@ -140,11 +140,9 @@ export default async function ArticlePage({ params }) {
             {(article.tags || []).slice(0, 4).map(t => <span key={t}>#{t}</span>)}
           </div>
           <TableOfContents html={linkedContent} />
-          {article.cover && (
-            <div className="mt-10 rounded-2xl overflow-hidden border border-[#E5E4E0] relative aspect-video bg-[#F4F3EE]">
-              <Image src={article.cover} alt={article.title} fill className="object-cover" priority />
-            </div>
-          )}
+          <div className="mt-10 rounded-2xl overflow-hidden border border-[#E5E4E0] relative aspect-video bg-[#F4F3EE]">
+            <Image src={article.cover || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80'} alt={article.title} fill className="object-cover" priority />
+          </div>
           <div className="mt-12 prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtml(c1) }} />
           <AdSenseSlot slot={SLOT_TOP} format="auto" />
           <div className="prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtml(c2) }} />

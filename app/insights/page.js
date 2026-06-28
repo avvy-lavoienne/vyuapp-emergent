@@ -40,16 +40,14 @@ function ArticleCard({ a, featured = false, index = 0 }) {
       className={`rounded-2xl border border-[#E5E4E0] bg-white overflow-hidden flex flex-col group transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] ${featured ? 'lg:col-span-2' : ''}`}
     >
       <div className={`relative ${featured ? 'h-72' : 'h-52'} overflow-hidden bg-[#F4F3EE]`}>
-        {a.cover && (
-          <Image
-            src={a.cover}
-            alt={a.title}
-            fill
-            priority={index === 0}
-            className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-700"
-            sizes={featured ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
-          />
-        )}
+        <Image
+          src={a.cover || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=75'}
+          alt={a.title}
+          fill
+          priority={index === 0}
+          className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-700"
+          sizes={featured ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
+        />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
         <div className="absolute top-4 left-4">
           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6B6B68] bg-white/80 border border-[#E5E4E0]">
