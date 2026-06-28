@@ -45,6 +45,7 @@ function ArticleCard({ a, featured = false }) {
             src={a.cover}
             alt={a.title}
             fill
+            priority={i === 0}
             className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-700"
             sizes={featured ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
           />
