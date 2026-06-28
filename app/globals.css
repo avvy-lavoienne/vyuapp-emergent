@@ -2,6 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ================================================
+   Self-hosted Satoshi Font (from Fontshare)
+   ================================================ */
+@font-face {
+  font-family: 'Satoshi';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/satoshi-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/satoshi-medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/satoshi-bold.woff2') format('woff2');
+}
+
 :root {
   --accent: #6D5BA0;
   --accent-hover: #574886;

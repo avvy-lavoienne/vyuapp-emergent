@@ -61,9 +61,6 @@ export default function RootLayout({ children }) {
         <link rel="me" href="https://github.com/avvy-lavoienne" />
         <link rel="me" href="https://www.linkedin.com/in/frmnfird" />
         {adsenseClient && <link rel="preconnect" href="https://pagead2.googlesyndication.com" />}
-        <link rel="preconnect" href="https://api.fontshare.com" />
-        <link rel="preload" as="style" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" />
-        <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap" />
       </head>
       <body className="bg-[#FAFAF8] text-[#141413] antialiased font-sans selection:bg-[#6D5BA0]/20 selection:text-[#141413]">
         <OrganizationJsonLd />

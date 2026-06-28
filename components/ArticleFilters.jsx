@@ -17,6 +17,9 @@ const CATEGORIES = [
   'Database',
   'Testing',
   'Career',
+  'Web3',
+  'Performance',
+  'IndoTech',
 ];
 
 export default function ArticleFilters({ availableTags = [] }) {

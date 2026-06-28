@@ -14,6 +14,14 @@ import { BreadcrumbJsonLd, ArticleJsonLd } from '@/components/JsonLd';
 
 export const revalidate = 3600;
 
+function sanitizeHtml(html) {
+  if (!html) return '';
+  return html
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/on\w+="[^"]*"/gi, '')
+    .replace(/javascript:/gi, '');
+}
+
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://www.vyuapp.my.id';
 
 export async function generateMetadata({ params }) {
@@ -137,11 +145,11 @@ export default async function ArticlePage({ params }) {
               <Image src={article.cover} alt={article.title} fill className="object-cover" priority />
             </div>
           )}
-          <div className="mt-12 prose-light" dangerouslySetInnerHTML={{ __html: c1 }} />
+          <div className="mt-12 prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtml(c1) }} />
           <AdSenseSlot slot={SLOT_TOP} format="auto" />
-          <div className="prose-light" dangerouslySetInnerHTML={{ __html: c2 }} />
+          <div className="prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtml(c2) }} />
           <AdSenseSlot slot={SLOT_MID} format="rectangle" style={{ display: 'block', minHeight: 250, maxWidth: 336, margin: '0 auto' }} />
-          <div className="prose-light" dangerouslySetInnerHTML={{ __html: c3 }} />
+          <div className="prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtml(c3) }} />
           <AdSenseSlot slot={SLOT_END} format="auto" />
           <div className="mt-12 p-6 rounded-2xl border border-[#E5E4E0] bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
