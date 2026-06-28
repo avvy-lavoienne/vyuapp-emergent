@@ -106,3 +106,24 @@ export function SoftwareAppJsonLd({ name, description, url, applicationCategory,
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
+
+export function LocalBusinessJsonLd() {
+  const url = baseUrl();
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: 'VyuApp Studio',
+    url,
+    description: 'Studio rekayasa web premium dari Garut, Jawa Barat.',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Jl. Ratu Intan Dewata, Perumahan Griya Mutiara Rancabango Blok. C40',
+      addressLocality: 'Garut',
+      addressRegion: 'Jawa Barat',
+      addressCountry: 'ID'
+    },
+    geo: { '@type': 'GeoCoordinates', latitude: -7.22, longitude: 107.90 },
+    sameAs: ['https://github.com/avvy-lavoienne', 'https://www.linkedin.com/in/frmnfird']
+  };
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
+}

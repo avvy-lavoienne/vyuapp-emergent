@@ -7,6 +7,8 @@ import { notFound } from 'next/navigation';
 import { getArticleBySlug, getPublishedArticles } from '@/lib/data';
 import AdSenseSlot from '@/components/AdSenseSlot';
 import ShareButton from '@/components/ShareButton';
+import TableOfContents from '@/components/TableOfContents';
+import { autoLink } from '@/lib/auto-linker';
 import { BreadcrumbJsonLd, ArticleJsonLd } from '@/components/JsonLd';
 
 export const revalidate = 3600;
@@ -81,7 +83,8 @@ export default async function ArticlePage({ params }) {
   const prevArticle = currentIndex < all.length - 1 ? all[currentIndex + 1] : null;
   const nextArticle = currentIndex > 0 ? all[currentIndex - 1] : null;
 
-  const [c1, c2, c3] = splitHTMLByParagraphs(article.content);
+  const linkedContent = autoLink(article.content, article.slug);
+  const [c1, c2, c3] = splitHTMLByParagraphs(linkedContent);
   const readMin = Math.max(2, Math.round((article.content || '').replace(/<[^>]*>/g, '').split(/\s+/).length / 200));
   const SLOT_TOP = process.env.NEXT_PUBLIC_ADSENSE_SLOT_TOP;
   const SLOT_MID = process.env.NEXT_PUBLIC_ADSENSE_SLOT_MID;
@@ -127,6 +130,7 @@ export default async function ArticlePage({ params }) {
             <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> {readMin} min read</span>
             {(article.tags || []).slice(0, 4).map(t => <span key={t}>#{t}</span>)}
           </div>
+          <TableOfContents html={linkedContent} />
           {article.cover && (
             <div className="mt-10 rounded-2xl overflow-hidden border border-[#E5E4E0] relative aspect-video bg-[#F4F3EE]">
               <Image src={article.cover} alt={article.title} fill className="object-cover" priority />

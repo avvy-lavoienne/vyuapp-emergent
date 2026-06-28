@@ -36,6 +36,8 @@ export default function Footer() {
               <li><Link href="/portfolio" className="hover:text-[#141413] transition-colors">{isLanding ? t.nav.portfolio : 'Portfolio'}</Link></li>
               <li><Link href="/insights" className="hover:text-[#141413] transition-colors">{isLanding ? t.nav.insights : 'Insights'}</Link></li>
               <li><a href="/#kontak" className="hover:text-[#141413] transition-colors">{isLanding ? t.nav.contact : 'Kontak'}</a></li>
+              <li><Link href="/about" className="hover:text-[#141413] transition-colors">{isLanding ? 'Tentang Kami' : 'Tentang Kami'}</Link></li>
+              <li><Link href="/privacy" className="hover:text-[#141413] transition-colors">{isLanding ? 'Kebijakan Privasi' : 'Kebijakan Privasi'}</Link></li>
             </ul>
           </div>
           <div>

@@ -1,7 +1,7 @@
 import { JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import AdSenseScript from '@/components/AdSenseScript';
-import { OrganizationJsonLd, WebSiteJsonLd } from '@/components/JsonLd';
+import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from '@/components/JsonLd';
 
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', display: 'swap' });
 
@@ -49,7 +49,7 @@ export const metadata = {
   },
   alternates: {
     canonical: baseUrl,
-    languages: { 'id-ID': baseUrl },
+    languages: { 'id-ID': baseUrl, 'en': `${baseUrl}?lang=en` },
   },
 };
 
@@ -68,6 +68,7 @@ export default function RootLayout({ children }) {
       <body className="bg-[#FAFAF8] text-[#141413] antialiased font-sans selection:bg-[#6D5BA0]/20 selection:text-[#141413]">
         <OrganizationJsonLd />
         <WebSiteJsonLd />
+        <LocalBusinessJsonLd />
         <AdSenseScript />
         {children}
       </body>
