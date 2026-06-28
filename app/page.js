@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import Hero from '@/components/Hero';
 import SectionHeader from '@/components/SectionHeader';
 import Link from 'next/link';
-import { ArrowRight, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
+import { ArrowRight, Loader2, CheckCircle2, AlertCircle, Search, ShieldCheck, Globe, Zap } from 'lucide-react';
 
 function Capability({ title, description }) {
   return (
@@ -165,6 +165,52 @@ function HomeContent() {
             <Capability title={t.capabilities.frontend.title} description={t.capabilities.frontend.desc} />
             <Capability title={t.capabilities.backend.title} description={t.capabilities.backend.desc} />
             <Capability title={t.capabilities.product.title} description={t.capabilities.product.desc} />
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 md:py-32" id="cara-kerja">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <SectionHeader
+            overline="Metode Kami"
+            title="Cara Kami Bekerja"
+            description="Di balik setiap proyek, ada tim AI yang bekerja secara otonom untuk memastikan hasil terbaik."
+            align="center"
+          />
+          <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="p-6 rounded-2xl border border-[#E5E4E0] bg-white text-center">
+              <div className="w-12 h-12 rounded-xl bg-[#6D5BA0]/10 flex items-center justify-center mx-auto mb-4">
+                <Search className="w-6 h-6 text-[#6D5BA0]" />
+              </div>
+              <h3 className="font-semibold text-[#141413] mb-2">Riset Mendalam</h3>
+              <p className="text-sm text-[#6B6B68]">AI agent melakukan riset komprehensif untuk setiap konten dan fitur.</p>
+            </div>
+            <div className="p-6 rounded-2xl border border-[#E5E4E0] bg-white text-center">
+              <div className="w-12 h-12 rounded-xl bg-[#6D5BA0]/10 flex items-center justify-center mx-auto mb-4">
+                <ShieldCheck className="w-6 h-6 text-[#6D5BA0]" />
+              </div>
+              <h3 className="font-semibold text-[#141413] mb-2">Kode Berkualitas</h3>
+              <p className="text-sm text-[#6B6B68]">QA agent memastikan setiap baris kode memenuhi standar kualitas.</p>
+            </div>
+            <div className="p-6 rounded-2xl border border-[#E5E4E0] bg-white text-center">
+              <div className="w-12 h-12 rounded-xl bg-[#6D5BA0]/10 flex items-center justify-center mx-auto mb-4">
+                <Globe className="w-6 h-6 text-[#6D5BA0]" />
+              </div>
+              <h3 className="font-semibold text-[#141413] mb-2">SEO Optimization</h3>
+              <p className="text-sm text-[#6B6B68]">Dioptimasi sejak awal untuk mesin pencari dan performa web.</p>
+            </div>
+            <div className="p-6 rounded-2xl border border-[#E5E4E0] bg-white text-center">
+              <div className="w-12 h-12 rounded-xl bg-[#6D5BA0]/10 flex items-center justify-center mx-auto mb-4">
+                <Zap className="w-6 h-6 text-[#6D5BA0]" />
+              </div>
+              <h3 className="font-semibold text-[#141413] mb-2">Delivery Cepat</h3>
+              <p className="text-sm text-[#6B6B68]">AI mempercepat proses pengembangan tanpa mengorbankan kualitas.</p>
+            </div>
+          </div>
+          <div className="mt-10 text-center">
+            <Link href="/portfolio/ai-agents" className="inline-flex items-center gap-2 text-[#6D5BA0] font-semibold text-sm hover:gap-3 transition-all">
+              Pelajari lebih lanjut tentang sistem AI kami <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>

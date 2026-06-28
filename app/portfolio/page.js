@@ -112,6 +112,33 @@ export default async function PortfolioPage() {
             title="Proyek lain yang sedang berkembang."
             description="Slot ini akan terisi seiring kami merilis case study."
           />
+          
+          {/* Featured: AI Agents Case Study */}
+          <div className="mt-14 p-8 rounded-2xl border border-[#E5E4E0] bg-white mb-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className="flex-1">
+                <p className="font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.18em] font-medium mb-3">
+                  CASE STUDY
+                </p>
+                <h3 className="text-xl font-semibold text-[#141413] mb-2">VyuApp Multi-Agent System</h3>
+                <p className="text-sm text-[#4A4A48] mb-4">Bagaimana kami menggunakan 9 AI agent untuk menghasilkan website berkualitas tinggi dengan riset mendalam, kualitas kode terjamin, dan SEO yang dioptimasi.</p>
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {['AI', 'Multi-Agent', 'Automation', 'SEO'].map(tag => (
+                    <span key={tag} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6B6B68] bg-[#F4F3EE] border border-[#E5E4E0]">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <Link
+                href="/portfolio/ai-agents"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#6D5BA0] text-white text-sm font-semibold hover:bg-[#574886] transition-all duration-200 hover:-translate-y-0.5 shrink-0"
+              >
+                Lihat Case Study <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {(rest.length ? rest : FALLBACK_OTHER).map(item => <OtherProject key={item.id} item={item} />)}
           </div>
