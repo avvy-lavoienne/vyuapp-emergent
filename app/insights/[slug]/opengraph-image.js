@@ -130,7 +130,7 @@ export default async function OGImage({ params }) {
             color: '#B0AFAA',
           }}
         >
-          <div style={{ display: 'flex' }}>vyuapp.com/insights</div>
+          <div style={{ display: 'flex' }}>vyuapp.my.id/insights</div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div
               style={{

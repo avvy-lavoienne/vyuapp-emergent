@@ -1,13 +1,15 @@
 import { getPublishedArticles, getPublishedPortfolio, DEFAULT_MAIN } from '@/lib/data';
 
 export default async function sitemap() {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://localhost:3000';
+  const base = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://vyuapp.my.id';
   const now = new Date();
 
   const staticRoutes = [
     { url: `${base}/`, lastModified: now, changeFrequency: 'weekly', priority: 1.0 },
     { url: `${base}/portfolio`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${base}/insights`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${base}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${base}/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
   ];
 
   let articleRoutes = [];

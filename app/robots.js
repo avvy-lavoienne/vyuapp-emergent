@@ -1,9 +1,8 @@
 export default function robots() {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || '';
+  const base = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://vyuapp.my.id';
   return {
     rules: [
-      { userAgent: '*', allow: '/', disallow: ['/admin', '/api/admin'] },
-      // Google AdsBot must access pages to render ads
+      { userAgent: '*', allow: '/', disallow: ['/admin', '/api/'] },
       { userAgent: 'Mediapartners-Google', allow: '/' },
     ],
     sitemap: `${base}/sitemap.xml`,

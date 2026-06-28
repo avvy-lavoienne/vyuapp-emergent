@@ -57,9 +57,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="id" className={`${mono.variable}`}>
       <head>
-        <meta name="theme-color" content="#FAFAF8" />
         <meta name="format-detection" content="telephone=no, email=no" />
-        <link rel="canonical" href={baseUrl} />
         <link rel="me" href="https://github.com/avvy-lavoienne" />
         <link rel="me" href="https://www.linkedin.com/in/frmnfird" />
         {adsenseClient && <link rel="preconnect" href="https://pagead2.googlesyndication.com" />}

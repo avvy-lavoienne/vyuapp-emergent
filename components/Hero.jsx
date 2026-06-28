@@ -10,9 +10,9 @@ export default function Hero() {
       <div className="relative max-w-7xl mx-auto px-6 md:px-10">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.5rem] leading-[1.04] font-sans font-semibold tracking-[-0.03em] text-[#141413]">
-            build systems that{' '}
+            {t.hero.headline.split(' ').slice(0, -1).join(' ')}{' '}
             <span className="relative text-[#6D5BA0]">
-              last
+              {t.hero.headline.split(' ').slice(-1)[0].replace('.', '')}
               <span className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-gradient-to-r from-[#6D5BA0]/60 to-[#6D5BA0]/10 rounded-full" />
             </span>
             .

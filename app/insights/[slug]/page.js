@@ -146,7 +146,7 @@ export default async function ArticlePage({ params }) {
                 <p className="text-xs text-[#6B6B68]">Bespoke web engineering — Garut, ID</p>
               </div>
             </div>
-            <ShareButton />
+            <ShareButton title={article.title} />
           </div>
         </div>
       </article>
