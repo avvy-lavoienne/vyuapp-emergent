@@ -1,38 +1,65 @@
 {
-  "last_pool_index": 1,
+  "last_pool_index": 2,
   "phase": "DONE",
   "topics": [
-    "Supabase Edge Functions tutorial",
-    "Supabase vs PlanetScale comparison",
-    "Supabase Auth with Next.js",
-    "Supabase RLS policies guide",
-    "Supabase Realtime subscriptions"
+    "Progressive Web Apps guide",
+    "Web Performance optimization",
+    "Web security checklist 2026",
+    "Tailwind CSS 4 new features",
+    "TypeScript advanced patterns 2026"
   ],
-  "created_at": "2026-06-28T06:49:03.653718",
-  "selected_topic": "Supabase vs PlanetScale comparison",
-  "updated_at": "2026-06-28T06:49:27.861662",
+  "created_at": "2026-06-28T06:53:32.416841",
+  "selected_topic": "Tailwind CSS 4 new features",
+  "updated_at": "2026-06-28T06:53:48.927621",
   "research": {
-    "title": "Supabase vs PlanetScale comparison",
-    "slug": "supabase-vs-planetscale-comparison",
-    "excerpt": "Panduan lengkap Supabase vs PlanetScale comparison berdasarkan riset dari 0 sumber terpercaya.",
+    "title": "Tailwind CSS 4 new features",
+    "slug": "tailwind-css-4-new-features",
+    "excerpt": "Panduan lengkap Tailwind CSS 4 new features berdasarkan riset dari 0 sumber. Pelajari konsep, implementasi, dan best practices secara mendalam.",
     "sections": [
-      "Pendahuluan",
-      "Landasan Konsep",
-      "Arsitektur dan Komponen Utama",
-      "Best Practices",
-      "Studi Kasus Nyata",
-      "Tantangan dan Solusi",
-      "Optimasi dan Performa",
-      "Kesimpulan dan Rekomendasi"
+      {
+        "title": "Pendahuluan",
+        "prompt": "kenalan dan pengantar topik"
+      },
+      {
+        "title": "Mengapa Topik Ini Penting",
+        "prompt": "relevansi dan manfaat"
+      },
+      {
+        "title": "Konsep dan Arsitektur",
+        "prompt": "penjelasan teknis fundamental"
+      },
+      {
+        "title": "Implementasi dan Cara Kerja",
+        "prompt": "langkah implementasi"
+      },
+      {
+        "title": "Best Practices",
+        "prompt": "praktik terbaik dari sumber"
+      },
+      {
+        "title": "Perbandingan dan Alternatif",
+        "prompt": "bandingkan dengan alternatif"
+      },
+      {
+        "title": "Studi Kasus Nyata",
+        "prompt": "contoh penerapan di dunia nyata"
+      },
+      {
+        "title": "Tantangan dan Solusi",
+        "prompt": "masalah umum dan cara mengatasi"
+      },
+      {
+        "title": "Kesimpulan dan Rekomendasi",
+        "prompt": "ringkasan dan saran"
+      }
     ],
     "sources": [],
     "contents": [],
     "word_count": 2500,
     "category": "Engineering",
     "tags": [
-      "supabase",
-      "planetscale",
-      "comparison",
+      "tailwind",
+      "features",
       "Tutorial",
       "Web Dev"
     ]

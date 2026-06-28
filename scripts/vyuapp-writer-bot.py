@@ -59,44 +59,45 @@ def greeting():
 # ─── Real Research ───
 
 def do_research(topic):
-    """Real research using DuckDuckGo + content extraction."""
-    from duckduckgo_search import DDGS
+    """Real research using Hermes Scout (web search)."""
     
-    # Search
-    search_results = []
+    # Use Hermes CLI for web search — Scout has proper web_search tool
+    search_prompt = f'use web_search to find 5 results about: {topic}. Return title, url, and brief description for each result.'
+    
     try:
-        with DDGS() as ddgs:
-            for r in ddgs.text(topic, max_results=5):
-                search_results.append({
-                    'title': r.get('title', ''),
-                    'url': r.get('href', ''),
-                    'snippet': r.get('body', '')
-                })
+        result = subprocess.run(
+            ['hermes', '-z', search_prompt, '--yolo', '--toolsets', 'web'],
+            capture_output=True, text=True, timeout=60
+        )
+        scout_output = result.stdout.strip()
     except Exception as e:
-        logger.error(f'Search error: {e}')
+        logger.error(f'Hermes Scout error: {e}')
+        scout_output = ''
     
-    # If no search results, try alternative queries
-    if not search_results:
-        alt_queries = [f'{topic} tutorial', f'{topic} guide', f'{topic} 2026']
-        for q in alt_queries:
-            try:
-                with DDGS() as ddgs:
-                    for r in ddgs.text(q, max_results=3):
-                        search_results.append({
-                            'title': r.get('title', ''),
-                            'url': r.get('href', ''),
-                            'snippet': r.get('body', '')
-                        })
-                if search_results:
-                    break
-            except:
-                pass
+    # Parse search results from Scout output
+    search_results = []
+    if scout_output:
+        lines = scout_output.split('\n')
+        current = {}
+        for line in lines:
+            line = line.strip()
+            if line.startswith(('1.', '2.', '3.', '4.', '5.')):
+                if current.get('title'):
+                    search_results.append(current)
+                current = {'title': line[3:].strip(), 'url': '', 'snippet': ''}
+            elif line.startswith('http'):
+                current['url'] = line.strip()
+            elif line and not line.startswith('Mau') and not line.startswith('Hasil'):
+                if current.get('title') and not current.get('snippet'):
+                    current['snippet'] = line
+        if current.get('title'):
+            search_results.append(current)
     
     # Fetch content from top 3 URLs
     contents = []
     for sr in search_results[:3]:
         url = sr.get('url', '')
-        if not url:
+        if not url or not url.startswith('http'):
             continue
         try:
             resp = requests.get(url, timeout=10, headers={'User-Agent': 'Mozilla/5.0'})
@@ -111,7 +112,7 @@ def do_research(topic):
         except:
             pass
     
-    # Build dynamic sections based on topic
+    # Build sections
     sections = [
         {'title': 'Pendahuluan', 'prompt': 'kenalan dan pengantar topik'},
         {'title': 'Mengapa Topik Ini Penting', 'prompt': 'relevansi dan manfaat'},
@@ -139,6 +140,7 @@ def do_research(topic):
         'sections': sections,
         'sources': search_results,
         'contents': contents,
+        'scout_output': scout_output,
         'word_count': 2500,
         'category': 'Engineering',
         'tags': tags
