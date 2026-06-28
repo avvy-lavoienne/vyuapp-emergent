@@ -5,7 +5,7 @@ import { Calendar, Code, Globe, Mail } from 'lucide-react';
 export const metadata = {
   title: 'Tentang VyuApp',
   description: 'VyuApp adalah studio rekayasa web premium dari Garut, Jawa Barat. Spesialis Next.js, Supabase, dan produk digital presisi tinggi.',
-  alternates: { canonical: 'https://vyuapp.my.id/about' },
+  alternates: { canonical: 'https://www.vyuapp.my.id/about' },
 };
 
 export default function AboutPage() {

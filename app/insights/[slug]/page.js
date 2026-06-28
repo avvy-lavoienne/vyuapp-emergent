@@ -13,7 +13,7 @@ import { BreadcrumbJsonLd, ArticleJsonLd } from '@/components/JsonLd';
 
 export const revalidate = 3600;
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://www.vyuapp.my.id';
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;

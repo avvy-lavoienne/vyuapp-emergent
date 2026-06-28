@@ -5,7 +5,7 @@ import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from '@/compon
 
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', display: 'swap' });
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://www.vyuapp.my.id';
 const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
 export const metadata = {
