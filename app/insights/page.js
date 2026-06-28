@@ -1,6 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SectionHeader from '@/components/SectionHeader';
+import ArticleFilters from '@/components/ArticleFilters';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, ArrowRight } from 'lucide-react';
@@ -78,8 +79,18 @@ function ArticleCard({ a, featured = false }) {
   );
 }
 
-export default async function InsightsPage() {
-  const articles = await getPublishedArticles();
+export default async function InsightsPage({ searchParams }) {
+  const params = await searchParams;
+  const category = params?.category || '';
+  const tags = params?.tags || '';
+
+  const [articles, allArticles] = await Promise.all([
+    getPublishedArticles({ category, tags }),
+    getPublishedArticles(),
+  ]);
+
+  const availableTags = [...new Set(allArticles.flatMap(a => a.tags || []))].sort();
+
   const breadcrumbItems = [
     { name: 'Beranda', url: `${baseUrl}/` },
     { name: 'Insights', url: `${baseUrl}/insights` },
@@ -99,15 +110,25 @@ export default async function InsightsPage() {
         </div>
       </section>
 
+      <section className="pb-4">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <ArticleFilters availableTags={availableTags} />
+        </div>
+      </section>
+
       <section className="pb-24 md:pb-32">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           {articles.length === 0 ? (
             <div className="p-12 rounded-2xl border border-[#E5E4E0] bg-white text-center">
               <p className="font-mono text-xs text-[#8F8E8A] uppercase tracking-[0.15em]">// Belum ada artikel</p>
-              <p className="mt-3 text-sm text-[#4A4A48]">Buka panel admin untuk mulai menulis.</p>
+              <p className="mt-3 text-sm text-[#4A4A48]">
+                {(category || tags) 
+                  ? 'Tidak ditemukan artikel yang cocok dengan filter. Coba filter lain.'
+                  : 'Buka panel admin untuk mulai menulis.'}
+              </p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7" key={`${category}-${tags}`}>
               {articles.map((a, i) => <ArticleCard key={a.id} a={a} featured={i === 0} />)}
             </div>
           )}
