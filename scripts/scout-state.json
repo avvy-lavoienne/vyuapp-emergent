@@ -1,0 +1,38 @@
+{
+  "last_pool_index": 0,
+  "phase": "DONE",
+  "topics": [
+    "Next.js 16 Server Components best practices",
+    "Next.js image optimization guide",
+    "Next.js middleware patterns 2026",
+    "Next.js 16 caching strategies",
+    "App Router vs Pages Router migration"
+  ],
+  "created_at": "2026-06-28T06:24:23.095108",
+  "selected_topic": "Next.js image optimization guide",
+  "updated_at": "2026-06-28T06:24:45.238529",
+  "research": {
+    "title": "Next.js image optimization guide",
+    "slug": "next.js-image-optimization-guide",
+    "excerpt": "Panduan lengkap Next.js image optimization guide untuk developer Indonesia.",
+    "sections": [
+      "Pendahuluan",
+      "Mengapa Next.js image optimization guide Penting",
+      "Konsep Dasar",
+      "Best Practices",
+      "Studi Kasus",
+      "Kesimpulan"
+    ],
+    "sources": [
+      "https://nextjs.org/docs",
+      "https://vercel.com/blog"
+    ],
+    "word_count": 2500,
+    "category": "Engineering",
+    "tags": [
+      "Next.js",
+      "Tutorial",
+      "Web Dev"
+    ]
+  }
+}
