@@ -9,7 +9,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 
 load_dotenv('/root/vyuapp-emergent/.env')
 
-BOT_TOKEN = "8716453974:AAEWm-QWepk31vMx-7tIxBuAN_ioUoaBowo"
+BOT_TOKEN=os.getenv("VYUAPP_WRITER_BOT_TOKEN", "")
 CHAT_ID = int(os.getenv('VYUAPP_WRITER_CHAT_ID', '0'))
 SUPABASE_URL = os.getenv('NEXT_PUBLIC_SUPABASE_URL', '')
 SUPABASE_KEY = os.getenv('SUPABASE_SERVICE_ROLE_KEY', '')
