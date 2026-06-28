@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""VyuApp Writer Bot v2 — Conversational workflow with real Scout research."""
+"""VyuApp Writer Bot v2 — Telegram UI, Scout does the work.
+
+Bot handles Telegram conversation.
+Scout (Hermes) does research, writing, and publishing.
+"""
 
 import os, json, subprocess, logging, requests, re
 from datetime import datetime
@@ -9,11 +13,12 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 
 load_dotenv('/root/vyuapp-emergent/.env')
 
-BOT_TOKEN=os.getenv("VYUAPP_WRITER_BOT_TOKEN", "")
+BOT_TOKEN=os.getenv('VYUAPP_WRITER_BOT_TOKEN', '')
 CHAT_ID = int(os.getenv('VYUAPP_WRITER_CHAT_ID', '0'))
 SUPABASE_URL = os.getenv('NEXT_PUBLIC_SUPABASE_URL', '')
 SUPABASE_KEY = os.getenv('SUPABASE_SERVICE_ROLE_KEY', '')
 STATE_FILE = '/root/vyuapp-emergent/scripts/scout-state.json'
+REPO_PATH = '/root/vyuapp-emergent'
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('vyuapp-writer')
@@ -45,7 +50,7 @@ def publish_to_supabase(title, slug, excerpt, content, cover, category, tags):
         'status': 'published', 'published_at': datetime.now().isoformat()
     }
     r = requests.post(f'{SUPABASE_URL}/rest/v1/articles', json=article, headers=supa_headers())
-    return r.status_code in (200, 201), r.text[:200]
+    return r.status_code in (200, 201)
 
 # ─── Greeting ───
 
@@ -56,211 +61,159 @@ def greeting():
     elif 15 <= h < 18: return 'Selamat sore'
     return 'Selamat malam'
 
-# ─── Real Research ───
+# ─── Scout: Find Topics ───
 
-def do_research(topic):
-    """Real research using Hermes Scout (web search)."""
-    
-    # Use Hermes CLI for web search — Scout has proper web_search tool
-    search_prompt = f'use web_search to find 5 results about: {topic}. Return title, url, and brief description for each result.'
-    
+def scout_find_topics():
+    """Ask Scout to find 5 quality topics."""
+    prompt = (
+        'Find 5 trending tech topics for a Indonesian web development blog. '
+        'Topics should be about: Next.js, Supabase, TypeScript, Docker, or AI in web dev. '
+        'Return ONLY a numbered list of 5 topics, nothing else. Example:\n'
+        '1. Next.js 16 Server Components best practices\n'
+        '2. Supabase RLS policies guide\n'
+        '3. TypeScript advanced patterns 2026\n'
+        '4. Docker for Next.js production deployment\n'
+        '5. AI integration in web applications'
+    )
     try:
         result = subprocess.run(
-            ['hermes', '-z', search_prompt, '--yolo', '--toolsets', 'web'],
-            capture_output=True, text=True, timeout=60
+            ['hermes', '-z', prompt, '--yolo'],
+            capture_output=True, text=True, timeout=60,
+            cwd=REPO_PATH
         )
-        scout_output = result.stdout.strip()
-    except Exception as e:
-        logger.error(f'Hermes Scout error: {e}')
-        scout_output = ''
-    
-    # Parse search results from Scout output
-    search_results = []
-    if scout_output:
-        lines = scout_output.split('\n')
-        current = {}
-        for line in lines:
+        output = result.stdout.strip()
+        # Parse numbered list
+        topics = []
+        for line in output.split('\n'):
             line = line.strip()
-            if line.startswith(('1.', '2.', '3.', '4.', '5.')):
-                if current.get('title'):
-                    search_results.append(current)
-                current = {'title': line[3:].strip(), 'url': '', 'snippet': ''}
-            elif line.startswith('http'):
-                current['url'] = line.strip()
-            elif line and not line.startswith('Mau') and not line.startswith('Hasil'):
-                if current.get('title') and not current.get('snippet'):
-                    current['snippet'] = line
-        if current.get('title'):
-            search_results.append(current)
-    
-    # Fetch content from top 3 URLs
-    contents = []
-    for sr in search_results[:3]:
-        url = sr.get('url', '')
-        if not url or not url.startswith('http'):
-            continue
-        try:
-            resp = requests.get(url, timeout=10, headers={'User-Agent': 'Mozilla/5.0'})
-            if resp.status_code == 200:
-                text = resp.text
-                text = re.sub(r'<script[^>]*>.*?</script>', '', text, flags=re.DOTALL)
-                text = re.sub(r'<style[^>]*>.*?</style>', '', text, flags=re.DOTALL)
-                text = re.sub(r'<[^>]+>', ' ', text)
-                text = re.sub(r'\s+', ' ', text).strip()
-                if len(text) > 200:
-                    contents.append({'url': url, 'content': text[:5000]})
-        except:
-            pass
-    
-    # Build sections
-    sections = [
-        {'title': 'Pendahuluan', 'prompt': 'kenalan dan pengantar topik'},
-        {'title': 'Mengapa Topik Ini Penting', 'prompt': 'relevansi dan manfaat'},
-        {'title': 'Konsep dan Arsitektur', 'prompt': 'penjelasan teknis fundamental'},
-        {'title': 'Implementasi dan Cara Kerja', 'prompt': 'langkah implementasi'},
-        {'title': 'Best Practices', 'prompt': 'praktik terbaik dari sumber'},
-        {'title': 'Perbandingan dan Alternatif', 'prompt': 'bandingkan dengan alternatif'},
-        {'title': 'Studi Kasus Nyata', 'prompt': 'contoh penerapan di dunia nyata'},
-        {'title': 'Tantangan dan Solusi', 'prompt': 'masalah umum dan cara mengatasi'},
-        {'title': 'Kesimpulan dan Rekomendasi', 'prompt': 'ringkasan dan saran'},
-    ]
-    
-    # Build tags
-    words = topic.lower().split()
-    tags = [w for w in words if len(w) > 3][:4]
-    tags.append('Tutorial')
-    tags.append('Web Dev')
-    
-    slug = topic.lower().replace(' ', '-').replace('/', '-').replace(':', '').replace('?', '')[:60]
-    
-    return {
-        'title': topic,
-        'slug': slug,
-        'excerpt': f'Panduan lengkap {topic} berdasarkan riset dari {len(search_results)} sumber. Pelajari konsep, implementasi, dan best practices secara mendalam.',
-        'sections': sections,
-        'sources': search_results,
-        'contents': contents,
-        'scout_output': scout_output,
-        'word_count': 2500,
-        'category': 'Engineering',
-        'tags': tags
-    }
+            for prefix in ['1.', '2.', '3.', '4.', '5.']:
+                if line.startswith(prefix):
+                    topic = line[len(prefix):].strip()
+                    if topic:
+                        topics.append(topic)
+                    break
+        return topics[:5]
+    except Exception as e:
+        logger.error(f'Scout find topics error: {e}')
+        return []
 
-def generate_article_html(research):
-    """Generate substantial article HTML from research data."""
-    title = research['title']
-    sections = research['sections']
-    sources = research.get('sources', [])
-    contents = research.get('contents', [])
-    
-    # Collect all snippets from search results
-    all_snippets = [s['snippet'] for s in sources if s.get('snippet')]
-    
-    html = f'<h1>{title}</h1>\n'
-    
-    # Introduction paragraph
-    intro = f'Artikel ini membahas {title} secara mendalam berdasarkan riset dari {len(sources)} sumber terpercaya.'
-    if all_snippets:
-        intro += f' {all_snippets[0][:200]}'
-    html += f'<p>{intro}</p>\n'
-    
-    # Generate each section
-    for i, section in enumerate(sections):
-        html += f'<h2>{section["title"]}</h2>\n'
+# ─── Scout: Research + Write + Publish ───
+
+def scout_research_and_write(topic):
+    """Ask Scout to research, write, and save article to a file."""
+    prompt = f'''You are writing an article for vyuapp.my.id blog.
+
+TOPIC: {topic}
+
+YOUR TASK — Do ALL of these steps:
+
+1. RESEARCH: Use web_search to find 3-5 real sources about "{topic}". Get real data, statistics, examples.
+
+2. WRITE: Write a comprehensive article in Indonesian (NO English sentences, only technical terms kept in English).
+   - Format: HTML (<h1>, <h2>, <h3>, <p>, <ul>, <li>, <strong>, <em>, <a>, <img>)
+   - Minimum 2000 words
+   - 8-10 sections with H2 headings
+   - Include 2-3 internal links to existing articles:
+     * /insights/studio-kecil-mengalahkan-agensi-besar
+     * /insights/sellica-mesin-intelijen-pasar
+     * /insights/avalon-estetika-sebagai-strategi
+   - Include 3-5 Unsplash images via <img> tags with descriptive alt text
+   - End with FAQ section (3 questions)
+   - Include a Sources section with the URLs you found
+
+3. SAVE: Write the complete article to /tmp/vyuapp-article.json as JSON:
+   {{
+     "title": "Article Title Here",
+     "slug": "article-slug-here",
+     "excerpt": "150 char summary",
+     "content": "<h1>Full HTML content here</h1>",
+     "cover": "https://images.unsplash.com/photo-XXXX?w=1600&q=80",
+     "category": "Engineering",
+     "tags": ["tag1", "tag2", "tag3"]
+   }}
+
+IMPORTANT: The article content must be REAL paragraphs written from your research, NOT template text.
+Each section must have 2-3 paragraphs of actual content.
+
+Write the file using the write_file tool or terminal echo command.'''
+
+    try:
+        result = subprocess.run(
+            ['hermes', '-z', prompt, '--yolo', '--toolsets', 'web,terminal,file'],
+            capture_output=True, text=True, timeout=300,
+            cwd=REPO_PATH
+        )
+        output = result.stdout.strip()
+        logger.info(f'Scout output length: {len(output)} chars')
         
-        # Find relevant content from research
-        section_content = []
+        # Try to read the saved article file
+        if os.path.exists('/tmp/vyuapp-article.json'):
+            with open('/tmp/vyuapp-article.json') as f:
+                article = json.load(f)
+            return article, output
         
-        # Try to get content from fetched pages
-        for c in contents:
-            text = c.get('content', '')
-            if text and len(text) > 100:
-                # Extract paragraphs that might be relevant
-                paragraphs = text.split('. ')
-                relevant = [p for p in paragraphs if len(p) > 30][:3]
-                section_content.extend(relevant)
+        # Fallback: try to extract JSON from Scout output
+        json_match = re.search(r'\{[^{}]*"title"[^{}]*"content"[^{}]*\}', output, re.DOTALL)
+        if json_match:
+            try:
+                article = json.loads(json_match.group())
+                return article, output
+            except:
+                pass
         
-        # Add snippets from search results
-        if i < len(all_snippets):
-            section_content.append(all_snippets[i])
-        
-        # Generate paragraph from collected content
-        if section_content:
-            # Combine and clean
-            paragraph = '. '.join(section_content[:3])
-            if len(paragraph) > 100:
-                # Ensure it ends properly
-                if not paragraph.endswith('.'):
-                    paragraph += '.'
-                html += f'<p>{paragraph}</p>\n'
-                
-                # Add a second paragraph with more detail
-                if len(section_content) > 3:
-                    paragraph2 = '. '.join(section_content[3:6])
-                    if len(paragraph2) > 50:
-                        html += f'<p>{paragraph2}.</p>\n'
-            else:
-                html += f'<p>{section["prompt"].capitalize()} merupakan aspek penting dari {title}. Pemahaman yang baik tentang {section["title"].lower()} akan membantu implementasi yang lebih efektif dan optimal.</p>\n'
-        else:
-            html += f'<p>Bagian ini menjelaskan tentang {section["title"].lower()} dalam konteks {title}. {section["prompt"].capitalize()} adalah komponen kunci yang perlu diperhatikan untuk hasil yang optimal.</p>\n'
-    
-    # Sources section
-    if sources:
-        html += '<h2>Sumber dan Referensi</h2>\n<p>Sumber yang digunakan dalam artikel ini:</p>\n<ul>\n'
-        for s in sources[:5]:
-            if s.get('url') and s.get('title'):
-                html += f'<li><a href="{s["url"]}">{s["title"]}</a></li>\n'
-        html += '</ul>\n'
-    
-    return html
+        return None, output
+    except Exception as e:
+        logger.error(f'Scout research error: {e}')
+        return None, str(e)
 
 # ─── Commands ───
 
 async def cmd_start(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         'Halo! Saya VyuApp Writer Bot 🤖\n\n'
-        '/topics — Cari 5 topik hari ini\n'
-        '/status — Cek status workflow\n'
+        '/topics — Scout cari 5 topik\n'
+        '/status — Cek status\n'
         '/help — Bantuan'
     )
 
 async def cmd_help(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
         'Cara kerja:\n'
-        '1. /topics → Scout cari 5 topik\n'
+        '1. /topics → Scout cari topik\n'
         '2. Pilih nomor (1-5)\n'
-        '3. Scout riset mendalam (web search)\n'
+        '3. Scout riset + tulis artikel\n'
         '4. Ketik "approve" atau "reject"\n'
-        '5. Artikel terbit otomatis!'
+        '5. Artikel terbit!'
     )
 
 async def cmd_status(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     s = load_state()
-    phase = s.get('phase', 'IDLE')
-    topic = s.get('selected_topic', '-')
-    await update.message.reply_text(f'Phase: {phase}\nTopik: {topic}\nUpdate: {s.get("updated_at", "-")}')
+    await update.message.reply_text(
+        f'Phase: {s.get("phase", "IDLE")}\n'
+        f'Topik: {s.get("selected_topic", "-")}\n'
+        f'Update: {s.get("updated_at", "-")}'
+    )
 
 async def cmd_topics(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     if update.effective_chat.id != CHAT_ID:
         return await update.message.reply_text('Unauthorized.')
     
-    try:
-        result = subprocess.run(
-            ['python3', '/root/vyuapp-emergent/scripts/scout-topics.py'],
-            capture_output=True, text=True, timeout=30
-        )
-    except Exception as e:
-        return await update.message.reply_text(f'Error: {e}')
+    await update.message.reply_text('🔍 Scout mencari topik...')
+    
+    topics = scout_find_topics()
+    
+    if not topics:
+        return await update.message.reply_text('❌ Scout gagal cari topik. Coba lagi.')
     
     s = load_state()
-    topics = s.get('topics', [])
-    if not topics:
-        return await update.message.reply_text('Gagal cari topik.')
+    s['phase'] = 'WAITING_TOPIC_SELECTION'
+    s['topics'] = topics
+    save_state(s)
     
-    text = f'{greeting()}, Vy! ☀️\n\n5 topik untuk hari ini:\n\n'
+    text = f'{greeting()}, Vy! ☀️\n\n5 topik hari ini:\n\n'
     for i, t in enumerate(topics, 1):
         text += f'{i}. {t}\n'
-    text += '\nKetik nomor (1-5) 🎯'
+    text += '\nPilih nomor (1-5) 🎯'
     await update.message.reply_text(text)
 
 # ─── Message Handler ───
@@ -281,37 +234,56 @@ async def handle_msg(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
             return await update.message.reply_text('Nomor tidak valid.')
         
         topic = topics[idx]
-        s['phase'] = 'RESEARCHING'
+        s['phase'] = 'SCOUT_RESEARCHING'
         s['selected_topic'] = topic
         save_state(s)
         
-        await update.message.reply_text(f'Riset: {topic}\n\nScout mencari data... 🔍')
+        await update.message.reply_text(
+            f'🔍 Scout sedang riset & tulis artikel:\n\n'
+            f'{topic}\n\n'
+            f'⏳ Estimasi: 2-5 menit...\n'
+            f'(Scout akan riset web, tulis 2000+ kata, simpan ke file)'
+        )
         
-        # Real research
-        research = do_research(topic)
+        # Scout does everything
+        article, scout_output = scout_research_and_write(topic)
         
-        if research:
+        if article and article.get('content'):
+            # Check if content is real (not template)
+            content = article.get('content', '')
+            content_words = len(re.sub(r'<[^>]+>', ' ', content).split())
+            
+            if content_words < 200:
+                s['phase'] = 'WAITING_TOPIC_SELECTION'
+                save_state(s)
+                await update.message.reply_text(
+                    '❌ Artikel terlalu pendek. Scout perlu tulis lebih banyak.\n'
+                    'Ketik /topics untuk topik baru.'
+                )
+                return
+            
             s['phase'] = 'WAITING_APPROVAL'
-            s['research'] = research
+            s['article'] = article
+            s['word_count'] = content_words
             save_state(s)
             
-            text = f'Review Artikel:\n\n'
-            text += f'Judul: {research["title"]}\n'
-            text += f'Kata: ~{research["word_count"]}\n'
-            text += f'Sections: {len(research["sections"])}\n'
-            text += f'Sumber: {len(research["sources"])} URLs\n\n'
-            text += 'Outline:\n'
-            for i, sec in enumerate(research['sections'], 1):
-                text += f'{i}. {sec}\n'
-            text += '\nSumber ditemukan:\n'
-            for s_item in research['sources'][:3]:
-                text += f'  - {s_item["title"][:50]}\n'
-            text += '\nKetik "approve" atau "reject"'
+            preview = re.sub(r'<[^>]+>', ' ', content[:800]).strip()
+            text = f'📝 Review Artikel:\n\n'
+            text += f'Judul: {article.get("title", "")}\n'
+            text += f'Kata: ~{content_words}\n'
+            text += f'Sumber: {len(article.get("tags", []))} tags\n\n'
+            text += f'Preview:\n{preview[:500]}...\n\n'
+            text += 'Ketik "approve" atau "reject"'
             await update.message.reply_text(text)
         else:
-            s['phase'] = 'IDLE'
+            s['phase'] = 'WAITING_TOPIC_SELECTION'
             save_state(s)
-            await update.message.reply_text('Riset gagal. /topics lagi.')
+            preview = scout_output[:500] if scout_output else 'No output'
+            await update.message.reply_text(
+                f'❌ Scout gagal generate artikel.\n\n'
+                f'Output: {preview}\n\n'
+                f'Ketik /topics untuk coba lagi.'
+            )
         return
     
     # Approval
@@ -319,43 +291,41 @@ async def handle_msg(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         if text.lower() in ('approve', 'ya', 'ok', 'oke'):
             s['phase'] = 'PUBLISHING'
             save_state(s)
-            await update.message.reply_text('Publishing...')
+            await update.message.reply_text('🚀 Publishing...')
             
-            research = s.get('research', {})
-            content = generate_article_html(research)
-            
-            ok, msg = publish_to_supabase(
-                title=research.get('title', 'Article'),
-                slug=research.get('slug', 'article'),
-                excerpt=research.get('excerpt', ''),
-                content=content,
-                cover='https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1600&q=80',
-                category=research.get('category', 'Engineering'),
-                tags=research.get('tags', ['Tutorial'])
+            article = s.get('article', {})
+            ok = publish_to_supabase(
+                title=article.get('title', 'Article'),
+                slug=article.get('slug', 'article'),
+                excerpt=article.get('excerpt', ''),
+                content=article.get('content', ''),
+                cover=article.get('cover', 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1600&q=80'),
+                category=article.get('category', 'Engineering'),
+                tags=article.get('tags', ['Tutorial'])
             )
             
             if ok:
-                slug = research.get('slug', 'article')
+                slug = article.get('slug', 'article')
                 s['phase'] = 'DONE'
                 save_state(s)
                 await update.message.reply_text(
-                    f'Artikel Terbit!\n\n'
-                    f'Judul: {research.get("title", "")}\n'
-                    f'Kata: ~{research.get("word_count", "")}\n\n'
+                    f'✅ Artikel Terbit!\n\n'
+                    f'Judul: {article.get("title", "")}\n'
+                    f'Kata: ~{s.get("word_count", "?")}\n\n'
                     f'https://vyuapp.my.id/insights/{slug}\n\n'
                     f'/topics untuk topik berikutnya!'
                 )
             else:
                 s['phase'] = 'WAITING_APPROVAL'
                 save_state(s)
-                await update.message.reply_text(f'Gagal publish: {msg}')
+                await update.message.reply_text('❌ Gagal publish. Coba lagi.')
             return
         
         elif text.lower() in ('reject', 'tidak', 'batal'):
             s['phase'] = 'IDLE'
             s['selected_topic'] = None
             save_state(s)
-            await update.message.reply_text('Dibatalkan. /topics untuk baru.')
+            await update.message.reply_text('❌ Dibatalkan. /topics untuk baru.')
             return
     
     # Default
@@ -365,6 +335,8 @@ async def handle_msg(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text('Pilih nomor 1-5.')
     elif phase == 'WAITING_APPROVAL':
         await update.message.reply_text('Ketik "approve" atau "reject".')
+    elif phase == 'SCOUT_RESEARCHING':
+        await update.message.reply_text('⏳ Scout sedang kerja...')
 
 # ─── Main ───
 

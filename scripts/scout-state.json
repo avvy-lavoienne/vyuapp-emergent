@@ -1,20 +1,20 @@
 {
-  "last_pool_index": 2,
+  "last_pool_index": 3,
   "phase": "DONE",
   "topics": [
-    "Progressive Web Apps guide",
-    "Web Performance optimization",
-    "Web security checklist 2026",
-    "Tailwind CSS 4 new features",
-    "TypeScript advanced patterns 2026"
+    "CI/CD with GitHub Actions",
+    "Monitoring web apps in production",
+    "Vercel deployment optimization",
+    "Database migration strategies",
+    "Docker for Next.js production"
   ],
-  "created_at": "2026-06-28T06:53:32.416841",
-  "selected_topic": "Tailwind CSS 4 new features",
-  "updated_at": "2026-06-28T06:53:48.927621",
+  "created_at": "2026-06-28T06:58:20.230246",
+  "selected_topic": "Docker for Next.js production",
+  "updated_at": "2026-06-28T06:59:05.115546",
   "research": {
-    "title": "Tailwind CSS 4 new features",
-    "slug": "tailwind-css-4-new-features",
-    "excerpt": "Panduan lengkap Tailwind CSS 4 new features berdasarkan riset dari 0 sumber. Pelajari konsep, implementasi, dan best practices secara mendalam.",
+    "title": "Docker for Next.js production",
+    "slug": "docker-for-next.js-production",
+    "excerpt": "Panduan lengkap Docker for Next.js production berdasarkan riset dari 5 sumber. Pelajari konsep, implementasi, dan best practices secara mendalam.",
     "sections": [
       {
         "title": "Pendahuluan",
@@ -53,13 +53,41 @@
         "prompt": "ringkasan dan saran"
       }
     ],
-    "sources": [],
+    "sources": [
+      {
+        "title": "**Docker for Front-end developers - Next.js Production Dockerfile**",
+        "url": "",
+        "snippet": "URL: https://forums.docker.com/t/docker-for-front-end-developers-next-js-production-dockerfile/146652"
+      },
+      {
+        "title": "**Install next.js through Dockerfile? - General - Docker**",
+        "url": "",
+        "snippet": "URL: https://forums.docker.com/t/install-next-js-through-dockerfile/136978"
+      },
+      {
+        "title": "**How to Deploy Next.js to a Docker Container: Complete 2025**",
+        "url": "",
+        "snippet": "URL: https://serversinc.io/blog/how-to-deploy-next-js-to-a-docker-container-complete-2025-production-guide/"
+      },
+      {
+        "title": "**Dockerizing Next.js**",
+        "url": "",
+        "snippet": "URL: https://renanleonel.com/posts/dockerizing-nextjs/"
+      },
+      {
+        "title": "**Running Next.js with Docker - Markus Oberlehner**",
+        "url": "",
+        "snippet": "URL: https://markus.oberlehner.net/blog/running-nextjs-with-docker/"
+      }
+    ],
     "contents": [],
+    "scout_output": "Berikut 5 hasil pencarian tentang Docker untuk Next.js production:\n\n1. **Docker for Front-end developers - Next.js Production Dockerfile**\n   URL: https://forums.docker.com/t/docker-for-front-end-developers-next-js-production-dockerfile/146652\n   Description: Optimized Next.js Production Dockerfile untuk streamline deployments. Forum discussion tentang best practices Docker untuk front-end developers.\n\n2. **Install next.js through Dockerfile? - General - Docker**\n   URL: https://forums.docker.com/t/install-next-js-through-dockerfile/136978\n   Description: Tutorial tentang cara install Next.js ke dalam container menggunakan Dockerfile. Mencakup cara setup web application dalam container.\n\n3. **How to Deploy Next.js to a Docker Container: Complete 2025**\n   URL: https://serversinc.io/blog/how-to-deploy-next-js-to-a-docker-container-complete-2025-production-guide/\n   Description: Guide lengkap production-ready untuk deploy Next.js ke Docker container. Mencakup production Dockerfile, multi-stage builds, dan deploy ke berbagai cloud provider.\n\n4. **Dockerizing Next.js**\n   URL: https://renanleonel.com/posts/dockerizing-nextjs/\n   Description: Tutorial step-by-step untuk containerize Next.js application menggunakan Docker. Mencakup setup WSL, Docker, Docker Compose, dan integration dengan project Next.js.\n\n5. **Running Next.js with Docker - Markus Oberlehner**\n   URL: https://markus.oberlehner.net/blog/running-nextjs-with-docker/\n   Description: Cara menjalankan Next.js application dengan Docker menggunakan command sederhana. Fokus pada kemudahan penggunaan tanpa perlu mengingat banyak parameter.\n\nSemua hasil ini relevan untuk deployment Next.js menggunakan Docker di production environment. Yang paling lengkap adalah result nomor 3 (guide lengkap 2025).",
     "word_count": 2500,
     "category": "Engineering",
     "tags": [
-      "tailwind",
-      "features",
+      "docker",
+      "next.js",
+      "production",
       "Tutorial",
       "Web Dev"
     ]
