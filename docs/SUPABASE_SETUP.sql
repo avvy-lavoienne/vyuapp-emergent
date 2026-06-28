@@ -102,3 +102,32 @@ drop policy if exists "Public can read featured-images" on storage.objects;
 create policy "Public can read featured-images"
 on storage.objects for select to anon, authenticated
 using (bucket_id = 'featured-images');
+
+-- =========================
+-- PROPOSALS (for VyuApp Writer)
+-- =========================
+create table if not exists public.proposals (
+  id text primary key,
+  title text not null,
+  excerpt text,
+  topic text,
+  sources text[] default '{}',
+  category text default 'Engineering',
+  tags text[] default '{}',
+  estimated_words integer default 2000,
+  status text not null default 'pending' check (status in ('pending', 'approved', 'rejected', 'published')),
+  created_at timestamptz default now(),
+  updated_at timestamptz default now()
+);
+
+drop trigger if exists handle_proposals_updated_at on public.proposals;
+create trigger handle_proposals_updated_at
+before update on public.proposals
+for each row execute procedure extensions.moddatetime (updated_at);
+
+alter table public.proposals enable row level security;
+
+drop policy if exists "Authenticated full access proposals" on public.proposals;
+create policy "Authenticated full access proposals"
+on public.proposals for all to authenticated
+using (true) with check (true);
