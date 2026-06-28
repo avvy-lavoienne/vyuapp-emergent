@@ -16,18 +16,23 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
-  if (!article) return { title: 'Artikel tidak ditemukan' };
+  if (!article || article.status !== 'published') return { title: 'Artikel tidak ditemukan', robots: { index: false, follow: false } };
   const url = `${baseUrl}/insights/${article.slug}`;
   return {
     title: `${article.title} — VyuApp Insights`,
     description: article.excerpt,
+    robots: { index: true, follow: true },
     openGraph: {
       title: article.title,
       description: article.excerpt,
       type: 'article',
       url,
       publishedTime: article.published_at,
-      images: article.cover ? [{ url: article.cover, width: 1200, height: 630 }] : [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
+      modifiedTime: article.updated_at,
+      authors: ['VyuApp Studio'],
+      section: article.category,
+      tags: article.tags || [],
+      images: article.cover ? [{ url: article.cover, width: 1200, height: 630, alt: article.title }] : [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
     },
     twitter: { card: 'summary_large_image', title: article.title, description: article.excerpt, images: article.cover ? [article.cover] : [`${baseUrl}/opengraph-image.png`] },
     alternates: { canonical: url },
@@ -58,11 +63,26 @@ export default async function ArticlePage({ params }) {
   const { slug } = await params;
   const article = await getArticleBySlug(slug);
   if (!article || article.status !== 'published') notFound();
-  const all = await getPublishedArticles({ limit: 8 });
-  const related = all.filter(a => a.id !== article.id).slice(0, 3);
+  const all = await getPublishedArticles({ limit: 100 });
+  const others = all.filter(a => a.id !== article.id);
+  
+  // Semantic matching: same category first, then shared tags
+  const withScore = others.map(a => {
+    let score = 0;
+    if (a.category === article.category) score += 10;
+    const sharedTags = (a.tags || []).filter(t => (article.tags || []).includes(t));
+    score += sharedTags.length * 3;
+    return { ...a, score };
+  }).sort((a, b) => b.score - a.score);
+  const related = withScore.slice(0, 3);
+
+  // Previous/Next navigation
+  const currentIndex = all.findIndex(a => a.id === article.id);
+  const prevArticle = currentIndex < all.length - 1 ? all[currentIndex + 1] : null;
+  const nextArticle = currentIndex > 0 ? all[currentIndex - 1] : null;
 
   const [c1, c2, c3] = splitHTMLByParagraphs(article.content);
-  const readMin = Math.max(2, Math.round((article.content || '').length / 1000));
+  const readMin = Math.max(2, Math.round((article.content || '').replace(/<[^>]*>/g, '').split(/\s+/).length / 200));
   const SLOT_TOP = process.env.NEXT_PUBLIC_ADSENSE_SLOT_TOP;
   const SLOT_MID = process.env.NEXT_PUBLIC_ADSENSE_SLOT_MID;
   const SLOT_END = process.env.NEXT_PUBLIC_ADSENSE_SLOT_END;
@@ -126,10 +146,29 @@ export default async function ArticlePage({ params }) {
                 <p className="text-xs text-[#6B6B68]">Bespoke web engineering — Garut, ID</p>
               </div>
             </div>
-            <ShareButton title={article.title} />
+            <ShareButton />
           </div>
         </div>
       </article>
+
+      {(prevArticle || nextArticle) && (
+        <section className="border-t border-[#E5E4E0]">
+          <div className="max-w-4xl mx-auto px-6 md:px-10 py-10 flex flex-col sm:flex-row gap-4">
+            {prevArticle ? (
+              <Link href={`/insights/${prevArticle.slug}`} className="flex-1 p-5 rounded-2xl border border-[#E5E4E0] bg-white hover:border-[#D1D0C9] transition group">
+                <span className="text-xs text-[#8F8E8A] font-mono">← Sebelumnya</span>
+                <p className="mt-2 text-sm font-semibold text-[#141413] group-hover:text-[#6D5BA0] transition line-clamp-2">{prevArticle.title}</p>
+              </Link>
+            ) : <div className="flex-1" />}
+            {nextArticle ? (
+              <Link href={`/insights/${nextArticle.slug}`} className="flex-1 p-5 rounded-2xl border border-[#E5E4E0] bg-white hover:border-[#D1D0C9] transition group text-right">
+                <span className="text-xs text-[#8F8E8A] font-mono">Selanjutnya →</span>
+                <p className="mt-2 text-sm font-semibold text-[#141413] group-hover:text-[#6D5BA0] transition line-clamp-2">{nextArticle.title}</p>
+              </Link>
+            ) : <div className="flex-1" />}
+          </div>
+        </section>
+      )}
 
       {related.length > 0 && (
         <section className="py-24 md:py-32 border-t border-[#E5E4E0]">
