@@ -75,7 +75,24 @@ def do_research(topic):
     except Exception as e:
         logger.error(f'Search error: {e}')
     
-    # Fetch top 3 articles
+    # If no search results, try alternative queries
+    if not search_results:
+        alt_queries = [f'{topic} tutorial', f'{topic} guide', f'{topic} 2026']
+        for q in alt_queries:
+            try:
+                with DDGS() as ddgs:
+                    for r in ddgs.text(q, max_results=3):
+                        search_results.append({
+                            'title': r.get('title', ''),
+                            'url': r.get('href', ''),
+                            'snippet': r.get('body', '')
+                        })
+                if search_results:
+                    break
+            except:
+                pass
+    
+    # Fetch content from top 3 URLs
     contents = []
     for sr in search_results[:3]:
         url = sr.get('url', '')
@@ -89,35 +106,36 @@ def do_research(topic):
                 text = re.sub(r'<style[^>]*>.*?</style>', '', text, flags=re.DOTALL)
                 text = re.sub(r'<[^>]+>', ' ', text)
                 text = re.sub(r'\s+', ' ', text).strip()
-                contents.append({'url': url, 'content': text[:4000]})
+                if len(text) > 200:
+                    contents.append({'url': url, 'content': text[:5000]})
         except:
             pass
     
-    # Build sections from research
+    # Build dynamic sections based on topic
     sections = [
-        'Pendahuluan',
-        'Landasan Konsep',
-        'Arsitektur dan Komponen Utama',
-        'Best Practices',
-        'Studi Kasus Nyata',
-        'Tantangan dan Solusi',
-        'Optimasi dan Performa',
-        'Kesimpulan dan Rekomendasi'
+        {'title': 'Pendahuluan', 'prompt': 'kenalan dan pengantar topik'},
+        {'title': 'Mengapa Topik Ini Penting', 'prompt': 'relevansi dan manfaat'},
+        {'title': 'Konsep dan Arsitektur', 'prompt': 'penjelasan teknis fundamental'},
+        {'title': 'Implementasi dan Cara Kerja', 'prompt': 'langkah implementasi'},
+        {'title': 'Best Practices', 'prompt': 'praktik terbaik dari sumber'},
+        {'title': 'Perbandingan dan Alternatif', 'prompt': 'bandingkan dengan alternatif'},
+        {'title': 'Studi Kasus Nyata', 'prompt': 'contoh penerapan di dunia nyata'},
+        {'title': 'Tantangan dan Solusi', 'prompt': 'masalah umum dan cara mengatasi'},
+        {'title': 'Kesimpulan dan Rekomendasi', 'prompt': 'ringkasan dan saran'},
     ]
     
-    # Build tags from topic
+    # Build tags
     words = topic.lower().split()
     tags = [w for w in words if len(w) > 3][:4]
     tags.append('Tutorial')
     tags.append('Web Dev')
     
-    # Create slug
     slug = topic.lower().replace(' ', '-').replace('/', '-').replace(':', '').replace('?', '')[:60]
     
     return {
         'title': topic,
         'slug': slug,
-        'excerpt': f'Panduan lengkap {topic} berdasarkan riset dari {len(search_results)} sumber terpercaya.',
+        'excerpt': f'Panduan lengkap {topic} berdasarkan riset dari {len(search_results)} sumber. Pelajari konsep, implementasi, dan best practices secara mendalam.',
         'sections': sections,
         'sources': search_results,
         'contents': contents,
@@ -127,37 +145,70 @@ def do_research(topic):
     }
 
 def generate_article_html(research):
-    """Generate real article HTML from research."""
+    """Generate substantial article HTML from research data."""
     title = research['title']
     sections = research['sections']
     sources = research.get('sources', [])
     contents = research.get('contents', [])
     
-    html = f'<h1>{title}</h1>\n'
-    html += f'<p>Panduan komprehensif tentang {title} yang disusun berdasarkan riset dari berbagai sumber terpercaya. Artikel ini membahas konsep, implementasi, dan best practices secara mendalam.</p>\n'
+    # Collect all snippets from search results
+    all_snippets = [s['snippet'] for s in sources if s.get('snippet')]
     
-    # Generate content from research
+    html = f'<h1>{title}</h1>\n'
+    
+    # Introduction paragraph
+    intro = f'Artikel ini membahas {title} secara mendalam berdasarkan riset dari {len(sources)} sumber terpercaya.'
+    if all_snippets:
+        intro += f' {all_snippets[0][:200]}'
+    html += f'<p>{intro}</p>\n'
+    
+    # Generate each section
     for i, section in enumerate(sections):
-        html += f'<h2>{section}</h2>\n'
+        html += f'<h2>{section["title"]}</h2>\n'
         
-        # Use real content from research if available
-        if contents and i < len(contents):
-            content_text = contents[i % len(contents)]['content']
-            # Take first few sentences
-            sentences = content_text.split('.')
-            paragraph = '. '.join(sentences[:5]) + '.'
-            if len(paragraph) > 50:
+        # Find relevant content from research
+        section_content = []
+        
+        # Try to get content from fetched pages
+        for c in contents:
+            text = c.get('content', '')
+            if text and len(text) > 100:
+                # Extract paragraphs that might be relevant
+                paragraphs = text.split('. ')
+                relevant = [p for p in paragraphs if len(p) > 30][:3]
+                section_content.extend(relevant)
+        
+        # Add snippets from search results
+        if i < len(all_snippets):
+            section_content.append(all_snippets[i])
+        
+        # Generate paragraph from collected content
+        if section_content:
+            # Combine and clean
+            paragraph = '. '.join(section_content[:3])
+            if len(paragraph) > 100:
+                # Ensure it ends properly
+                if not paragraph.endswith('.'):
+                    paragraph += '.'
                 html += f'<p>{paragraph}</p>\n'
+                
+                # Add a second paragraph with more detail
+                if len(section_content) > 3:
+                    paragraph2 = '. '.join(section_content[3:6])
+                    if len(paragraph2) > 50:
+                        html += f'<p>{paragraph2}.</p>\n'
             else:
-                html += f'<p>Bagian ini membahas aspek {section.lower()} dalam konteks {title}.</p>\n'
+                html += f'<p>{section["prompt"].capitalize()} merupakan aspek penting dari {title}. Pemahaman yang baik tentang {section["title"].lower()} akan membantu implementasi yang lebih efektif dan optimal.</p>\n'
         else:
-            html += f'<p>Bagian ini membahas aspek {section.lower()} dalam konteks {title}.</p>\n'
+            html += f'<p>Bagian ini menjelaskan tentang {section["title"].lower()} dalam konteks {title}. {section["prompt"].capitalize()} adalah komponen kunci yang perlu diperhatikan untuk hasil yang optimal.</p>\n'
     
     # Sources section
-    html += '<h2>Sumber</h2>\n<ul>\n'
-    for s in sources[:5]:
-        html += f'<li><a href="{s["url"]}">{s["title"]}</a></li>\n'
-    html += '</ul>\n'
+    if sources:
+        html += '<h2>Sumber dan Referensi</h2>\n<p>Sumber yang digunakan dalam artikel ini:</p>\n<ul>\n'
+        for s in sources[:5]:
+            if s.get('url') and s.get('title'):
+                html += f'<li><a href="{s["url"]}">{s["title"]}</a></li>\n'
+        html += '</ul>\n'
     
     return html
 
