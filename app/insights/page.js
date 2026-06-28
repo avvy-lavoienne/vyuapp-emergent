@@ -33,7 +33,7 @@ function formatDate(ts) {
   return new Date(ts).toLocaleDateString('id-ID', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
-function ArticleCard({ a, featured = false }) {
+function ArticleCard({ a, featured = false, index = 0 }) {
   return (
     <Link
       href={`/insights/${a.slug}`}
@@ -45,7 +45,7 @@ function ArticleCard({ a, featured = false }) {
             src={a.cover}
             alt={a.title}
             fill
-            priority={i === 0}
+            priority={index === 0}
             className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-700"
             sizes={featured ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
           />
@@ -130,7 +130,7 @@ export default async function InsightsPage({ searchParams }) {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7" key={`${category}-${tags}`}>
-              {articles.map((a, i) => <ArticleCard key={a.id} a={a} featured={i === 0} />)}
+              {articles.map((a, i) => <ArticleCard key={a.id} a={a} featured={i === 0} index={i} />)}
             </div>
           )}
         </div>
