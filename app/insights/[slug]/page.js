@@ -10,7 +10,28 @@ import ShareButton from '@/components/ShareButton';
 import TableOfContents from '@/components/TableOfContents';
 
 import { autoLink } from '@/lib/auto-linker';
-import { BreadcrumbJsonLd, ArticleJsonLd } from '@/components/JsonLd';
+import { BreadcrumbJsonLd, ArticleJsonLd, FAQPageJsonLd } from '@/components/JsonLd';
+
+function extractFAQs(html) {
+  if (!html) return [];
+  const faqs = [];
+  // Find FAQ section
+  const faqIdx = html.toLowerCase().indexOf('pertanyaan yang sering diajukan');
+  if (faqIdx === -1) return faqs;
+  
+  const faqSection = html.substring(faqIdx);
+  // Extract Q&A pairs
+  const regex = /<h3[^>]*>(.*?)<\/h3>\s*<p>(.*?)<\/p>/gs;
+  let match;
+  while ((match = regex.exec(faqSection)) !== null) {
+    const question = match[1].replace(/<[^>]+>/g, '').replace(/^Q:\s*/i, '').trim();
+    const answer = match[2].replace(/<[^>]+>/g, '').trim();
+    if (question && answer) {
+      faqs.push({ question, answer });
+    }
+  }
+  return faqs;
+}
 
 export const revalidate = 3600;
 
@@ -118,6 +139,7 @@ export default async function ArticlePage({ params }) {
         dateModified={article.updated_at}
         authorName="VyuApp Studio"
       />
+      <FAQPageJsonLd faqs={extractFAQs(article.content)} />
       <Navbar />
       <article className="pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-6 md:px-10">
