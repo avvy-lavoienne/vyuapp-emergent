@@ -215,6 +215,48 @@ function HomeContent() {
         </div>
       </section>
 
+      {/* Tim Kami */}
+      <section className="py-24 md:py-32 bg-[#F8F7F4]" id="tim-kami">
+        <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <SectionHeader
+            overline="Tim Kami"
+            title="9 AI Agent, 1 Visi"
+            description="Setiap agent memiliki peran spesifik. Bersama, mereka membentuk tim digital yang bekerja tanpa henti untuk proyek Anda."
+            align="center"
+          />
+          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              { emoji: '🌸', name: 'Hikari', role: 'Orchestrator', desc: 'Mengoordinasi semua agent dan mengelola alur kerja multi-agent.' },
+              { emoji: '🧙', name: 'Merlin', role: 'Research Specialist', desc: 'Riset komprehensif, analisis kompetitor, dan investigasi data.' },
+              { emoji: '📜', name: 'Bedivere', role: 'Content Creator', desc: 'Menulis artikel SEO-optimized, dokumentasi teknis, dan panduan.' },
+              { emoji: '⚔️', name: 'Lancelot', role: 'Full-Stack Developer', desc: 'Spesialis Next.js, Go, Python, Supabase, dan Tailwind CSS.' },
+              { emoji: '🛡️', name: 'Agravain', role: 'Quality Guardian', desc: 'Review kode, security audit, test design, dan bug detection.' },
+              { emoji: '☀️', name: 'Gawain', role: 'Infrastructure', desc: 'Deploy, Docker, CI/CD, monitoring, dan server management.' },
+              { emoji: '🎵', name: 'Tristan', role: 'Marketing Strategist', desc: 'Growth strategy, social media, content calendar, dan user retention.' },
+              { emoji: '🏛️', name: 'Lotus', role: 'Gov Systems', desc: 'Asisten khusus PNS Disdukcapil untuk surat-menyurat dan birokrasi.' },
+              { emoji: '🎓', name: 'Guru', role: 'Learning Mentor', desc: 'Kurikulum personal, accountability belajar, dan quiz interaktif.' },
+            ].map((agent) => (
+              <div
+                key={agent.name}
+                className="p-6 rounded-2xl border border-[#E5E4E0] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9]"
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-2xl">{agent.emoji}</span>
+                  <h3 className="text-lg font-semibold text-[#141413]">{agent.name}</h3>
+                </div>
+                <p className="font-mono text-[11px] text-[#6D5BA0] uppercase tracking-[0.1em]">{agent.role}</p>
+                <p className="mt-3 text-sm text-[#4A4A48] leading-relaxed">{agent.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <Link href="/portfolio/ai-agents" className="inline-flex items-center gap-2 text-[#6D5BA0] font-semibold text-sm hover:gap-3 transition-all">
+              Kenali seluruh tim <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="py-24 md:py-32" id="portfolio">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
