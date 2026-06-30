@@ -38,9 +38,10 @@ interface GetArticlesOptions {
   limit?: number;
   category?: string;
   tags?: string;
+  search?: string;
 }
 
-export async function getPublishedArticles({ limit = 100, category = '', tags = '' }: GetArticlesOptions = {}): Promise<Article[]> {
+export async function getPublishedArticles({ limit = 100, category = '', tags = '', search = '' }: GetArticlesOptions = {}): Promise<Article[]> {
   const supabase = await getServerSupabase();
   let query = supabase
     .from('articles')
@@ -56,12 +57,18 @@ export async function getPublishedArticles({ limit = 100, category = '', tags = 
   if (tags) {
     const tagList = tags.split(',').map(t => t.trim()).filter(Boolean);
     if (tagList.length === 1) {
-      // Single tag: use contains (array overlap)
       query = query.contains('tags', [tagList[0]]);
     } else if (tagList.length > 1) {
-      // Multiple tags: use overlaps (any match)
       query = query.overlaps('tags', tagList);
     }
+  }
+
+  if (search && search.trim()) {
+    const term = search.trim();
+    // Use ilike across title, excerpt, and content for broad compatibility
+    query = query.or(
+      `title.ilike.%${term}%,excerpt.ilike.%${term}%,content.ilike.%${term}%`
+    );
   }
 
   const { data, error } = await query;

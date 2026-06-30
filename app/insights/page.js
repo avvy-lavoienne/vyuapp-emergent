@@ -2,7 +2,9 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import SectionHeader from '@/components/SectionHeader';
 import ArticleFilters from '@/components/ArticleFilters';
+import ArticleSearch from '@/components/ArticleSearch';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import Image from 'next/image';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { getPublishedArticles } from '@/lib/data';
@@ -83,9 +85,10 @@ export default async function InsightsPage({ searchParams }) {
   const params = await searchParams;
   const category = params?.category || '';
   const tags = params?.tags || '';
+  const q = params?.q || '';
 
   const [articles, allArticles] = await Promise.all([
-    getPublishedArticles({ category, tags }),
+    getPublishedArticles({ category, tags, search: q }),
     getPublishedArticles(),
   ]);
 
@@ -112,6 +115,9 @@ export default async function InsightsPage({ searchParams }) {
 
       <section className="pb-4">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
+          <Suspense>
+            <ArticleSearch />
+          </Suspense>
           <ArticleFilters availableTags={availableTags} />
         </div>
       </section>
@@ -120,17 +126,36 @@ export default async function InsightsPage({ searchParams }) {
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           {articles.length === 0 ? (
             <div className="p-12 rounded-2xl border border-[#E5E4E0] bg-white text-center">
-              <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em]">// Belum ada artikel</p>
-              <p className="mt-3 text-sm text-[#4A4A48]">
-                {(category || tags) 
-                  ? 'Tidak ditemukan artikel yang cocok dengan filter. Coba filter lain.'
-                  : 'Buka panel admin untuk mulai menulis.'}
-              </p>
+              {q ? (
+                <>
+                  <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em]">// Tidak ditemukan</p>
+                  <p className="mt-3 text-sm text-[#4A4A48]">
+                    Tidak ada artikel yang cocok dengan pencarian &ldquo;{q}&rdquo;.
+                    {(category || tags) ? ' Coba hapus filter atau gunakan kata kunci lain.' : ''}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em]">// Belum ada artikel</p>
+                  <p className="mt-3 text-sm text-[#4A4A48]">
+                    {(category || tags)
+                      ? 'Tidak ditemukan artikel yang cocok dengan filter. Coba filter lain.'
+                      : 'Buka panel admin untuk mulai menulis.'}
+                  </p>
+                </>
+              )}
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7" key={`${category}-${tags}`}>
-              {articles.map((a, i) => <ArticleCard key={a.id} a={a} featured={i === 0} index={i} />)}
-            </div>
+            <>
+              {q && (
+                <p className="mb-5 text-sm text-[#636360]">
+                  {articles.length} hasil untuk &ldquo;{q}&rdquo;
+                </p>
+              )}
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7" key={`${category}-${tags}-${q}`}>
+                {articles.map((a, i) => <ArticleCard key={a.id} a={a} featured={i === 0} index={i} />)}
+              </div>
+            </>
           )}
         </div>
       </section>

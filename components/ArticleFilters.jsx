@@ -70,7 +70,7 @@ export default function ArticleFilters({ availableTags = [] }) {
     router.push('/insights', { scroll: false });
   }, [router]);
 
-  const hasFilters = activeCategory || activeTags.length > 0;
+  const hasFilters = activeCategory || activeTags.length > 0 || !!searchParams.get('q');
 
   return (
     <div className="mb-8 space-y-5">
@@ -133,6 +133,11 @@ export default function ArticleFilters({ availableTags = [] }) {
         <div className="flex items-center gap-3 pt-2 border-t border-[#E5E4E0]">
           <span className="text-xs text-[#636360]">
             Filter aktif:
+            {searchParams.get('q') && (
+              <span className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#6D5BA0]/10 text-[#6D5BA0] font-medium">
+                &ldquo;{searchParams.get('q')}&rdquo;
+              </span>
+            )}
             {activeCategory && (
               <span className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#6D5BA0]/10 text-[#6D5BA0] font-medium">
                 {activeCategory}
