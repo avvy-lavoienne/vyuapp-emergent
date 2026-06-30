@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 
 const CS_MODEL_BASE = process.env.CS_MODEL_BASE_URL || 'http://195.88.211.166:20128/v1';
-const CS_MODEL = process.env.CS_MODEL_NAME || 'nara/mimo-2.5';
+const CS_MODEL = process.env.CS_MODEL_NAME || 'nara/mimo-v2.5';
 const CS_API_KEY = process.env.CS_API_KEY || '';
 const RATE_LIMIT = 5;
+const ADMIN_PASSWORD = 'AkuWibuGanteng';
+const ADMIN_DURATION = 5 * 60 * 1000; // 5 minutes
 
 // In-memory rate limit store (per-process)
 const visitorSessions = new Map();
@@ -16,20 +18,34 @@ function getVisitorId(request) {
 
 function checkRateLimit(visitorId) {
   const now = Date.now();
-  const session = visitorSessions.get(visitorId) || { count: 0, resetAt: now + 60 * 60 * 1000 };
+  const session = visitorSessions.get(visitorId) || { count: 0, resetAt: now + 60 * 60 * 1000, adminUntil: 0 };
 
+  // Check admin mode
+  if (session.adminUntil > now) {
+    return { allowed: true, admin: true, remaining: Infinity };
+  }
+
+  // Reset if expired
   if (now > session.resetAt) {
     session.count = 0;
     session.resetAt = now + 60 * 60 * 1000;
   }
 
   if (session.count >= RATE_LIMIT) {
-    return false;
+    return { allowed: false, admin: false, remaining: 0 };
   }
 
   session.count++;
   visitorSessions.set(visitorId, session);
-  return true;
+  return { allowed: true, admin: false, remaining: RATE_LIMIT - session.count };
+}
+
+function activateAdmin(visitorId) {
+  const now = Date.now();
+  const session = visitorSessions.get(visitorId) || { count: 0, resetAt: now + 60 * 60 * 1000, adminUntil: 0 };
+  session.adminUntil = now + ADMIN_DURATION;
+  visitorSessions.set(visitorId, session);
+  return Math.floor(ADMIN_DURATION / 60000);
 }
 
 const SYSTEM_PROMPT = `Kamu adalah Hana, customer service VyuApp yang elegan dan cerdas. Kamu adalah kesan pertama yang didapat pengunjung vyuapp.my.id.
@@ -95,9 +111,20 @@ export async function POST(request) {
     }
 
     const visitorId = getVisitorId(request);
-    if (!checkRateLimit(visitorId)) {
+
+    // Check for admin password
+    if (message.trim() === ADMIN_PASSWORD) {
+      const minutes = activateAdmin(visitorId);
+      return NextResponse.json({
+        reply: `🔑 Admin mode activated! Rate limit removed for ${minutes} minutes. Enjoy testing!`,
+        admin: true,
+      });
+    }
+
+    const rateCheck = checkRateLimit(visitorId);
+    if (!rateCheck.allowed) {
       return NextResponse.json(
-        { error: 'Rate limit exceeded. Maximum 5 messages per session.' },
+        { error: 'Rate limit exceeded. Maximum 5 messages per hour.' },
         { status: 429 }
       );
     }

@@ -2,6 +2,17 @@
 
 import { useState, useEffect, useRef } from 'react';
 
+// Simple markdown to HTML parser
+function parseMarkdown(text) {
+  if (!text) return '';
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/`(.*?)`/g, '<code style="background:#f0f0f0;padding:1px 4px;border-radius:3px;font-size:12px">$1</code>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" style="color:#6D5BA0;text-decoration:underline">$1</a>')
+    .replace(/\n/g, '<br/>');
+}
+
 const STORAGE_KEY = 'vyuapp_chat_history';
 const RATE_LIMIT = 5;
 
@@ -108,9 +119,9 @@ export default function ChatWidget() {
           position: 'fixed',
           bottom: '24px',
           right: '24px',
-          width: '56px',
-          height: '56px',
-          borderRadius: '50%',
+          height: '48px',
+          padding: '0 20px',
+          borderRadius: '24px',
           backgroundColor: '#6D5BA0',
           color: '#fff',
           border: 'none',
@@ -120,20 +131,29 @@ export default function ChatWidget() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          gap: '8px',
           transition: 'transform 0.2s ease, background-color 0.2s ease',
-          transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
+          transform: isOpen ? 'scale(0.9)' : 'scale(1)',
+          fontSize: '14px',
+          fontWeight: 600,
         }}
-        onMouseEnter={e => { if (!isOpen) e.currentTarget.style.transform = 'scale(1.1)'; }}
-        onMouseLeave={e => { e.currentTarget.style.transform = isOpen ? 'rotate(45deg)' : 'rotate(0deg)'; }}
+        onMouseEnter={e => { if (!isOpen) e.currentTarget.style.transform = 'scale(1.05)'; }}
+        onMouseLeave={e => { e.currentTarget.style.transform = isOpen ? 'scale(0.9)' : 'scale(1)'; }}
       >
         {isOpen ? (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         ) : (
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-          </svg>
+          <>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              <circle cx="12" cy="10" r="0.5" fill="currentColor" />
+              <circle cx="8" cy="10" r="0.5" fill="currentColor" />
+              <circle cx="16" cy="10" r="0.5" fill="currentColor" />
+            </svg>
+            <span>Chat dengan Hana</span>
+          </>
         )}
       </button>
 
@@ -233,7 +253,7 @@ export default function ChatWidget() {
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-word',
               }}>
-                {msg.text}
+                {msg.role === 'visitor' ? msg.text : <span dangerouslySetInnerHTML={{ __html: parseMarkdown(msg.text) }} />}
               </div>
             </div>
           ))}
