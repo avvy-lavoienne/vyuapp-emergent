@@ -47,7 +47,7 @@ function ArticleCard({ a, featured = false, index = 0 }) {
           priority={index < 3}
           quality={80}
           className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-700"
-          sizes={featured ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 100vw, 33vw'}
+          sizes={featured ? '(max-width: 768px) 100vw, 50vw' : '(max-width: 768px) 100vw, 25vw'}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
         <div className="absolute top-4 left-4">
