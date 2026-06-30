@@ -42,6 +42,14 @@ export function WebSiteJsonLd() {
     publisher: { '@id': `${url}/#organization` },
     description: 'Studio rekayasa web bespoke & market intelligence.',
     inLanguage: 'id',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${url}/insights?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
