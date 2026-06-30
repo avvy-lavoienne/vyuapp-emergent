@@ -7,33 +7,37 @@ const RATE_LIMIT = 20;
 const ADMIN_PASSWORD = process.env.CHAT_ADMIN_PASSWORD || 'AkuWibuGanteng';
 const ADMIN_DURATION = 5 * 60 * 1000; // 5 minutes
 
-// Lazy-init Redis — survives missing env vars at build time
-let redis: any = null;
+// Upstash Redis REST API — bypass @upstash/redis client (avoids evalsha)
+const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL || '';
+const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || '';
 
-function getRedis() {
-  if (redis) return redis;
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !token) return null;
+async function redisCommand(...args: string[]): Promise<string | null> {
+  if (!REDIS_URL || !REDIS_TOKEN) return null;
   try {
-    const { Redis } = require('@upstash/redis');
-    redis = new Redis({ url, token });
-    return redis;
-  } catch { return null; }
+    const res = await fetch(REDIS_URL, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${REDIS_TOKEN}` },
+      body: args.join(' '),
+    });
+    const data = await res.text();
+    return data;
+  } catch (err) {
+    console.error('Redis command failed:', err);
+    return null;
+  }
 }
 
-// Simple rate limit using Redis INCR (no evalsha needed)
+// Simple rate limit using Redis INCR + EXPIRE via raw REST
 async function checkRateLimit(key: string, maxRequests: number, windowSeconds: number): Promise<boolean> {
-  const r = getRedis();
-  if (!r) return true; // no Redis = allow through
   try {
-    const count = await r.incr(key);
+    const countStr = await redisCommand('INCR', key);
+    if (countStr === null) return true; // no Redis = allow through
+    const count = parseInt(countStr, 10);
     if (count === 1) {
-      await r.expire(key, windowSeconds);
+      await redisCommand('EXPIRE', key, String(windowSeconds));
     }
     return count <= maxRequests;
-  } catch (err) {
-    console.error('Rate limit check failed:', err);
+  } catch {
     return true; // on error, allow through
   }
 }
@@ -124,13 +128,10 @@ export async function POST(request: NextRequest) {
 
     // Check for admin password
     if (message.trim() === ADMIN_PASSWORD) {
-      const r = getRedis();
-      if (r) {
-        try {
-          await r.set(`chat:admin:${visitorId}`, '1', { ex: Math.floor(ADMIN_DURATION / 1000) });
-        } catch (e) {
-          console.error('Failed to set admin flag:', e);
-        }
+      try {
+        await redisCommand('SET', `chat:admin:${visitorId}`, '1', 'EX', String(Math.floor(ADMIN_DURATION / 1000)));
+      } catch (e) {
+        console.error('Failed to set admin flag:', e);
       }
       const minutes = Math.floor(ADMIN_DURATION / 60000);
       return NextResponse.json({
@@ -141,14 +142,11 @@ export async function POST(request: NextRequest) {
 
     // Check if IP has admin bypass
     let isAdmin = false;
-    const r = getRedis();
-    if (r) {
-      try {
-        const adminFlag = await r.get(`chat:admin:${visitorId}`);
-        isAdmin = adminFlag === '1';
-      } catch (e) {
-        // If Redis check fails, continue without admin bypass
-      }
+    try {
+      const adminFlag = await redisCommand('GET', `chat:admin:${visitorId}`);
+      isAdmin = adminFlag === '1';
+    } catch (e) {
+      // If Redis check fails, continue without admin bypass
     }
 
     if (!isAdmin) {
