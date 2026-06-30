@@ -121,6 +121,7 @@ export async function POST(request) {
         messages,
         max_tokens: 300,
         temperature: 0.7,
+        stream: false,
       }),
     });
 
@@ -128,7 +129,7 @@ export async function POST(request) {
       const errText = await modelRes.text();
       console.error('Model API error:', modelRes.status, errText);
       return NextResponse.json(
-        { reply: 'Maaf, layanan chat sedang tidak tersedia. Silakan hubungi kami via email di info@vyuapp.my.id 📧' },
+        { reply: 'Maaf, layanan chat sedang tidak tersedia. Silakan hubungi kami via email di vyuapp@proton.me 📧' },
         { status: 200 }
       );
     }
@@ -141,7 +142,7 @@ export async function POST(request) {
   } catch (err) {
     console.error('Chat API error:', err);
     return NextResponse.json(
-      { reply: 'Terjadi kesalahan. Silakan hubungi kami via info@vyuapp.my.id' },
+      { reply: 'Terjadi kesalahan. Silakan hubungi kami via vyuapp@proton.me' },
       { status: 200 }
     );
   }
