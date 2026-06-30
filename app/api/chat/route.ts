@@ -1,31 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { chatLimiter } from '@/lib/rate-limit';
+import { Redis } from '@upstash/redis';
 
-const CS_MODEL_BASE = process.env.CS_MODEL_BASE_URL || 'http://195.88.211.166:20128/v1';
+const CS_MODEL_BASE = process.env.CS_MODEL_BASE_URL || '';
 const CS_MODEL = process.env.CS_MODEL_NAME || 'nara/mimo-v2.5';
 const CS_API_KEY = process.env.CS_API_KEY || '';
-const RATE_LIMIT = 5;
-const ADMIN_PASSWORD = 'AkuWibuGanteng';
+const RATE_LIMIT = 20;
+const ADMIN_PASSWORD = process.env.CHAT_ADMIN_PASSWORD || 'AkuWibuGanteng';
 const ADMIN_DURATION = 5 * 60 * 1000; // 5 minutes
 
-interface VisitorSession {
-  count: number;
-  resetAt: number;
-  adminUntil: number;
-}
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
 
 interface ChatMessage {
   role: 'system' | 'user' | 'assistant';
   content: string;
 }
-
-interface RateLimitResult {
-  allowed: boolean;
-  admin: boolean;
-  remaining: number;
-}
-
-// In-memory rate limit store (per-process)
-const visitorSessions = new Map<string, VisitorSession>();
 
 function getVisitorId(request: NextRequest): string {
   const forwarded = request.headers.get('x-forwarded-for');
@@ -33,37 +25,6 @@ function getVisitorId(request: NextRequest): string {
   return ip;
 }
 
-function checkRateLimit(visitorId: string): RateLimitResult {
-  const now = Date.now();
-  const session: VisitorSession = visitorSessions.get(visitorId) || { count: 0, resetAt: now + 60 * 60 * 1000, adminUntil: 0 };
-
-  // Check admin mode
-  if (session.adminUntil > now) {
-    return { allowed: true, admin: true, remaining: Infinity };
-  }
-
-  // Reset if expired
-  if (now > session.resetAt) {
-    session.count = 0;
-    session.resetAt = now + 60 * 60 * 1000;
-  }
-
-  if (session.count >= RATE_LIMIT) {
-    return { allowed: false, admin: false, remaining: 0 };
-  }
-
-  session.count++;
-  visitorSessions.set(visitorId, session);
-  return { allowed: true, admin: false, remaining: RATE_LIMIT - session.count };
-}
-
-function activateAdmin(visitorId: string): number {
-  const now = Date.now();
-  const session: VisitorSession = visitorSessions.get(visitorId) || { count: 0, resetAt: now + 60 * 60 * 1000, adminUntil: 0 };
-  session.adminUntil = now + ADMIN_DURATION;
-  visitorSessions.set(visitorId, session);
-  return Math.floor(ADMIN_DURATION / 60000);
-}
 
 const SYSTEM_PROMPT = `Kamu adalah Hana, customer service VyuApp yang elegan dan cerdas. Kamu adalah kesan pertama yang didapat pengunjung vyuapp.my.id.
 
@@ -120,6 +81,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (!CS_MODEL_BASE) {
+      console.error('CS_MODEL_BASE_URL environment variable is not configured');
+      return NextResponse.json(
+        { reply: 'Maaf, layanan chat sedang tidak tersedia. Silakan hubungi kami via email di vyuapp@proton.me 📧' },
+        { status: 200 }
+      );
+    }
+
     if (message.length > 500) {
       return NextResponse.json(
         { error: 'Message too long (max 500 characters)' },
@@ -131,25 +100,47 @@ export async function POST(request: NextRequest) {
 
     // Check for admin password
     if (message.trim() === ADMIN_PASSWORD) {
-      const minutes = activateAdmin(visitorId);
+      try {
+        await redis.set(`chat:admin:${visitorId}`, '1', { ex: Math.floor(ADMIN_DURATION / 1000) });
+      } catch (e) {
+        console.error('Failed to set admin flag:', e);
+      }
+      const minutes = Math.floor(ADMIN_DURATION / 60000);
       return NextResponse.json({
         reply: `🔑 Admin mode activated! Rate limit removed for ${minutes} minutes. Enjoy testing!`,
         admin: true,
       });
     }
 
-    const rateCheck = checkRateLimit(visitorId);
-    if (!rateCheck.allowed) {
-      return NextResponse.json(
-        { error: 'Rate limit exceeded. Maximum 5 messages per hour.' },
-        { status: 429 }
-      );
+    // Check if IP has admin bypass
+    let isAdmin = false;
+    try {
+      const adminFlag = await redis.get(`chat:admin:${visitorId}`);
+      isAdmin = adminFlag === '1';
+    } catch (e) {
+      // If Redis check fails, continue without admin bypass
+    }
+
+    if (!isAdmin) {
+      const { success, remaining, reset } = await chatLimiter.limit(`chat:${visitorId}`);
+      if (!success) {
+        return NextResponse.json(
+          { error: `Rate limit exceeded. Maximum ${RATE_LIMIT} messages per hour.` },
+          { status: 429 }
+        );
+      }
     }
 
     // Build messages array with history
+    const sanitizedHistory = Array.isArray(history)
+      ? history
+          .filter((h: any) => h && (h.role === 'user' || h.role === 'assistant') && typeof h.content === 'string')
+          .map((h: any) => ({ role: h.role, content: h.content.slice(0, 2000) }))
+          .slice(-6)
+      : [];
     const messages: ChatMessage[] = [
       { role: 'system', content: SYSTEM_PROMPT },
-      ...(Array.isArray(history) ? history.slice(-6) : []),
+      ...sanitizedHistory,
       { role: 'user', content: message.trim() },
     ];
 

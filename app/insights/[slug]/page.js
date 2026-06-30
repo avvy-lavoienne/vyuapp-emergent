@@ -11,6 +11,7 @@ import TableOfContents from '@/components/TableOfContents';
 
 import { autoLink } from '@/lib/auto-linker';
 import { BreadcrumbJsonLd, ArticleJsonLd, FAQPageJsonLd } from '@/components/JsonLd';
+import DOMPurify from 'isomorphic-dompurify';
 
 function extractFAQs(html) {
   if (!html) return [];
@@ -37,10 +38,10 @@ export const revalidate = 3600;
 
 function sanitizeHtml(html) {
   if (!html) return '';
-  return html
-    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
-    .replace(/on\w+="[^"]*"/gi, '')
-    .replace(/javascript:/gi, '');
+  return DOMPurify.sanitize(html, {
+    ALLOWED_TAGS: ['p','br','strong','em','h2','h3','h4','h5','h6','ul','ol','li','a','blockquote','code','pre','img','figure','figcaption','table','thead','tbody','tr','td','th','span','div'],
+    ALLOWED_ATTR: ['href','src','alt','class','id','target','rel','width','height','style'],
+  });
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://www.vyuapp.my.id';

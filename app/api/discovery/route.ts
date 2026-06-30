@@ -16,6 +16,33 @@ interface DiscoveryPayload {
   turnstileToken?: string;
 }
 
+function stripNewlines(str: string): string {
+  return typeof str === 'string' ? str.replace(/[\r\n]+/g, ' ').trim() : '';
+}
+
+function clampLen(str: string, max = 2000): string {
+  return typeof str === 'string' ? str.slice(0, max) : '';
+}
+
+const FIELD_LIMITS: Record<string, number> = {
+  fullName: 200,
+  companyName: 200,
+  businessEmail: 320,
+  coreGoal: 5000,
+  targetAudience: 5000,
+  uniqueValue: 5000,
+  techRequirements: 5000,
+};
+
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const budgetOptions: Record<string, string> = {
@@ -58,8 +85,15 @@ function buildEmail(body: DiscoveryPayload): string {
     minute: '2-digit',
   });
 
-  const budgetLabel = budgetOptions[body.budgetRange] || body.budgetRange;
-  const timelineLabel = timelineOptions[body.timeline] || body.timeline;
+  const budgetLabel = escapeHtml(budgetOptions[body.budgetRange] || body.budgetRange);
+  const timelineLabel = escapeHtml(timelineOptions[body.timeline] || body.timeline);
+  const safeName = escapeHtml(body.fullName);
+  const safeCompany = escapeHtml(body.companyName);
+  const safeEmail = escapeHtml(body.businessEmail);
+  const safeGoal = escapeHtml(body.coreGoal);
+  const safeAudience = escapeHtml(body.targetAudience);
+  const safeUnique = escapeHtml(body.uniqueValue);
+  const safeTech = escapeHtml(body.techRequirements);
 
   const fieldRow = (label: string, value: string) => `
     <tr>
@@ -87,7 +121,7 @@ function buildEmail(body: DiscoveryPayload): string {
           <tr>
             <td style="padding:28px 30px;background:#18181b;border-radius:12px 12px 0 0;border-bottom:2px solid #34d399;">
               <h1 style="margin:0;font-size:18px;color:#f4f4f5;font-weight:700;font-family:Arial,Helvetica,sans-serif;">[VyuApp Discovery Brief]</h1>
-              <p style="margin:6px 0 0;font-size:12px;color:#a1a1aa;font-family:Arial,Helvetica,sans-serif;">${body.companyName} \u2014 ${body.fullName}</p>
+              <p style="margin:6px 0 0;font-size:12px;color:#a1a1aa;font-family:Arial,Helvetica,sans-serif;">${safeCompany} \u2014 ${safeName}</p>
             </td>
           </tr>
           <tr>
@@ -95,15 +129,15 @@ function buildEmail(body: DiscoveryPayload): string {
               <h2 style="margin:0 0 12px;font-size:13px;color:#34d399;text-transform:uppercase;letter-spacing:0.5px;font-family:Arial,Helvetica,sans-serif;">Ringkasan Jawaban</h2>
               <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
                 ${fieldRow('Dikirim', ts)}
-                ${fieldRow('Nama', body.fullName)}
-                ${fieldRow('Perusahaan', body.companyName)}
-                ${fieldRow('Email', body.businessEmail)}
+                ${fieldRow('Nama', safeName)}
+                ${fieldRow('Perusahaan', safeCompany)}
+                ${fieldRow('Email', safeEmail)}
               </table>
             </td>
           </tr>
-          ${section('Corporate Identity', fieldRow('Nama Lengkap', body.fullName) + fieldRow('Perusahaan', body.companyName) + fieldRow('Email Bisnis', body.businessEmail))}
-          ${section('Project Core Goals & Audience', fieldRow('Tujuan Utama', body.coreGoal) + fieldRow('Target Audiens', body.targetAudience))}
-          ${section('UVP, Tech & Investment', fieldRow('Nilai Unik', body.uniqueValue) + fieldRow('Kebutuhan Teknis', body.techRequirements) + fieldRow('Budget', budgetLabel) + fieldRow('Timeline', timelineLabel))}
+          ${section('Corporate Identity', fieldRow('Nama Lengkap', safeName) + fieldRow('Perusahaan', safeCompany) + fieldRow('Email Bisnis', safeEmail))}
+          ${section('Project Core Goals & Audience', fieldRow('Tujuan Utama', safeGoal) + fieldRow('Target Audiens', safeAudience))}
+          ${section('UVP, Tech & Investment', fieldRow('Nilai Unik', safeUnique) + fieldRow('Kebutuhan Teknis', safeTech) + fieldRow('Budget', budgetLabel) + fieldRow('Timeline', timelineLabel))}
           <tr>
             <td style="padding:18px 30px;background:#18181b;border-radius:0 0 12px 12px;border-top:1px solid #27272a;text-align:center;">
               <p style="margin:0;font-size:11px;color:#52525b;font-family:Arial,Helvetica,sans-serif;">VyuApp Studio \u2014 Garut, Indonesia</p>
@@ -139,6 +173,15 @@ export async function POST(request: NextRequest) {
     const { turnstileToken, ...restBody } = rawBody;
     const body: DiscoveryPayload = restBody;
 
+    // Clamp field lengths
+    body.fullName = clampLen((body.fullName || '').trim(), FIELD_LIMITS.fullName);
+    body.companyName = clampLen((body.companyName || '').trim(), FIELD_LIMITS.companyName);
+    body.businessEmail = clampLen((body.businessEmail || '').trim(), FIELD_LIMITS.businessEmail);
+    body.coreGoal = clampLen((body.coreGoal || '').trim(), FIELD_LIMITS.coreGoal);
+    body.targetAudience = clampLen((body.targetAudience || '').trim(), FIELD_LIMITS.targetAudience);
+    body.uniqueValue = clampLen((body.uniqueValue || '').trim(), FIELD_LIMITS.uniqueValue);
+    body.techRequirements = clampLen((body.techRequirements || '').trim(), FIELD_LIMITS.techRequirements);
+
     // Verify Turnstile token
     if (!turnstileToken) {
       return NextResponse.json({ error: 'Security verification required.' }, { status: 403 });
@@ -164,7 +207,7 @@ export async function POST(request: NextRequest) {
       from: 'VyuApp Discovery <noreply@vyuapp.my.id>',
       to: 'vyuapp@proton.me',
       replyTo: body.businessEmail,
-      subject: `[VyuApp Discovery] ${body.companyName} \u2014 ${body.fullName}`,
+      subject: stripNewlines(`[VyuApp Discovery] ${escapeHtml(body.companyName)} \u2014 ${escapeHtml(body.fullName)}`),
       html: buildEmail(body),
     });
 

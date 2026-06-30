@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import DOMPurify from 'isomorphic-dompurify';
 
 // Simple markdown to HTML parser
 function parseMarkdown(text) {
@@ -9,7 +10,10 @@ function parseMarkdown(text) {
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/\*(.*?)\*/g, '<em>$1</em>')
     .replace(/`(.*?)`/g, '<code style="background:#f0f0f0;padding:1px 4px;border-radius:3px;font-size:12px">$1</code>')
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" style="color:#6D5BA0;text-decoration:underline">$1</a>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
+      const safe = /^(https?:\/\/)/i.test(url) ? url : '#';
+      return `<a href="${safe}" target="_blank" rel="noopener" style="color:#6D5BA0;text-decoration:underline">${text}</a>`;
+    })
     .replace(/\n/g, '<br/>');
 }
 
@@ -253,7 +257,7 @@ export default function ChatWidget() {
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-word',
               }}>
-                {msg.role === 'visitor' ? msg.text : <span dangerouslySetInnerHTML={{ __html: parseMarkdown(msg.text) }} />}
+                {msg.role === 'visitor' ? msg.text : <span dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(parseMarkdown(msg.text)) }} />}
               </div>
             </div>
           ))}

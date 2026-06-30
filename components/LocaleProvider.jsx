@@ -17,7 +17,7 @@ export function LocaleProvider({ children, initialLocale = 'id' }) {
     const next = locale === 'id' ? 'en' : 'id';
     // Persist to both localStorage and cookie
     localStorage.setItem('vyu-locale', next);
-    document.cookie = `vyu-locale=${next};path=/;max-age=31536000;SameSite=Lax`;
+    document.cookie = `vyu-locale=${next};path=/;max-age=31536000;SameSite=Lax;Secure`;
     // Reload to re-render server components with the new locale
     window.location.reload();
   };

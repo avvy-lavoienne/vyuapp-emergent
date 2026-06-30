@@ -1,5 +1,7 @@
 import { getPublishedArticles, getPublishedPortfolio, DEFAULT_MAIN } from '@/lib/data';
 
+export const revalidate = 3600;
+
 export default async function sitemap() {
   const base = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://www.vyuapp.my.id';
   const now = new Date();

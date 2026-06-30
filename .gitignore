@@ -80,7 +80,6 @@ agenthub/agents/youtube/db
 
 memory/
 test_reports/
-.env.example
 
 # Mobile development
 android-sdk/node_modules/@next/swc-linux-arm64-musl/next-swc.linux-arm64-musl.node

@@ -2,6 +2,8 @@
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { getServerSupabase } from '@/lib/supabase/server';
+import { headers } from 'next/headers';
+import { loginLimiter } from '@/lib/rate-limit';
 
 export async function loginAction(prevState, formData) {
   const email = formData.get('email');
@@ -9,6 +11,14 @@ export async function loginAction(prevState, formData) {
   const next = formData.get('next') || '/admin';
 
   if (!email || !password) return { error: 'Email dan password wajib diisi.' };
+
+  // Rate limiting by IP
+  const headersList = await headers();
+  const ip = headersList.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1';
+  const { success } = await loginLimiter.limit(`login:${ip}`);
+  if (!success) {
+    return { error: 'Terlalu banyak percobaan login. Coba lagi nanti.' };
+  }
 
   const supabase = await getServerSupabase();
   const { error } = await supabase.auth.signInWithPassword({

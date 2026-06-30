@@ -75,6 +75,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Semua field wajib harus diisi.' }, { status: 400 });
     }
 
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: 'Format email tidak valid.' }, { status: 400 });
+    }
+
     const apiKey = process.env.RESEND_API_KEY;
     if (!apiKey) {
       return NextResponse.json({ error: 'Email service not configured.' }, { status: 500 });
