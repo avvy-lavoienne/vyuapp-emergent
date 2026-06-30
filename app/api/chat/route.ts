@@ -5,98 +5,61 @@ const CS_MODEL = process.env.CS_MODEL_NAME || 'nara/mimo-v2.5';
 const CS_API_KEY = process.env.CS_API_KEY || '';
 const RATE_LIMIT = 20;
 const ADMIN_PASSWORD = process.env.CHAT_ADMIN_PASSWORD || 'AkuWibuGanteng';
-const ADMIN_DURATION = 5 * 60 * 1000; // 5 minutes
+const ADMIN_DURATION = 5 * 60 * 1000;
 
-// Upstash Redis REST API — bypass @upstash/redis client (avoids evalsha)
-const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL || '';
-const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN || '';
-
-async function redisCommand(...args: string[]): Promise<string | null> {
-  if (!REDIS_URL || !REDIS_TOKEN) return null;
-  try {
-    const res = await fetch(REDIS_URL, {
-      method: 'POST',
-      headers: { 'Authorization': `Bearer ${REDIS_TOKEN}` },
-      body: args.join(' '),
-    });
-    const data = await res.text();
-    // Upstash returns raw value, trim whitespace/newlines
-    return data.trim();
-  } catch (err) {
-    console.error('Redis command failed:', err);
-    return null;
-  }
-}
-
-// Simple rate limit using Redis INCR + EXPIRE via raw REST
-async function checkRateLimit(key: string, maxRequests: number, windowSeconds: number): Promise<boolean> {
-  try {
-    const countStr = await redisCommand('INCR', key);
-    if (countStr === null) return true; // no Redis = allow through
-    const count = parseInt(countStr, 10);
-    if (count === 1) {
-      await redisCommand('EXPIRE', key, String(windowSeconds));
-    }
-    return count <= maxRequests;
-  } catch {
-    return true; // on error, allow through
-  }
-}
-
-interface ChatMessage {
-  role: 'system' | 'user' | 'assistant';
-  content: string;
-}
+// In-memory stores (per serverless instance)
+const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
+const adminStore = new Map<string, number>();
 
 function getVisitorId(request: NextRequest): string {
   const forwarded = request.headers.get('x-forwarded-for');
-  const ip = forwarded?.split(',')[0]?.trim() || 'unknown';
-  return ip;
+  return forwarded?.split(',')[0]?.trim() || 'unknown';
 }
 
+function checkRateLimit(key: string, max: number, windowMs: number): boolean {
+  const now = Date.now();
+  const entry = rateLimitStore.get(key);
+  if (!entry || now > entry.resetAt) {
+    rateLimitStore.set(key, { count: 1, resetAt: now + windowMs });
+    return true;
+  }
+  entry.count++;
+  return entry.count <= max;
+}
 
-const SYSTEM_PROMPT = `Kamu adalah Hana, customer service VyuApp yang elegan dan cerdas. Kamu adalah kesan pertama yang didapat pengunjung vyuapp.my.id.
+function setAdmin(id: string) { adminStore.set(id, Date.now() + ADMIN_DURATION); }
+function getAdmin(id: string): boolean {
+  const exp = adminStore.get(id);
+  if (!exp) return false;
+  if (Date.now() > exp) { adminStore.delete(id); return false; }
+  return true;
+}
+
+const SYSTEM_PROMPT = `Kamu adalah Hana, customer service VyuApp yang elegan dan cerdas.
 
 Siapa Hana:
 - Nama: Hana (ハナ)
 - Peran: Customer Service & Brand Ambassador VyuApp
-- Personality: Anggun, hangat, cerdas, helpful — seperti penasihat tepercaya
-- Gaya bicara: Tenang, jelas, tidak terburu-buru. Membuat hal kompleks terdengar sederhana.
+- Gaya bicara: Tenang, jelas, tidak berlebihan. 1-2 emoji per pesan.
 
 Tentang VyuApp:
 - Studio rekayasa web bespoke dari Garut, Jawa Barat
 - Founder: Firman Firdaus (fullstack developer, 4+ tahun)
 - Spesialis: AI-powered web systems & data intelligence
 - 9 AI agent yang bekerja 24/7
-- 30+ artikel teknis tentang AI, web development, market intelligence
 
 Produk:
-1. Sellica — Sistem evaluasi kinerja berbasis Scrum + AI, Pre-Auditor otomatis
-2. Avalon — Market intelligence untuk e-commerce enterprise (HET Guard, Data Purification)
+1. Sellica — Sistem evaluasi kinerja berbasis Scrum + AI
+2. Avalon — Market intelligence untuk e-commerce enterprise
 
-Layanan:
-- Custom web application (Next.js, Go, Python)
-- Data pipeline & intelligence systems
-- Design system & brand engineering
-- AI agent integration
-
-Tim AI (9 agent):
-Hikari (Orchestrator), Merlin (Research), Bedivere (Content), Lancelot (Dev), Agravain (QA), Gawain (DevOps), Tristan (Marketing), Lotus (Government), Guru (Learning)
-
-Kebijakan respons:
+Kebijakan:
 - Bahasa: Ikuti bahasa pengunjung (ID/EN)
-- Panjang: Maksimal 5 kalimat, 200 kata
-- Emoji: 1-2 per pesan, tidak berlebihan
-- Selalu akhiri dengan CTA (contact form / email)
-- JANGAN fabricate harga, timeline, atau kemampuan
-- JANGAN share internal architecture atau API keys
-- Email: vyuapp@proton.me
-- Kontak: https://www.vyuapp.my.id/#kontak
+- Panjang: Maks 5 kalimat, 200 kata
+- Akhiri dengan CTA (kontak/email)
+- JANGAN fabricate harga/timeline
+- Email: vyuapp@proton.me | Kontak: https://www.vyuapp.my.id/#kontak`;
 
-Gaya bicara Hana (TIDAK terlalu formal, TIDAK terlalu kasual):
-✅ "Halo! 🌸 VyuApp membangun sistem digital yang tahan lama. Ada yang ingin Anda ketahui?"
-❌ "Terima kasih atas pertanyaan Anda. Kami dengan senang hati akan membantu."
-❌ "Halo! Mau tanya apa nih? 😄😄😄"`;
+interface ChatMessage { role: 'system' | 'user' | 'assistant'; content: string; }
 
 export async function POST(request: NextRequest) {
   try {
@@ -104,112 +67,78 @@ export async function POST(request: NextRequest) {
     const { message, history } = body as { message?: string; history?: ChatMessage[] };
 
     if (!message || typeof message !== 'string' || message.trim().length === 0) {
-      return NextResponse.json(
-        { error: 'Message is required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Message is required' }, { status: 400 });
     }
-
-    if (!CS_MODEL_BASE) {
-      console.error('CS_MODEL_BASE_URL environment variable is not configured');
-      return NextResponse.json(
-        { reply: 'Maaf, layanan chat sedang tidak tersedia. Silakan hubungi kami via email di vyuapp@proton.me 📧' },
-        { status: 200 }
-      );
-    }
-
     if (message.length > 500) {
-      return NextResponse.json(
-        { error: 'Message too long (max 500 characters)' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Message too long (max 500)' }, { status: 400 });
     }
 
     const visitorId = getVisitorId(request);
 
-    // Check for admin password
+    // Admin mode
     if (message.trim() === ADMIN_PASSWORD) {
-      try {
-        await redisCommand('SET', `chat:admin:${visitorId}`, '1', 'EX', String(Math.floor(ADMIN_DURATION / 1000)));
-      } catch (e) {
-        console.error('Failed to set admin flag:', e);
-      }
-      const minutes = Math.floor(ADMIN_DURATION / 60000);
+      setAdmin(visitorId);
       return NextResponse.json({
-        reply: `🔑 Admin mode activated! Rate limit removed for ${minutes} minutes. Enjoy testing!`,
+        reply: '🔑 Admin mode activated! Rate limit removed for 5 minutes.',
         admin: true,
       });
     }
 
-    // Check if IP has admin bypass
-    let isAdmin = false;
-    try {
-      const adminFlag = await redisCommand('GET', `chat:admin:${visitorId}`);
-      console.log('Admin flag check:', { visitorId, adminFlag, type: typeof adminFlag });
-      isAdmin = adminFlag === '1';
-    } catch (e) {
-      // If Redis check fails, continue without admin bypass
-    }
-    console.log('Rate limit check:', { isAdmin, visitorId });
-
-    if (!isAdmin) {
-      const allowed = await checkRateLimit(`chat:${visitorId}`, RATE_LIMIT, 3600);
-      if (!allowed) {
-        return NextResponse.json(
-          { reply: `⏳ Anda telah mencapai batas ${RATE_LIMIT} pesan per jam. Silakan tunggu atau hubungi kami via vyuapp@proton.me`, rateLimited: true },
-          { status: 200 }
-        );
+    // Rate limit (skip if admin)
+    if (!getAdmin(visitorId)) {
+      if (!checkRateLimit(`chat:${visitorId}`, RATE_LIMIT, 60 * 60 * 1000)) {
+        return NextResponse.json({
+          reply: `⏳ Batas ${RATE_LIMIT} pesan/jam tercapai. Hubungi vyuapp@proton.me`,
+          rateLimited: true,
+        });
       }
     }
 
-    // Build messages array with history
-    const sanitizedHistory = Array.isArray(history)
-      ? history
-          .filter((h: any) => h && (h.role === 'user' || h.role === 'assistant') && typeof h.content === 'string')
-          .map((h: any) => ({ role: h.role, content: h.content.slice(0, 2000) }))
+    // If no model configured
+    if (!CS_MODEL_BASE) {
+      return NextResponse.json({
+        reply: 'Maaf, layanan chat sedang tidak tersedia. Hubungi vyuapp@proton.me 📧',
+      });
+    }
+
+    // Build messages
+    const sanitized = Array.isArray(history)
+      ? history.filter(h => h && (h.role === 'user' || h.role === 'assistant') && typeof h.content === 'string')
+          .map(h => ({ role: h.role, content: h.content.slice(0, 2000) }))
           .slice(-6)
       : [];
     const messages: ChatMessage[] = [
       { role: 'system', content: SYSTEM_PROMPT },
-      ...sanitizedHistory,
+      ...sanitized,
       { role: 'user', content: message.trim() },
     ];
 
-    // Call the CS agent's model
+    // Call model
     const modelRes = await fetch(`${CS_MODEL_BASE}/chat/completions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         ...(CS_API_KEY ? { Authorization: `Bearer ${CS_API_KEY}` } : {}),
       },
-      body: JSON.stringify({
-        model: CS_MODEL,
-        messages,
-        max_tokens: 300,
-        temperature: 0.7,
-        stream: false,
-      }),
+      body: JSON.stringify({ model: CS_MODEL, messages, max_tokens: 300, temperature: 0.7, stream: false }),
     });
 
     if (!modelRes.ok) {
       const errText = await modelRes.text();
       console.error('Model API error:', modelRes.status, errText);
-      return NextResponse.json(
-        { reply: 'Maaf, layanan chat sedang tidak tersedia. Silakan hubungi kami via email di vyuapp@proton.me 📧' },
-        { status: 200 }
-      );
+      return NextResponse.json({
+        reply: 'Maaf, layanan chat sedang tidak tersedia. Hubungi vyuapp@proton.me 📧',
+      });
     }
 
     const data = await modelRes.json();
     const reply = data.choices?.[0]?.message?.content || 'Maaf, saya tidak dapat memproses pesan Anda saat ini.';
-
     return NextResponse.json({ reply });
 
   } catch (err: any) {
     console.error('Chat API error:', err);
-    return NextResponse.json(
-      { reply: `Error: ${err?.message || String(err)}` },
-      { status: 200 }
-    );
+    return NextResponse.json({
+      reply: `Error: ${err?.message || String(err)}`,
+    });
   }
 }

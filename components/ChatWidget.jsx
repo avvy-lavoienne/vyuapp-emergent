@@ -28,6 +28,7 @@ export default function ChatWidget() {
   const [messageCount, setMessageCount] = useState(0);
   const [isAdmin, setIsAdmin] = useState(false);
   const [rateLimited, setRateLimited] = useState(false);
+  const [rateLimitTimer, setRateLimitTimer] = useState(0); // seconds remaining
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -62,6 +63,21 @@ export default function ChatWidget() {
       setTimeout(() => inputRef.current?.focus(), 300);
     }
   }, [isOpen]);
+
+  // Countdown timer for rate limit
+  useEffect(() => {
+    if (!rateLimited || rateLimitTimer <= 0) return;
+    const interval = setInterval(() => {
+      setRateLimitTimer(prev => {
+        if (prev <= 1) {
+          setRateLimited(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [rateLimited, rateLimitTimer]);
 
   const effectiveLimit = isAdmin ? Infinity : RATE_LIMIT;
 
@@ -100,10 +116,11 @@ export default function ChatWidget() {
 
       if (data.reply) {
         setMessages(prev => [...prev, { role: 'agent', text: data.reply, time: Date.now() }]);
-        if (data.admin) { setIsAdmin(true); setRateLimited(false); }
-        if (data.rateLimited) { setRateLimited(true); }
+        if (data.admin) { setIsAdmin(true); setRateLimited(false); setRateLimitTimer(0); }
+        if (data.rateLimited) { setRateLimited(true); setRateLimitTimer(15 * 60); }
       } else if (res.status === 429) {
         setRateLimited(true);
+        setRateLimitTimer(15 * 60);
         setMessages(prev => [...prev, {
           role: 'system',
           text: '⏳ Anda telah mencapai batas pesan. Silakan tunggu beberapa saat atau refresh halaman.',
@@ -313,7 +330,10 @@ export default function ChatWidget() {
             flexShrink: 0,
           }}>
             <span>⏳</span>
-            <span>Rate limit tercapai. Tunggu beberapa saat atau <button onClick={() => window.location.reload()} style={{ color: '#6D5BA0', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: '12px', fontWeight: 600 }}>refresh halaman</button></span>
+            <span>
+              Rate limit aktif. Coba lagi dalam{' '}
+              <strong>{Math.floor(rateLimitTimer / 60)}:{String(rateLimitTimer % 60).padStart(2, '0')}</strong>
+            </span>
           </div>
         )}
 
