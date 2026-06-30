@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-const CS_MODEL_BASE = process.env.CS_MODEL_BASE_URL || 'http://localhost:20128/v1';
+const CS_MODEL_BASE = process.env.CS_MODEL_BASE_URL || 'http://195.88.211.166:20128/v1';
 const CS_MODEL = process.env.CS_MODEL_NAME || 'nara/mimo-2.5';
 const CS_API_KEY = process.env.CS_API_KEY || '';
 const RATE_LIMIT = 5;
