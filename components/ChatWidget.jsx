@@ -27,6 +27,7 @@ export default function ChatWidget() {
   const [loading, setLoading] = useState(false);
   const [messageCount, setMessageCount] = useState(0);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [rateLimited, setRateLimited] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -99,9 +100,16 @@ export default function ChatWidget() {
 
       if (data.reply) {
         setMessages(prev => [...prev, { role: 'agent', text: data.reply, time: Date.now() }]);
-        if (data.admin) setIsAdmin(true);
+        if (data.admin) { setIsAdmin(true); setRateLimited(false); }
+      } else if (res.status === 429) {
+        setRateLimited(true);
+        setMessages(prev => [...prev, {
+          role: 'system',
+          text: '⏳ Anda telah mencapai batas pesan. Silakan tunggu beberapa saat atau refresh halaman.',
+          time: Date.now()
+        }]);
       } else if (data.error) {
-        setMessages(prev => [...prev, { role: 'agent', text: 'Maaf, terjadi kesalahan. Silakan coba lagi nanti.', time: Date.now() }]);
+        setMessages(prev => [...prev, { role: 'agent', text: data.error, time: Date.now() }]);
       }
     } catch {
       setMessages(prev => [...prev, { role: 'agent', text: 'Gagal menghubungi server. Periksa koneksi Anda.', time: Date.now() }]);
@@ -290,6 +298,24 @@ export default function ChatWidget() {
           <div ref={messagesEndRef} />
         </div>
 
+        {/* Rate Limit Banner */}
+        {rateLimited && (
+          <div style={{
+            padding: '10px 16px',
+            backgroundColor: '#FEF3C7',
+            borderTop: '1px solid #F59E0B',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            fontSize: '12px',
+            color: '#92400E',
+            flexShrink: 0,
+          }}>
+            <span>⏳</span>
+            <span>Rate limit tercapai. Tunggu beberapa saat atau <button onClick={() => window.location.reload()} style={{ color: '#6D5BA0', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: '12px', fontWeight: 600 }}>refresh halaman</button></span>
+          </div>
+        )}
+
         {/* Input */}
         <div style={{
           padding: '12px 16px',
@@ -306,7 +332,7 @@ export default function ChatWidget() {
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ketik pesan..."
-            disabled={loading || messageCount >= effectiveLimit}
+            disabled={loading || rateLimited || messageCount >= effectiveLimit}
             style={{
               flex: 1,
               padding: '10px 14px',
@@ -315,7 +341,7 @@ export default function ChatWidget() {
               fontSize: '13.5px',
               outline: 'none',
               transition: 'border-color 0.2s',
-              backgroundColor: messageCount >= effectiveLimit ? '#f5f5f5' : '#fff',
+              backgroundColor: (rateLimited || messageCount >= effectiveLimit) ? '#f5f5f5' : '#fff',
             }}
             onFocus={e => { e.currentTarget.style.borderColor = '#6D5BA0'; }}
             onBlur={e => { e.currentTarget.style.borderColor = '#ddd'; }}
@@ -323,15 +349,15 @@ export default function ChatWidget() {
           <button
             aria-label="Kirim pesan"
             onClick={sendMessage}
-            disabled={!input.trim() || loading || messageCount >= effectiveLimit}
+            disabled={!input.trim() || loading || rateLimited || messageCount >= effectiveLimit}
             style={{
               width: '40px',
               height: '40px',
               borderRadius: '10px',
-              backgroundColor: input.trim() && !loading && messageCount < effectiveLimit ? '#6D5BA0' : '#ddd',
+              backgroundColor: input.trim() && !loading && !rateLimited && messageCount < effectiveLimit ? '#6D5BA0' : '#ddd',
               color: '#fff',
               border: 'none',
-              cursor: input.trim() && !loading && messageCount < effectiveLimit ? 'pointer' : 'not-allowed',
+              cursor: input.trim() && !loading && !rateLimited && messageCount < effectiveLimit ? 'pointer' : 'not-allowed',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
