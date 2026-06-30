@@ -156,7 +156,7 @@ export default async function ArticlePage({ params }) {
             {article.title}
           </h1>
           <p className="mt-5 text-lg text-[#4A4A48] leading-relaxed">{article.excerpt}</p>
-          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-[#8F8E8A] font-mono">
+          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-[#636360] font-mono">
             <span className="flex items-center gap-1.5"><Calendar className="w-3 h-3" /> {formatDate(article.published_at || article.updated_at)}</span>
             <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> {readMin} min read</span>
             {(article.tags || []).slice(0, 4).map(t => <span key={t}>#{t}</span>)}
@@ -189,13 +189,13 @@ export default async function ArticlePage({ params }) {
           <div className="max-w-4xl mx-auto px-6 md:px-10 py-10 flex flex-col sm:flex-row gap-4">
             {prevArticle ? (
               <Link href={`/insights/${prevArticle.slug}`} className="flex-1 p-5 rounded-2xl border border-[#E5E4E0] bg-white hover:border-[#D1D0C9] transition group">
-                <span className="text-xs text-[#8F8E8A] font-mono">← Sebelumnya</span>
+                <span className="text-xs text-[#636360] font-mono">← Sebelumnya</span>
                 <p className="mt-2 text-sm font-semibold text-[#141413] group-hover:text-[#6D5BA0] transition line-clamp-2">{prevArticle.title}</p>
               </Link>
             ) : <div className="flex-1" />}
             {nextArticle ? (
               <Link href={`/insights/${nextArticle.slug}`} className="flex-1 p-5 rounded-2xl border border-[#E5E4E0] bg-white hover:border-[#D1D0C9] transition group text-right">
-                <span className="text-xs text-[#8F8E8A] font-mono">Selanjutnya →</span>
+                <span className="text-xs text-[#636360] font-mono">Selanjutnya →</span>
                 <p className="mt-2 text-sm font-semibold text-[#141413] group-hover:text-[#6D5BA0] transition line-clamp-2">{nextArticle.title}</p>
               </Link>
             ) : <div className="flex-1" />}
@@ -206,7 +206,7 @@ export default async function ArticlePage({ params }) {
       {related.length > 0 && (
         <section className="py-24 md:py-32 border-t border-[#E5E4E0]">
           <div className="max-w-7xl mx-auto px-6 md:px-10">
-            <p className="font-mono text-xs text-[#8F8E8A] uppercase tracking-[0.15em] font-medium">Artikel terkait</p>
+            <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] font-medium">Artikel terkait</p>
             <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">
               Lanjutkan membaca
             </h2>

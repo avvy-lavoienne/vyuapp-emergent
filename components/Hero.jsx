@@ -22,7 +22,7 @@ export default function Hero({ locale = 'id' }) {
             .
           </h1>
 
-          <p className="mt-5 text-base md:text-lg text-[#8F8E8A] font-medium tracking-wide">
+          <p className="mt-5 text-base md:text-lg text-[#636360] font-medium tracking-wide">
             {t.hero.tagline}
           </p>
 

@@ -56,10 +56,10 @@ export default function ImageUpload({ value, onChange, bucket = 'featured-images
         </div>
       ) : (
         <button type="button" onClick={() => inputRef.current?.click()} disabled={busy}
-          className="w-full h-40 rounded-lg border border-dashed border-[#E5E4E0] hover:border-[#6D5BA0]/50 hover:bg-[#6D5BA0]/5 transition flex flex-col items-center justify-center gap-2 text-[#8F8E8A] hover:text-[#6D5BA0]">
+          className="w-full h-40 rounded-lg border border-dashed border-[#E5E4E0] hover:border-[#6D5BA0]/50 hover:bg-[#6D5BA0]/5 transition flex flex-col items-center justify-center gap-2 text-[#636360] hover:text-[#6D5BA0]">
           {busy ? <Loader2 className="w-6 h-6 animate-spin text-[#6D5BA0]" /> : <ImageIcon className="w-6 h-6" />}
           <span className="text-xs font-mono">{busy ? 'MENGUNGGAH…' : '+ UPLOAD GAMBAR'}</span>
-          <span className="text-[10px] text-[#B0AFAA]">JPG / PNG / WebP · maks 8MB</span>
+          <span className="text-[10px] text-[#737370]">JPG / PNG / WebP · maks 8MB</span>
         </button>
       )}
 
@@ -68,7 +68,7 @@ export default function ImageUpload({ value, onChange, bucket = 'featured-images
           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#141413] border border-[#D1D0C9] hover:border-[#B0AFAA] hover:bg-black/[0.02] transition-all duration-200 disabled:opacity-50">
           <Upload className="w-3.5 h-3.5" /> Pilih file
         </button>
-        {value && <span className="text-[10px] text-[#8F8E8A] font-mono truncate">{value}</span>}
+        {value && <span className="text-[10px] text-[#636360] font-mono truncate">{value}</span>}
       </div>
 
       {busy && (

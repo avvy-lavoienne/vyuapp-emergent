@@ -227,7 +227,7 @@ export default function AIAgentsPage() {
             <p className="text-sm text-[#4A4A48] leading-relaxed italic">
               &quot;Ini bukan soal mengganti manusia dengan mesin. Ini tentang memberdayakan tim kami dengan alat yang tepat sehingga setiap proyek mendapat perhatian terbaik dari setiap aspeknya.&quot;
             </p>
-            <p className="mt-3 text-xs font-mono text-[#8F8E8A]">— VyuApp Studio</p>
+            <p className="mt-3 text-xs font-mono text-[#636360]">— VyuApp Studio</p>
           </div>
         </div>
       </section>
@@ -235,7 +235,7 @@ export default function AIAgentsPage() {
       {/* Tim Agent — Detailed Profiles */}
       <section className="py-16 md:py-24 border-t border-[#E5E4E0]">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <p className="font-mono text-xs text-[#8F8E8A] uppercase tracking-[0.15em] font-medium">
+          <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] font-medium">
             Tim Agent
           </p>
           <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">
@@ -287,7 +287,7 @@ export default function AIAgentsPage() {
       {/* Pipeline */}
       <section className="py-16 md:py-24 border-t border-[#E5E4E0] bg-[#F8F7F4]">
         <div className="max-w-4xl mx-auto px-6 md:px-10">
-          <p className="font-mono text-xs text-[#8F8E8A] uppercase tracking-[0.15em] font-medium">
+          <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] font-medium">
             Pipeline
           </p>
           <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">
@@ -313,7 +313,7 @@ export default function AIAgentsPage() {
                 <div className="pb-8 flex-1">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-base font-semibold text-[#141413]">{step.task}</span>
-                    <ChevronRight className="w-4 h-4 text-[#8F8E8A]" />
+                    <ChevronRight className="w-4 h-4 text-[#636360]" />
                     <span className="font-mono text-[11px] text-[#6D5BA0] uppercase tracking-[0.1em] font-medium">{step.agent}</span>
                   </div>
                   <p className="text-sm text-[#4A4A48] leading-relaxed">{step.description}</p>
@@ -327,7 +327,7 @@ export default function AIAgentsPage() {
       {/* Manfaat */}
       <section className="py-16 md:py-24 border-t border-[#E5E4E0]">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <p className="font-mono text-xs text-[#8F8E8A] uppercase tracking-[0.15em] font-medium">
+          <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] font-medium">
             Manfaat
           </p>
           <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">
@@ -356,7 +356,7 @@ export default function AIAgentsPage() {
       {/* Proses */}
       <section className="py-16 md:py-24 border-t border-[#E5E4E0]">
         <div className="max-w-4xl mx-auto px-6 md:px-10">
-          <p className="font-mono text-xs text-[#8F8E8A] uppercase tracking-[0.15em] font-medium">
+          <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] font-medium">
             Proses
           </p>
           <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">

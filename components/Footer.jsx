@@ -21,14 +21,14 @@ export default function Footer() {
               Vyu<span className="text-[#6D5BA0]">App</span>
             </span>
           </Link>
-          <p className="text-sm text-[#8F8E8A] mt-4 max-w-xs leading-relaxed">
+          <p className="text-sm text-[#636360] mt-4 max-w-xs leading-relaxed">
             {isLanding ? t.footer.desc : 'Studio rekayasa web bespoke berbasis di Garut, Jawa Barat.'}
           </p>
         </div>
 
         <div className="flex items-start gap-10">
           <div>
-            <p className="text-xs font-medium text-[#8F8E8A] uppercase tracking-widest mb-4">
+            <p className="text-xs font-medium text-[#636360] uppercase tracking-widest mb-4">
               {isLanding ? t.footer.nav : 'Navigasi'}
             </p>
             <ul className="space-y-2.5 text-sm text-[#6B6B68]">
@@ -41,7 +41,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <p className="text-xs font-medium text-[#8F8E8A] uppercase tracking-widest mb-4">
+            <p className="text-xs font-medium text-[#636360] uppercase tracking-widest mb-4">
               {isLanding ? t.footer.contact : 'Kontak'}
             </p>
             <ul className="space-y-2.5 text-sm text-[#6B6B68]">
@@ -50,16 +50,16 @@ export default function Footer() {
                   vyuapp@proton.me
                 </a>
               </li>
-              <li className="text-[#8F8E8A]">Garut, Jawa Barat</li>
+              <li className="text-[#636360]">Garut, Jawa Barat</li>
             </ul>
           </div>
         </div>
       </div>
 
       <div className="border-t border-[#E5E4E0]">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 py-5 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-[#B0AFAA]">
+        <div className="max-w-7xl mx-auto px-6 md:px-10 py-5 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-[#737370]">
           <p>&copy; {new Date().getFullYear()} {isLanding ? t.footer.copyright : 'VyuApp.'}</p>
-          <p className="font-mono text-[#B0AFAA]/50">{isLanding ? t.footer.tagline : 'crafted with precision in Garut'}</p>
+          <p className="font-mono text-[#737370]/50">{isLanding ? t.footer.tagline : 'crafted with precision in Garut'}</p>
         </div>
       </div>
     </footer>

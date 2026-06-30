@@ -99,7 +99,7 @@ function ArticleEditor({ article, onClose, onSaved }) {
     setTagInput('');
   };
 
-  const inputCls = 'w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-2.5 text-sm text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all';
+  const inputCls = 'w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-2.5 text-sm text-[#141413] placeholder:text-[#737370] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all';
 
   return (
     <div className="space-y-6">
@@ -109,7 +109,7 @@ function ArticleEditor({ article, onClose, onSaved }) {
             <ChevronRight className="w-3 h-3 rotate-180" /> Kembali ke daftar
           </button>
           <h1 className="text-2xl font-sans font-semibold text-[#141413]">{isNew ? 'Artikel Baru' : 'Edit Artikel'}</h1>
-          <p className="text-xs text-[#8F8E8A] font-mono mt-1">status: <span className={form.status === 'published' ? 'text-[#6D5BA0]' : 'text-amber-500'}>{form.status}</span></p>
+          <p className="text-xs text-[#636360] font-mono mt-1">status: <span className={form.status === 'published' ? 'text-[#6D5BA0]' : 'text-amber-500'}>{form.status}</span></p>
         </div>
         <div className="flex flex-wrap gap-2">
           {!isNew && form.status === 'published' && (
@@ -188,9 +188,9 @@ function ArticleEditor({ article, onClose, onSaved }) {
                 <h2 className="mt-3 text-2xl font-sans font-semibold text-[#141413] leading-tight">{form.title || 'Judul artikel akan muncul di sini'}</h2>
                 {form.excerpt && <p className="mt-3 text-[#6B6B68] text-sm">{form.excerpt}</p>}
                 <div className="mt-4 flex flex-wrap gap-1.5">
-                  {form.tags.map(t => <span key={t} className="text-[10px] font-mono text-[#8F8E8A] uppercase">#{t}</span>)}
+                  {form.tags.map(t => <span key={t} className="text-[10px] font-mono text-[#636360] uppercase">#{t}</span>)}
                 </div>
-                <div className="mt-6 vyu-prose !text-sm" dangerouslySetInnerHTML={{ __html: form.content || '<p class="text-[#B0AFAA] italic">Konten akan muncul di sini…</p>' }} />
+                <div className="mt-6 vyu-prose !text-sm" dangerouslySetInnerHTML={{ __html: form.content || '<p class="text-[#737370] italic">Konten akan muncul di sini…</p>' }} />
               </div>
             </div>
           </div>
@@ -217,7 +217,7 @@ function ArrayEditor({ label, value, onChange, placeholder }) {
       </div>
       <div className="flex gap-2">
         <input value={v} onChange={(e) => setV(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); add(); } }}
-          className="w-full bg-white border border-[#E5E4E0] rounded-lg px-3 py-2 text-xs text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] outline-none transition-all" placeholder={placeholder} />
+          className="w-full bg-white border border-[#E5E4E0] rounded-lg px-3 py-2 text-xs text-[#141413] placeholder:text-[#737370] focus:border-[#6D5BA0] outline-none transition-all" placeholder={placeholder} />
         <button type="button" onClick={add} className="vyu-btn-secondary text-xs whitespace-nowrap">+</button>
       </div>
     </div>
@@ -261,7 +261,7 @@ function PortfolioEditor({ item, onClose, onSaved }) {
     setTimeout(() => onSaved(res.data), 600);
   };
 
-  const inputCls = 'w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-2.5 text-sm text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all';
+  const inputCls = 'w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-2.5 text-sm text-[#141413] placeholder:text-[#737370] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all';
 
   return (
     <div className="space-y-6">
@@ -271,7 +271,7 @@ function PortfolioEditor({ item, onClose, onSaved }) {
             <ChevronRight className="w-3 h-3 rotate-180" /> Kembali ke daftar
           </button>
           <h1 className="text-2xl font-sans font-semibold text-[#141413]">{isNew ? 'Portfolio Baru' : 'Edit Portfolio'}</h1>
-          <p className="text-xs text-[#8F8E8A] font-mono mt-1">status: <span className={form.status === 'published' ? 'text-[#6D5BA0]' : 'text-amber-500'}>{form.status}</span></p>
+          <p className="text-xs text-[#636360] font-mono mt-1">status: <span className={form.status === 'published' ? 'text-[#6D5BA0]' : 'text-amber-500'}>{form.status}</span></p>
         </div>
         <div className="flex flex-wrap gap-2">
           <button disabled={busy} onClick={() => save('draft')} className="vyu-btn-secondary text-sm">{busy ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />} Save Draft</button>
@@ -458,7 +458,7 @@ export default function AdminClient({ user }) {
           </Link>
         </nav>
         <div className="p-4 border-t border-[#E5E4E0]">
-          <p className="text-xs text-[#8F8E8A] mb-2 font-mono truncate">{user?.email}</p>
+          <p className="text-xs text-[#636360] mb-2 font-mono truncate">{user?.email}</p>
           <button onClick={handleLogout} disabled={loggingOut} className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#6B6B68] hover:text-red-500 hover:bg-red-50 transition">
             {loggingOut ? <Loader2 className="w-4 h-4 animate-spin" /> : <LogOut className="w-4 h-4" />} {loggingOut ? 'Logging out…' : 'Logout'}
           </button>
@@ -511,9 +511,9 @@ export default function AdminClient({ user }) {
               </div>
 
               <div className="mb-6 relative max-w-md">
-                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8F8E8A]" />
+                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#636360]" />
                 <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Cari judul atau kategori…"
-                  className="w-full bg-white border border-[#E5E4E0] rounded-lg pl-9 pr-4 py-2.5 text-sm text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] outline-none transition-all" />
+                  className="w-full bg-white border border-[#E5E4E0] rounded-lg pl-9 pr-4 py-2.5 text-sm text-[#141413] placeholder:text-[#737370] focus:border-[#6D5BA0] outline-none transition-all" />
               </div>
 
               <div className="vyu-card overflow-hidden">
@@ -529,20 +529,20 @@ export default function AdminClient({ user }) {
                   </thead>
                   <tbody>
                     {loading ? (
-                      <tr><td colSpan={5} className="px-5 py-12 text-center text-[#8F8E8A]"><Loader2 className="w-5 h-5 animate-spin inline" /></td></tr>
+                      <tr><td colSpan={5} className="px-5 py-12 text-center text-[#636360]"><Loader2 className="w-5 h-5 animate-spin inline" /></td></tr>
                     ) : filteredArticles.length === 0 ? (
-                      <tr><td colSpan={5} className="px-5 py-12 text-center text-[#8F8E8A]">Belum ada artikel. Klik &quot;Artikel Baru&quot;.</td></tr>
+                      <tr><td colSpan={5} className="px-5 py-12 text-center text-[#636360]">Belum ada artikel. Klik &quot;Artikel Baru&quot;.</td></tr>
                     ) : filteredArticles.map(a => (
                       <tr key={a.id} className="border-t border-[#E5E4E0] hover:bg-[#F8F7F4]">
                         <td className="px-5 py-4">
                           <p className="font-medium text-[#141413] line-clamp-1">{a.title}</p>
-                          <p className="text-xs text-[#8F8E8A] mt-1 line-clamp-1 font-mono">/{a.slug}</p>
+                          <p className="text-xs text-[#636360] mt-1 line-clamp-1 font-mono">/{a.slug}</p>
                         </td>
                         <td className="px-5 py-4 hidden md:table-cell text-[#4A4A48]">{a.category}</td>
                         <td className="px-5 py-4">
                           <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-widest uppercase border ${a.status === 'published' ? 'bg-[#6D5BA0]/10 border-[#6D5BA0]/30 text-[#6D5BA0]' : 'bg-amber-50 border-amber-200 text-amber-600'}`}>{a.status}</span>
                         </td>
-                        <td className="px-5 py-4 hidden lg:table-cell text-[#8F8E8A] text-xs font-mono">{new Date(a.updated_at).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
+                        <td className="px-5 py-4 hidden lg:table-cell text-[#636360] text-xs font-mono">{new Date(a.updated_at).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</td>
                         <td className="px-5 py-4 text-right">
                           <div className="inline-flex gap-1">
                             {a.status === 'published' && (
@@ -578,23 +578,23 @@ export default function AdminClient({ user }) {
               </div>
 
               <div className="mb-6 relative max-w-md">
-                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#8F8E8A]" />
+                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#636360]" />
                 <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Cari nama produk…"
-                  className="w-full bg-white border border-[#E5E4E0] rounded-lg pl-9 pr-4 py-2.5 text-sm text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] outline-none transition-all" />
+                  className="w-full bg-white border border-[#E5E4E0] rounded-lg pl-9 pr-4 py-2.5 text-sm text-[#141413] placeholder:text-[#737370] focus:border-[#6D5BA0] outline-none transition-all" />
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {loading ? (
-                  <div className="col-span-full text-center py-12 text-[#8F8E8A]"><Loader2 className="w-5 h-5 animate-spin inline" /></div>
+                  <div className="col-span-full text-center py-12 text-[#636360]"><Loader2 className="w-5 h-5 animate-spin inline" /></div>
                 ) : filteredPortfolio.length === 0 ? (
-                  <div className="col-span-full vyu-card p-12 text-center text-[#8F8E8A]">Belum ada portfolio. Klik &quot;Portfolio Baru&quot;.</div>
+                  <div className="col-span-full vyu-card p-12 text-center text-[#636360]">Belum ada portfolio. Klik &quot;Portfolio Baru&quot;.</div>
                 ) : filteredPortfolio.map(p => (
                   <div key={p.id} className="vyu-card overflow-hidden flex flex-col">
                     {p.cover ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={p.cover} alt={p.name} className="w-full h-32 object-cover opacity-90" />
                     ) : (
-                      <div className="w-full h-32 bg-[#F4F3EE] flex items-center justify-center text-[#B0AFAA]"><ImageLucide className="w-8 h-8" /></div>
+                      <div className="w-full h-32 bg-[#F4F3EE] flex items-center justify-center text-[#737370]"><ImageLucide className="w-8 h-8" /></div>
                     )}
                     <div className="p-5 flex flex-col flex-1">
                       <div className="flex items-center justify-between mb-2">
@@ -603,7 +603,7 @@ export default function AdminClient({ user }) {
                       </div>
                       <h3 className="text-base font-sans font-semibold text-[#141413]">{p.name}</h3>
                       <p className="text-xs text-[#6B6B68] mt-1 line-clamp-2 leading-relaxed">{p.description}</p>
-                      <div className="mt-auto pt-4 flex items-center justify-between text-xs text-[#8F8E8A]">
+                      <div className="mt-auto pt-4 flex items-center justify-between text-xs text-[#636360]">
                         <span className="font-mono">pos: {p.position}</span>
                         <div className="flex gap-1">
                           <button onClick={() => setView({ mode: 'edit', item: p })} className="p-1.5 rounded hover:bg-[#6D5BA0]/10 text-[#6B6B68] hover:text-[#6D5BA0]" aria-label="Edit portfolio"><Edit3 className="w-4 h-4" /></button>

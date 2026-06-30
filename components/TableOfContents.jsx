@@ -19,7 +19,7 @@ export default function TableOfContents({ html }) {
         <span className="flex items-center gap-2 text-sm font-semibold text-[#141413]">
           <List className="w-4 h-4 text-[#6D5BA0]" /> Daftar Isi
         </span>
-        {open ? <ChevronUp className="w-4 h-4 text-[#8F8E8A]" /> : <ChevronDown className="w-4 h-4 text-[#8F8E8A]" />}
+        {open ? <ChevronUp className="w-4 h-4 text-[#636360]" /> : <ChevronDown className="w-4 h-4 text-[#636360]" />}
       </button>
       {open && (
         <nav className="mt-4 space-y-2">

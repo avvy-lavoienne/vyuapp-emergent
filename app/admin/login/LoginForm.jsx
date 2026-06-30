@@ -60,13 +60,13 @@ export default function LoginForm({ next = '/admin' }) {
           <div>
             <label className="block font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.18em] font-medium mb-2">Email</label>
             <input name="email" type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-3 text-sm text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all"
+              className="w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-3 text-sm text-[#141413] placeholder:text-[#737370] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all"
               placeholder="admin@vyuapp.com" />
           </div>
           <div>
             <label className="block font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.18em] font-medium mb-2">Password</label>
             <input name="password" type="password" required autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-3 text-sm text-[#141413] placeholder:text-[#B0AFAA] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all"
+              className="w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-3 text-sm text-[#141413] placeholder:text-[#737370] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all"
               placeholder="••••••••" />
           </div>
           {(clientError || state?.error) && (
@@ -77,7 +77,7 @@ export default function LoginForm({ next = '/admin' }) {
           <SubmitButton />
         </form>
 
-        <div className="mt-6 pt-6 border-t border-[#E5E4E0] text-[11px] text-[#B0AFAA] font-mono space-y-1">
+        <div className="mt-6 pt-6 border-t border-[#E5E4E0] text-[11px] text-[#737370] font-mono space-y-1">
           <p>Auth via Supabase. Middleware menjaga session di server.</p>
         </div>
       </div>

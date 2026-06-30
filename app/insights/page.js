@@ -57,7 +57,7 @@ function ArticleCard({ a, featured = false, index = 0 }) {
         </div>
       </div>
       <div className="p-6 flex flex-col flex-1">
-        <div className="flex items-center gap-3 text-xs text-[#8F8E8A] mb-3">
+        <div className="flex items-center gap-3 text-xs text-[#636360] mb-3">
           <span className="flex items-center gap-1.5"><Calendar className="w-3 h-3" /> {formatDate(a.published_at || a.updated_at)}</span>
           <span>·</span>
           <span>{Math.max(2, Math.round((a.content || '').length / 1000))} min read</span>
@@ -68,7 +68,7 @@ function ArticleCard({ a, featured = false, index = 0 }) {
         <p className="mt-3 text-sm text-[#4A4A48] leading-relaxed line-clamp-3">{a.excerpt}</p>
         <div className="mt-5 flex flex-wrap gap-1.5">
           {(a.tags || []).slice(0, 3).map(t => (
-            <span key={t} className="text-[10px] font-mono tracking-wider text-[#B0AFAA] uppercase">#{t}</span>
+            <span key={t} className="text-[10px] font-mono tracking-wider text-[#737370] uppercase">#{t}</span>
           ))}
         </div>
         <div className="mt-auto pt-5">
@@ -120,7 +120,7 @@ export default async function InsightsPage({ searchParams }) {
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           {articles.length === 0 ? (
             <div className="p-12 rounded-2xl border border-[#E5E4E0] bg-white text-center">
-              <p className="font-mono text-xs text-[#8F8E8A] uppercase tracking-[0.15em]">// Belum ada artikel</p>
+              <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em]">// Belum ada artikel</p>
               <p className="mt-3 text-sm text-[#4A4A48]">
                 {(category || tags) 
                   ? 'Tidak ditemukan artikel yang cocok dengan filter. Coba filter lain.'

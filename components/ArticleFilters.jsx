@@ -76,7 +76,7 @@ export default function ArticleFilters({ availableTags = [] }) {
     <div className="mb-8 space-y-5">
       {/* Category Filter */}
       <div>
-        <h3 className="text-xs font-mono uppercase tracking-[0.15em] text-[#8F8E8A] mb-3">
+        <h3 className="text-xs font-mono uppercase tracking-[0.15em] text-[#636360] mb-3">
           Kategori
         </h3>
         <div className="flex flex-wrap gap-2">
@@ -99,7 +99,7 @@ export default function ArticleFilters({ availableTags = [] }) {
       {/* Tag Filter */}
       {availableTags.length > 0 && (
         <div>
-          <h3 className="text-xs font-mono uppercase tracking-[0.15em] text-[#8F8E8A] mb-3">
+          <h3 className="text-xs font-mono uppercase tracking-[0.15em] text-[#636360] mb-3">
             Tag
           </h3>
           <div className="flex flex-wrap gap-2">
@@ -110,7 +110,7 @@ export default function ArticleFilters({ availableTags = [] }) {
                 className={`px-3 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase transition-all duration-200 border ${
                   activeTags.includes(tag)
                     ? 'bg-[#141413] text-white border-[#141413]'
-                    : 'bg-white text-[#B0AFAA] border-[#E5E4E0] hover:border-[#D1D0C9] hover:text-[#6B6B68]'
+                    : 'bg-white text-[#737370] border-[#E5E4E0] hover:border-[#D1D0C9] hover:text-[#6B6B68]'
                 }`}
               >
                 #{tag}
@@ -131,7 +131,7 @@ export default function ArticleFilters({ availableTags = [] }) {
       {/* Active Filters Summary + Clear */}
       {hasFilters && (
         <div className="flex items-center gap-3 pt-2 border-t border-[#E5E4E0]">
-          <span className="text-xs text-[#8F8E8A]">
+          <span className="text-xs text-[#636360]">
             Filter aktif:
             {activeCategory && (
               <span className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#6D5BA0]/10 text-[#6D5BA0] font-medium">
@@ -146,7 +146,7 @@ export default function ArticleFilters({ availableTags = [] }) {
           </span>
           <button
             onClick={clearAll}
-            className="inline-flex items-center gap-1 text-xs text-[#8F8E8A] hover:text-[#6D5BA0] transition-colors"
+            className="inline-flex items-center gap-1 text-xs text-[#636360] hover:text-[#6D5BA0] transition-colors"
           >
             <X className="w-3 h-3" /> Hapus semua
           </button>

@@ -23,7 +23,7 @@ export default function SectionHeader({ overline, title, description, align = 'l
   return (
     <div className={`max-w-3xl ${alignCls}`}>
       {overline && (
-        <p className="font-mono text-xs text-[#8F8E8A] uppercase tracking-[0.15em] font-medium">
+        <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] font-medium">
           {overline}
         </p>
       )}

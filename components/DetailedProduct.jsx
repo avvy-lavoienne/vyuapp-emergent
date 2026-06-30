@@ -39,7 +39,7 @@ export default function DetailedProduct({ item }) {
         </div>
         <div className="lg:col-span-5">
           <div className="h-full rounded-2xl border border-[#E5E4E0] p-7 bg-[#F8F7F4]">
-            <p className="font-mono text-xs text-[#8F8E8A] uppercase tracking-[0.15em] font-medium mb-4">
+            <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] font-medium mb-4">
               Value Proposition
             </p>
             <ul className="space-y-3">

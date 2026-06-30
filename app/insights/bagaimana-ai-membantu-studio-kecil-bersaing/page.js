@@ -86,7 +86,7 @@ export default function BagaimanaAIMembantuPage() {
             Di industri web development Indonesia, studio kecil sering kali merasa tertinggal. Namun AI mengubah peraturan permainan — dan yang mengejutkan, studio kecil justru bisa lebih lincah.
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-[#8F8E8A] font-mono">
+          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-[#636360] font-mono">
             <span className="flex items-center gap-1.5"><Calendar className="w-3 h-3" /> {formatDate()}</span>
             <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> {readTime}</span>
             <span>#AI development</span>
@@ -96,7 +96,7 @@ export default function BagaimanaAIMembantuPage() {
 
           {/* Table of Contents */}
           <div className="mt-8 p-6 rounded-2xl border border-[#E5E4E0] bg-white">
-            <p className="font-mono text-[10px] text-[#8F8E8A] uppercase tracking-[0.18em] font-medium mb-3">Daftar Isi</p>
+            <p className="font-mono text-[10px] text-[#636360] uppercase tracking-[0.18em] font-medium mb-3">Daftar Isi</p>
             <nav className="space-y-2">
               {tocItems.map((item) => (
                 <a key={item.id} href={`#${item.id}`} className="block text-sm text-[#6D5BA0] hover:text-[#574886] transition-colors">
@@ -239,7 +239,7 @@ export default function BagaimanaAIMembantuPage() {
               </div>
             </div>
             <div className="flex items-center gap-3">
-            <span className="text-xs text-[#8F8E8A]">Bagikan artikel</span>
+            <span className="text-xs text-[#636360]">Bagikan artikel</span>
             </div>
           </div>
         </div>

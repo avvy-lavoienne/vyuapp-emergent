@@ -17,7 +17,7 @@ export default function PrivacyPage() {
           <h1 className="mt-4 text-3xl md:text-4xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">
             Kebijakan Privasi
           </h1>
-          <p className="mt-3 text-sm text-[#8F8E8A]">Terakhir diperbarui: 28 Juni 2026</p>
+          <p className="mt-3 text-sm text-[#636360]">Terakhir diperbarui: 28 Juni 2026</p>
 
           <div className="mt-10 space-y-8 text-[#4A4A48] text-sm leading-relaxed">
             <section>
