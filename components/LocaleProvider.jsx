@@ -14,13 +14,12 @@ export function LocaleProvider({ children, initialLocale = 'id' }) {
   }, []);
 
   const toggle = () => {
-    setLocale(prev => {
-      const next = prev === 'id' ? 'en' : 'id';
-      // Persist to both localStorage and cookie for server-side detection
-      localStorage.setItem('vyu-locale', next);
-      document.cookie = `vyu-locale=${next};path=/;max-age=31536000;SameSite=Lax`;
-      return next;
-    });
+    const next = locale === 'id' ? 'en' : 'id';
+    // Persist to both localStorage and cookie
+    localStorage.setItem('vyu-locale', next);
+    document.cookie = `vyu-locale=${next};path=/;max-age=31536000;SameSite=Lax`;
+    // Reload to re-render server components with the new locale
+    window.location.reload();
   };
 
   const t = locales[locale] || locales.id;

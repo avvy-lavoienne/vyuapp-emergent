@@ -2,12 +2,16 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLocale } from '@/components/LocaleProvider';
-import { usePathname } from 'next/navigation';
 
-export default function Footer() {
+/**
+ * Footer — client component.
+ * When `isLanding` is true, uses locale context for translated text.
+ * Otherwise falls back to static Indonesian text.
+ * useLocale() always returns a valid value (fallback context when no provider).
+ */
+export default function Footer({ isLanding = false }) {
   const { t } = useLocale();
-  const pathname = usePathname();
-  const isLanding = pathname === '/';
+  const text = isLanding ? t : null;
 
   return (
     <footer className="border-t border-[#E5E4E0] bg-[#FAFAF8]">
@@ -22,27 +26,27 @@ export default function Footer() {
             </span>
           </Link>
           <p className="text-sm text-[#636360] mt-4 max-w-xs leading-relaxed">
-            {isLanding ? t.footer.desc : 'Studio rekayasa web bespoke berbasis di Garut, Jawa Barat.'}
+            {text ? text.footer.desc : 'Studio rekayasa web bespoke berbasis di Garut, Jawa Barat.'}
           </p>
         </div>
 
         <div className="flex items-start gap-10">
           <div>
             <p className="text-xs font-medium text-[#636360] uppercase tracking-widest mb-4">
-              {isLanding ? t.footer.nav : 'Navigasi'}
+              {text ? text.footer.nav : 'Navigasi'}
             </p>
             <ul className="space-y-2.5 text-sm text-[#6B6B68]">
-              <li><Link href="/" className="hover:text-[#141413] transition-colors">{isLanding ? t.nav.home : 'Beranda'}</Link></li>
-              <li><Link href="/portfolio" className="hover:text-[#141413] transition-colors">{isLanding ? t.nav.portfolio : 'Portfolio'}</Link></li>
-              <li><Link href="/insights" className="hover:text-[#141413] transition-colors">{isLanding ? t.nav.insights : 'Insights'}</Link></li>
-              <li><a href="/#kontak" className="hover:text-[#141413] transition-colors">{isLanding ? t.nav.contact : 'Kontak'}</a></li>
-              <li><Link href="/about" className="hover:text-[#141413] transition-colors">{isLanding ? 'Tentang Kami' : 'Tentang Kami'}</Link></li>
-              <li><Link href="/privacy" className="hover:text-[#141413] transition-colors">{isLanding ? 'Kebijakan Privasi' : 'Kebijakan Privasi'}</Link></li>
+              <li><Link href="/" className="hover:text-[#141413] transition-colors">{text ? text.nav.home : 'Beranda'}</Link></li>
+              <li><Link href="/portfolio" className="hover:text-[#141413] transition-colors">{text ? text.nav.portfolio : 'Portfolio'}</Link></li>
+              <li><Link href="/insights" className="hover:text-[#141413] transition-colors">{text ? text.nav.insights : 'Insights'}</Link></li>
+              <li><a href="/#kontak" className="hover:text-[#141413] transition-colors">{text ? text.nav.contact : 'Kontak'}</a></li>
+              <li><Link href="/about" className="hover:text-[#141413] transition-colors">Tentang Kami</Link></li>
+              <li><Link href="/privacy" className="hover:text-[#141413] transition-colors">Kebijakan Privasi</Link></li>
             </ul>
           </div>
           <div>
             <p className="text-xs font-medium text-[#636360] uppercase tracking-widest mb-4">
-              {isLanding ? t.footer.contact : 'Kontak'}
+              {text ? text.footer.contact : 'Kontak'}
             </p>
             <ul className="space-y-2.5 text-sm text-[#6B6B68]">
               <li>
@@ -58,8 +62,8 @@ export default function Footer() {
 
       <div className="border-t border-[#E5E4E0]">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-5 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-[#737370]">
-          <p>&copy; {new Date().getFullYear()} {isLanding ? t.footer.copyright : 'VyuApp.'}</p>
-          <p className="font-mono text-[#737370]">{isLanding ? t.footer.tagline : 'crafted with precision in Garut'}</p>
+          <p>&copy; {new Date().getFullYear()} {text ? text.footer.copyright : 'VyuApp.'}</p>
+          <p className="font-mono text-[#737370]">{text ? text.footer.tagline : 'crafted with precision in Garut'}</p>
         </div>
       </div>
     </footer>

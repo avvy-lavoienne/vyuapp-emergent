@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
+import { verifyTurnstileToken } from '@/lib/turnstile';
+import { discoveryLimiter } from '@/lib/rate-limit';
 
 interface DiscoveryPayload {
   fullName: string;
@@ -11,6 +13,7 @@ interface DiscoveryPayload {
   techRequirements: string;
   budgetRange: string;
   timeline: string;
+  turnstileToken?: string;
 }
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -116,7 +119,34 @@ function buildEmail(body: DiscoveryPayload): string {
 
 export async function POST(request: NextRequest) {
   try {
-    const body: DiscoveryPayload = await request.json();
+    // Rate limiting
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1';
+    const { success, remaining, reset } = await discoveryLimiter.limit(ip);
+    if (!success) {
+      return NextResponse.json(
+        { error: 'Terlalu banyak percobaan. Coba lagi nanti.' },
+        {
+          status: 429,
+          headers: {
+            'X-RateLimit-Remaining': remaining.toString(),
+            'X-RateLimit-Reset': reset.toString(),
+          },
+        },
+      );
+    }
+
+    const rawBody = await request.json();
+    const { turnstileToken, ...restBody } = rawBody;
+    const body: DiscoveryPayload = restBody;
+
+    // Verify Turnstile token
+    if (!turnstileToken) {
+      return NextResponse.json({ error: 'Security verification required.' }, { status: 403 });
+    }
+    const turnstileResult = await verifyTurnstileToken(turnstileToken);
+    if (!turnstileResult.success) {
+      return NextResponse.json({ error: 'Security verification failed. Please try again.' }, { status: 403 });
+    }
 
     const validationError = validate(body);
     if (validationError) {

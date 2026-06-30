@@ -1,4 +1,5 @@
 import { JetBrains_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import AdSenseScript from '@/components/AdSenseScript';
 import ChatWidget from '@/components/ChatWidget';
@@ -6,6 +7,17 @@ import NavigationLoader from '@/components/NavigationLoader';
 import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from '@/components/JsonLd';
 
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', display: 'swap' });
+
+const satoshi = localFont({
+  src: [
+    { path: '../public/fonts/satoshi-regular.woff2', weight: '400', style: 'normal' },
+    { path: '../public/fonts/satoshi-medium.woff2', weight: '500', style: 'normal' },
+    { path: '../public/fonts/satoshi-bold.woff2', weight: '700', style: 'normal' },
+  ],
+  variable: '--font-sans',
+  display: 'swap',
+  fallback: ['system-ui', 'sans-serif'],
+});
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://www.vyuapp.my.id';
 const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
@@ -57,12 +69,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id" className={`${mono.variable}`}>
+    <html lang="id" className={`${satoshi.variable} ${mono.variable}`}>
       <head>
         <meta name="format-detection" content="telephone=no, email=no" />
-        <link rel="preload" href="/fonts/satoshi-regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/satoshi-medium.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
-        <link rel="preload" href="/fonts/satoshi-bold.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="me" href="https://github.com/avvy-lavoienne" />
         <link rel="me" href="https://www.linkedin.com/in/frmnfird" />
         {adsenseClient && <link rel="preconnect" href="https://pagead2.googlesyndication.com" />}

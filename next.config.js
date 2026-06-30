@@ -10,12 +10,7 @@ const nextConfig = {
   },
   experimental: {
     optimizePackageImports: [
-      '@radix-ui/react-accordion',
-      '@radix-ui/react-alert-dialog',
       '@radix-ui/react-dialog',
-      '@radix-ui/react-dropdown-menu',
-      '@radix-ui/react-popover',
-      '@radix-ui/react-tabs',
       '@radix-ui/react-tooltip',
       'lucide-react',
       'date-fns',

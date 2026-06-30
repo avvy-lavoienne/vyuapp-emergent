@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 const CS_MODEL_BASE = process.env.CS_MODEL_BASE_URL || 'http://195.88.211.166:20128/v1';
 const CS_MODEL = process.env.CS_MODEL_NAME || 'nara/mimo-v2.5';
@@ -7,18 +7,35 @@ const RATE_LIMIT = 5;
 const ADMIN_PASSWORD = 'AkuWibuGanteng';
 const ADMIN_DURATION = 5 * 60 * 1000; // 5 minutes
 
-// In-memory rate limit store (per-process)
-const visitorSessions = new Map();
+interface VisitorSession {
+  count: number;
+  resetAt: number;
+  adminUntil: number;
+}
 
-function getVisitorId(request) {
+interface ChatMessage {
+  role: 'system' | 'user' | 'assistant';
+  content: string;
+}
+
+interface RateLimitResult {
+  allowed: boolean;
+  admin: boolean;
+  remaining: number;
+}
+
+// In-memory rate limit store (per-process)
+const visitorSessions = new Map<string, VisitorSession>();
+
+function getVisitorId(request: NextRequest): string {
   const forwarded = request.headers.get('x-forwarded-for');
   const ip = forwarded?.split(',')[0]?.trim() || 'unknown';
   return ip;
 }
 
-function checkRateLimit(visitorId) {
+function checkRateLimit(visitorId: string): RateLimitResult {
   const now = Date.now();
-  const session = visitorSessions.get(visitorId) || { count: 0, resetAt: now + 60 * 60 * 1000, adminUntil: 0 };
+  const session: VisitorSession = visitorSessions.get(visitorId) || { count: 0, resetAt: now + 60 * 60 * 1000, adminUntil: 0 };
 
   // Check admin mode
   if (session.adminUntil > now) {
@@ -40,9 +57,9 @@ function checkRateLimit(visitorId) {
   return { allowed: true, admin: false, remaining: RATE_LIMIT - session.count };
 }
 
-function activateAdmin(visitorId) {
+function activateAdmin(visitorId: string): number {
   const now = Date.now();
-  const session = visitorSessions.get(visitorId) || { count: 0, resetAt: now + 60 * 60 * 1000, adminUntil: 0 };
+  const session: VisitorSession = visitorSessions.get(visitorId) || { count: 0, resetAt: now + 60 * 60 * 1000, adminUntil: 0 };
   session.adminUntil = now + ADMIN_DURATION;
   visitorSessions.set(visitorId, session);
   return Math.floor(ADMIN_DURATION / 60000);
@@ -91,10 +108,10 @@ Gaya bicara Hana (TIDAK terlalu formal, TIDAK terlalu kasual):
 ❌ "Terima kasih atas pertanyaan Anda. Kami dengan senang hati akan membantu."
 ❌ "Halo! Mau tanya apa nih? 😄😄😄"`;
 
-export async function POST(request) {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { message, history } = body;
+    const { message, history } = body as { message?: string; history?: ChatMessage[] };
 
     if (!message || typeof message !== 'string' || message.trim().length === 0) {
       return NextResponse.json(
@@ -130,7 +147,7 @@ export async function POST(request) {
     }
 
     // Build messages array with history
-    const messages = [
+    const messages: ChatMessage[] = [
       { role: 'system', content: SYSTEM_PROMPT },
       ...(Array.isArray(history) ? history.slice(-6) : []),
       { role: 'user', content: message.trim() },

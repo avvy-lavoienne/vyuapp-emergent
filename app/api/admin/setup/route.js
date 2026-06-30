@@ -4,6 +4,7 @@
 //   1. Create the 'featured-images' storage bucket (public)
 //   2. Create / ensure the admin auth user (with default password)
 //   3. Seed sample articles + portfolio items if tables are empty
+import { validateEnv } from '@/lib/env';
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase/admin';
 import { SEED_ARTICLES_FOR_SUPABASE, SEED_PORTFOLIO } from '@/lib/seed';
@@ -11,6 +12,7 @@ import { SEED_ARTICLES_FOR_SUPABASE, SEED_PORTFOLIO } from '@/lib/seed';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request) {
+  validateEnv();
   const setupToken = request.headers.get('x-setup-token');
   const expectedToken = process.env.SETUP_TOKEN;
 

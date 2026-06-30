@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { CheckCircle2, ArrowRight, Loader2, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import * as Progress from '@radix-ui/react-progress';
+import Turnstile from '@/components/ui/turnstile';
 
 interface DiscoveryFormData {
   fullName: string;
@@ -63,6 +64,8 @@ const timelineOptions = [
 
 type FormStatus = 'idle' | 'loading' | 'sent' | 'error';
 
+type TurnstileStatus = 'pending' | 'verified';
+
 const iconBox = 'w-9 h-9 rounded-lg bg-terracotta-50 border border-terracotta-100 flex items-center justify-center text-terracotta-500';
 
 export default function DiscoveryForm() {
@@ -71,7 +74,14 @@ export default function DiscoveryForm() {
   const [status, setStatus] = useState<FormStatus>('idle');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [errorMessage, setErrorMessage] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileStatus, setTurnstileStatus] = useState<TurnstileStatus>('pending');
   const refs = useRef<Record<string, HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null>>({});
+
+  const handleTurnstileVerify = useCallback((token: string) => {
+    setTurnstileToken(token);
+    setTurnstileStatus('verified');
+  }, []);
 
   useEffect(() => {
     try {
@@ -148,13 +158,18 @@ export default function DiscoveryForm() {
   };
 
   const handleSubmit = async () => {
+    if (!turnstileToken) {
+      setErrorMessage('Please complete the security check.');
+      setStatus('error');
+      return;
+    }
     setStatus('loading');
     setErrorMessage('');
     try {
       const res = await fetch('/api/discovery', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(answers),
+        body: JSON.stringify({ ...answers, turnstileToken }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -165,6 +180,8 @@ export default function DiscoveryForm() {
       setStatus('sent');
       setAnswers(initialAnswers);
       setStep(0);
+      setTurnstileToken('');
+      setTurnstileStatus('pending');
       try {
         localStorage.removeItem(STORAGE_KEY);
       } catch {
@@ -353,6 +370,9 @@ export default function DiscoveryForm() {
                 </span>
               </div>
             ))}
+            <div className="flex justify-center pt-2">
+              <Turnstile onVerify={handleTurnstileVerify} />
+            </div>
           </div>
         )}
       </div>
