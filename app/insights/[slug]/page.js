@@ -11,7 +11,7 @@ import TableOfContents from '@/components/TableOfContents';
 
 import { autoLink } from '@/lib/auto-linker';
 import { BreadcrumbJsonLd, ArticleJsonLd, FAQPageJsonLd } from '@/components/JsonLd';
-import DOMPurify from 'isomorphic-dompurify';
+import sanitizeHtml from 'sanitize-html';
 
 function extractFAQs(html) {
   if (!html) return [];
@@ -36,11 +36,16 @@ function extractFAQs(html) {
 
 export const revalidate = 3600;
 
-function sanitizeHtml(html) {
+function sanitizeHtmlContent(html) {
   if (!html) return '';
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: ['p','br','strong','em','h2','h3','h4','h5','h6','ul','ol','li','a','blockquote','code','pre','img','figure','figcaption','table','thead','tbody','tr','td','th','span','div'],
-    ALLOWED_ATTR: ['href','src','alt','class','id','target','rel','width','height','style'],
+  return sanitizeHtml(html, {
+    allowedTags: ['p','br','strong','em','h2','h3','h4','h5','h6','ul','ol','li','a','blockquote','code','pre','img','figure','figcaption','table','thead','tbody','tr','td','th','span','div'],
+    allowedAttributes: {
+      'a': ['href','target','rel'],
+      'img': ['src','alt','width','height'],
+      '*': ['class','id','style'],
+    },
+    allowedSchemes: ['http','https','data'],
   });
 }
 
@@ -177,11 +182,11 @@ export default async function ArticlePage({ params }) {
           <div className="mt-10 rounded-2xl overflow-hidden border border-[#E5E4E0] relative aspect-video bg-[#F4F3EE]">
             <Image src={article.cover || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80'} alt={article.title} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, 896px" />
           </div>
-          <div className="mt-12 prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtml(c1) }} />
+          <div className="mt-12 prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtmlContent(c1) }} />
           <AdSenseSlot slot={SLOT_TOP} format="auto" />
-          <div className="prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtml(c2) }} />
+          <div className="prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtmlContent(c2) }} />
           <AdSenseSlot slot={SLOT_MID} format="rectangle" style={{ display: 'block', minHeight: 250, maxWidth: 336, margin: '0 auto' }} />
-          <div className="prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtml(c3) }} />
+          <div className="prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtmlContent(c3) }} />
           <AdSenseSlot slot={SLOT_END} format="auto" />
           <div className="mt-12 p-6 rounded-2xl border border-[#E5E4E0] bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">

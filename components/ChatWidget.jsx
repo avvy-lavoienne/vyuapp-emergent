@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import DOMPurify from 'isomorphic-dompurify';
+import sanitizeHtml from 'sanitize-html';
 
 // Simple markdown to HTML parser
 function parseMarkdown(text) {
@@ -257,7 +257,7 @@ export default function ChatWidget() {
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-word',
               }}>
-                {msg.role === 'visitor' ? msg.text : <span dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(parseMarkdown(msg.text)) }} />}
+                {msg.role === 'visitor' ? msg.text : <span dangerouslySetInnerHTML={{ __html: sanitizeHtml(parseMarkdown(msg.text), { allowedTags: ['p','br','strong','em','code','pre','a','ul','ol','li','blockquote','h1','h2','h3','h4','h5','h6'], allowedAttributes: { 'a': ['href','target','rel'] }, allowedSchemes: ['http','https'] }) }} />}
               </div>
             </div>
           ))}
