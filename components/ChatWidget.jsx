@@ -26,6 +26,7 @@ export default function ChatWidget() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [messageCount, setMessageCount] = useState(0);
+  const [isAdmin, setIsAdmin] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -61,11 +62,13 @@ export default function ChatWidget() {
     }
   }, [isOpen]);
 
+  const effectiveLimit = isAdmin ? Infinity : RATE_LIMIT;
+
   const sendMessage = async () => {
     const text = input.trim();
     if (!text || loading) return;
 
-    if (messageCount >= RATE_LIMIT) {
+    if (messageCount >= effectiveLimit) {
       setMessages(prev => [...prev, {
         role: 'system',
         text: 'Batas pesan tercapai (5 pesan per sesi). Silakan refresh halaman untuk memulai sesi baru.',
@@ -84,12 +87,19 @@ export default function ChatWidget() {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({
+          message: text,
+          history: messages
+            .filter(m => m.role === 'visitor' || m.role === 'agent')
+            .slice(-6)
+            .map(m => ({ role: m.role === 'visitor' ? 'user' : 'assistant', content: m.text })),
+        }),
       });
       const data = await res.json();
 
       if (data.reply) {
         setMessages(prev => [...prev, { role: 'agent', text: data.reply, time: Date.now() }]);
+        if (data.admin) setIsAdmin(true);
       } else if (data.error) {
         setMessages(prev => [...prev, { role: 'agent', text: 'Maaf, terjadi kesalahan. Silakan coba lagi nanti.', time: Date.now() }]);
       }
@@ -296,7 +306,7 @@ export default function ChatWidget() {
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Ketik pesan..."
-            disabled={loading || messageCount >= RATE_LIMIT}
+            disabled={loading || messageCount >= effectiveLimit}
             style={{
               flex: 1,
               padding: '10px 14px',
@@ -305,7 +315,7 @@ export default function ChatWidget() {
               fontSize: '13.5px',
               outline: 'none',
               transition: 'border-color 0.2s',
-              backgroundColor: messageCount >= RATE_LIMIT ? '#f5f5f5' : '#fff',
+              backgroundColor: messageCount >= effectiveLimit ? '#f5f5f5' : '#fff',
             }}
             onFocus={e => { e.currentTarget.style.borderColor = '#6D5BA0'; }}
             onBlur={e => { e.currentTarget.style.borderColor = '#ddd'; }}
@@ -313,15 +323,15 @@ export default function ChatWidget() {
           <button
             aria-label="Kirim pesan"
             onClick={sendMessage}
-            disabled={!input.trim() || loading || messageCount >= RATE_LIMIT}
+            disabled={!input.trim() || loading || messageCount >= effectiveLimit}
             style={{
               width: '40px',
               height: '40px',
               borderRadius: '10px',
-              backgroundColor: input.trim() && !loading && messageCount < RATE_LIMIT ? '#6D5BA0' : '#ddd',
+              backgroundColor: input.trim() && !loading && messageCount < effectiveLimit ? '#6D5BA0' : '#ddd',
               color: '#fff',
               border: 'none',
-              cursor: input.trim() && !loading && messageCount < RATE_LIMIT ? 'pointer' : 'not-allowed',
+              cursor: input.trim() && !loading && messageCount < effectiveLimit ? 'pointer' : 'not-allowed',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

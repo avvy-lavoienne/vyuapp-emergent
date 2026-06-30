@@ -12,18 +12,26 @@ export default async function sitemap() {
     { url: `${base}/insights`, lastModified: now, changeFrequency: 'daily', priority: 0.9 },
     { url: `${base}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${base}/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${base}/tos`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${base}/portfolio/ai-agents`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
   ];
 
   let articleRoutes = [];
   try {
     const articles = await getPublishedArticles({ limit: 1000 });
-    articleRoutes = articles.map(a => ({
-      url: `${base}/insights/${a.slug}`,
-      lastModified: new Date(a.updated_at || a.published_at || now),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    }));
-  } catch {}
+    articleRoutes = articles.map(a => {
+      const daysSincePublished = (now - new Date(a.published_at)) / (1000 * 60 * 60 * 24);
+      const priority = daysSincePublished < 7 ? 0.8 : daysSincePublished < 30 ? 0.7 : daysSincePublished < 90 ? 0.65 : 0.6;
+      return {
+        url: `${base}/insights/${a.slug}`,
+        lastModified: new Date(a.updated_at || a.published_at || now),
+        changeFrequency: 'monthly',
+        priority,
+      };
+    });
+  } catch (e) {
+    console.error('Sitemap: failed to fetch articles:', e.message);
+  }
 
   let portfolioRoutes = [];
   try {
@@ -41,7 +49,9 @@ export default async function sitemap() {
         changeFrequency: 'monthly',
         priority: 0.6,
       }));
-  } catch {}
+  } catch (e) {
+    console.error('Sitemap: failed to fetch portfolio:', e.message);
+  }
 
   return [...staticRoutes, ...articleRoutes, ...portfolioRoutes];
 }

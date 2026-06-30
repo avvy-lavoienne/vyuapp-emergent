@@ -74,6 +74,7 @@ export default function RootLayout({ children }) {
         <meta name="format-detection" content="telephone=no, email=no" />
         <link rel="me" href="https://github.com/avvy-lavoienne" />
         <link rel="me" href="https://www.linkedin.com/in/frmnfird" />
+        <link rel="alternate" type="application/rss+xml" title="VyuApp Insights" href="/feed.xml" />
         {adsenseClient && <link rel="preconnect" href="https://pagead2.googlesyndication.com" />}
       </head>
       <body className="bg-[#FAFAF8] text-[#141413] antialiased font-sans selection:bg-[#6D5BA0]/20 selection:text-[#141413]">

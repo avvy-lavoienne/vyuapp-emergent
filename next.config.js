@@ -21,6 +21,30 @@ const nextConfig = {
       ],
     },
   },
+  async redirects() {
+    return [
+      {
+        source: '/insights/tren-web-development-2026-bagaimana-ai-mengubah-cara-kita-membangun-website',
+        destination: '/insights/tren-web-development-2026-ai-mengubah-cara-membangun-website',
+        permanent: true,
+      },
+      {
+        source: '/insights/hana-ai-customer-service-agent-vyuapp',
+        destination: '/insights/hana-ai-customer-service-bukan-sekadar-chatbot-biasa',
+        permanent: true,
+      },
+      {
+        source: '/insights/redis-caching-patterns-untuk-web-apps-skala-besar',
+        destination: '/insights/redis-caching-patterns-for-scalable-web-apps-dari-dasar-hingga',
+        permanent: true,
+      },
+      {
+        source: '/insights/vyuapp-platform-documentation-membangun-sistem-ai-powered-content-creation-denga',
+        destination: '/insights/vyuapp-platform-documentation',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

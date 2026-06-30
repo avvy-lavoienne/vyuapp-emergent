@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { chatLimiter } from '@/lib/rate-limit';
-import { Redis } from '@upstash/redis';
 
 const CS_MODEL_BASE = process.env.CS_MODEL_BASE_URL || '';
 const CS_MODEL = process.env.CS_MODEL_NAME || 'nara/mimo-v2.5';
@@ -9,10 +7,32 @@ const RATE_LIMIT = 20;
 const ADMIN_PASSWORD = process.env.CHAT_ADMIN_PASSWORD || 'AkuWibuGanteng';
 const ADMIN_DURATION = 5 * 60 * 1000; // 5 minutes
 
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
+// Lazy-init rate limiter — survives missing env vars at build time
+let chatLimiter: any = null;
+let redis: any = null;
+
+function getRedis() {
+  if (redis) return redis;
+  const url = process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return null;
+  try {
+    const { Redis } = require('@upstash/redis');
+    redis = new Redis({ url, token });
+    return redis;
+  } catch { return null; }
+}
+
+function getChatLimiter() {
+  if (chatLimiter) return chatLimiter;
+  const r = getRedis();
+  if (!r) return null;
+  try {
+    const { Ratelimit } = require('@upstash/ratelimit');
+    chatLimiter = new Ratelimit({ redis: r, limiter: Ratelimit.slidingWindow(RATE_LIMIT, '1 h'), analytics: true });
+    return chatLimiter;
+  } catch { return null; }
+}
 
 interface ChatMessage {
   role: 'system' | 'user' | 'assistant';
@@ -100,10 +120,13 @@ export async function POST(request: NextRequest) {
 
     // Check for admin password
     if (message.trim() === ADMIN_PASSWORD) {
-      try {
-        await redis.set(`chat:admin:${visitorId}`, '1', { ex: Math.floor(ADMIN_DURATION / 1000) });
-      } catch (e) {
-        console.error('Failed to set admin flag:', e);
+      const r = getRedis();
+      if (r) {
+        try {
+          await r.set(`chat:admin:${visitorId}`, '1', { ex: Math.floor(ADMIN_DURATION / 1000) });
+        } catch (e) {
+          console.error('Failed to set admin flag:', e);
+        }
       }
       const minutes = Math.floor(ADMIN_DURATION / 60000);
       return NextResponse.json({
@@ -114,21 +137,28 @@ export async function POST(request: NextRequest) {
 
     // Check if IP has admin bypass
     let isAdmin = false;
-    try {
-      const adminFlag = await redis.get(`chat:admin:${visitorId}`);
-      isAdmin = adminFlag === '1';
-    } catch (e) {
-      // If Redis check fails, continue without admin bypass
+    const r = getRedis();
+    if (r) {
+      try {
+        const adminFlag = await r.get(`chat:admin:${visitorId}`);
+        isAdmin = adminFlag === '1';
+      } catch (e) {
+        // If Redis check fails, continue without admin bypass
+      }
     }
 
     if (!isAdmin) {
-      const { success, remaining, reset } = await chatLimiter.limit(`chat:${visitorId}`);
-      if (!success) {
-        return NextResponse.json(
-          { error: `Rate limit exceeded. Maximum ${RATE_LIMIT} messages per hour.` },
-          { status: 429 }
-        );
+      const limiter = getChatLimiter();
+      if (limiter) {
+        const { success } = await limiter.limit(`chat:${visitorId}`);
+        if (!success) {
+          return NextResponse.json(
+            { error: `Rate limit exceeded. Maximum ${RATE_LIMIT} messages per hour.` },
+            { status: 429 }
+          );
+        }
       }
+      // If no limiter available (Redis down), allow request through
     }
 
     // Build messages array with history

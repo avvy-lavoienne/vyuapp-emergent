@@ -5,6 +5,6 @@ export default function robots() {
       { userAgent: '*', allow: '/', disallow: ['/admin', '/api/'] },
       { userAgent: 'Mediapartners-Google', allow: '/' },
     ],
-    sitemap: `${base}/sitemap.xml`,
+    sitemap: [`${base}/sitemap.xml`, `${base}/feed.xml`],
   };
 }
