@@ -84,6 +84,77 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   return data as Article | null;
 }
 
+export async function getRelatedArticles(currentSlug: string, category: string, tags: string[], limit: number = 3): Promise<Article[]> {
+  const all = await getPublishedArticles({ limit: 100 });
+  const others = all.filter(a => a.slug !== currentSlug);
+
+  // Score: same category +10, each shared tag +3
+  const scored = others.map(a => {
+    let score = 0;
+    if (a.category === category) score += 10;
+    const shared = (a.tags || []).filter(t => (tags || []).includes(t));
+    score += shared.length * 3;
+    return { ...a, score };
+  });
+
+  // Sort by score desc, then by published_at desc for ties
+  scored.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return new Date(b.published_at || 0).getTime() - new Date(a.published_at || 0).getTime();
+  });
+
+  return scored.slice(0, limit);
+}
+
+export async function getAdjacentArticles(publishedAt: string | null): Promise<{ prev: Article | null; next: Article | null }> {
+  if (!publishedAt) return { prev: null, next: null };
+  const supabase = await getServerSupabase();
+
+  // Article published just BEFORE this one (older)
+  const { data: prevData } = await supabase
+    .from('articles')
+    .select('id, slug, title, excerpt, cover, category, tags, published_at, updated_at')
+    .eq('status', 'published')
+    .lt('published_at', publishedAt)
+    .order('published_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  // Article published just AFTER this one (newer)
+  const { data: nextData } = await supabase
+    .from('articles')
+    .select('id, slug, title, excerpt, cover, category, tags, published_at, updated_at')
+    .eq('status', 'published')
+    .gt('published_at', publishedAt)
+    .order('published_at', { ascending: true })
+    .limit(1)
+    .maybeSingle();
+
+  return {
+    prev: (prevData as Article) || null,
+    next: (nextData as Article) || null,
+  };
+}
+
+export async function getArticlesWithAutoLinks(slug: string): Promise<Article | null> {
+  const { autoLinkContent } = await import('@/lib/auto-link');
+  const article = await getArticleBySlug(slug);
+  if (!article) return null;
+
+  // Fetch all other published articles (just title + slug for efficiency)
+  const supabase = await getServerSupabase();
+  const { data: allArticles } = await supabase
+    .from('articles')
+    .select('title, slug')
+    .eq('status', 'published')
+    .neq('slug', slug);
+
+  if (!allArticles || allArticles.length === 0) return article;
+
+  const linkedContent = autoLinkContent(article.content, allArticles as { title: string; slug: string }[]);
+  return { ...article, content: linkedContent };
+}
+
 export async function getPublishedPortfolio(): Promise<PortfolioItem[]> {
   const supabase = await getServerSupabase();
   const { data, error } = await supabase

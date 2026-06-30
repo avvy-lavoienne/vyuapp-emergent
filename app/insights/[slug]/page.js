@@ -4,12 +4,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, ArrowLeft, Clock } from 'lucide-react';
 import { notFound } from 'next/navigation';
-import { getArticleBySlug, getPublishedArticles } from '@/lib/data';
+import { getArticleBySlug, getRelatedArticles, getAdjacentArticles, getArticlesWithAutoLinks } from '@/lib/data';
 import AdSenseSlot from '@/components/AdSenseSlot';
 import ShareButton from '@/components/ShareButton';
 import TableOfContents from '@/components/TableOfContents';
+import ArticleNav from '@/components/ArticleNav';
 
-import { autoLink } from '@/lib/auto-linker';
 import { BreadcrumbJsonLd, ArticleJsonLd, FAQPageJsonLd } from '@/components/JsonLd';
 import sanitizeHtml from 'sanitize-html';
 
@@ -99,27 +99,18 @@ function splitHTMLByParagraphs(html) {
 
 export default async function ArticlePage({ params }) {
   const { slug } = await params;
-  const article = await getArticleBySlug(slug);
-  if (!article || article.status !== 'published') notFound();
-  const all = await getPublishedArticles({ limit: 100 });
-  const others = all.filter(a => a.id !== article.id);
   
-  // Semantic matching: same category first, then shared tags
-  const withScore = others.map(a => {
-    let score = 0;
-    if (a.category === article.category) score += 10;
-    const sharedTags = (a.tags || []).filter(t => (article.tags || []).includes(t));
-    score += sharedTags.length * 3;
-    return { ...a, score };
-  }).sort((a, b) => b.score - a.score);
-  const related = withScore.slice(0, 3);
+  // Fetch article with auto-links injected (Feature 3)
+  const article = await getArticlesWithAutoLinks(slug);
+  if (!article || article.status !== 'published') notFound();
 
-  // Previous/Next navigation
-  const currentIndex = all.findIndex(a => a.id === article.id);
-  const prevArticle = currentIndex < all.length - 1 ? all[currentIndex + 1] : null;
-  const nextArticle = currentIndex > 0 ? all[currentIndex - 1] : null;
+  // Smart related articles (Feature 1)
+  const related = await getRelatedArticles(slug, article.category, article.tags || [], 3);
 
-  const linkedContent = autoLink(article.content, article.slug);
+  // Previous/Next navigation (Feature 2)
+  const { prev: prevArticle, next: nextArticle } = await getAdjacentArticles(article.published_at);
+
+  const linkedContent = article.content; // already auto-linked
   const [c1, c2, c3] = splitHTMLByParagraphs(linkedContent);
   const readMin = Math.max(2, Math.round((article.content || '').replace(/<[^>]*>/g, '').split(/\s+/).length / 200));
   const SLOT_TOP = process.env.NEXT_PUBLIC_ADSENSE_SLOT_TOP;
@@ -201,24 +192,7 @@ export default async function ArticlePage({ params }) {
         </div>
       </article>
 
-      {(prevArticle || nextArticle) && (
-        <section className="border-t border-[#E5E4E0]">
-          <div className="max-w-4xl mx-auto px-6 md:px-10 py-10 flex flex-col sm:flex-row gap-4">
-            {prevArticle ? (
-              <Link href={`/insights/${prevArticle.slug}`} className="flex-1 p-5 rounded-2xl border border-[#E5E4E0] bg-white hover:border-[#D1D0C9] transition group">
-                <span className="text-xs text-[#636360] font-mono">← Sebelumnya</span>
-                <p className="mt-2 text-sm font-semibold text-[#141413] group-hover:text-[#6D5BA0] transition line-clamp-2">{prevArticle.title}</p>
-              </Link>
-            ) : <div className="flex-1" />}
-            {nextArticle ? (
-              <Link href={`/insights/${nextArticle.slug}`} className="flex-1 p-5 rounded-2xl border border-[#E5E4E0] bg-white hover:border-[#D1D0C9] transition group text-right">
-                <span className="text-xs text-[#636360] font-mono">Selanjutnya →</span>
-                <p className="mt-2 text-sm font-semibold text-[#141413] group-hover:text-[#6D5BA0] transition line-clamp-2">{nextArticle.title}</p>
-              </Link>
-            ) : <div className="flex-1" />}
-          </div>
-        </section>
-      )}
+      <ArticleNav prev={prevArticle} next={nextArticle} />
 
       {related.length > 0 && (
         <section className="py-24 md:py-32 border-t border-[#E5E4E0]">
