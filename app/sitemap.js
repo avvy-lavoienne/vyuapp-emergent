@@ -16,6 +16,15 @@ export default async function sitemap() {
     { url: `${base}/portfolio/ai-agents`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
   ];
 
+  // Category pages
+  const categories = ['AI', 'Engineering', 'DevOps', 'Cloud', 'Security', 'Productivity', 'Design', 'Mobile', 'Backend', 'Database', 'Testing', 'Career', 'Web3', 'Performance', 'IndoTech'];
+  const categoryRoutes = categories.map(cat => ({
+    url: `${base}/category/${encodeURIComponent(cat)}`,
+    lastModified: now,
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  }));
+
   let articleRoutes = [];
   try {
     const articles = await getPublishedArticles({ limit: 1000 });
@@ -53,5 +62,5 @@ export default async function sitemap() {
     console.error('Sitemap: failed to fetch portfolio:', e.message);
   }
 
-  return [...staticRoutes, ...articleRoutes, ...portfolioRoutes];
+  return [...staticRoutes, ...categoryRoutes, ...articleRoutes, ...portfolioRoutes];
 }
