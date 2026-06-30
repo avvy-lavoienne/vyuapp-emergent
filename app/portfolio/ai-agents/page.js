@@ -1,7 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import { ArrowRight, Search, ShieldCheck, Globe, Zap, Brain, FileText, Code, TestTube, Server, Megaphone, Building2, GraduationCap, ChevronRight } from 'lucide-react';
+import { ArrowRight, Search, ShieldCheck, Globe, Zap, Brain, FileText, Code, TestTube, Server, Megaphone, Building2, GraduationCap, ChevronRight, Headphones } from 'lucide-react';
 import { BreadcrumbJsonLd } from '@/components/JsonLd';
 
 export const revalidate = 3600;
@@ -10,16 +10,16 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE
 
 export const metadata = {
   title: 'VyuApp Multi-Agent System — Tim AI Agent',
-  description: 'Kenali 9 AI agent VyuApp: Hikari, Merlin, Bedivere, Lancelot, Agravain, Gawain, Tristan, Lotus, dan Guru. Sistem multi-agent untuk website berkualitas tinggi.',
+  description: 'Kenali 10 AI agent VyuApp: Hikari, Merlin, Bedivere, Lancelot, Agravain, Gawain, Tristan, Lotus, dan Guru. Sistem multi-agent untuk website berkualitas tinggi.',
   openGraph: {
     title: 'VyuApp Multi-Agent System — Tim AI Agent',
-    description: 'Kenali 9 AI agent yang membentuk tim digital VyuApp.',
+    description: 'Kenali 10 AI agent yang membentuk tim digital VyuApp.',
     images: [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'VyuApp Multi-Agent System — Tim AI Agent',
-    description: 'Kenali 9 AI agent yang membentuk tim digital VyuApp.',
+    description: 'Kenali 10 AI agent yang membentuk tim digital VyuApp.',
   },
   alternates: { canonical: `${baseUrl}/portfolio/ai-agents` },
 };
@@ -119,6 +119,19 @@ const agentGroups = [
         icon: GraduationCap,
         description: 'Kurikulum personal, accountability belajar, penjelasan konsep dengan analogi, quiz & review. Membantu belajar dengan pendekatan personal.',
         capabilities: ['Personal curriculum', 'Learning accountability', 'Concept explanation', 'Quiz & review system'],
+      },
+    ],
+  },
+  {
+    category: 'Layanan',
+    agents: [
+      {
+        emoji: '🌸',
+        name: 'Hana',
+        role: 'Customer Service & Brand Ambassador',
+        icon: Headphones,
+        description: 'Wajah VyuApp yang melayani pengunjung website secara real-time. Anggun, cerdas, dan selalu siap membantu — dari pertanyaan umum hingga kualifikasi prospek.',
+        capabilities: ['Live chat di website', 'Lead qualification', 'Product knowledge', 'Multi-language support'],
       },
     ],
   },
@@ -242,7 +255,7 @@ export default function AIAgentsPage() {
             Mengenal Setiap Agent
           </h2>
           <p className="mt-4 text-base text-[#4A4A48] leading-relaxed max-w-2xl">
-            9 AI agent dengan spesialisasi masing-masing, bekerja secara terkoordinasi untuk menghasilkan website berkualitas tinggi.
+            10 AI agent dengan spesialisasi masing-masing, bekerja secara terkoordinasi untuk menghasilkan website berkualitas tinggi.
           </p>
 
           {agentGroups.map((group) => (

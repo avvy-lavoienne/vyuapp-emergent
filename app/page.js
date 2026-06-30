@@ -145,7 +145,7 @@ async function HomeContent({ locale }) {
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <SectionHeader
             overline="Tim Kami"
-            title="9 AI Agent, 1 Visi"
+            title="10 AI Agent, 1 Visi"
             description="Setiap agent memiliki peran spesifik. Bersama, mereka membentuk tim digital yang bekerja tanpa henti untuk proyek Anda."
             align="center"
           />
