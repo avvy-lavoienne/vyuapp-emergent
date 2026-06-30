@@ -44,9 +44,10 @@ function ArticleCard({ a, featured = false, index = 0 }) {
           src={a.cover || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=75'}
           alt={a.title}
           fill
-          priority={index === 0}
+          priority={index < 3}
+          quality={80}
           className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition duration-700"
-          sizes={featured ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'}
+          sizes={featured ? '(max-width: 768px) 100vw, 66vw' : '(max-width: 768px) 100vw, 33vw'}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
         <div className="absolute top-4 left-4">

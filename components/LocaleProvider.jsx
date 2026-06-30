@@ -4,10 +4,11 @@ import { locales } from '@/lib/locales';
 
 const LocaleContext = createContext(null);
 
-export function LocaleProvider({ children }) {
-  const [locale, setLocale] = useState('id');
+export function LocaleProvider({ children, initialLocale = 'id' }) {
+  const [locale, setLocale] = useState(initialLocale);
 
   useEffect(() => {
+    // Read from localStorage on client, override initialLocale if stored
     const stored = localStorage.getItem('vyu-locale');
     if (stored === 'en' || stored === 'id') setLocale(stored);
   }, []);
@@ -15,7 +16,9 @@ export function LocaleProvider({ children }) {
   const toggle = () => {
     setLocale(prev => {
       const next = prev === 'id' ? 'en' : 'id';
+      // Persist to both localStorage and cookie for server-side detection
       localStorage.setItem('vyu-locale', next);
+      document.cookie = `vyu-locale=${next};path=/;max-age=31536000;SameSite=Lax`;
       return next;
     });
   };

@@ -58,6 +58,9 @@ export default function RootLayout({ children }) {
     <html lang="id" className={`${mono.variable}`}>
       <head>
         <meta name="format-detection" content="telephone=no, email=no" />
+        <link rel="preload" href="/fonts/satoshi-regular.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/satoshi-medium.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/satoshi-bold.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <link rel="me" href="https://github.com/avvy-lavoienne" />
         <link rel="me" href="https://www.linkedin.com/in/frmnfird" />
         {adsenseClient && <link rel="preconnect" href="https://pagead2.googlesyndication.com" />}

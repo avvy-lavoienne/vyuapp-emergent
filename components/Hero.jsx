@@ -1,9 +1,13 @@
-'use client';
 import { ArrowRight } from 'lucide-react';
-import { useLocale } from '@/components/LocaleProvider';
+import { locales } from '@/lib/locales';
 
-export default function Hero() {
-  const { t } = useLocale();
+/**
+ * Server Component — renders the hero section with server-side translations.
+ * The h2 headline is now SSR'd for instant LCP.
+ * @param {string} locale - 'id' | 'en'
+ */
+export default function Hero({ locale = 'id' }) {
+  const t = locales[locale] || locales.id;
 
   return (
     <section className="relative pt-36 pb-28 md:pt-44 md:pb-36 overflow-hidden">
