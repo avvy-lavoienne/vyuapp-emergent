@@ -156,8 +156,8 @@ export async function POST(request: NextRequest) {
       const allowed = await checkRateLimit(`chat:${visitorId}`, RATE_LIMIT, 3600);
       if (!allowed) {
         return NextResponse.json(
-          { error: `Rate limit exceeded. Maximum ${RATE_LIMIT} messages per hour.` },
-          { status: 429 }
+          { reply: `⏳ Anda telah mencapai batas ${RATE_LIMIT} pesan per jam. Silakan tunggu atau hubungi kami via vyuapp@proton.me`, rateLimited: true },
+          { status: 200 }
         );
       }
     }

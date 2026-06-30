@@ -101,6 +101,7 @@ export default function ChatWidget() {
       if (data.reply) {
         setMessages(prev => [...prev, { role: 'agent', text: data.reply, time: Date.now() }]);
         if (data.admin) { setIsAdmin(true); setRateLimited(false); }
+        if (data.rateLimited) { setRateLimited(true); }
       } else if (res.status === 429) {
         setRateLimited(true);
         setMessages(prev => [...prev, {
