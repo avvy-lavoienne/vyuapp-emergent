@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { X } from 'lucide-react';
 
 const CATEGORIES = [
@@ -22,9 +22,12 @@ const CATEGORIES = [
   'IndoTech',
 ];
 
+const MAX_VISIBLE_TAGS = 20;
+
 export default function ArticleFilters({ availableTags = [] }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [showAllTags, setShowAllTags] = useState(false);
 
   const activeCategory = searchParams.get('category') || '';
   const activeTags = searchParams.get('tags')
@@ -100,7 +103,7 @@ export default function ArticleFilters({ availableTags = [] }) {
             Tag
           </h3>
           <div className="flex flex-wrap gap-2">
-            {availableTags.map((tag) => (
+            {(showAllTags ? availableTags : availableTags.slice(0, MAX_VISIBLE_TAGS)).map((tag) => (
               <button
                 key={tag}
                 onClick={() => toggleTag(tag)}
@@ -113,6 +116,14 @@ export default function ArticleFilters({ availableTags = [] }) {
                 #{tag}
               </button>
             ))}
+            {availableTags.length > MAX_VISIBLE_TAGS && (
+              <button
+                onClick={() => setShowAllTags(!showAllTags)}
+                className="px-3 py-1.5 rounded-full text-xs font-medium text-[#6D5BA0] border border-[#6D5BA0]/30 hover:bg-[#6D5BA0]/5 transition-all"
+              >
+                {showAllTags ? 'Sembunyikan' : `+${availableTags.length - MAX_VISIBLE_TAGS} lainnya`}
+              </button>
+            )}
           </div>
         </div>
       )}
