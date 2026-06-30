@@ -307,6 +307,7 @@ export default function ChatWidget() {
             onBlur={e => { e.currentTarget.style.borderColor = '#ddd'; }}
           />
           <button
+            aria-label="Kirim pesan"
             onClick={sendMessage}
             disabled={!input.trim() || loading || messageCount >= RATE_LIMIT}
             style={{

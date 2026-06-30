@@ -33,7 +33,7 @@ export default function AdSenseSlot({ slot, format = 'auto', responsive = true, 
     return (
       <div className="my-10">
         <div className="rounded-xl border border-dashed border-[#E5E4E0] bg-[#F8F7F4] flex flex-col items-center justify-center text-center px-6 py-12" style={style}>
-          <p className="font-mono text-xs text-[#737370] uppercase tracking-[0.15em]">// {label}</p>
+          <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em]">// {label}</p>
           <p className="text-xs text-[#737370] mt-2">AdSense placeholder — set NEXT_PUBLIC_ADSENSE_CLIENT_ID</p>
         </div>
       </div>
@@ -42,7 +42,7 @@ export default function AdSenseSlot({ slot, format = 'auto', responsive = true, 
 
   return (
     <div className="my-10">
-      <p className="font-mono text-xs text-[#737370] uppercase tracking-[0.15em] text-center mb-3 opacity-60">// {label}</p>
+      <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] text-center mb-3">// {label}</p>
       <ins
         ref={ref}
         className="adsbygoogle block"

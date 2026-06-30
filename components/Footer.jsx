@@ -59,7 +59,7 @@ export default function Footer() {
       <div className="border-t border-[#E5E4E0]">
         <div className="max-w-7xl mx-auto px-6 md:px-10 py-5 flex flex-col md:flex-row items-center justify-between gap-2 text-xs text-[#737370]">
           <p>&copy; {new Date().getFullYear()} {isLanding ? t.footer.copyright : 'VyuApp.'}</p>
-          <p className="font-mono text-[#737370]/50">{isLanding ? t.footer.tagline : 'crafted with precision in Garut'}</p>
+          <p className="font-mono text-[#737370]">{isLanding ? t.footer.tagline : 'crafted with precision in Garut'}</p>
         </div>
       </div>
     </footer>

@@ -46,7 +46,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 md:px-10 h-[72px] flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
           <span className="w-9 h-9 rounded-lg bg-white border border-[#E5E4E0] flex items-center justify-center overflow-hidden p-1">
-            <Image src="/images/vyu-removebg.png" alt="VyuApp" width={36} height={36} className="w-full h-full object-contain" priority />
+            <Image src="/images/vyu-removebg.png" alt="" width={36} height={36} className="w-full h-full object-contain" priority />
           </span>
           <span className="font-sans font-bold text-lg tracking-tight text-[#141413]">
             Vyu<span className="text-[#6D5BA0]">App</span>
