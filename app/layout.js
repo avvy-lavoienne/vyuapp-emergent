@@ -3,6 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import AdSenseScript from '@/components/AdSenseScript';
 import ChatWidget from '@/components/ChatWidget';
+import CookieConsent from '@/components/CookieConsent';
 import NavigationLoader from '@/components/NavigationLoader';
 import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from '@/components/JsonLd';
 
@@ -84,6 +85,7 @@ export default function RootLayout({ children }) {
         <AdSenseScript />
         <NavigationLoader />
         <ChatWidget />
+        <CookieConsent />
         {children}
       </body>
     </html>

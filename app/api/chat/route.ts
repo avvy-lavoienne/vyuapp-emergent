@@ -16,15 +16,16 @@ function getVisitorId(request: NextRequest): string {
   return forwarded?.split(',')[0]?.trim() || 'unknown';
 }
 
-function checkRateLimit(key: string, max: number, windowMs: number): boolean {
+function checkRateLimit(key: string, max: number, windowMs: number): { allowed: boolean; remaining: number } {
   const now = Date.now();
   const entry = rateLimitStore.get(key);
   if (!entry || now > entry.resetAt) {
     rateLimitStore.set(key, { count: 1, resetAt: now + windowMs });
-    return true;
+    return { allowed: true, remaining: max - 1 };
   }
   entry.count++;
-  return entry.count <= max;
+  const remaining = Math.max(0, max - entry.count);
+  return { allowed: entry.count <= max, remaining };
 }
 
 function setAdmin(id: string) { adminStore.set(id, Date.now() + ADMIN_DURATION); }
@@ -83,6 +84,42 @@ Gaya bicara Hana:
 
 interface ChatMessage { role: 'system' | 'user' | 'assistant'; content: string; }
 
+async function handleChat(message: string, history: ChatMessage[]): Promise<{ reply: string; admin?: boolean }> {
+  if (!CS_MODEL_BASE) {
+    return { reply: 'Maaf, layanan chat sedang tidak tersedia. Hubungi vyuapp@proton.me 📧' };
+  }
+
+  const sanitized = Array.isArray(history)
+    ? history.filter(h => h && (h.role === 'user' || h.role === 'assistant') && typeof h.content === 'string')
+        .map(h => ({ role: h.role, content: h.content.slice(0, 2000) }))
+        .slice(-6)
+    : [];
+  const messages: ChatMessage[] = [
+    { role: 'system', content: SYSTEM_PROMPT },
+    ...sanitized,
+    { role: 'user', content: message.trim() },
+  ];
+
+  const modelRes = await fetch(`${CS_MODEL_BASE}/chat/completions`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      ...(CS_API_KEY ? { Authorization: `Bearer ${CS_API_KEY}` } : {}),
+    },
+    body: JSON.stringify({ model: CS_MODEL, messages, max_tokens: 300, temperature: 0.7, stream: false }),
+  });
+
+  if (!modelRes.ok) {
+    const errText = await modelRes.text();
+    console.error('Model API error:', modelRes.status, errText);
+    return { reply: 'Maaf, layanan chat sedang tidak tersedia. Hubungi vyuapp@proton.me 📧' };
+  }
+
+  const data = await modelRes.json();
+  const reply = data.choices?.[0]?.message?.content || 'Maaf, saya tidak dapat memproses pesan Anda saat ini.';
+  return { reply };
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -108,54 +145,21 @@ export async function POST(request: NextRequest) {
 
     // Rate limit (skip if admin)
     if (!getAdmin(visitorId)) {
-      if (!checkRateLimit(`chat:${visitorId}`, RATE_LIMIT, 60 * 60 * 1000)) {
+      const { allowed, remaining } = checkRateLimit(`chat:${visitorId}`, RATE_LIMIT, 60 * 60 * 1000);
+      if (!allowed) {
         return NextResponse.json({
           reply: `⏳ Batas ${RATE_LIMIT} pesan/jam tercapai. Hubungi vyuapp@proton.me`,
           rateLimited: true,
+          remaining: 0,
         });
       }
+      const response = await handleChat(message, history || []);
+      return NextResponse.json({ ...response, remaining });
     }
 
-    // If no model configured
-    if (!CS_MODEL_BASE) {
-      return NextResponse.json({
-        reply: 'Maaf, layanan chat sedang tidak tersedia. Hubungi vyuapp@proton.me 📧',
-      });
-    }
-
-    // Build messages
-    const sanitized = Array.isArray(history)
-      ? history.filter(h => h && (h.role === 'user' || h.role === 'assistant') && typeof h.content === 'string')
-          .map(h => ({ role: h.role, content: h.content.slice(0, 2000) }))
-          .slice(-6)
-      : [];
-    const messages: ChatMessage[] = [
-      { role: 'system', content: SYSTEM_PROMPT },
-      ...sanitized,
-      { role: 'user', content: message.trim() },
-    ];
-
-    // Call model
-    const modelRes = await fetch(`${CS_MODEL_BASE}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(CS_API_KEY ? { Authorization: `Bearer ${CS_API_KEY}` } : {}),
-      },
-      body: JSON.stringify({ model: CS_MODEL, messages, max_tokens: 300, temperature: 0.7, stream: false }),
-    });
-
-    if (!modelRes.ok) {
-      const errText = await modelRes.text();
-      console.error('Model API error:', modelRes.status, errText);
-      return NextResponse.json({
-        reply: 'Maaf, layanan chat sedang tidak tersedia. Hubungi vyuapp@proton.me 📧',
-      });
-    }
-
-    const data = await modelRes.json();
-    const reply = data.choices?.[0]?.message?.content || 'Maaf, saya tidak dapat memproses pesan Anda saat ini.';
-    return NextResponse.json({ reply });
+    // Admin path — no rate limit
+    const response = await handleChat(message, history || []);
+    return NextResponse.json({ ...response, remaining: RATE_LIMIT });
 
   } catch (err: any) {
     console.error('Chat API error:', err);

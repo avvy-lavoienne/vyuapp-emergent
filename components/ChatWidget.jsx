@@ -18,7 +18,7 @@ function parseMarkdown(text) {
 }
 
 const STORAGE_KEY = 'vyuapp_chat_history';
-const RATE_LIMIT = 5;
+const RATE_LIMIT = 20;
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,6 +26,7 @@ export default function ChatWidget() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [messageCount, setMessageCount] = useState(0);
+  const [remaining, setRemaining] = useState(RATE_LIMIT); // synced from server
   const [isAdmin, setIsAdmin] = useState(false);
   const [rateLimited, setRateLimited] = useState(false);
   const [rateLimitTimer, setRateLimitTimer] = useState(0); // seconds remaining
@@ -88,7 +89,7 @@ export default function ChatWidget() {
     if (messageCount >= effectiveLimit) {
       setMessages(prev => [...prev, {
         role: 'system',
-        text: 'Batas pesan tercapai (5 pesan per sesi). Silakan refresh halaman untuk memulai sesi baru.',
+        text: `Batas ${RATE_LIMIT} pesan per jam tercapai. Tunggu timer atau hubungi vyuapp@proton.me`,
         time: Date.now()
       }]);
       return;
@@ -118,6 +119,7 @@ export default function ChatWidget() {
         setMessages(prev => [...prev, { role: 'agent', text: data.reply, time: Date.now() }]);
         if (data.admin) { setIsAdmin(true); setRateLimited(false); setRateLimitTimer(0); }
         if (data.rateLimited) { setRateLimited(true); setRateLimitTimer(15 * 60); }
+        if (typeof data.remaining === 'number') { setRemaining(data.remaining); }
       } else if (res.status === 429) {
         setRateLimited(true);
         setRateLimitTimer(15 * 60);
@@ -232,8 +234,16 @@ export default function ChatWidget() {
           <div>
             <div style={{ fontWeight: 600, fontSize: '15px' }}>Hana — VyuApp Support</div>
             <div style={{ fontSize: '12px', opacity: 0.85, marginTop: 2 }}>
-              {loading ? 'Mengetik...' : 'Online'}
+              {loading ? 'Mengetik...' : isAdmin ? '🔑 Admin Mode' : rateLimited ? '⏳ Rate Limited' : 'Online'}
             </div>
+            {!isAdmin && (
+              <div style={{ fontSize: '10px', opacity: 0.65, marginTop: 1 }}>
+                {rateLimited
+                  ? `Tunggu ${Math.floor(rateLimitTimer / 60)}:${String(rateLimitTimer % 60).padStart(2, '0')} untuk melanjutkan`
+                  : `${remaining}/${RATE_LIMIT} pesan tersisa`
+                }
+              </div>
+            )}
           </div>
           <button
             onClick={clearChat}
