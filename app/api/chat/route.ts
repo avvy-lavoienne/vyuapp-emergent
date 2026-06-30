@@ -20,7 +20,8 @@ async function redisCommand(...args: string[]): Promise<string | null> {
       body: args.join(' '),
     });
     const data = await res.text();
-    return data;
+    // Upstash returns raw value, trim whitespace/newlines
+    return data.trim();
   } catch (err) {
     console.error('Redis command failed:', err);
     return null;
@@ -144,10 +145,12 @@ export async function POST(request: NextRequest) {
     let isAdmin = false;
     try {
       const adminFlag = await redisCommand('GET', `chat:admin:${visitorId}`);
+      console.log('Admin flag check:', { visitorId, adminFlag, type: typeof adminFlag });
       isAdmin = adminFlag === '1';
     } catch (e) {
       // If Redis check fails, continue without admin bypass
     }
+    console.log('Rate limit check:', { isAdmin, visitorId });
 
     if (!isAdmin) {
       const allowed = await checkRateLimit(`chat:${visitorId}`, RATE_LIMIT, 3600);
