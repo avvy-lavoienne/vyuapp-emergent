@@ -2,6 +2,7 @@ import { JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import AdSenseScript from '@/components/AdSenseScript';
 import ChatWidget from '@/components/ChatWidget';
+import NavigationLoader from '@/components/NavigationLoader';
 import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from '@/components/JsonLd';
 
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', display: 'swap' });
@@ -71,6 +72,7 @@ export default function RootLayout({ children }) {
         <WebSiteJsonLd />
         <LocalBusinessJsonLd />
         <AdSenseScript />
+        <NavigationLoader />
         <ChatWidget />
         {children}
       </body>
