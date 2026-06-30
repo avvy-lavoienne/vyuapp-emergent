@@ -141,6 +141,17 @@ export default async function ArticlePage({ params }) {
       />
       <FAQPageJsonLd faqs={extractFAQs(article.content)} />
       <Navbar />
+      {/* Preload cover image for LCP */}
+      {article.cover && (
+        <link
+          rel="preload"
+          as="image"
+          href={`/_next/image?url=${encodeURIComponent(article.cover)}&w=1200&q=75`}
+          imagesrcset={`/_next/image?url=${encodeURIComponent(article.cover)}&w=640&q=75 640w, /_next/image?url=${encodeURIComponent(article.cover)}&w=828&q=75 828w, /_next/image?url=${encodeURIComponent(article.cover)}&w=1200&q=75 1200w`}
+          imagesizes="(max-width: 768px) 100vw, 896px"
+          fetchpriority="high"
+        />
+      )}
       <article className="pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-6 md:px-10">
           <Link
@@ -163,7 +174,7 @@ export default async function ArticlePage({ params }) {
           </div>
           <TableOfContents html={linkedContent} />
           <div className="mt-10 rounded-2xl overflow-hidden border border-[#E5E4E0] relative aspect-video bg-[#F4F3EE]">
-            <Image src={article.cover || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80'} alt={article.title} fill className="object-cover" priority />
+            <Image src={article.cover || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80'} alt={article.title} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, 896px" />
           </div>
           <div className="mt-12 prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtml(c1) }} />
           <AdSenseSlot slot={SLOT_TOP} format="auto" />
