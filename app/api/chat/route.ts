@@ -204,10 +204,10 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ reply });
 
-  } catch (err) {
+  } catch (err: any) {
     console.error('Chat API error:', err);
     return NextResponse.json(
-      { reply: 'Terjadi kesalahan. Silakan hubungi kami via vyuapp@proton.me' },
+      { reply: `Error: ${err?.message || String(err)}` },
       { status: 200 }
     );
   }
