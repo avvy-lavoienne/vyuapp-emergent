@@ -7,8 +7,7 @@ const RATE_LIMIT = 20;
 const ADMIN_PASSWORD = process.env.CHAT_ADMIN_PASSWORD || 'AkuWibuGanteng';
 const ADMIN_DURATION = 5 * 60 * 1000; // 5 minutes
 
-// Lazy-init rate limiter — survives missing env vars at build time
-let chatLimiter: any = null;
+// Lazy-init Redis — survives missing env vars at build time
 let redis: any = null;
 
 function getRedis() {
@@ -23,15 +22,20 @@ function getRedis() {
   } catch { return null; }
 }
 
-function getChatLimiter() {
-  if (chatLimiter) return chatLimiter;
+// Simple rate limit using Redis INCR (no evalsha needed)
+async function checkRateLimit(key: string, maxRequests: number, windowSeconds: number): Promise<boolean> {
   const r = getRedis();
-  if (!r) return null;
+  if (!r) return true; // no Redis = allow through
   try {
-    const { Ratelimit } = require('@upstash/ratelimit');
-    chatLimiter = new Ratelimit({ redis: r, limiter: Ratelimit.slidingWindow(RATE_LIMIT, '1 h'), analytics: true });
-    return chatLimiter;
-  } catch { return null; }
+    const count = await r.incr(key);
+    if (count === 1) {
+      await r.expire(key, windowSeconds);
+    }
+    return count <= maxRequests;
+  } catch (err) {
+    console.error('Rate limit check failed:', err);
+    return true; // on error, allow through
+  }
 }
 
 interface ChatMessage {
@@ -148,17 +152,13 @@ export async function POST(request: NextRequest) {
     }
 
     if (!isAdmin) {
-      const limiter = getChatLimiter();
-      if (limiter) {
-        const { success } = await limiter.limit(`chat:${visitorId}`);
-        if (!success) {
-          return NextResponse.json(
-            { error: `Rate limit exceeded. Maximum ${RATE_LIMIT} messages per hour.` },
-            { status: 429 }
-          );
-        }
+      const allowed = await checkRateLimit(`chat:${visitorId}`, RATE_LIMIT, 3600);
+      if (!allowed) {
+        return NextResponse.json(
+          { error: `Rate limit exceeded. Maximum ${RATE_LIMIT} messages per hour.` },
+          { status: 429 }
+        );
       }
-      // If no limiter available (Redis down), allow request through
     }
 
     // Build messages array with history
