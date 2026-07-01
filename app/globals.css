@@ -258,6 +258,69 @@ html { scroll-behavior: smooth; }
   color: #6D5BA0;
 }
 
+/* Code blocks — editor style */
+.prose-light pre {
+  background: #1E1E2E;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  margin: 2rem 0;
+  border: 1px solid #313244;
+  position: relative;
+}
+.prose-light pre::before {
+  content: '';
+  display: block;
+  height: 2.5rem;
+  background: #181825;
+  border-bottom: 1px solid #313244;
+  position: relative;
+}
+.prose-light pre::after {
+  content: '● ● ●';
+  position: absolute;
+  top: 0.6rem;
+  left: 1rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.3rem;
+  color: #6C7086;
+}
+.prose-light pre[data-lang]::before {
+  content: attr(data-lang);
+  display: block;
+  height: 2.5rem;
+  background: #181825;
+  border-bottom: 1px solid #313244;
+  position: relative;
+  padding-left: 3.5rem;
+  line-height: 2.5rem;
+  font-size: 0.7rem;
+  color: #6C7086;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: 'JetBrains Mono', monospace;
+}
+.prose-light pre code {
+  display: block;
+  padding: 1.25rem 1.5rem;
+  padding-top: 0.75rem;
+  background: transparent;
+  color: #CDD6F4;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+  border-radius: 0;
+}
+/* Syntax colors */
+.prose-light pre code .keyword { color: #CBA6F7; }
+.prose-light pre code .string { color: #A6E3A1; }
+.prose-light pre code .comment { color: #6C7086; font-style: italic; }
+.prose-light pre code .function { color: #89B4FA; }
+.prose-light pre code .number { color: #FAB387; }
+.prose-light pre code .operator { color: #89DCEB; }
+/* Language label */
+
 /* Article tables */
 .prose-light table {
   width: 100%;
@@ -350,6 +413,10 @@ html { scroll-behavior: smooth; }
 .dark .prose-light blockquote { color: #B0B0B0; border-left-color: #8B7BC4; }
 .dark .vyu-prose code,
 .dark .prose-light code { background: #2A2A2D; color: #8B7BC4; }
+.dark .prose-light pre { background: #11111B; border-color: #1E1E2E; }
+.dark .prose-light pre::before { background: #181825; border-bottom-color: #1E1E2E; }
+.dark .prose-light pre[data-lang]::before { background: #181825; border-bottom-color: #1E1E2E; }
+.dark .prose-light pre code { color: #CDD6F4; }
 
 /* Anth legacy classes — dark mode */
 .dark .anth-overline { color: #B0B0B0; }
