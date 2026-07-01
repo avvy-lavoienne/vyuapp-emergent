@@ -2,7 +2,7 @@ import { ArrowRight } from 'lucide-react';
 
 export default function DetailedProduct({ item }) {
   return (
-    <div className="p-8 md:p-12 rounded-2xl border border-[#E5E4E0] bg-white">
+    <div className="p-8 md:p-12 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D]">
       <div className="grid lg:grid-cols-12 gap-8">
         <div className="lg:col-span-7">
           <p className="font-mono text-xs text-[#6D5BA0] uppercase tracking-[0.12em] font-medium">
@@ -16,7 +16,7 @@ export default function DetailedProduct({ item }) {
           {(item.stack || []).length > 0 && (
             <div className="mt-7 flex flex-wrap gap-2">
               {(item.stack || []).map(s => (
-                <span key={s} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium text-[#6B6B68] bg-[#F4F3EE] border border-[#E5E4E0]">
+                <span key={s} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium text-[#6B6B68] dark:text-[#B0B0B0] bg-[#F4F3EE] dark:bg-[#2A2A2D] border border-[#E5E4E0] dark:border-[#2A2A2D]">
                   {s}
                 </span>
               ))}

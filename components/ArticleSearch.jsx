@@ -70,12 +70,12 @@ export default function ArticleSearch() {
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           placeholder="Cari artikel…"
-          className="w-full pl-11 pr-10 py-3 bg-white border border-[#E5E4E0] rounded-full text-sm text-[#141413] placeholder:text-[#9C9C99] focus:outline-none focus:border-[#6D5BA0] focus:ring-1 focus:ring-[#6D5BA0]/20 transition-all duration-200"
+          className="w-full pl-11 pr-10 py-3 bg-white dark:bg-[#1A1A1D] border border-[#E5E4E0] dark:border-[#2A2A2D] rounded-full text-sm text-[#141413] dark:text-[#F0F0F0] placeholder:text-[#9C9C99] focus:outline-none focus:border-[#6D5BA0] focus:ring-1 focus:ring-[#6D5BA0]/20 transition-all duration-200"
         />
         {value && (
           <button
             onClick={handleClear}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-[#636360] hover:text-[#141413] hover:bg-[#F4F3EE] transition-colors"
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-[#636360] hover:text-[#141413] dark:text-[#F0F0F0] hover:bg-[#F4F3EE] transition-colors"
             aria-label="Hapus pencarian"
           >
             <X className="w-4 h-4" />
