@@ -257,3 +257,81 @@ html { scroll-behavior: smooth; }
   border-radius: 0.25rem;
   color: #6D5BA0;
 }
+
+/* ================================================
+   DARK MODE GLOBAL OVERRIDES
+   Fixes ALL muted/gray text + legacy CSS classes
+   ================================================ */
+
+/* Force muted text colors to be readable in dark mode */
+.dark [class*="text-[#4A4A48]"]  { color: #B0B0B0 !important; }
+.dark [class*="text-[#636360]"]  { color: #8A8A8A !important; }
+.dark [class*="text-[#6B6B68]"]  { color: #B0B0B0 !important; }
+.dark [class*="text-[#737370]"]  { color: #8A8A8A !important; }
+.dark [class*="text-[#141413]"]  { color: #F0F0F0 !important; }
+
+/* Legacy CSS classes — dark mode */
+.dark .vyu-card {
+  background: #1A1A1D !important;
+  border-color: #2A2A2D !important;
+}
+.dark .vyu-card:hover {
+  border-color: #3A3A3D !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.dark .vyu-overline { color: #8B7BC4; }
+.dark .vyu-btn-primary { background: #8B7BC4; }
+.dark .vyu-btn-primary:hover { background: #A594D9; }
+.dark .vyu-btn-secondary { color: #F0F0F0; border-color: #2A2A2D; }
+.dark .vyu-btn-secondary:hover { border-color: #3A3A3D; background: rgba(255, 255, 255, 0.02); }
+.dark .vyu-chip { color: #B0B0B0; background: #1A1A1D; border-color: #2A2A2D; }
+
+/* Article prose — dark mode */
+.dark .vyu-prose,
+.dark .prose-light { color: #B0B0B0; }
+.dark .vyu-prose h2,
+.dark .vyu-prose h3,
+.dark .prose-light h2,
+.dark .prose-light h3 { color: #F0F0F0; }
+.dark .vyu-prose strong,
+.dark .prose-light strong { color: #F0F0F0; }
+.dark .vyu-prose a,
+.dark .prose-light a { color: #8B7BC4; }
+.dark .vyu-prose a:hover,
+.dark .prose-light a:hover { text-decoration-color: #8B7BC4; }
+.dark .vyu-prose blockquote,
+.dark .prose-light blockquote { color: #B0B0B0; border-left-color: #8B7BC4; }
+.dark .vyu-prose code,
+.dark .prose-light code { background: #2A2A2D; color: #8B7BC4; }
+
+/* Anth legacy classes — dark mode */
+.dark .anth-overline { color: #B0B0B0; }
+.dark .anth-card {
+  background: #1A1A1D !important;
+  border-color: #2A2A2D !important;
+}
+.dark .anth-card:hover {
+  border-color: #3A3A3D !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.dark .anth-btn-primary { background: #8B7BC4; }
+.dark .anth-btn-primary:hover { background: #A594D9; }
+.dark .anth-btn-secondary { color: #F0F0F0; border-color: #2A2A2D; }
+.dark .anth-btn-secondary:hover { border-color: #3A3A3D; background: rgba(255, 255, 255, 0.02); }
+
+/* Focus ring — dark mode */
+.dark *:focus-visible {
+  box-shadow: 0 0 0 2px #0F0F10, 0 0 0 4px #8B7BC4;
+}
+
+/* Editor placeholder — dark mode */
+.dark .vyu-editor:empty:before { color: #4A4A4D; }
+
+/* Form inputs — dark mode */
+.dark input:not([type="submit"]),
+.dark textarea,
+.dark select {
+  background-color: #1A1A1D;
+  color: #F0F0F0;
+  border-color: #2A2A2D;
+}

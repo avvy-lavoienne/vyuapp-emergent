@@ -36,10 +36,10 @@ export default function ContactForm({ locale = 'id' }) {
     }
   };
 
-  const inputCls = 'w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-3 text-sm text-[#141413] placeholder:text-[#737370] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all';
+  const inputCls = 'w-full bg-white dark:bg-[#1A1A1D] border border-[#E5E4E0] dark:border-[#2A2A2D] rounded-lg px-4 py-3 text-sm text-[#141413] dark:text-[#F0F0F0] placeholder:text-[#737370] dark:placeholder:text-[#8A8A8A] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all';
 
   return (
-    <div className="p-8 md:p-10 rounded-2xl border border-[#E5E4E0] bg-white">
+    <div className="p-8 md:p-10 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D]">
       <form onSubmit={onSubmit} className="space-y-5">
         <div className="grid sm:grid-cols-2 gap-5">
           <div>
@@ -67,7 +67,7 @@ export default function ContactForm({ locale = 'id' }) {
         <div>
           <label className="block font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.15em] font-medium mb-2">{t.contact.form.message_label}</label>
           <textarea required value={form.message} onChange={onChange('message')} rows={4} placeholder={t.contact.form.message_placeholder}
-            className="w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-3 text-sm text-[#141413] placeholder:text-[#737370] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all resize-y min-h-[100px]" />
+            className="w-full bg-white dark:bg-[#1A1A1D] border border-[#E5E4E0] dark:border-[#2A2A2D] rounded-lg px-4 py-3 text-sm text-[#141413] dark:text-[#F0F0F0] placeholder:text-[#737370] dark:placeholder:text-[#8A8A8A] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all resize-y min-h-[100px]" />
         </div>
         <button type="submit" disabled={status === 'loading'}
           className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#6D5BA0] text-white text-sm font-semibold hover:bg-[#574886] transition-all duration-200 hover:-translate-y-0.5 disabled:opacity-60">
@@ -75,7 +75,7 @@ export default function ContactForm({ locale = 'id' }) {
           {status === 'loading' ? t.contact.form.sending : t.contact.form.submit}
         </button>
         {status === 'sent' && (
-          <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#6D5BA0]/10 border border-[#6D5BA0]/30 text-[#6D5BA0] text-sm">
+          <div className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#6D5BA0]/10 dark:bg-[#8B7BC4]/10 border border-[#6D5BA0]/30 dark:border-[#8B7BC4]/20 text-[#6D5BA0] text-sm">
             <CheckCircle2 className="w-5 h-5" /> {t.contact.form.sent}
           </div>
         )}
@@ -84,7 +84,7 @@ export default function ContactForm({ locale = 'id' }) {
             <AlertCircle className="w-5 h-5" /> {err}
           </div>
         )}
-        <p className="text-xs text-[#737370] text-center">
+        <p className="text-xs text-[#737370] dark:text-[#8A8A8A] text-center">
           {t.contact.form.or_email}{' '}
           <a href="mailto:vyuapp@proton.me" className="text-[#6D5BA0] hover:text-[#574886] transition-colors">vyuapp@proton.me</a>
         </p>

@@ -12,7 +12,7 @@ export default function Hero() {
     <section className="relative pt-36 pb-28 md:pt-44 md:pb-36 overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-6 md:px-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.5rem] leading-[1.04] font-sans font-semibold tracking-[-0.03em] text-[#141413]">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.5rem] leading-[1.04] font-sans font-semibold tracking-[-0.03em] text-[#141413] dark:text-[#F0F0F0]">
             {t.hero.headline.split(' ').slice(0, -1).join(' ')}{' '}
             <span className="relative text-[#6D5BA0]">
               {t.hero.headline.split(' ').slice(-1)[0].replace('.', '')}
@@ -21,11 +21,11 @@ export default function Hero() {
             .
           </h1>
 
-          <p className="mt-5 text-base md:text-lg text-[#636360] font-medium tracking-wide">
+          <p className="mt-5 text-base md:text-lg text-[#636360] dark:text-[#8A8A8A] font-medium tracking-wide">
             {t.hero.tagline}
           </p>
 
-          <p className="mt-8 text-[#4A4A48] text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
+          <p className="mt-8 text-[#4A4A48] dark:text-[#B0B0B0] text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
             {t.hero.description}
           </p>
 
@@ -38,7 +38,7 @@ export default function Hero() {
             </a>
             <a
               href="#kontak"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-transparent text-[#141413] font-semibold text-sm border border-[#D1D0C9] hover:border-[#B0AFAA] hover:bg-black/[0.02] transition-all duration-200 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-transparent text-[#141413] dark:text-[#F0F0F0] font-semibold text-sm border border-[#D1D0C9] dark:border-[#3A3A3D] hover:border-[#B0AFAA] dark:hover:border-[#4A4A4D] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-all duration-200 hover:-translate-y-0.5"
             >
               {t.hero.cta_secondary}
             </a>
