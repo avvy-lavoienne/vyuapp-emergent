@@ -125,7 +125,7 @@ export default async function ArticlePage({ params }) {
   ];
 
   return (
-    <main className="min-h-screen bg-[#FAFAF8]">
+    <main className="min-h-screen bg-[#FAFAF8] dark:bg-[#0F0F10]">
       <BreadcrumbJsonLd items={breadcrumbItems} />
       <ArticleJsonLd
         title={article.title}
@@ -153,24 +153,24 @@ export default async function ArticlePage({ params }) {
         <div className="max-w-4xl mx-auto px-6 md:px-10">
           <Link
             href="/insights"
-            className="inline-flex items-center gap-2 text-sm text-[#6B6B68] hover:text-[#6D5BA0] transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-sm text-[#6B6B68] dark:text-[#B0B0B0] hover:text-[#6D5BA0] dark:hover:text-[#8B7BC4] transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" /> Semua artikel
           </Link>
-          <p className="font-mono text-xs text-[#6D5BA0] uppercase tracking-[0.15em] font-medium">
+          <p className="font-mono text-xs text-[#6D5BA0] dark:text-[#8B7BC4] uppercase tracking-[0.15em] font-medium">
             {article.category}
           </p>
-          <h1 className="mt-4 text-3xl md:text-5xl font-sans font-semibold leading-tight tracking-[-0.025em] text-[#141413]">
+          <h1 className="mt-4 text-3xl md:text-5xl font-sans font-semibold leading-tight tracking-[-0.025em] text-[#141413] dark:text-[#F0F0F0]">
             {article.title}
           </h1>
-          <p className="mt-5 text-lg text-[#4A4A48] leading-relaxed">{article.excerpt}</p>
-          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-[#636360] font-mono">
+          <p className="mt-5 text-lg text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed">{article.excerpt}</p>
+          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-[#636360] dark:text-[#8A8A8A] font-mono">
             <span className="flex items-center gap-1.5"><Calendar className="w-3 h-3" /> {formatDate(article.published_at || article.updated_at)}</span>
             <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> {readMin} min read</span>
             {(article.tags || []).slice(0, 4).map(t => <span key={t}>#{t}</span>)}
           </div>
           <TableOfContents html={linkedContent} />
-          <div className="mt-10 rounded-2xl overflow-hidden border border-[#E5E4E0] relative aspect-video bg-[#F4F3EE]">
+          <div className="mt-10 rounded-2xl overflow-hidden border border-[#E5E4E0] dark:border-[#2A2A2D] relative aspect-video bg-[#F4F3EE] dark:bg-[#1A1A1D]">
             <Image src={article.cover || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80'} alt={article.title} fill className="object-cover" priority sizes="(max-width: 768px) 100vw, 896px" />
           </div>
           <div className="mt-12 prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtmlContent(c1) }} />
@@ -179,12 +179,12 @@ export default async function ArticlePage({ params }) {
           <AdSenseSlot slot={SLOT_MID} format="rectangle" style={{ display: 'block', minHeight: 250, maxWidth: 336, margin: '0 auto' }} />
           <div className="prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtmlContent(c3) }} />
           <AdSenseSlot slot={SLOT_END} format="auto" />
-          <div className="mt-12 p-6 rounded-2xl border border-[#E5E4E0] bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="mt-12 p-6 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <span className="w-12 h-12 rounded-full bg-[#6D5BA0]/10 border border-[#6D5BA0]/20 flex items-center justify-center text-[#6D5BA0] font-semibold">V</span>
+              <span className="w-12 h-12 rounded-full bg-[#6D5BA0]/10 dark:bg-[#8B7BC4]/10 border border-[#6D5BA0]/20 dark:border-[#8B7BC4]/20 flex items-center justify-center text-[#6D5BA0] dark:text-[#8B7BC4] font-semibold">V</span>
               <div>
-                <p className="text-sm text-[#141413] font-medium">VyuApp Studio</p>
-                <p className="text-xs text-[#6B6B68]">Bespoke web engineering — Garut, ID</p>
+                <p className="text-sm text-[#141413] dark:text-[#F0F0F0] font-medium">VyuApp Studio</p>
+                <p className="text-xs text-[#6B6B68] dark:text-[#B0B0B0]">Bespoke web engineering — Garut, ID</p>
               </div>
             </div>
             <ShareButton title={article.title} />
@@ -195,10 +195,10 @@ export default async function ArticlePage({ params }) {
       <ArticleNav prev={prevArticle} next={nextArticle} />
 
       {related.length > 0 && (
-        <section className="py-24 md:py-32 border-t border-[#E5E4E0]">
+        <section className="py-24 md:py-32 border-t border-[#E5E4E0] dark:border-[#2A2A2D]">
           <div className="max-w-7xl mx-auto px-6 md:px-10">
-            <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] font-medium">Artikel terkait</p>
-            <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">
+            <p className="font-mono text-xs text-[#636360] dark:text-[#8A8A8A] uppercase tracking-[0.15em] font-medium">Artikel terkait</p>
+            <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] dark:text-[#F0F0F0] tracking-[-0.02em]">
               Lanjutkan membaca
             </h2>
             <div className="mt-10 grid md:grid-cols-3 gap-6">
@@ -206,15 +206,15 @@ export default async function ArticlePage({ params }) {
                 <Link
                   key={r.id}
                   href={`/insights/${r.slug}`}
-                  className="p-6 rounded-2xl border border-[#E5E4E0] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] group"
+                  className="p-6 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] group"
                 >
-                  <p className="font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.15em] font-medium">
+                  <p className="font-mono text-[10px] text-[#6D5BA0] dark:text-[#8B7BC4] uppercase tracking-[0.15em] font-medium">
                     {r.category}
                   </p>
-                  <h3 className="mt-3 text-base font-sans font-semibold text-[#141413] group-hover:text-[#6D5BA0] transition leading-snug tracking-[-0.01em]">
+                  <h3 className="mt-3 text-base font-sans font-semibold text-[#141413] dark:text-[#F0F0F0] group-hover:text-[#6D5BA0] dark:group-hover:text-[#8B7BC4] transition leading-snug tracking-[-0.01em]">
                     {r.title}
                   </h3>
-                  <p className="mt-3 text-xs text-[#6B6B68] line-clamp-2 leading-relaxed">{r.excerpt}</p>
+                  <p className="mt-3 text-xs text-[#6B6B68] dark:text-[#B0B0B0] line-clamp-2 leading-relaxed">{r.excerpt}</p>
                 </Link>
               ))}
             </div>

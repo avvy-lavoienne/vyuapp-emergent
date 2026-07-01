@@ -29,16 +29,16 @@ export const metadata = {
 
 function OtherProject({ item }) {
   return (
-    <div className="p-6 rounded-2xl border border-[#E5E4E0] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9]">
-      <p className="font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.18em] font-medium mb-3">
+    <div className="p-6 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]">
+      <p className="font-mono text-[10px] text-[#6D5BA0] dark:text-[#8B7BC4] uppercase tracking-[0.18em] font-medium mb-3">
         {(item.category || 'PROJECT').toUpperCase()}
       </p>
-      <h4 className="text-base font-semibold text-[#141413] tracking-[-0.01em]">{item.name}</h4>
-      <p className="mt-2 text-sm text-[#4A4A48] leading-relaxed">{item.description}</p>
+      <h4 className="text-base font-semibold text-[#141413] dark:text-[#F0F0F0] tracking-[-0.01em]">{item.name}</h4>
+      <p className="mt-2 text-sm text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed">{item.description}</p>
       {(item.stack || []).length > 0 && (
         <div className="mt-4 flex flex-wrap gap-1.5">
           {(item.stack || []).slice(0, 4).map(s => (
-            <span key={s} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6B6B68] bg-[#F4F3EE] border border-[#E5E4E0]">
+            <span key={s} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6B6B68] dark:text-[#B0B0B0] bg-[#F4F3EE] dark:bg-[#2A2A2D] border border-[#E5E4E0] dark:border-[#2A2A2D]">
               {s}
             </span>
           ))}
@@ -62,7 +62,7 @@ export default async function PortfolioPage() {
   const avalonUrl = 'https://avalon.vyuapp.my.id';
 
   return (
-    <main className="min-h-screen bg-[#FAFAF8]">
+    <main className="min-h-screen bg-[#FAFAF8] dark:bg-[#0F0F10]">
       <BreadcrumbJsonLd items={breadcrumbItems} />
       {main1 && <SoftwareAppJsonLd
         name={main1.name}
@@ -114,17 +114,17 @@ export default async function PortfolioPage() {
           />
           
           {/* Featured: AI Agents Case Study */}
-          <div className="mt-14 p-8 rounded-2xl border border-[#E5E4E0] bg-white mb-8">
+          <div className="mt-14 p-8 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] mb-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="flex-1">
-                <p className="font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.18em] font-medium mb-3">
+                <p className="font-mono text-[10px] text-[#6D5BA0] dark:text-[#8B7BC4] uppercase tracking-[0.18em] font-medium mb-3">
                   CASE STUDY
                 </p>
-                <h3 className="text-xl font-semibold text-[#141413] mb-2">VyuApp Multi-Agent System</h3>
-                <p className="text-sm text-[#4A4A48] mb-4">Bagaimana kami menggunakan 9 AI agent untuk menghasilkan website berkualitas tinggi dengan riset mendalam, kualitas kode terjamin, dan SEO yang dioptimasi.</p>
+                <h3 className="text-xl font-semibold text-[#141413] dark:text-[#F0F0F0] mb-2">VyuApp Multi-Agent System</h3>
+                <p className="text-sm text-[#4A4A48] dark:text-[#B0B0B0] mb-4">Bagaimana kami menggunakan 9 AI agent untuk menghasilkan website berkualitas tinggi dengan riset mendalam, kualitas kode terjamin, dan SEO yang dioptimasi.</p>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {['AI', 'Multi-Agent', 'Automation', 'SEO'].map(tag => (
-                    <span key={tag} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6B6B68] bg-[#F4F3EE] border border-[#E5E4E0]">
+                    <span key={tag} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6B6B68] dark:text-[#B0B0B0] bg-[#F4F3EE] dark:bg-[#2A2A2D] border border-[#E5E4E0] dark:border-[#2A2A2D]">
                       {tag}
                     </span>
                   ))}
@@ -142,10 +142,10 @@ export default async function PortfolioPage() {
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {(rest.length ? rest : FALLBACK_OTHER).map(item => <OtherProject key={item.id} item={item} />)}
           </div>
-          <div className="mt-12 p-8 md:p-10 rounded-2xl border border-[#E5E4E0] bg-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="mt-12 p-8 md:p-10 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
-              <h3 className="text-xl font-semibold text-[#141413]">Punya proyek yang layak masuk kanon ini?</h3>
-              <p className="text-sm text-[#4A4A48] mt-2 max-w-xl">Kami menerima 2–3 kolaborasi baru per kuartal. Hubungi kami dengan brief yang spesifik.</p>
+              <h3 className="text-xl font-semibold text-[#141413] dark:text-[#F0F0F0]">Punya proyek yang layak masuk kanon ini?</h3>
+              <p className="text-sm text-[#4A4A48] dark:text-[#B0B0B0] mt-2 max-w-xl">Kami menerima 2–3 kolaborasi baru per kuartal. Hubungi kami dengan brief yang spesifik.</p>
             </div>
             <Link
               href="/#kontak"

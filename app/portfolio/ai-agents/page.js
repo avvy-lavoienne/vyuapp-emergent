@@ -199,7 +199,7 @@ const breadcrumbItems = [
 
 export default function AIAgentsPage() {
   return (
-    <main className="min-h-screen bg-[#FAFAF8]">
+    <main className="min-h-screen bg-[#FAFAF8] dark:bg-[#0F0F10]">
       <BreadcrumbJsonLd items={breadcrumbItems} />
       <Navbar />
 
@@ -208,60 +208,60 @@ export default function AIAgentsPage() {
         <div className="max-w-4xl mx-auto px-6 md:px-10">
           <Link
             href="/portfolio"
-            className="inline-flex items-center gap-2 text-sm text-[#6B6B68] hover:text-[#6D5BA0] transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-sm text-[#6B6B68] dark:text-[#B0B0B0] hover:text-[#6D5BA0] dark:hover:text-[#8B7BC4] transition-colors mb-8"
           >
             ← Kembali ke Portfolio
           </Link>
-          <p className="font-mono text-xs text-[#6D5BA0] uppercase tracking-[0.15em] font-medium">
+          <p className="font-mono text-xs text-[#6D5BA0] dark:text-[#8B7BC4] uppercase tracking-[0.15em] font-medium">
             Case Study
           </p>
-          <h1 className="mt-4 text-3xl md:text-5xl font-sans font-semibold leading-tight tracking-[-0.025em] text-[#141413]">
+          <h1 className="mt-4 text-3xl md:text-5xl font-sans font-semibold leading-tight tracking-[-0.025em] text-[#141413] dark:text-[#F0F0F0]">
             VyuApp Multi-Agent System
           </h1>
-          <p className="mt-5 text-lg md:text-xl text-[#4A4A48] leading-relaxed max-w-2xl">
+          <p className="mt-5 text-lg md:text-xl text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed max-w-2xl">
             Bagaimana Kami Menggunakan AI untuk Memberikan Hasil Terbaik
           </p>
         </div>
       </section>
 
       {/* Apa itu Multi-Agent System */}
-      <section className="py-16 md:py-24 border-t border-[#E5E4E0]">
+      <section className="py-16 md:py-24 border-t border-[#E5E4E0] dark:border-[#2A2A2D]">
         <div className="max-w-4xl mx-auto px-6 md:px-10">
-          <h2 className="text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">
+          <h2 className="text-2xl md:text-3xl font-sans font-semibold text-[#141413] dark:text-[#F0F0F0] tracking-[-0.02em]">
             Apa itu Sistem Multi-Agent?
           </h2>
-          <p className="mt-5 text-base text-[#4A4A48] leading-relaxed">
+          <p className="mt-5 text-base text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed">
             Bayangkan memiliki tim ahli yang masing-masing spesialis pada bidangnya — ada yang ahli riset pasar, ada yang spesialis SEO, ada yang fokus pada kualitas kode, dan ada yang memastikan semuanya berjalan sempurna. Itulah inti dari sistem multi-agent kami.
           </p>
-          <p className="mt-4 text-base text-[#4A4A48] leading-relaxed">
+          <p className="mt-4 text-base text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed">
             Alih-alih mengandalkan satu proses linier, VyuApp menjalankan beberapa &quot;agent&quot; AI yang bekerja secara terkoordinasi. Setiap agent memiliki peran spesifik dan saling melengkapi. Hasilnya adalah website yang dibangun dengan presisi tinggi — dari riset hingga deployment.
           </p>
-          <div className="mt-8 p-6 md:p-8 rounded-2xl border border-[#E5E4E0] bg-white">
-            <p className="text-sm text-[#4A4A48] leading-relaxed italic">
+          <div className="mt-8 p-6 md:p-8 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D]">
+            <p className="text-sm text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed italic">
               &quot;Ini bukan soal mengganti manusia dengan mesin. Ini tentang memberdayakan tim kami dengan alat yang tepat sehingga setiap proyek mendapat perhatian terbaik dari setiap aspeknya.&quot;
             </p>
-            <p className="mt-3 text-xs font-mono text-[#636360]">— VyuApp Studio</p>
+            <p className="mt-3 text-xs font-mono text-[#636360] dark:text-[#8A8A8A]">— VyuApp Studio</p>
           </div>
         </div>
       </section>
 
       {/* Tim Agent — Detailed Profiles */}
-      <section className="py-16 md:py-24 border-t border-[#E5E4E0]">
+      <section className="py-16 md:py-24 border-t border-[#E5E4E0] dark:border-[#2A2A2D]">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] font-medium">
+          <p className="font-mono text-xs text-[#636360] dark:text-[#8A8A8A] uppercase tracking-[0.15em] font-medium">
             Tim Agent
           </p>
-          <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">
+          <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] dark:text-[#F0F0F0] tracking-[-0.02em]">
             Mengenal Setiap Agent
           </h2>
-          <p className="mt-4 text-base text-[#4A4A48] leading-relaxed max-w-2xl">
+          <p className="mt-4 text-base text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed max-w-2xl">
             10 AI agent dengan spesialisasi masing-masing, bekerja secara terkoordinasi untuk menghasilkan website berkualitas tinggi.
           </p>
 
           {agentGroups.map((group) => (
             <div key={group.category} className="mt-14">
               <div className="flex items-center gap-3 mb-6">
-                <span className="font-mono text-[11px] text-[#6D5BA0] uppercase tracking-[0.15em] font-semibold">{group.category}</span>
+                <span className="font-mono text-[11px] text-[#6D5BA0] dark:text-[#8B7BC4] uppercase tracking-[0.15em] font-semibold">{group.category}</span>
                 <div className="flex-1 h-px bg-[#E5E4E0]" />
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -270,19 +270,19 @@ export default function AIAgentsPage() {
                   return (
                     <div
                       key={agent.name}
-                      className="p-7 rounded-2xl border border-[#E5E4E0] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] flex flex-col"
+                      className="p-7 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] flex flex-col"
                     >
                       <div className="flex items-center gap-3 mb-4">
                         <span className="text-3xl">{agent.emoji}</span>
                         <div>
-                          <h3 className="text-lg font-semibold text-[#141413]">{agent.name}</h3>
-                          <p className="font-mono text-[11px] text-[#6D5BA0] uppercase tracking-[0.1em]">{agent.role}</p>
+                          <h3 className="text-lg font-semibold text-[#141413] dark:text-[#F0F0F0]">{agent.name}</h3>
+                          <p className="font-mono text-[11px] text-[#6D5BA0] dark:text-[#8B7BC4] uppercase tracking-[0.1em]">{agent.role}</p>
                         </div>
                       </div>
-                      <p className="text-sm text-[#4A4A48] leading-relaxed flex-1">{agent.description}</p>
+                      <p className="text-sm text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed flex-1">{agent.description}</p>
                       <ul className="mt-5 space-y-2">
                         {agent.capabilities.map((cap) => (
-                          <li key={cap} className="flex items-start gap-2.5 text-sm text-[#4A4A48]">
+                          <li key={cap} className="flex items-start gap-2.5 text-sm text-[#4A4A48] dark:text-[#B0B0B0]">
                             <span className="w-1 h-1 rounded-full bg-[#6D5BA0] mt-2 flex-shrink-0" />
                             {cap}
                           </li>
@@ -298,15 +298,15 @@ export default function AIAgentsPage() {
       </section>
 
       {/* Pipeline */}
-      <section className="py-16 md:py-24 border-t border-[#E5E4E0] bg-[#F8F7F4]">
+      <section className="py-16 md:py-24 border-t border-[#E5E4E0] dark:border-[#2A2A2D] bg-[#F8F7F4] dark:bg-[#1A1A1D]">
         <div className="max-w-4xl mx-auto px-6 md:px-10">
-          <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] font-medium">
+          <p className="font-mono text-xs text-[#636360] dark:text-[#8A8A8A] uppercase tracking-[0.15em] font-medium">
             Pipeline
           </p>
-          <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">
+          <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] dark:text-[#F0F0F0] tracking-[-0.02em]">
             Bagaimana Agent Bekerja Bersama
           </h2>
-          <p className="mt-4 text-base text-[#4A4A48] leading-relaxed max-w-2xl">
+          <p className="mt-4 text-base text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed max-w-2xl">
             Dari riset hingga deployment, setiap agent memiliki momen spesifik dalam pipeline untuk memastikan kualitas di setiap tahap.
           </p>
 
@@ -319,17 +319,17 @@ export default function AIAgentsPage() {
                     {i + 1}
                   </div>
                   {i < pipelineSteps.length - 1 && (
-                    <div className="w-px flex-1 bg-[#D1D0C9] my-1" />
+                    <div className="w-px flex-1 bg-[#D1D0C9] dark:bg-[#3A3A3D] my-1" />
                   )}
                 </div>
                 {/* Content */}
                 <div className="pb-8 flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-base font-semibold text-[#141413]">{step.task}</span>
-                    <ChevronRight className="w-4 h-4 text-[#636360]" />
-                    <span className="font-mono text-[11px] text-[#6D5BA0] uppercase tracking-[0.1em] font-medium">{step.agent}</span>
+                    <span className="text-base font-semibold text-[#141413] dark:text-[#F0F0F0]">{step.task}</span>
+                    <ChevronRight className="w-4 h-4 text-[#636360] dark:text-[#8A8A8A]" />
+                    <span className="font-mono text-[11px] text-[#6D5BA0] dark:text-[#8B7BC4] uppercase tracking-[0.1em] font-medium">{step.agent}</span>
                   </div>
-                  <p className="text-sm text-[#4A4A48] leading-relaxed">{step.description}</p>
+                  <p className="text-sm text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed">{step.description}</p>
                 </div>
               </div>
             ))}
@@ -338,12 +338,12 @@ export default function AIAgentsPage() {
       </section>
 
       {/* Manfaat */}
-      <section className="py-16 md:py-24 border-t border-[#E5E4E0]">
+      <section className="py-16 md:py-24 border-t border-[#E5E4E0] dark:border-[#2A2A2D]">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
-          <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] font-medium">
+          <p className="font-mono text-xs text-[#636360] dark:text-[#8A8A8A] uppercase tracking-[0.15em] font-medium">
             Manfaat
           </p>
-          <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">
+          <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] dark:text-[#F0F0F0] tracking-[-0.02em]">
             Apa yang Anda Dapatkan
           </h2>
           <div className="mt-14 grid md:grid-cols-2 gap-6">
@@ -352,13 +352,13 @@ export default function AIAgentsPage() {
               return (
                 <div
                   key={f.title}
-                  className="p-8 rounded-2xl border border-[#E5E4E0] bg-white transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9]"
+                  className="p-8 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-[#6D5BA0]/10 flex items-center justify-center mb-5">
-                    <Icon className="w-5 h-5 text-[#6D5BA0]" />
+                  <div className="w-10 h-10 rounded-xl bg-[#6D5BA0]/10 dark:bg-[#8B7BC4]/10 flex items-center justify-center mb-5">
+                    <Icon className="w-5 h-5 text-[#6D5BA0] dark:text-[#8B7BC4]" />
                   </div>
-                  <h3 className="text-lg font-semibold text-[#141413] tracking-[-0.01em]">{f.title}</h3>
-                  <p className="mt-3 text-sm text-[#4A4A48] leading-relaxed">{f.description}</p>
+                  <h3 className="text-lg font-semibold text-[#141413] dark:text-[#F0F0F0] tracking-[-0.01em]">{f.title}</h3>
+                  <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed">{f.description}</p>
                 </div>
               );
             })}
@@ -367,21 +367,21 @@ export default function AIAgentsPage() {
       </section>
 
       {/* Proses */}
-      <section className="py-16 md:py-24 border-t border-[#E5E4E0]">
+      <section className="py-16 md:py-24 border-t border-[#E5E4E0] dark:border-[#2A2A2D]">
         <div className="max-w-4xl mx-auto px-6 md:px-10">
-          <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] font-medium">
+          <p className="font-mono text-xs text-[#636360] dark:text-[#8A8A8A] uppercase tracking-[0.15em] font-medium">
             Proses
           </p>
-          <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">
+          <h2 className="mt-3 text-2xl md:text-3xl font-sans font-semibold text-[#141413] dark:text-[#F0F0F0] tracking-[-0.02em]">
             Dari Ide hingga Website Hidup
           </h2>
           <div className="mt-14 space-y-8">
             {processSteps.map((s) => (
               <div key={s.step} className="flex gap-6 items-start">
-                <span className="font-mono text-xs text-[#6D5BA0] font-semibold mt-1 shrink-0">{s.step}</span>
-                <div className="flex-1 p-6 rounded-2xl border border-[#E5E4E0] bg-white">
-                  <h3 className="text-base font-semibold text-[#141413]">{s.title}</h3>
-                  <p className="mt-2 text-sm text-[#4A4A48] leading-relaxed">{s.description}</p>
+                <span className="font-mono text-xs text-[#6D5BA0] dark:text-[#8B7BC4] font-semibold mt-1 shrink-0">{s.step}</span>
+                <div className="flex-1 p-6 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D]">
+                  <h3 className="text-base font-semibold text-[#141413] dark:text-[#F0F0F0]">{s.title}</h3>
+                  <p className="mt-2 text-sm text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed">{s.description}</p>
                 </div>
               </div>
             ))}
@@ -390,12 +390,12 @@ export default function AIAgentsPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 md:py-24 border-t border-[#E5E4E0]">
+      <section className="py-16 md:py-24 border-t border-[#E5E4E0] dark:border-[#2A2A2D]">
         <div className="max-w-4xl mx-auto px-6 md:px-10">
-          <div className="p-8 md:p-10 rounded-2xl border border-[#E5E4E0] bg-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="p-8 md:p-10 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
-              <h3 className="text-xl font-semibold text-[#141413]">Siap Merasakan Bedanya?</h3>
-              <p className="text-sm text-[#4A4A48] mt-2 max-w-xl">Diskusikan proyek Anda bersama kami. Kami hanya menerima 2–3 kolaborasi baru per kuartal untuk menjaga kualitas.</p>
+              <h3 className="text-xl font-semibold text-[#141413] dark:text-[#F0F0F0]">Siap Merasakan Bedanya?</h3>
+              <p className="text-sm text-[#4A4A48] dark:text-[#B0B0B0] mt-2 max-w-xl">Diskusikan proyek Anda bersama kami. Kami hanya menerima 2–3 kolaborasi baru per kuartal untuk menjaga kualitas.</p>
             </div>
             <Link
               href="/#kontak"
