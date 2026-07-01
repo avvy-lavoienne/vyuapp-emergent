@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const CS_MODEL_BASE = process.env.CS_MODEL_BASE_URL || '';
-const CS_MODEL = process.env.CS_MODEL_NAME || 'nara/mimo-v2.5';
+const CS_MODEL = process.env.CS_MODEL_NAME || 'nara/mimo-v2.5-pro';
 const CS_API_KEY = process.env.CS_API_KEY || '';
 const RATE_LIMIT = 20;
 const ADMIN_PASSWORD = process.env.CHAT_ADMIN_PASSWORD || 'AkuWibuGanteng';
@@ -140,8 +140,26 @@ async function handleChat(message: string, history: ChatMessage[]): Promise<{ re
         .map(h => ({ role: h.role, content: h.content.slice(0, 2000) }))
         .slice(-6)
     : [];
+
+  // Search Mem0 for relevant context
+  let mem0Context = '';
+  try {
+    const mem0Res = await fetch(`http://100.104.41.34:8080/memories?query=${encodeURIComponent(message)}&user_id=hana&limit=3`, {
+      signal: AbortSignal.timeout(3000),
+    });
+    if (mem0Res.ok) {
+      const mem0Data = await mem0Res.json();
+      const memories = mem0Data.results || [];
+      if (memories.length > 0) {
+        mem0Context = '\n\n## Relevant Knowledge:\n' + memories.map((m: any) => `- ${m.memory}`).join('\n');
+      }
+    }
+  } catch (e) {
+    // Mem0 unavailable — continue without context
+  }
+
   const messages: ChatMessage[] = [
-    { role: 'system', content: SYSTEM_PROMPT },
+    { role: 'system', content: SYSTEM_PROMPT + mem0Context },
     ...sanitized,
     { role: 'user', content: message.trim() },
   ];
@@ -152,7 +170,7 @@ async function handleChat(message: string, history: ChatMessage[]): Promise<{ re
       'Content-Type': 'application/json',
       ...(CS_API_KEY ? { Authorization: `Bearer ${CS_API_KEY}` } : {}),
     },
-    body: JSON.stringify({ model: CS_MODEL, messages, max_tokens: 300, temperature: 0.7, stream: false }),
+    body: JSON.stringify({ model: CS_MODEL, messages, max_tokens: 1000, temperature: 0.7, stream: false }),
   });
 
   if (!modelRes.ok) {
