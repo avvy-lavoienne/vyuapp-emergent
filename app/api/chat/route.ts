@@ -4,7 +4,7 @@ const CS_MODEL_BASE = process.env.CS_MODEL_BASE_URL || '';
 const CS_MODEL = process.env.CS_MODEL_NAME || 'nara/mimo-v2.5-pro';
 const CS_API_KEY = process.env.CS_API_KEY || '';
 const RATE_LIMIT = 100;
-const ADMIN_PASSWORD=proces...WORD || 'AkuWibuGanteng';
+const ADMIN_PASSWORD = process.env.CHAT_ADMIN_PASSWORD || 'AkuWibuGanteng';
 const ADMIN_DURATION = 5 * 60 * 1000;
 
 // In-memory stores (per serverless instance)
