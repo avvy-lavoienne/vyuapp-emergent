@@ -3,9 +3,11 @@ import Footer from '@/components/Footer';
 import SectionHeader from '@/components/SectionHeader';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import { cookies } from 'next/headers';
 import { getPublishedPortfolio, DEFAULT_MAIN, FALLBACK_OTHER } from '@/lib/data';
 import { BreadcrumbJsonLd, SoftwareAppJsonLd } from '@/components/JsonLd';
 import DetailedProduct from '@/components/DetailedProduct';
+import { locales } from '@/lib/locales';
 
 export const revalidate = 3600;
 
@@ -49,13 +51,17 @@ function OtherProject({ item }) {
 }
 
 export default async function PortfolioPage() {
+  const cookieStore = await cookies();
+  const locale = cookieStore.get('vyu-locale')?.value === 'en' ? 'en' : 'id';
+  const t = locales[locale].portfolioPage;
+
   const [main1, main2] = DEFAULT_MAIN;
   const dbItems = await getPublishedPortfolio();
   const rest = dbItems.length > 0 ? dbItems : FALLBACK_OTHER;
 
   const breadcrumbItems = [
-    { name: 'Beranda', url: `${baseUrl}/` },
-    { name: 'Portfolio', url: `${baseUrl}/portfolio` },
+    { name: t.breadcrumb.home, url: `${baseUrl}/` },
+    { name: t.breadcrumb.portfolio, url: `${baseUrl}/portfolio` },
   ];
 
   const sellicaUrl = `${baseUrl}/portfolio/sellica`;
@@ -82,9 +88,9 @@ export default async function PortfolioPage() {
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <SectionHeader
             overline="Portfolio"
-            title="Produk hidup, dijaga oleh tangan yang sama."
-            description="Kami mempublikasikan portfolio yang dapat kami pertanggungjawabkan di produksi — bukan mockup, bukan konsep."
-            highlight="yang sama"
+            title={t.title}
+            description={t.description}
+            highlight={t.titleHighlight}
           />
         </div>
       </section>
@@ -108,9 +114,9 @@ export default async function PortfolioPage() {
       <section className="py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <SectionHeader
-            overline="Other Work"
-            title="Proyek lain yang sedang berkembang."
-            description="Slot ini akan terisi seiring kami merilis case study."
+            overline={t.otherWork.overline}
+            title={t.otherWork.title}
+            description={t.otherWork.description}
           />
           
           {/* Featured: AI Agents Case Study */}
@@ -118,10 +124,10 @@ export default async function PortfolioPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="flex-1">
                 <p className="font-mono text-[10px] text-[#6D5BA0] dark:text-[#8B7BC4] uppercase tracking-[0.18em] font-medium mb-3">
-                  CASE STUDY
+                  {t.caseStudy.overline}
                 </p>
-                <h3 className="text-xl font-semibold text-[#141413] dark:text-[#F0F0F0] mb-2">VyuApp Multi-Agent System</h3>
-                <p className="text-sm text-[#4A4A48] dark:text-[#B0B0B0] mb-4">Bagaimana kami menggunakan 9 AI agent untuk menghasilkan website berkualitas tinggi dengan riset mendalam, kualitas kode terjamin, dan SEO yang dioptimasi.</p>
+                <h3 className="text-xl font-semibold text-[#141413] dark:text-[#F0F0F0] mb-2">{t.caseStudy.title}</h3>
+                <p className="text-sm text-[#4A4A48] dark:text-[#B0B0B0] mb-4">{t.caseStudy.description}</p>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {['AI', 'Multi-Agent', 'Automation', 'SEO'].map(tag => (
                     <span key={tag} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6B6B68] dark:text-[#B0B0B0] bg-[#F4F3EE] dark:bg-[#2A2A2D] border border-[#E5E4E0] dark:border-[#2A2A2D]">
@@ -134,7 +140,7 @@ export default async function PortfolioPage() {
                 href="/portfolio/ai-agents"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#6D5BA0] text-white text-sm font-semibold hover:bg-[#574886] transition-all duration-200 hover:-translate-y-0.5 shrink-0"
               >
-                Lihat Case Study <ArrowRight className="w-4 h-4" />
+                {t.caseStudy.cta} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
@@ -144,14 +150,14 @@ export default async function PortfolioPage() {
           </div>
           <div className="mt-12 p-8 md:p-10 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
-              <h3 className="text-xl font-semibold text-[#141413] dark:text-[#F0F0F0]">Punya proyek yang layak masuk kanon ini?</h3>
-              <p className="text-sm text-[#4A4A48] dark:text-[#B0B0B0] mt-2 max-w-xl">Kami menerima 2–3 kolaborasi baru per kuartal. Hubungi kami dengan brief yang spesifik.</p>
+              <h3 className="text-xl font-semibold text-[#141413] dark:text-[#F0F0F0]">{t.cta.title}</h3>
+              <p className="text-sm text-[#4A4A48] dark:text-[#B0B0B0] mt-2 max-w-xl">{t.cta.description}</p>
             </div>
             <Link
               href="/#kontak"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#6D5BA0] text-white text-sm font-semibold hover:bg-[#574886] transition-all duration-200 hover:-translate-y-0.5 shrink-0"
             >
-              Request Collaboration <ArrowRight className="w-4 h-4" />
+              {t.cta.button} <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
