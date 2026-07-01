@@ -4,7 +4,7 @@ const CS_MODEL_BASE = process.env.CS_MODEL_BASE_URL || '';
 const CS_MODEL = process.env.CS_MODEL_NAME || 'nara/mimo-v2.5-pro';
 const CS_API_KEY = process.env.CS_API_KEY || '';
 const RATE_LIMIT = 20;
-const ADMIN_PASSWORD = process.env.CHAT_ADMIN_PASSWORD || 'AkuWibuGanteng';
+const ADMIN_PASSWORD = process.env.CHAT_ADMIN_PASSWORD || '';
 const ADMIN_DURATION = 5 * 60 * 1000;
 
 // In-memory stores (per serverless instance)
@@ -141,7 +141,23 @@ async function handleChat(message: string, history: ChatMessage[]): Promise<{ re
         .slice(-6)
     : [];
 
+  // Basic prompt injection detection
+  const injectionPatterns = [
+    'ignore previous', 'ignore all', 'system prompt', 'you are now',
+    'forget your instructions', 'new instructions', 'override',
+    'abaikan instruksi', 'lupakan semua', 'kamu sekarang',
+  ];
+  const lowerMessage = message.toLowerCase();
+  const isInjection = injectionPatterns.some(p => lowerMessage.includes(p));
+  if (isInjection) {
+    return { reply: 'Maaf, saya tidak bisa memproses permintaan itu. Ada yang bisa saya bantu tentang VyuApp? 😊' };
+  }
+
   // Search Mem0 for relevant context
+  // NOTE: Mem0 at 100.104.41.34 is a Tailscale private IP.
+  // This will only work when deployed on the same network (not Vercel serverless).
+  // The try/catch gracefully falls back to inline SYSTEM_PROMPT knowledge.
+  // To enable RAG on Vercel: expose Mem0 via Tailscale Funnel or public URL.
   let mem0Context = '';
   try {
     const mem0Res = await fetch(`http://100.104.41.34:8080/memories?query=${encodeURIComponent(message)}&user_id=hana&limit=3`, {
@@ -199,7 +215,7 @@ export async function POST(request: NextRequest) {
     const visitorId = getVisitorId(request);
 
     // Admin mode
-    if (message.trim() === ADMIN_PASSWORD) {
+    if (ADMIN_PASSWORD && message.trim() === ADMIN_PASSWORD) {
       setAdmin(visitorId);
       return NextResponse.json({
         reply: '🔑 Admin mode activated! Rate limit removed for 5 minutes.',
@@ -228,7 +244,7 @@ export async function POST(request: NextRequest) {
   } catch (err: any) {
     console.error('Chat API error:', err);
     return NextResponse.json({
-      reply: `Error: ${err?.message || String(err)}`,
+      reply: 'Maaf, terjadi kesalahan internal. Hubungi vyuapp@proton.me 📧',
     });
   }
 }
