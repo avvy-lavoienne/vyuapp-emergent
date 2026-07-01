@@ -258,6 +258,53 @@ html { scroll-behavior: smooth; }
   color: #6D5BA0;
 }
 
+/* Article tables */
+.prose-light table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #E5E4E0;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  margin: 2rem 0;
+  font-size: 0.95rem;
+}
+.prose-light thead {
+  background: #6D5BA0;
+}
+.prose-light th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-family: 'Satoshi', system-ui, sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  color: #fff;
+  border-bottom: 2px solid #5A4A8A;
+}
+.prose-light td {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid #E5E4E0;
+  vertical-align: top;
+}
+.prose-light tbody tr:last-child td {
+  border-bottom: none;
+}
+.prose-light tbody tr:nth-child(even) {
+  background: #F9F8F6;
+}
+.prose-light tbody tr:hover {
+  background: #F0EEFA;
+}
+
+/* Article tables — dark mode */
+.dark .prose-light table { border-color: #2A2A2D; }
+.dark .prose-light thead { background: #5A4A8A; }
+.dark .prose-light th { border-bottom-color: #4A3A7A; }
+.dark .prose-light td { border-bottom-color: #2A2A2D; color: #D0D0D0; }
+.dark .prose-light tbody tr:nth-child(even) { background: #1E1E22; }
+.dark .prose-light tbody tr:hover { background: #2A2A35; }
+
 /* ================================================
    DARK MODE GLOBAL OVERRIDES
    Fixes ALL muted/gray text + legacy CSS classes
