@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Globe } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
 import { useLocale } from '@/components/LocaleProvider';
 
 const LINKS = [
@@ -39,16 +40,16 @@ export default function Navbar() {
     <header
       className={`fixed top-0 inset-x-0 z-50 h-[72px] transition-all duration-300 ${
         scrolled
-          ? 'bg-white/80 backdrop-blur-xl border-b border-[#E5E4E0]'
+          ? 'bg-white/80 dark:bg-[#0F0F10]/80 backdrop-blur-xl border-b border-[#E5E4E0] dark:border-[#2A2A2D]'
           : 'bg-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10 h-[72px] flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
-          <span className="w-9 h-9 rounded-lg bg-white border border-[#E5E4E0] flex items-center justify-center overflow-hidden p-1">
+          <span className="w-9 h-9 rounded-lg bg-white dark:bg-[#1A1A1D] border border-[#E5E4E0] dark:border-[#2A2A2D] flex items-center justify-center overflow-hidden p-1">
             <Image src="/images/vyu-removebg.png" alt="" width={36} height={36} className="w-full h-full object-contain" priority />
           </span>
-          <span className="font-sans font-bold text-lg tracking-tight text-[#141413]">
+          <span className="font-sans font-bold text-lg tracking-tight text-[#141413] dark:text-[#F0F0F0]">
             Vyu<span className="text-[#6D5BA0]">App</span>
           </span>
         </Link>
@@ -58,7 +59,7 @@ export default function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-sm font-medium text-[#6B6B68] hover:text-[#141413] transition-colors duration-200"
+              className="text-sm font-medium text-[#6B6B68] dark:text-[#B0B0B0] hover:text-[#141413] dark:hover:text-[#F0F0F0] transition-colors duration-200"
             >
               {isLanding ? t.nav[l.localeKey] : l.localeKey === 'home' ? 'Beranda' : l.localeKey.charAt(0).toUpperCase() + l.localeKey.slice(1)}
             </Link>
@@ -66,7 +67,7 @@ export default function Navbar() {
           {isLanding && (
             <button
               onClick={toggle}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#6B6B68] border border-[#E5E4E0] hover:border-[#D1D0C9] hover:text-[#141413] transition-all duration-200"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#6B6B68] dark:text-[#B0B0B0] border border-[#E5E4E0] dark:border-[#2A2A2D] hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] hover:text-[#141413] dark:hover:text-[#F0F0F0] transition-all duration-200"
               aria-label="Toggle language"
             >
               <Globe className="w-3.5 h-3.5" />
@@ -79,13 +80,14 @@ export default function Navbar() {
           >
             {isLanding ? t.nav.contact : 'Hubungi Kami'}
           </a>
+          <ThemeToggle />
         </nav>
 
         <div className="md:hidden flex items-center gap-3">
           {isLanding && (
             <button
               onClick={toggle}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-medium text-[#6B6B68] border border-[#E5E4E0] transition-all duration-200"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-medium text-[#6B6B68] dark:text-[#B0B0B0] border border-[#E5E4E0] dark:border-[#2A2A2D] transition-all duration-200"
               aria-label="Toggle language"
             >
               <Globe className="w-3 h-3" />
@@ -94,7 +96,7 @@ export default function Navbar() {
           )}
           <button
             onClick={() => setOpen(v => !v)}
-            className="p-2 text-[#6B6B68] hover:text-[#141413] transition-colors"
+            className="p-2 text-[#6B6B68] dark:text-[#B0B0B0] hover:text-[#141413] dark:hover:text-[#F0F0F0] transition-colors"
             aria-label="menu"
           >
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -103,14 +105,14 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-[#E5E4E0] bg-white/95 backdrop-blur-xl">
+        <div className="md:hidden border-t border-[#E5E4E0] dark:border-[#2A2A2D] bg-white/95 dark:bg-[#0F0F10]/95 backdrop-blur-xl">
           <div className="px-6 py-6 flex flex-col gap-4">
             {LINKS.map(l => (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="text-[#4A4A48] hover:text-[#141413] text-sm font-medium transition-colors"
+                className="text-[#4A4A48] dark:text-[#B0B0B0] hover:text-[#141413] dark:hover:text-[#F0F0F0] text-sm font-medium transition-colors"
               >
                 {isLanding ? t.nav[l.localeKey] : l.localeKey === 'home' ? 'Beranda' : l.localeKey.charAt(0).toUpperCase() + l.localeKey.slice(1)}
               </Link>

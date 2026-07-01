@@ -207,9 +207,9 @@ export default function ChatWidget() {
           right: '24px',
           width: 'min(380px, calc(100vw - 32px))',
           height: 'min(520px, calc(100vh - 120px))',
-          backgroundColor: '#fff',
+          backgroundColor: 'var(--bg-primary, #fff)',
           borderRadius: '16px',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.25)',
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
@@ -269,7 +269,7 @@ export default function ChatWidget() {
           display: 'flex',
           flexDirection: 'column',
           gap: '12px',
-          backgroundColor: '#F8F7FC',
+          backgroundColor: 'var(--bg-secondary, #F8F7FC)',
         }}>
           {messages.length === 0 && (
             <div style={{
@@ -295,8 +295,8 @@ export default function ChatWidget() {
                 borderRadius: msg.role === 'visitor'
                   ? '14px 14px 4px 14px'
                   : '14px 14px 14px 4px',
-                backgroundColor: msg.role === 'visitor' ? '#6D5BA0' : '#fff',
-                color: msg.role === 'visitor' ? '#fff' : '#141413',
+                backgroundColor: msg.role === 'visitor' ? '#6D5BA0' : 'var(--bg-secondary, #fff)',
+                color: msg.role === 'visitor' ? '#fff' : 'var(--text-primary, #141413)',
                 fontSize: '13.5px',
                 lineHeight: '1.5',
                 boxShadow: msg.role !== 'visitor' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
@@ -312,7 +312,7 @@ export default function ChatWidget() {
               <div style={{
                 padding: '10px 18px',
                 borderRadius: '14px 14px 14px 4px',
-                backgroundColor: '#fff',
+                backgroundColor: 'var(--bg-secondary, #fff)',
                 boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
                 fontSize: '13px',
                 color: '#999',
@@ -350,10 +350,10 @@ export default function ChatWidget() {
         {/* Input */}
         <div style={{
           padding: '12px 16px',
-          borderTop: '1px solid #eee',
+          borderTop: '1px solid var(--border, #eee)',
           display: 'flex',
           gap: '8px',
-          backgroundColor: '#fff',
+          backgroundColor: 'var(--bg-primary, #fff)',
           flexShrink: 0,
         }}>
           <input
@@ -372,7 +372,8 @@ export default function ChatWidget() {
               fontSize: '13.5px',
               outline: 'none',
               transition: 'border-color 0.2s',
-              backgroundColor: (rateLimited || messageCount >= effectiveLimit) ? '#f5f5f5' : '#fff',
+              backgroundColor: (rateLimited || messageCount >= effectiveLimit) ? 'var(--bg-secondary, #f5f5f5)' : 'var(--bg-primary, #fff)',
+              color: 'var(--text-primary, #141413)',
             }}
             onFocus={e => { e.currentTarget.style.borderColor = '#6D5BA0'; }}
             onBlur={e => { e.currentTarget.style.borderColor = '#ddd'; }}

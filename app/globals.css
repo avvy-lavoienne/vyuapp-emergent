@@ -12,6 +12,16 @@
   --border: #E5E4E0;
 }
 
+.dark {
+  --accent: #8B7BC4;
+  --accent-hover: #A594D9;
+  --bg-primary: #0F0F10;
+  --bg-secondary: #1A1A1D;
+  --text-primary: #F0F0F0;
+  --text-secondary: #B0B0B0;
+  --border: #2A2A2D;
+}
+
 html { scroll-behavior: smooth; }
 
 ::selection {
@@ -47,6 +57,15 @@ html { scroll-behavior: smooth; }
 ::-webkit-scrollbar-track { background: #F8F7F4; }
 ::-webkit-scrollbar-thumb { background: #D1D0C9; border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: #B0AFAA; }
+
+.dark ::selection {
+  background: rgba(139, 123, 196, 0.3);
+  color: #F0F0F0;
+}
+
+.dark ::-webkit-scrollbar-track { background: #1A1A1D; }
+.dark ::-webkit-scrollbar-thumb { background: #3A3A3D; }
+.dark ::-webkit-scrollbar-thumb:hover { background: #4A4A4D; }
 
 /* ================================================
    Legacy — used by admin, portfolio, insights pages
