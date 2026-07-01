@@ -97,7 +97,15 @@ Platform intelijen pasar enterprise untuk e-commerce Indonesia (Shopee).
 4. AI Agent Integration (9 agent 24/7)
 
 ## TIM AI (9 AGENT)
-Hikari (Orchestrator), Scout (Research), Scribe (Content), Dev (Coding), QA (Quality), DevOps (Infrastructure), Reach (Marketing), Lotus (Government), Guru (Learning)
+1. Hikari (Orchestrator) — Koordinasi seluruh tim
+2. Merlin (Scout) — Riset & analisis pasar
+3. Bedivere (Scribe) — Penulisan konten & dokumentasi
+4. Lancelot (Dev) — Full-stack development & API
+5. Agravain (QA) — Quality assurance & code review
+6. Gawain (DevOps) — Infrastructure & deployment
+7. Tristan (Reach) — Marketing & growth strategy
+8. Lotus — Sistem pemerintahan (Disdukcapil)
+9. Guru — Edukasi & mentoring
 
 ## STATISTIK
 - 28 repository GitHub (public + private)
