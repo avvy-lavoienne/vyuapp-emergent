@@ -139,25 +139,33 @@ export default function HomeContent() {
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <SectionHeader
             overline="Tim Kami"
-            title="10 AI Agent, 1 Visi"
+            title="15 AI Agent, 1 Visi"
             description="Setiap agent memiliki peran spesifik. Bersama, mereka membentuk tim digital yang bekerja tanpa henti untuk proyek Anda."
             align="center"
           />
-          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
             {[
+              // Tim Artikel (6)
               { emoji: '🌸', name: 'Hikari', role: 'Orchestrator', desc: 'Mengoordinasi semua agent dan mengelola alur kerja multi-agent.' },
-              { emoji: '🧙', name: 'Merlin', role: 'Research Specialist', desc: 'Riset komprehensif, analisis kompetitor, dan investigasi data.' },
-              { emoji: '📜', name: 'Bedivere', role: 'Content Creator', desc: 'Menulis artikel SEO-optimized, dokumentasi teknis, dan panduan.' },
-              { emoji: '⚔️', name: 'Lancelot', role: 'Full-Stack Developer', desc: 'Spesialis Next.js, Go, Python, Supabase, dan Tailwind CSS.' },
-              { emoji: '🛡️', name: 'Agravain', role: 'Quality Guardian', desc: 'Review kode, security audit, test design, dan bug detection.' },
-              { emoji: '☀️', name: 'Gawain', role: 'Infrastructure', desc: 'Deploy, Docker, CI/CD, monitoring, dan server management.' },
-              { emoji: '🎵', name: 'Tristan', role: 'Marketing Strategist', desc: 'Growth strategy, social media, content calendar, dan user retention.' },
+              { emoji: '🦅', name: 'Helena', role: 'Research Specialist', desc: 'Riset komprehensif, analisis kompetitor, dan investigasi data.' },
+              { emoji: '✍️', name: 'Artoria', role: 'Content Creator', desc: 'Menulis artikel SEO-optimized, dokumentasi teknis, dan panduan.' },
+              { emoji: '🛡️', name: 'Jeanne', role: 'Quality Guardian', desc: 'Review konten, fakta-checking, dan quality assurance.' },
+              { emoji: '🔧', name: 'Circe', role: 'Infrastructure', desc: 'Deploy, Docker, CI/CD, monitoring, dan server management.' },
+              { emoji: '📣', name: 'Reach', role: 'Marketing Strategist', desc: 'Growth strategy, social media, content calendar, dan user retention.' },
+              // Tim Dev (6)
+              { emoji: '📋', name: 'Artoria', role: 'Project Manager', desc: 'Mengelola alur proyek, sprint planning, dan koordinasi tim development.' },
+              { emoji: '🎨', name: 'Nero', role: 'UI/UX Designer', desc: 'Design system, wireframe, prototyping, dan user experience.' },
+              { emoji: '⚔️', name: 'Mordred', role: 'Fullstack Developer', desc: 'Spesialis Next.js, Go, Python, Supabase, dan Tailwind CSS.' },
+              { emoji: '🌸', name: 'Tamamo', role: 'Frontend Specialist', desc: 'React, Next.js App Router, TypeScript, dan optimasi performa frontend.' },
+              { emoji: '📚', name: 'Scheherazade', role: 'Backend Specialist', desc: 'API design, database architecture, Go backend, dan sistem integrasi.' },
+              { emoji: '🎯', name: 'Scathach', role: 'QA Code', desc: 'Code review, automated testing, regression testing, dan quality gates.' },
+              // Lainnya (3)
               { emoji: '🏛️', name: 'Lotus', role: 'Gov Systems', desc: 'Asisten khusus PNS Disdukcapil untuk surat-menyurat dan birokrasi.' },
               { emoji: '🎓', name: 'Guru', role: 'Learning Mentor', desc: 'Kurikulum personal, accountability belajar, dan quiz interaktif.' },
               { emoji: '🎧', name: 'Hana', role: 'Customer Service', desc: 'Melayani pengunjung website secara real-time dengan kecerdasan dan keanggunan.' },
             ].map((agent) => (
               <div
-                key={agent.name}
+                key={`${agent.name}-${agent.role}`}
                 className="p-6 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]"
               >
                 <div className="flex items-center gap-3 mb-2">

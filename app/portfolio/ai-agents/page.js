@@ -10,16 +10,16 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE
 
 export const metadata = {
   title: 'VyuApp Multi-Agent System — Tim AI Agent',
-  description: 'Kenali 10 AI agent VyuApp: Hikari, Merlin, Bedivere, Lancelot, Agravain, Gawain, Tristan, Lotus, dan Guru. Sistem multi-agent untuk website berkualitas tinggi.',
+  description: 'Kenali 15 AI agent VyuApp: Hikari, Helena, Artoria, Jeanne, Circe, Reach, Mordred, Nero, Tamamo, Scheherazade, Scathach, Lotus, Guru, dan Hana.',
   openGraph: {
     title: 'VyuApp Multi-Agent System — Tim AI Agent',
-    description: 'Kenali 10 AI agent yang membentuk tim digital VyuApp.',
+    description: 'Kenali 15 AI agent yang membentuk tim digital VyuApp.',
     images: [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'VyuApp Multi-Agent System — Tim AI Agent',
-    description: 'Kenali 10 AI agent yang membentuk tim digital VyuApp.',
+    description: 'Kenali 15 AI agent yang membentuk tim digital VyuApp.',
   },
   alternates: { canonical: `${baseUrl}/portfolio/ai-agents` },
 };
@@ -39,65 +39,100 @@ const agentGroups = [
     ],
   },
   {
-    category: 'Konten',
+    category: 'Tim Artikel',
     agents: [
       {
-        emoji: '🧙',
-        name: 'Merlin',
+        emoji: '🦅',
+        name: 'Helena',
         role: 'Deep Research Specialist',
         icon: Search,
         description: 'Riset komprehensif, analisis kompetitor, benchmark teknologi, dan investigasi data. Selalu menyertakan sumber valid — tidak pernah menebak.',
         capabilities: ['Competitor analysis', 'Market research & trends', 'Data investigation', 'Source validation'],
       },
       {
-        emoji: '📜',
-        name: 'Bedivere',
+        emoji: '✍️',
+        name: 'Artoria',
         role: 'Technical Writer & Content Creator',
         icon: FileText,
         description: 'Menulis artikel SEO-optimized, dokumentasi teknis, PRD, dan panduan. Gaya: business-focused, data-driven, 100% Bahasa Indonesia.',
         capabilities: ['SEO-optimized articles', 'Technical documentation', 'PRD & guidelines', 'Business-focused copywriting'],
       },
-    ],
-  },
-  {
-    category: 'Teknik',
-    agents: [
-      {
-        emoji: '⚔️',
-        name: 'Lancelot',
-        role: 'Full-Stack Developer',
-        icon: Code,
-        description: 'Spesialis Next.js, Go, Python, Supabase, Tailwind CSS. Menulis kode bersih, efisien, dan aman untuk skala produksi.',
-        capabilities: ['Next.js & React', 'Go & Python backends', 'Supabase integration', 'Clean & secure code'],
-      },
       {
         emoji: '🛡️',
-        name: 'Agravain',
+        name: 'Jeanne',
         role: 'Quality Guardian',
-        icon: TestTube,
-        description: 'Review kode, security audit, test design, bug detection. Tidak pernah menyetujui kode yang substandar — standar kualitas adalah mutlak.',
-        capabilities: ['Code review & audit', 'Security assessment', 'Test design & coverage', 'Bug detection & prevention'],
+        icon: ShieldCheck,
+        description: 'Review konten, fakta-checking, dan quality assurance. Memastikan setiap konten memenuhi standar kualitas sebelum dipublikasikan.',
+        capabilities: ['Content review & audit', 'Fact-checking', 'Quality assurance', 'Brand consistency'],
       },
       {
-        emoji: '☀️',
-        name: 'Gawain',
+        emoji: '🔧',
+        name: 'Circe',
         role: 'Infrastructure Specialist',
         icon: Server,
         description: 'Deploy, Docker, CI/CD, monitoring, server management. Memastikan sistem reliable dan scalable dari hari pertama.',
         capabilities: ['Docker & containerization', 'CI/CD pipelines', 'Server monitoring', 'Scalable infrastructure'],
       },
-    ],
-  },
-  {
-    category: 'Pertumbuhan',
-    agents: [
       {
-        emoji: '🎵',
-        name: 'Tristan',
+        emoji: '📣',
+        name: 'Reach',
         role: 'Marketing Strategist',
         icon: Megaphone,
         description: 'Growth strategy, social media, content calendar, user retention. Prioritas utama: membangun kepercayaan komunitas jangka panjang.',
         capabilities: ['Growth strategy', 'Social media management', 'Content calendar planning', 'Community trust building'],
+      },
+    ],
+  },
+  {
+    category: 'Tim Developer',
+    agents: [
+      {
+        emoji: '📋',
+        name: 'Artoria',
+        role: 'Project Manager',
+        icon: Brain,
+        description: 'Mengelola alur proyek, sprint planning, dan koordinasi tim development. Memastikan setiap sprint deliver on time dengan kualitas terjaga.',
+        capabilities: ['Sprint planning', 'Team coordination', 'Risk management', 'Stakeholder communication'],
+      },
+      {
+        emoji: '🎨',
+        name: 'Nero',
+        role: 'UI/UX Designer',
+        icon: Globe,
+        description: 'Design system, wireframe, prototyping, dan user experience. Menciptakan antarmuka yang intuitif dan estetis.',
+        capabilities: ['Design system', 'Wireframing & prototyping', 'User research', 'Accessibility design'],
+      },
+      {
+        emoji: '⚔️',
+        name: 'Mordred',
+        role: 'Fullstack Developer',
+        icon: Code,
+        description: 'Spesialis Next.js, Go, Python, Supabase, Tailwind CSS. Menulis kode bersih, efisien, dan aman untuk skala produksi.',
+        capabilities: ['Next.js & React', 'Go & Python backends', 'Supabase integration', 'Clean & secure code'],
+      },
+      {
+        emoji: '🌸',
+        name: 'Tamamo',
+        role: 'Frontend Specialist',
+        icon: Zap,
+        description: 'React, Next.js App Router, TypeScript, dan optimasi performa frontend. Fokus pada user experience dan performa rendering.',
+        capabilities: ['React & Next.js', 'TypeScript strict', 'Performance optimization', 'Component architecture'],
+      },
+      {
+        emoji: '📚',
+        name: 'Scheherazade',
+        role: 'Backend Specialist',
+        icon: Server,
+        description: 'API design, database architecture, Go backend, dan sistem integrasi. Membangun fondasi backend yang robust dan scalable.',
+        capabilities: ['API design & architecture', 'Database design', 'Go backend services', 'System integration'],
+      },
+      {
+        emoji: '🎯',
+        name: 'Scathach',
+        role: 'QA Code Specialist',
+        icon: TestTube,
+        description: 'Code review, automated testing, regression testing, dan quality gates. Memastikan setiap baris kode memenuhi standar produksi.',
+        capabilities: ['Code review', 'Automated testing', 'Regression testing', 'Quality gates'],
       },
     ],
   },
@@ -126,7 +161,7 @@ const agentGroups = [
     category: 'Layanan',
     agents: [
       {
-        emoji: '🌸',
+        emoji: '🎧',
         name: 'Hana',
         role: 'Customer Service & Brand Ambassador',
         icon: Headphones,
@@ -138,11 +173,11 @@ const agentGroups = [
 ];
 
 const pipelineSteps = [
-  { agent: 'Merlin', task: 'Riset & Analisis', description: 'Merlin mengumpulkan data, menganalisis kompetitor, dan menyusun insight berbasis sumber.' },
-  { agent: 'Bedivere', task: 'Penulisan & Dokumentasi', description: 'Bedivere mengubah riset menjadi konten SEO-optimized dan dokumentasi teknis yang jelas.' },
-  { agent: 'Lancelot', task: 'Pengembangan', description: 'Lancelot menerjemahkan desain dan konten menjadi kode produksi yang bersih dan efisien.' },
-  { agent: 'Agravain', task: 'Quality Assurance', description: 'Agravain melakukan review menyeluruh: kode, keamanan, performa, dan user experience.' },
-  { agent: 'Gawain', task: 'Deployment', description: 'Gawain memastikan sistem ter-deploy dengan aman, monitored, dan scalable.' },
+  { agent: 'Helena', task: 'Riset & Analisis', description: 'Helena mengumpulkan data, menganalisis kompetitor, dan menyusun insight berbasis sumber.' },
+  { agent: 'Artoria', task: 'Penulisan & Dokumentasi', description: 'Artoria mengubah riset menjadi konten SEO-optimized dan dokumentasi teknis yang jelas.' },
+  { agent: 'Mordred', task: 'Pengembangan', description: 'Mordred menerjemahkan desain dan konten menjadi kode produksi yang bersih dan efisien.' },
+  { agent: 'Jeanne', task: 'Quality Assurance', description: 'Jeanne melakukan review menyeluruh: konten, fakta, konsistensi, dan user experience.' },
+  { agent: 'Circe', task: 'Deployment', description: 'Circe memastikan sistem ter-deploy dengan aman, monitored, dan scalable.' },
 ];
 
 const features = [
@@ -255,7 +290,7 @@ export default function AIAgentsPage() {
             Mengenal Setiap Agent
           </h2>
           <p className="mt-4 text-base text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed max-w-2xl">
-            10 AI agent dengan spesialisasi masing-masing, bekerja secara terkoordinasi untuk menghasilkan website berkualitas tinggi.
+            15 AI agent dengan spesialisasi masing-masing, bekerja secara terkoordinasi untuk menghasilkan website berkualitas tinggi.
           </p>
 
           {agentGroups.map((group) => (
