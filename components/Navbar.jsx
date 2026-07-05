@@ -84,6 +84,7 @@ export default function Navbar() {
         </nav>
 
         <div className="md:hidden flex items-center gap-3">
+          <ThemeToggle />
           {isLanding && (
             <button
               onClick={toggle}

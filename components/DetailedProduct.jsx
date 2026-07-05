@@ -38,7 +38,7 @@ export default function DetailedProduct({ item }) {
           </div>
         </div>
         <div className="lg:col-span-5">
-          <div className="h-full rounded-2xl border border-[#E5E4E0] p-7 bg-[#F8F7F4]">
+          <div className="h-full rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] p-7 bg-[#F8F7F4] dark:bg-[#1A1A1D]">
             <p className="font-mono text-xs text-[#636360] uppercase tracking-[0.15em] font-medium mb-4">
               Value Proposition
             </p>
