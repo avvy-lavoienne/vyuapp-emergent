@@ -1,7 +1,7 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: './tests/e2e',
   fullyParallel: false,
   forbidOnly: true,
   retries: 1,
@@ -9,7 +9,7 @@ export default defineConfig({
   reporter: 'list',
   timeout: 30000,
   use: {
-    baseURL: 'https://www.vyuapp.my.id',
+    baseURL: 'http://localhost:3780',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },
