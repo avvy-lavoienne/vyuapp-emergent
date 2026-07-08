@@ -76,7 +76,7 @@ export default function ArticleFilters({ availableTags = [] }) {
     <div className="mb-8 space-y-5">
       {/* Category Filter */}
       <div>
-        <h3 className="text-xs font-mono uppercase tracking-[0.15em] text-[#636360] dark:text-[#8A8A8A] mb-3">
+        <h3 className="text-xs font-mono uppercase tracking-[0.15em] text-[#6e6e73] dark:text-[#8A8A8A] mb-3">
           Kategori
         </h3>
         <div className="flex flex-wrap gap-2">
@@ -86,8 +86,8 @@ export default function ArticleFilters({ availableTags = [] }) {
               onClick={() => updateParam('category', activeCategory === cat ? '' : cat)}
               className={`px-3.5 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${
                 activeCategory === cat
-                  ? 'bg-[#6D5BA0] text-white border-[#6D5BA0] shadow-sm'
-                  : 'bg-white dark:bg-[#1A1A1D] text-[#4A4A48] dark:text-[#B0B0B0] border-[#E5E4E0] dark:border-[#2A2A2D] hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] hover:text-[#141413] dark:hover:text-[#F0F0F0]'
+                  ? 'bg-[#2997ff] text-white border-[#2997ff] shadow-sm'
+                  : 'bg-white dark:bg-[#1d1d1f] text-[#4A4A48] dark:text-[#86868b] border-[#d2d2d7] dark:border-[#333336] hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7]'
               }`}
             >
               {cat}
@@ -99,7 +99,7 @@ export default function ArticleFilters({ availableTags = [] }) {
       {/* Tag Filter */}
       {availableTags.length > 0 && (
         <div>
-          <h3 className="text-xs font-mono uppercase tracking-[0.15em] text-[#636360] dark:text-[#8A8A8A] mb-3">
+          <h3 className="text-xs font-mono uppercase tracking-[0.15em] text-[#6e6e73] dark:text-[#8A8A8A] mb-3">
             Tag
           </h3>
           <div className="flex flex-wrap gap-2">
@@ -109,8 +109,8 @@ export default function ArticleFilters({ availableTags = [] }) {
                 onClick={() => toggleTag(tag)}
                 className={`px-3 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase transition-all duration-200 border ${
                   activeTags.includes(tag)
-                    ? 'bg-[#141413] text-white border-[#141413]'
-                    : 'bg-white dark:bg-[#1A1A1D] text-[#737370] dark:text-[#8A8A8A] border-[#E5E4E0] dark:border-[#2A2A2D] hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] hover:text-[#6B6B68] dark:hover:text-[#B0B0B0]'
+                    ? 'bg-[#1d1d1f] text-white border-[#1d1d1f]'
+                    : 'bg-white dark:bg-[#1d1d1f] text-[#737370] dark:text-[#8A8A8A] border-[#d2d2d7] dark:border-[#333336] hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] hover:text-[#6e6e73] dark:hover:text-[#86868b]'
                 }`}
               >
                 #{tag}
@@ -119,7 +119,7 @@ export default function ArticleFilters({ availableTags = [] }) {
             {availableTags.length > MAX_VISIBLE_TAGS && (
               <button
                 onClick={() => setShowAllTags(!showAllTags)}
-                className="px-3 py-1.5 rounded-full text-xs font-medium text-[#6D5BA0] border border-[#6D5BA0]/30 hover:bg-[#6D5BA0]/5 transition-all"
+                className="px-3 py-1.5 rounded-full text-xs font-medium text-[#2997ff] border border-[#2997ff]/30 hover:bg-[#2997ff]/5 transition-all"
               >
                 {showAllTags ? 'Sembunyikan' : `+${availableTags.length - MAX_VISIBLE_TAGS} lainnya`}
               </button>
@@ -130,28 +130,28 @@ export default function ArticleFilters({ availableTags = [] }) {
 
       {/* Active Filters Summary + Clear */}
       {hasFilters && (
-        <div className="flex items-center gap-3 pt-2 border-t border-[#E5E4E0] dark:border-[#2A2A2D]">
-          <span className="text-xs text-[#636360] dark:text-[#8A8A8A]">
+        <div className="flex items-center gap-3 pt-2 border-t border-[#d2d2d7] dark:border-[#333336]">
+          <span className="text-xs text-[#6e6e73] dark:text-[#8A8A8A]">
             Filter aktif:
             {searchParams.get('q') && (
-              <span className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#6D5BA0]/10 text-[#6D5BA0] font-medium">
+              <span className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#2997ff]/10 text-[#2997ff] font-medium">
                 &ldquo;{searchParams.get('q')}&rdquo;
               </span>
             )}
             {activeCategory && (
-              <span className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#6D5BA0]/10 text-[#6D5BA0] font-medium">
+              <span className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#2997ff]/10 text-[#2997ff] font-medium">
                 {activeCategory}
               </span>
             )}
             {activeTags.map((tag) => (
-              <span key={tag} className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#141413]/5 dark:bg-[#F0F0F0]/10 text-[#4A4A48] dark:text-[#B0B0B0] font-mono text-[10px] uppercase">
+              <span key={tag} className="ml-1 inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#1d1d1f]/5 dark:bg-[#f5f5f7]/10 text-[#4A4A48] dark:text-[#86868b] font-mono text-[10px] uppercase">
                 #{tag}
               </span>
             ))}
           </span>
           <button
             onClick={clearAll}
-            className="inline-flex items-center gap-1 text-xs text-[#636360] dark:text-[#8A8A8A] hover:text-[#6D5BA0] dark:hover:text-[#8B7BC4] transition-colors"
+            className="inline-flex items-center gap-1 text-xs text-[#6e6e73] dark:text-[#8A8A8A] hover:text-[#2997ff] dark:hover:text-[#5BA3FF] transition-colors"
           >
             <X className="w-3 h-3" /> Hapus semua
           </button>

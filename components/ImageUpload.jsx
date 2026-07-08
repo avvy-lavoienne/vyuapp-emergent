@@ -47,17 +47,17 @@ export default function ImageUpload({ value, onChange, bucket = 'featured-images
         onChange={(e) => upload(e.target.files?.[0])} />
 
       {value ? (
-        <div className="relative rounded-lg overflow-hidden border border-[#E5E4E0]">
+        <div className="relative rounded-lg overflow-hidden border border-[#d2d2d7]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={value} alt="featured" className="w-full h-40 object-cover" />
-          <button type="button" onClick={() => onChange?.('')} className="absolute top-2 right-2 p-1.5 rounded-full bg-white/80 text-[#6B6B68] hover:text-red-500 border border-[#E5E4E0]">
+          <button type="button" onClick={() => onChange?.('')} className="absolute top-2 right-2 p-1.5 rounded-full bg-white/80 text-[#6e6e73] hover:text-red-500 border border-[#d2d2d7]">
             <X className="w-4 h-4" />
           </button>
         </div>
       ) : (
         <button type="button" onClick={() => inputRef.current?.click()} disabled={busy}
-          className="w-full h-40 rounded-lg border border-dashed border-[#E5E4E0] hover:border-[#6D5BA0]/50 hover:bg-[#6D5BA0]/5 transition flex flex-col items-center justify-center gap-2 text-[#636360] hover:text-[#6D5BA0]">
-          {busy ? <Loader2 className="w-6 h-6 animate-spin text-[#6D5BA0]" /> : <ImageIcon className="w-6 h-6" />}
+          className="w-full h-40 rounded-lg border border-dashed border-[#d2d2d7] hover:border-[#2997ff]/50 hover:bg-[#2997ff]/5 transition flex flex-col items-center justify-center gap-2 text-[#6e6e73] hover:text-[#2997ff]">
+          {busy ? <Loader2 className="w-6 h-6 animate-spin text-[#2997ff]" /> : <ImageIcon className="w-6 h-6" />}
           <span className="text-xs font-mono">{busy ? 'MENGUNGGAH…' : '+ UPLOAD GAMBAR'}</span>
           <span className="text-[10px] text-[#737370]">JPG / PNG / WebP · maks 8MB</span>
         </button>
@@ -65,15 +65,15 @@ export default function ImageUpload({ value, onChange, bucket = 'featured-images
 
       <div className="flex items-center gap-2">
         <button type="button" onClick={() => inputRef.current?.click()} disabled={busy}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#141413] border border-[#D1D0C9] hover:border-[#B0AFAA] hover:bg-black/[0.02] transition-all duration-200 disabled:opacity-50">
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#1d1d1f] border border-[#D1D0C9] hover:border-[#B0AFAA] hover:bg-black/[0.02] transition-all duration-200 disabled:opacity-50">
           <Upload className="w-3.5 h-3.5" /> Pilih file
         </button>
-        {value && <span className="text-[10px] text-[#636360] font-mono truncate">{value}</span>}
+        {value && <span className="text-[10px] text-[#6e6e73] font-mono truncate">{value}</span>}
       </div>
 
       {busy && (
-        <div className="w-full h-1 bg-[#E5E4E0] rounded-full overflow-hidden">
-          <div className="h-full bg-[#6D5BA0] transition-all" style={{ width: `${progress}%` }} />
+        <div className="w-full h-1 bg-[#d2d2d7] rounded-full overflow-hidden">
+          <div className="h-full bg-[#2997ff] transition-all" style={{ width: `${progress}%` }} />
         </div>
       )}
       {err && <p className="text-xs text-red-500">{err}</p>}

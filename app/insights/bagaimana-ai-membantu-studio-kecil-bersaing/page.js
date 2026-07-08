@@ -53,7 +53,7 @@ const tocItems = [
 
 export default function BagaimanaAIMembantuPage() {
   return (
-    <main className="min-h-screen bg-[#FAFAF8]">
+    <main className="min-h-screen bg-[#f5f5f7]">
       <BreadcrumbJsonLd items={breadcrumbItems} />
       <ArticleJsonLd
         title="Bagaimana AI Membantu Studio Kecil Bersaing dengan Agensi Besar"
@@ -69,16 +69,16 @@ export default function BagaimanaAIMembantuPage() {
         <div className="max-w-4xl mx-auto px-6 md:px-10">
           <Link
             href="/insights"
-            className="inline-flex items-center gap-2 text-sm text-[#6B6B68] hover:text-[#6D5BA0] transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-sm text-[#6e6e73] hover:text-[#2997ff] transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" /> Semua artikel
           </Link>
 
-          <p className="font-mono text-xs text-[#6D5BA0] uppercase tracking-[0.15em] font-medium">
+          <p className="font-mono text-xs text-[#2997ff] uppercase tracking-[0.15em] font-medium">
             Strategy
           </p>
 
-          <h1 className="mt-4 text-3xl md:text-5xl font-sans font-semibold leading-tight tracking-[-0.025em] text-[#141413]">
+          <h1 className="mt-4 text-3xl md:text-5xl font-sans font-semibold leading-tight tracking-[-0.025em] text-[#1d1d1f]">
             Bagaimana AI Membantu Studio Kecil Bersaing dengan Agensi Besar
           </h1>
 
@@ -86,7 +86,7 @@ export default function BagaimanaAIMembantuPage() {
             Di industri web development Indonesia, studio kecil sering kali merasa tertinggal. Namun AI mengubah peraturan permainan — dan yang mengejutkan, studio kecil justru bisa lebih lincah.
           </p>
 
-          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-[#636360] font-mono">
+          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-[#6e6e73] font-mono">
             <span className="flex items-center gap-1.5"><Calendar className="w-3 h-3" /> {formatDate()}</span>
             <span className="flex items-center gap-1.5"><Clock className="w-3 h-3" /> {readTime}</span>
             <span>#AI development</span>
@@ -95,11 +95,11 @@ export default function BagaimanaAIMembantuPage() {
           </div>
 
           {/* Table of Contents */}
-          <div className="mt-8 p-6 rounded-2xl border border-[#E5E4E0] bg-white">
-            <p className="font-mono text-[10px] text-[#636360] uppercase tracking-[0.18em] font-medium mb-3">Daftar Isi</p>
+          <div className="mt-8 p-6 rounded-2xl border border-[#d2d2d7] bg-white">
+            <p className="font-mono text-[10px] text-[#6e6e73] uppercase tracking-[0.18em] font-medium mb-3">Daftar Isi</p>
             <nav className="space-y-2">
               {tocItems.map((item) => (
-                <a key={item.id} href={`#${item.id}`} className="block text-sm text-[#6D5BA0] hover:text-[#574886] transition-colors">
+                <a key={item.id} href={`#${item.id}`} className="block text-sm text-[#2997ff] hover:text-[#0066cc] transition-colors">
                   {item.label}
                 </a>
               ))}
@@ -108,7 +108,7 @@ export default function BagaimanaAIMembantuPage() {
 
           {/* Article Content */}
           <div className="mt-12 prose-light space-y-6">
-            <h2 id="permasalahan" className="text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em] pt-4">
+            <h2 id="permasalahan" className="text-2xl md:text-3xl font-sans font-semibold text-[#1d1d1f] tracking-[-0.02em] pt-4">
               Permasalahan: Kesenjangan yang Nyata
             </h2>
 
@@ -132,7 +132,7 @@ export default function BagaimanaAIMembantuPage() {
               Klien pun merasakan dampaknya. Mereka harus memilih antara harga terjangkau dari studio kecil dengan kualitas komprehensif dari agensi besar. Bagi usaha kecil dan menengah di Indonesia — yang merupakan tulang punggung perekonomian nasional — ini adalah dilema yang nyata. Mereka butuh website profesional untuk bersaing di era digital, namun anggaran sering kali tidak cukup untuk agensi tier atas yang biasanya mematok harga puluhan hingga ratusan juta rupiah.
             </p>
 
-            <h2 id="keunggulan-ai" className="text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em] pt-8">
+            <h2 id="keunggulan-ai" className="text-2xl md:text-3xl font-sans font-semibold text-[#1d1d1f] tracking-[-0.02em] pt-8">
               Keunggulan AI: Menyeimbangkan Permainan
             </h2>
 
@@ -156,7 +156,7 @@ export default function BagaimanaAIMembantuPage() {
               Lebih dari sekadar kecepatan, AI membantu menjaga konsistensi. Salah satu tantangan terbesar studio kecil adalah menjaga standar kualitas ketika workload meningkat. Di bulan yang sibuk, ada kecenderungan untuk mengorbankan beberapa aspek demi mengejar deadline. Dengan AI sebagai pemeriksa kualitas otomatis, standar ini dapat dipertahankan secara konsisten di setiap proyek — baik proyek pertama maupun proyek keseratus. Konsistensi inilah yang membedakan studio amatir dari studio profesional.
             </p>
 
-            <h2 id="pendekatan-vyuapp" className="text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em] pt-8">
+            <h2 id="pendekatan-vyuapp" className="text-2xl md:text-3xl font-sans font-semibold text-[#1d1d1f] tracking-[-0.02em] pt-8">
               Pendekatan VyuApp: Multi-Agent System
             </h2>
 
@@ -180,7 +180,7 @@ export default function BagaimanaAIMembantuPage() {
               Hasilnya? Studio kecil dengan tiga orang dapat menghasilkan website yang sebelumnya hanya bisa dilakukan oleh tim agensi dengan sepuluh orang lebih. Bukan karena AI menggantikan siapa pun, tapi karena AI memastikan setiap aspek proyek mendapat perhatian yang layak.
             </p>
 
-            <h2 id="manfaat-klien" className="text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em] pt-8">
+            <h2 id="manfaat-klien" className="text-2xl md:text-3xl font-sans font-semibold text-[#1d1d1f] tracking-[-0.02em] pt-8">
               Manfaat untuk Klien
             </h2>
 
@@ -208,7 +208,7 @@ export default function BagaimanaAIMembantuPage() {
               <strong>Dukungan berkelanjutan yang responsif.</strong> Studio kecil umumnya lebih dekat dengan klien mereka. Dengan AI yang mengotomasi tugas-tugas rutin, tim dapat mengalokasikan lebih banyak waktu untuk komunikasi dan dukungan pascaproyek — sebuah nilai tambah yang sulit ditawarkan agensi besar dengan ratusan klien.
             </p>
 
-            <h2 id="kesimpulan" className="text-2xl md:text-3xl font-sans font-semibold text-[#141413] tracking-[-0.02em] pt-8">
+            <h2 id="kesimpulan" className="text-2xl md:text-3xl font-sans font-semibold text-[#1d1d1f] tracking-[-0.02em] pt-8">
               Kesimpulan: Masa Depan Adalah Kolaborasi
             </h2>
 
@@ -230,30 +230,30 @@ export default function BagaimanaAIMembantuPage() {
           </div>
 
           {/* Author Card */}
-          <div className="mt-12 p-6 rounded-2xl border border-[#E5E4E0] bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="mt-12 p-6 rounded-2xl border border-[#d2d2d7] bg-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <span className="w-12 h-12 rounded-full bg-[#6D5BA0]/10 border border-[#6D5BA0]/20 flex items-center justify-center text-[#6D5BA0] font-semibold">V</span>
+              <span className="w-12 h-12 rounded-full bg-[#2997ff]/10 border border-[#2997ff]/20 flex items-center justify-center text-[#2997ff] font-semibold">V</span>
               <div>
-                <p className="text-sm text-[#141413] font-medium">VyuApp Studio</p>
-                <p className="text-xs text-[#6B6B68]">Bespoke web engineering — Garut, ID</p>
+                <p className="text-sm text-[#1d1d1f] font-medium">VyuApp Studio</p>
+                <p className="text-xs text-[#6e6e73]">Bespoke web engineering — Garut, ID</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-            <span className="text-xs text-[#636360]">Bagikan artikel</span>
+            <span className="text-xs text-[#6e6e73]">Bagikan artikel</span>
             </div>
           </div>
         </div>
       </article>
 
       {/* CTA */}
-      <section className="border-t border-[#E5E4E0]">
+      <section className="border-t border-[#d2d2d7]">
         <div className="max-w-4xl mx-auto px-6 md:px-10 py-16">
-          <div className="p-8 md:p-10 rounded-2xl border border-[#E5E4E0] bg-white text-center">
-            <h3 className="text-xl font-semibold text-[#141413]">Ingin Melihat Bedanya?</h3>
+          <div className="p-8 md:p-10 rounded-2xl border border-[#d2d2d7] bg-white text-center">
+            <h3 className="text-xl font-semibold text-[#1d1d1f]">Ingin Melihat Bedanya?</h3>
             <p className="text-sm text-[#4A4A48] mt-2 max-w-xl mx-auto">Kami hanya menerima 2–3 kolaborasi baru per kuartal. Diskusikan proyek Anda dan rasakan standar kualitas yang berbeda.</p>
             <Link
               href="/#kontak"
-              className="inline-flex items-center gap-2 px-5 py-2.5 mt-6 rounded-full bg-[#6D5BA0] text-white text-sm font-semibold hover:bg-[#574886] transition-all duration-200 hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 px-5 py-2.5 mt-6 rounded-full bg-[#2997ff] text-white text-sm font-semibold hover:bg-[#0066cc] transition-all duration-200 hover:-translate-y-0.5"
             >
               Mulai Diskusi
             </Link>

@@ -39,7 +39,7 @@ export default function CookieConsent() {
         right: 0,
         zIndex: 10000,
         backgroundColor: 'var(--bg-primary, #fff)',
-        borderTop: '1px solid var(--border, #E5E4E0)',
+        borderTop: '1px solid var(--border, #d2d2d7)',
         boxShadow: '0 -4px 24px rgba(0,0,0,0.1)',
         padding: '16px 20px',
         display: 'flex',
@@ -49,7 +49,7 @@ export default function CookieConsent() {
     >
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', flexWrap: 'wrap' }}>
         <div style={{ flex: 1, minWidth: '200px' }}>
-          <p style={{ fontSize: '13px', color: 'var(--text-primary, #141413)', lineHeight: '1.5', margin: 0 }}>
+          <p style={{ fontSize: '13px', color: 'var(--text-primary, #1d1d1f)', lineHeight: '1.5', margin: 0 }}>
             🍪 Kami menggunakan <strong>cookie</strong> dan <strong>localStorage</strong> untuk:
           </p>
           <ul style={{ fontSize: '12px', color: 'var(--text-secondary, #4A4A48)', lineHeight: '1.6', margin: '6px 0 0 0', paddingLeft: '16px' }}>
@@ -57,9 +57,9 @@ export default function CookieConsent() {
             <li>Menampilkan iklan yang relevan (Google AdSense)</li>
             <li>Mengingat preferensi Anda</li>
           </ul>
-          <p style={{ fontSize: '11px', color: 'var(--text-secondary, #636360)', margin: '6px 0 0 0' }}>
+          <p style={{ fontSize: '11px', color: 'var(--text-secondary, #6e6e73)', margin: '6px 0 0 0' }}>
             Dengan melanjutkan, Anda menyetujui penggunaan cookie sesuai{' '}
-            <a href="/privacy" style={{ color: '#6D5BA0', textDecoration: 'underline' }}>Kebijakan Privasi</a> kami.
+            <a href="/privacy" style={{ color: '#2997ff', textDecoration: 'underline' }}>Kebijakan Privasi</a> kami.
           </p>
         </div>
         <div style={{ display: 'flex', gap: '8px', flexShrink: 0, alignSelf: 'center' }}>
@@ -68,7 +68,7 @@ export default function CookieConsent() {
             style={{
               padding: '8px 16px',
               borderRadius: '8px',
-              border: '1px solid var(--border, #E5E4E0)',
+              border: '1px solid var(--border, #d2d2d7)',
               backgroundColor: 'var(--bg-primary, #fff)',
               color: 'var(--text-secondary, #4A4A48)',
               fontSize: '12px',
@@ -77,7 +77,7 @@ export default function CookieConsent() {
               transition: 'all 0.2s',
             }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = '#D1D0C9'; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = '#E5E4E0'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = '#d2d2d7'; }}
           >
             Tolak
           </button>
@@ -87,15 +87,15 @@ export default function CookieConsent() {
               padding: '8px 20px',
               borderRadius: '8px',
               border: 'none',
-              backgroundColor: '#6D5BA0',
+              backgroundColor: '#2997ff',
               color: '#fff',
               fontSize: '12px',
               fontWeight: 600,
               cursor: 'pointer',
               transition: 'all 0.2s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#574886'; }}
-            onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#6D5BA0'; }}
+            onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#0066cc'; }}
+            onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#2997ff'; }}
           >
             Terima Semua
           </button>

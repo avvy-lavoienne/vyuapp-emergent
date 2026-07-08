@@ -59,7 +59,7 @@ export default async function PortfolioDetailPage({ params }) {
   const productUrl = item.slug === 'avalon' ? 'https://avalon.vyuapp.my.id' : url;
 
   return (
-    <main className="min-h-screen bg-[#FAFAF8] dark:bg-[#0F0F10]">
+    <main className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000]">
       <BreadcrumbJsonLd items={breadcrumbItems} />
       <SoftwareAppJsonLd
         name={item.name}
@@ -73,7 +73,7 @@ export default async function PortfolioDetailPage({ params }) {
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <Link
             href="/portfolio"
-            className="inline-flex items-center gap-2 text-sm text-[#6B6B68] dark:text-[#B0B0B0] hover:text-[#6D5BA0] dark:hover:text-[#8B7BC4] transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-sm text-[#6e6e73] dark:text-[#86868b] hover:text-[#2997ff] dark:hover:text-[#5BA3FF] transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" /> Semua proyek
           </Link>

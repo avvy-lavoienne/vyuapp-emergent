@@ -11,7 +11,7 @@ export default function ShareButton({ title }) {
   return (
     <button
       onClick={onShare}
-      className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-[#141413] border border-[#D1D0C9] hover:border-[#B0AFAA] hover:bg-black/[0.02] transition-all duration-200"
+      className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium text-[#1d1d1f] border border-[#D1D0C9] hover:border-[#B0AFAA] hover:bg-black/[0.02] transition-all duration-200"
     >
       <Share2 className="w-4 h-4" /> Bagikan
     </button>

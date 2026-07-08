@@ -69,24 +69,24 @@ export default async function CategoryPage({ params }) {
   ];
 
   return (
-    <main className="min-h-screen bg-[#FAFAF8] dark:bg-[#0F0F10]">
+    <main className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000]">
       <BreadcrumbJsonLd items={breadcrumbItems} />
       <Navbar />
       <section className="pt-32 pb-12">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <Link
             href="/insights"
-            className="inline-flex items-center gap-2 text-sm text-[#6B6B68] dark:text-[#B0B0B0] hover:text-[#6D5BA0] dark:hover:text-[#8B7BC4] transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-sm text-[#6e6e73] dark:text-[#86868b] hover:text-[#2997ff] dark:hover:text-[#5BA3FF] transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" /> Semua artikel
           </Link>
-          <p className="font-mono text-xs text-[#6D5BA0] dark:text-[#8B7BC4] uppercase tracking-[0.15em] font-medium">
+          <p className="font-mono text-xs text-[#2997ff] dark:text-[#5BA3FF] uppercase tracking-[0.15em] font-medium">
             Kategori
           </p>
-          <h1 className="mt-4 text-3xl md:text-4xl lg:text-5xl font-sans font-semibold leading-tight tracking-[-0.025em] text-[#141413] dark:text-[#F0F0F0]">
+          <h1 className="mt-4 text-3xl md:text-4xl lg:text-5xl font-sans font-semibold leading-tight tracking-[-0.025em] text-[#1d1d1f] dark:text-[#f5f5f7]">
             {meta.title}
           </h1>
-          <p className="mt-5 text-[#4A4A48] dark:text-[#B0B0B0] text-base md:text-lg leading-relaxed max-w-2xl">
+          <p className="mt-5 text-[#4A4A48] dark:text-[#86868b] text-base md:text-lg leading-relaxed max-w-2xl">
             {meta.description}
           </p>
         </div>
@@ -95,11 +95,11 @@ export default async function CategoryPage({ params }) {
       <section className="pb-24 md:pb-32">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           {articles.length === 0 ? (
-            <div className="p-12 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] text-center">
-              <p className="font-mono text-xs text-[#636360] dark:text-[#8A8A8A] uppercase tracking-[0.15em]">
+            <div className="p-12 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] text-center">
+              <p className="font-mono text-xs text-[#6e6e73] dark:text-[#8A8A8A] uppercase tracking-[0.15em]">
                 // Belum ada artikel
               </p>
-              <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#B0B0B0]">
+              <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#86868b]">
                 Belum ada artikel dalam kategori {category}.
               </p>
             </div>
@@ -109,9 +109,9 @@ export default async function CategoryPage({ params }) {
                 <Link
                   key={a.id}
                   href={`/insights/${a.slug}`}
-                  className={`rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] overflow-hidden flex flex-col group transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] ${i === 0 ? 'lg:col-span-2' : ''}`}
+                  className={`rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] overflow-hidden flex flex-col group transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] ${i === 0 ? 'lg:col-span-2' : ''}`}
                 >
-                  <div className={`relative ${i === 0 ? 'h-72' : 'h-52'} overflow-hidden bg-[#F4F3EE] dark:bg-[#1A1A1D]`}>
+                  <div className={`relative ${i === 0 ? 'h-72' : 'h-52'} overflow-hidden bg-[#F4F3EE] dark:bg-[#1d1d1f]`}>
                     <Image
                       src={a.cover || 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=75'}
                       alt={a.title}
@@ -123,30 +123,30 @@ export default async function CategoryPage({ params }) {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                     <div className="absolute top-4 left-4">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6B6B68] dark:text-[#B0B0B0] bg-white/80 dark:bg-[#0F0F10]/80 border border-[#E5E4E0] dark:border-[#2A2A2D]">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6e6e73] dark:text-[#86868b] bg-white/80 dark:bg-[#000000]/80 border border-[#d2d2d7] dark:border-[#333336]">
                         {a.category}
                       </span>
                     </div>
                   </div>
                   <div className="p-6 flex flex-col flex-1">
-                    <div className="flex items-center gap-3 text-xs text-[#636360] dark:text-[#8A8A8A] mb-3">
+                    <div className="flex items-center gap-3 text-xs text-[#6e6e73] dark:text-[#8A8A8A] mb-3">
                       <span className="flex items-center gap-1.5">
                         <Calendar className="w-3 h-3" /> {formatDate(a.published_at || a.updated_at)}
                       </span>
                       <span>·</span>
                       <span>{Math.max(2, Math.round((a.content || '').length / 1000))} min read</span>
                     </div>
-                    <h3 className={`font-sans font-semibold text-[#141413] dark:text-[#F0F0F0] leading-snug ${i === 0 ? 'text-2xl' : 'text-lg'} group-hover:text-[#6D5BA0] dark:group-hover:text-[#8B7BC4] transition-colors tracking-[-0.01em]`}>
+                    <h3 className={`font-sans font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] leading-snug ${i === 0 ? 'text-2xl' : 'text-lg'} group-hover:text-[#2997ff] dark:group-hover:text-[#5BA3FF] transition-colors tracking-[-0.01em]`}>
                       {a.title}
                     </h3>
-                    <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed line-clamp-3">{a.excerpt}</p>
+                    <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#86868b] leading-relaxed line-clamp-3">{a.excerpt}</p>
                     <div className="mt-5 flex flex-wrap gap-1.5">
                       {(a.tags || []).slice(0, 3).map(t => (
                         <span key={t} className="text-[10px] font-mono tracking-wider text-[#737370] dark:text-[#8A8A8A] uppercase">#{t}</span>
                       ))}
                     </div>
                     <div className="mt-auto pt-5">
-                      <span className="inline-flex items-center gap-2 text-sm text-[#6D5BA0] dark:text-[#8B7BC4] font-medium group-hover:gap-3 transition-all">
+                      <span className="inline-flex items-center gap-2 text-sm text-[#2997ff] dark:text-[#5BA3FF] font-medium group-hover:gap-3 transition-all">
                         Baca artikel <ArrowRight className="w-4 h-4" />
                       </span>
                     </div>

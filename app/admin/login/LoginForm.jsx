@@ -10,7 +10,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <button type="submit" disabled={pending}
-      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#6D5BA0] text-white text-sm font-semibold hover:bg-[#574886] transition-all duration-200 disabled:opacity-50"
+      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#2997ff] text-white text-sm font-semibold hover:bg-[#0066cc] transition-all duration-200 disabled:opacity-50"
     >
       {pending ? <Loader2 className="w-4 h-4 animate-spin" /> : <LogIn className="w-4 h-4" />}
       {pending ? 'Memverifikasi…' : 'Masuk'}
@@ -40,33 +40,33 @@ export default function LoginForm({ next = '/admin' }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 bg-[#FAFAF8]">
-      <div className="p-8 md:p-10 w-full max-w-md rounded-2xl border border-[#E5E4E0] bg-white">
+    <div className="min-h-screen flex items-center justify-center px-6 bg-[#f5f5f7]">
+      <div className="p-8 md:p-10 w-full max-w-md rounded-2xl border border-[#d2d2d7] bg-white">
         <Link href="/" className="flex items-center gap-3 mb-6">
-          <span className="w-9 h-9 rounded-lg bg-white border border-[#E5E4E0] flex items-center justify-center overflow-hidden p-1">
+          <span className="w-9 h-9 rounded-lg bg-white border border-[#d2d2d7] flex items-center justify-center overflow-hidden p-1">
             <Image src="/images/vyu-removebg.png" alt="VyuApp" width={36} height={36} className="w-full h-full object-contain" />
           </span>
-          <span className="font-sans font-bold text-lg tracking-tight text-[#141413]">
-            Vyu<span className="text-[#6D5BA0]">App</span>
+          <span className="font-sans font-bold text-lg tracking-tight text-[#1d1d1f]">
+            Vyu<span className="text-[#2997ff]">App</span>
           </span>
         </Link>
 
-        <p className="font-mono text-xs text-[#6D5BA0] uppercase tracking-[0.18em] font-medium">Admin Area</p>
-        <h1 className="mt-3 text-2xl font-sans font-semibold text-[#141413] tracking-[-0.02em]">Masuk ke Dasbor</h1>
-        <p className="mt-2 text-sm text-[#6B6B68]">Otentikasi diverifikasi server-side via Supabase Auth.</p>
+        <p className="font-mono text-xs text-[#2997ff] uppercase tracking-[0.18em] font-medium">Admin Area</p>
+        <h1 className="mt-3 text-2xl font-sans font-semibold text-[#1d1d1f] tracking-[-0.02em]">Masuk ke Dasbor</h1>
+        <p className="mt-2 text-sm text-[#6e6e73]">Otentikasi diverifikasi server-side via Supabase Auth.</p>
 
         <form action={loginAction} onSubmit={onSubmit} className="mt-7 space-y-4">
           <input type="hidden" name="next" value={next} />
           <div>
-            <label className="block font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.18em] font-medium mb-2">Email</label>
+            <label className="block font-mono text-[10px] text-[#2997ff] uppercase tracking-[0.18em] font-medium mb-2">Email</label>
             <input name="email" type="email" required autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-3 text-sm text-[#141413] placeholder:text-[#737370] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all"
+              className="w-full bg-white border border-[#d2d2d7] rounded-lg px-4 py-3 text-sm text-[#1d1d1f] placeholder:text-[#737370] focus:border-[#2997ff] focus:ring-[3px] focus:ring-[#2997ff]/10 outline-none transition-all"
               placeholder="admin@vyuapp.com" />
           </div>
           <div>
-            <label className="block font-mono text-[10px] text-[#6D5BA0] uppercase tracking-[0.18em] font-medium mb-2">Password</label>
+            <label className="block font-mono text-[10px] text-[#2997ff] uppercase tracking-[0.18em] font-medium mb-2">Password</label>
             <input name="password" type="password" required autoComplete="current-password" value={password} onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-white border border-[#E5E4E0] rounded-lg px-4 py-3 text-sm text-[#141413] placeholder:text-[#737370] focus:border-[#6D5BA0] focus:ring-[3px] focus:ring-[#6D5BA0]/10 outline-none transition-all"
+              className="w-full bg-white border border-[#d2d2d7] rounded-lg px-4 py-3 text-sm text-[#1d1d1f] placeholder:text-[#737370] focus:border-[#2997ff] focus:ring-[3px] focus:ring-[#2997ff]/10 outline-none transition-all"
               placeholder="••••••••" />
           </div>
           {(clientError || state?.error) && (
@@ -77,7 +77,7 @@ export default function LoginForm({ next = '/admin' }) {
           <SubmitButton />
         </form>
 
-        <div className="mt-6 pt-6 border-t border-[#E5E4E0] text-[11px] text-[#737370] font-mono space-y-1">
+        <div className="mt-6 pt-6 border-t border-[#d2d2d7] text-[11px] text-[#737370] font-mono space-y-1">
           <p>Auth via Supabase. Middleware menjaga session di server.</p>
         </div>
       </div>

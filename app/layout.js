@@ -61,7 +61,7 @@ export const metadata = {
   manifest: '/favicon/site.webmanifest',
   other: {
     ...(adsenseClient ? { 'google-adsense-account': adsenseClient } : {}),
-    'theme-color': '#FAFAF8',
+    'theme-color': '#f5f5f7',
   },
   alternates: {
     canonical: baseUrl,
@@ -79,7 +79,7 @@ export default function RootLayout({ children }) {
         <link rel="alternate" type="application/rss+xml" title="VyuApp Insights" href="/feed.xml" />
         {adsenseClient && <link rel="preconnect" href="https://pagead2.googlesyndication.com" />}
       </head>
-      <body className="bg-[#FAFAF8] dark:bg-[#0F0F10] text-[#141413] dark:text-[#F0F0F0] antialiased font-sans selection:bg-[#6D5BA0]/20 selection:text-[#141413] dark:selection:bg-[#8B7BC4]/30 dark:selection:text-[#F0F0F0]">
+      <body className="bg-[#f5f5f7] dark:bg-[#000000] text-[#1d1d1f] dark:text-[#f5f5f7] antialiased font-sans selection:bg-[#2997ff]/20 selection:text-[#1d1d1f] dark:selection:bg-[#5BA3FF]/30 dark:selection:text-[#f5f5f7]">
         <ThemeProvider>
         <OrganizationJsonLd />
         <WebSiteJsonLd />

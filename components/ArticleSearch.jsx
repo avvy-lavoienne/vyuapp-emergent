@@ -62,7 +62,7 @@ export default function ArticleSearch() {
   return (
     <div className="relative mb-6">
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#636360] pointer-events-none" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6e6e73] pointer-events-none" />
         <input
           ref={inputRef}
           type="text"
@@ -70,12 +70,12 @@ export default function ArticleSearch() {
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           placeholder="Cari artikel…"
-          className="w-full pl-11 pr-10 py-3 bg-white dark:bg-[#1A1A1D] border border-[#E5E4E0] dark:border-[#2A2A2D] rounded-full text-sm text-[#141413] dark:text-[#F0F0F0] placeholder:text-[#9C9C99] focus:outline-none focus:border-[#6D5BA0] focus:ring-1 focus:ring-[#6D5BA0]/20 transition-all duration-200"
+          className="w-full pl-11 pr-10 py-3 bg-white dark:bg-[#1d1d1f] border border-[#d2d2d7] dark:border-[#333336] rounded-full text-sm text-[#1d1d1f] dark:text-[#f5f5f7] placeholder:text-[#86868b] focus:outline-none focus:border-[#2997ff] focus:ring-1 focus:ring-[#2997ff]/20 transition-all duration-200"
         />
         {value && (
           <button
             onClick={handleClear}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-[#636360] hover:text-[#141413] dark:text-[#F0F0F0] hover:bg-[#F4F3EE] transition-colors"
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full text-[#6e6e73] hover:text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#F4F3EE] transition-colors"
             aria-label="Hapus pencarian"
           >
             <X className="w-4 h-4" />

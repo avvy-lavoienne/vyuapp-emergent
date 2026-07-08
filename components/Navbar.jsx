@@ -38,19 +38,19 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 h-[72px] transition-all duration-300 ${
+      className={`fixed top-0 inset-x-0 z-50 h-[72px] transition-all duration-500 backdrop-blur-xl backdrop-saturate-[1.8] ${
         scrolled
-          ? 'bg-white/80 dark:bg-[#0F0F10]/80 backdrop-blur-xl border-b border-[#E5E4E0] dark:border-[#2A2A2D]'
-          : 'bg-transparent'
+          ? 'bg-white/80 dark:bg-black/80 border-b border-[#d2d2d7]/70 dark:border-[#333336]/70 shadow-[0_1px_3px_rgba(0,0,0,0.06)]'
+          : 'bg-white/65 dark:bg-black/65 border-b border-[#d2d2d7]/30 dark:border-[#333336]/30'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-10 h-[72px] flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
-          <span className="w-9 h-9 rounded-lg bg-white dark:bg-[#1A1A1D] border border-[#E5E4E0] dark:border-[#2A2A2D] flex items-center justify-center overflow-hidden p-1">
+          <span className="w-9 h-9 rounded-lg bg-white dark:bg-[#1d1d1f] border border-[#d2d2d7] dark:border-[#333336] flex items-center justify-center overflow-hidden p-1">
             <Image src="/images/vyu-removebg.png" alt="" width={36} height={36} className="w-full h-full object-contain" priority />
           </span>
-          <span className="font-sans font-bold text-lg tracking-tight text-[#141413] dark:text-[#F0F0F0]">
-            Vyu<span className="text-[#6D5BA0]">App</span>
+          <span className="font-sans font-bold text-lg tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
+            Vyu<span className="text-[#2997ff]">App</span>
           </span>
         </Link>
 
@@ -59,7 +59,7 @@ export default function Navbar() {
             <Link
               key={l.href}
               href={l.href}
-              className="text-sm font-medium text-[#6B6B68] dark:text-[#B0B0B0] hover:text-[#141413] dark:hover:text-[#F0F0F0] transition-colors duration-200"
+              className="text-sm font-medium text-[#6e6e73] dark:text-[#86868b] hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] transition-colors duration-200"
             >
               {isLanding ? t.nav[l.localeKey] : l.localeKey === 'home' ? 'Beranda' : l.localeKey.charAt(0).toUpperCase() + l.localeKey.slice(1)}
             </Link>
@@ -67,7 +67,7 @@ export default function Navbar() {
           {isLanding && (
             <button
               onClick={toggle}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#6B6B68] dark:text-[#B0B0B0] border border-[#E5E4E0] dark:border-[#2A2A2D] hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] hover:text-[#141413] dark:hover:text-[#F0F0F0] transition-all duration-200"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#6e6e73] dark:text-[#86868b] border border-[#d2d2d7] dark:border-[#333336] hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] transition-all duration-200"
               aria-label="Toggle language"
             >
               <Globe className="w-3.5 h-3.5" />
@@ -76,7 +76,7 @@ export default function Navbar() {
           )}
           <a
             href="/#kontak"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#6D5BA0] text-white text-sm font-semibold hover:bg-[#574886] transition-all duration-200 hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#2997ff] text-white text-sm font-semibold hover:bg-[#0066cc] transition-all duration-200 hover:-translate-y-0.5"
           >
             {isLanding ? t.nav.contact : 'Hubungi Kami'}
           </a>
@@ -88,7 +88,7 @@ export default function Navbar() {
           {isLanding && (
             <button
               onClick={toggle}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-medium text-[#6B6B68] dark:text-[#B0B0B0] border border-[#E5E4E0] dark:border-[#2A2A2D] transition-all duration-200"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-medium text-[#6e6e73] dark:text-[#86868b] border border-[#d2d2d7] dark:border-[#333336] transition-all duration-200"
               aria-label="Toggle language"
             >
               <Globe className="w-3 h-3" />
@@ -97,7 +97,7 @@ export default function Navbar() {
           )}
           <button
             onClick={() => setOpen(v => !v)}
-            className="p-2 text-[#6B6B68] dark:text-[#B0B0B0] hover:text-[#141413] dark:hover:text-[#F0F0F0] transition-colors"
+            className="p-2 text-[#6e6e73] dark:text-[#86868b] hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] transition-colors"
             aria-label="menu"
           >
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -106,14 +106,14 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-[#E5E4E0] dark:border-[#2A2A2D] bg-white/95 dark:bg-[#0F0F10]/95 backdrop-blur-xl">
+        <div className="md:hidden border-t border-[#d2d2d7] dark:border-[#333336] bg-white/95 dark:bg-[#000000]/95 backdrop-blur-xl">
           <div className="px-6 py-6 flex flex-col gap-4">
             {LINKS.map(l => (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="text-[#4A4A48] dark:text-[#B0B0B0] hover:text-[#141413] dark:hover:text-[#F0F0F0] text-sm font-medium transition-colors"
+                className="text-[#4A4A48] dark:text-[#86868b] hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] text-sm font-medium transition-colors"
               >
                 {isLanding ? t.nav[l.localeKey] : l.localeKey === 'home' ? 'Beranda' : l.localeKey.charAt(0).toUpperCase() + l.localeKey.slice(1)}
               </Link>
@@ -121,7 +121,7 @@ export default function Navbar() {
             <a
               href="/#kontak"
               onClick={() => setOpen(false)}
-              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#6D5BA0] text-white text-sm font-semibold hover:bg-[#574886] transition-all duration-200"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#2997ff] text-white text-sm font-semibold hover:bg-[#0066cc] transition-all duration-200"
             >
               {isLanding ? t.nav.contact : 'Hubungi Kami'}
             </a>

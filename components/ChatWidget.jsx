@@ -12,7 +12,7 @@ function parseMarkdown(text) {
     .replace(/`(.*?)`/g, '<code style="background:#f0f0f0;padding:1px 4px;border-radius:3px;font-size:12px">$1</code>')
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
       const safe = /^(https?:\/\/)/i.test(url) ? url : '#';
-      return `<a href="${safe}" target="_blank" rel="noopener" style="color:#6D5BA0;text-decoration:underline">${text}</a>`;
+      return `<a href="${safe}" target="_blank" rel="noopener" style="color:#2997ff;text-decoration:underline">${text}</a>`;
     })
     .replace(/\n/g, '<br/>');
 }
@@ -164,7 +164,7 @@ export default function ChatWidget() {
           height: '48px',
           padding: '0 20px',
           borderRadius: '24px',
-          backgroundColor: '#6D5BA0',
+          backgroundColor: '#2997ff',
           color: '#fff',
           border: 'none',
           cursor: 'pointer',
@@ -224,7 +224,7 @@ export default function ChatWidget() {
         {/* Header */}
         <div style={{
           padding: '16px 20px',
-          background: 'linear-gradient(135deg, #6D5BA0, #8B7BC4)',
+          background: 'linear-gradient(135deg, #2997ff, #5BA3FF)',
           color: '#fff',
           display: 'flex',
           justifyContent: 'space-between',
@@ -295,8 +295,8 @@ export default function ChatWidget() {
                 borderRadius: msg.role === 'visitor'
                   ? '14px 14px 4px 14px'
                   : '14px 14px 14px 4px',
-                backgroundColor: msg.role === 'visitor' ? '#6D5BA0' : 'var(--bg-secondary, #fff)',
-                color: msg.role === 'visitor' ? '#fff' : 'var(--text-primary, #141413)',
+                backgroundColor: msg.role === 'visitor' ? '#2997ff' : 'var(--bg-secondary, #fff)',
+                color: msg.role === 'visitor' ? '#fff' : 'var(--text-primary, #1d1d1f)',
                 fontSize: '13.5px',
                 lineHeight: '1.5',
                 boxShadow: msg.role !== 'visitor' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
@@ -373,9 +373,9 @@ export default function ChatWidget() {
               outline: 'none',
               transition: 'border-color 0.2s',
               backgroundColor: (rateLimited || messageCount >= effectiveLimit) ? 'var(--bg-secondary, #f5f5f5)' : 'var(--bg-primary, #fff)',
-              color: 'var(--text-primary, #141413)',
+              color: 'var(--text-primary, #1d1d1f)',
             }}
-            onFocus={e => { e.currentTarget.style.borderColor = '#6D5BA0'; }}
+            onFocus={e => { e.currentTarget.style.borderColor = '#2997ff'; }}
             onBlur={e => { e.currentTarget.style.borderColor = '#ddd'; }}
           />
           <button
@@ -386,7 +386,7 @@ export default function ChatWidget() {
               width: '40px',
               height: '40px',
               borderRadius: '10px',
-              backgroundColor: input.trim() && !loading && !rateLimited && messageCount < effectiveLimit ? '#6D5BA0' : '#ddd',
+              backgroundColor: input.trim() && !loading && !rateLimited && messageCount < effectiveLimit ? '#2997ff' : '#ddd',
               color: '#fff',
               border: 'none',
               cursor: input.trim() && !loading && !rateLimited && messageCount < effectiveLimit ? 'pointer' : 'not-allowed',
@@ -413,7 +413,7 @@ export default function ChatWidget() {
         .chat-typing-dots span {
           display: inline-block;
           animation: chatBounce 1.4s infinite;
-          color: #6D5BA0;
+          color: #2997ff;
           font-size: 10px;
           margin: 0 1px;
         }

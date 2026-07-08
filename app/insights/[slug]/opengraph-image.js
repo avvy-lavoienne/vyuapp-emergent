@@ -20,8 +20,8 @@ export default async function OGImage({ params }) {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          background: '#FAFAF8',
-          color: '#141413',
+          background: '#f5f5f7',
+          color: '#1d1d1f',
           position: 'relative',
           fontFamily: 'sans-serif',
           padding: '72px',
@@ -57,7 +57,7 @@ export default async function OGImage({ params }) {
               width: 42,
               height: 42,
               borderRadius: 10,
-              background: '#6D5BA0',
+              background: '#2997ff',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -66,9 +66,9 @@ export default async function OGImage({ params }) {
           >
             <div style={{ width: 14, height: 14, borderRadius: 9999, background: '#FFFFFF', display: 'flex' }} />
           </div>
-          <div style={{ display: 'flex', fontSize: 32, fontWeight: 700, letterSpacing: -0.5, color: '#141413' }}>
+          <div style={{ display: 'flex', fontSize: 32, fontWeight: 700, letterSpacing: -0.5, color: '#1d1d1f' }}>
             <span>Vyu</span>
-            <span style={{ color: '#6D5BA0' }}>App</span>
+            <span style={{ color: '#2997ff' }}>App</span>
           </div>
         </div>
 
@@ -77,7 +77,7 @@ export default async function OGImage({ params }) {
             display: 'flex',
             marginTop: 52,
             fontSize: 18,
-            color: '#6D5BA0',
+            color: '#2997ff',
             textTransform: 'uppercase',
             letterSpacing: 4,
             fontFamily: 'monospace',
@@ -94,7 +94,7 @@ export default async function OGImage({ params }) {
             fontWeight: 600,
             lineHeight: 1.08,
             letterSpacing: -1.5,
-            color: '#141413',
+            color: '#1d1d1f',
             maxWidth: 1056,
           }}
         >
@@ -137,7 +137,7 @@ export default async function OGImage({ params }) {
                 width: 8,
                 height: 8,
                 borderRadius: 9999,
-                background: '#6D5BA0',
+                background: '#2997ff',
                 marginRight: 10,
                 display: 'flex',
               }}

@@ -6,9 +6,9 @@ import SectionHeader from '@/components/SectionHeader';
 
 function Capability({ title, description }) {
   return (
-    <div className="p-8 md:p-10 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]">
-      <h3 className="text-lg font-semibold text-[#141413] dark:text-[#F0F0F0] tracking-[-0.01em]">{title}</h3>
-      <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed">{description}</p>
+    <div className="p-8 md:p-10 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] apple-card-hover hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]">
+      <h3 className="text-lg font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-[-0.01em]">{title}</h3>
+      <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#86868b] leading-relaxed">{description}</p>
     </div>
   );
 }
@@ -18,14 +18,14 @@ function ProductCard({ name, tagline, description, features, href, ctaLabel }) {
   const Tag = isExternal ? 'a' : Link;
   const extraProps = isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
   return (
-    <div className="p-8 md:p-10 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] flex flex-col">
-      <p className="text-xs text-[#6D5BA0] font-medium uppercase tracking-[0.12em]">{tagline}</p>
-      <h3 className="mt-2 text-xl font-semibold text-[#141413] dark:text-[#F0F0F0] tracking-[-0.02em]">{name}</h3>
-      <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed">{description}</p>
+    <div className="p-8 md:p-10 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] apple-card-hover hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] flex flex-col">
+      <p className="text-xs text-[#2997ff] font-medium uppercase tracking-[0.12em]">{tagline}</p>
+      <h3 className="mt-2 text-xl font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-[-0.02em]">{name}</h3>
+      <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#86868b] leading-relaxed">{description}</p>
       <ul className="mt-6 space-y-2">
         {features.map((f) => (
-          <li key={f} className="flex items-start gap-2.5 text-sm text-[#4A4A48] dark:text-[#B0B0B0]">
-            <span className="w-1 h-1 rounded-full bg-[#6D5BA0] mt-2 flex-shrink-0" />
+          <li key={f} className="flex items-start gap-2.5 text-sm text-[#4A4A48] dark:text-[#86868b]">
+            <span className="w-1 h-1 rounded-full bg-[#2997ff] mt-2 flex-shrink-0" />
             {f}
           </li>
         ))}
@@ -33,7 +33,7 @@ function ProductCard({ name, tagline, description, features, href, ctaLabel }) {
       <div className="mt-8">
         <Tag
           href={href}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#6D5BA0] text-white text-sm font-semibold hover:bg-[#574886] transition-all duration-200 hover:-translate-y-0.5"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#2997ff] text-white text-sm font-semibold hover:bg-[#0066cc] apple-btn-hover"
           {...extraProps}
         >
           {ctaLabel} <ArrowRight className="w-4 h-4" />
@@ -45,20 +45,20 @@ function ProductCard({ name, tagline, description, features, href, ctaLabel }) {
 
 function PhilosophyItem({ title, description }) {
   return (
-    <div className="p-8 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]">
-      <h3 className="text-base font-semibold text-[#141413] dark:text-[#F0F0F0] tracking-[-0.01em]">{title}</h3>
-      <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed">{description}</p>
+    <div className="p-8 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] apple-card-hover hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]">
+      <h3 className="text-base font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-[-0.01em]">{title}</h3>
+      <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#86868b] leading-relaxed">{description}</p>
     </div>
   );
 }
 
 /* ─── Server-rendered static sections ─── */
 
-export function AboutSection({ summary }) {
+export function AboutSection({ summary, className = '' }) {
   return (
-    <section className="py-24 md:py-32" id="tentang">
+    <section className={`py-24 md:py-32 dark:bg-[#000000] ${className}`} id="tentang">
       <div className="max-w-4xl mx-auto px-6 md:px-10">
-        <p className="text-[#4A4A48] dark:text-[#B0B0B0] text-base md:text-lg leading-relaxed text-center max-w-3xl mx-auto">
+        <p className="text-[#4A4A48] dark:text-[#86868b] text-base md:text-lg leading-relaxed text-center max-w-3xl mx-auto">
           {summary}
         </p>
       </div>
@@ -66,9 +66,9 @@ export function AboutSection({ summary }) {
   );
 }
 
-export function CapabilitiesSection({ t }) {
+export function CapabilitiesSection({ t, className = '' }) {
   return (
-    <section className="py-24 md:py-32 bg-[#F8F7F4] dark:bg-[#0F0F10]" id="kapabilitas">
+    <section className={`py-24 md:py-32 bg-[#f5f5f7] dark:bg-[#1d1d1f] ${className}`} id="kapabilitas">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <SectionHeader
           overline={t.capabilities.overline}
@@ -86,9 +86,9 @@ export function CapabilitiesSection({ t }) {
   );
 }
 
-export function CaraKerjaSection() {
+export function CaraKerjaSection({ className = '' }) {
   return (
-    <section className="py-24 md:py-32" id="cara-kerja">
+    <section className={`py-24 md:py-32 dark:bg-[#000000] ${className}`} id="cara-kerja">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <SectionHeader
           overline="Metode Kami"
@@ -97,37 +97,37 @@ export function CaraKerjaSection() {
           align="center"
         />
         <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-6 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] text-center">
-            <div className="w-12 h-12 rounded-xl bg-[#6D5BA0]/10 dark:bg-[#8B7BC4]/10 flex items-center justify-center mx-auto mb-4">
-              <Search className="w-6 h-6 text-[#6D5BA0]" />
+          <div className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] text-center apple-card-hover">
+            <div className="w-12 h-12 rounded-xl bg-[#2997ff]/10 dark:bg-[#5BA3FF]/10 flex items-center justify-center mx-auto mb-4">
+              <Search className="w-6 h-6 text-[#2997ff]" />
             </div>
-            <h3 className="font-semibold text-[#141413] dark:text-[#F0F0F0] mb-2">Riset Mendalam</h3>
-            <p className="text-sm text-[#6B6B68] dark:text-[#B0B0B0]">AI agent melakukan riset komprehensif untuk setiap konten dan fitur.</p>
+            <h3 className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">Riset Mendalam</h3>
+            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">AI agent melakukan riset komprehensif untuk setiap konten dan fitur.</p>
           </div>
-          <div className="p-6 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] text-center">
-            <div className="w-12 h-12 rounded-xl bg-[#6D5BA0]/10 dark:bg-[#8B7BC4]/10 flex items-center justify-center mx-auto mb-4">
-              <ShieldCheck className="w-6 h-6 text-[#6D5BA0]" />
+          <div className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] text-center apple-card-hover">
+            <div className="w-12 h-12 rounded-xl bg-[#2997ff]/10 dark:bg-[#5BA3FF]/10 flex items-center justify-center mx-auto mb-4">
+              <ShieldCheck className="w-6 h-6 text-[#2997ff]" />
             </div>
-            <h3 className="font-semibold text-[#141413] dark:text-[#F0F0F0] mb-2">Kode Berkualitas</h3>
-            <p className="text-sm text-[#6B6B68] dark:text-[#B0B0B0]">QA agent memastikan setiap baris kode memenuhi standar kualitas.</p>
+            <h3 className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">Kode Berkualitas</h3>
+            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">QA agent memastikan setiap baris kode memenuhi standar kualitas.</p>
           </div>
-          <div className="p-6 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] text-center">
-            <div className="w-12 h-12 rounded-xl bg-[#6D5BA0]/10 dark:bg-[#8B7BC4]/10 flex items-center justify-center mx-auto mb-4">
-              <Globe className="w-6 h-6 text-[#6D5BA0]" />
+          <div className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] text-center apple-card-hover">
+            <div className="w-12 h-12 rounded-xl bg-[#2997ff]/10 dark:bg-[#5BA3FF]/10 flex items-center justify-center mx-auto mb-4">
+              <Globe className="w-6 h-6 text-[#2997ff]" />
             </div>
-            <h3 className="font-semibold text-[#141413] dark:text-[#F0F0F0] mb-2">SEO Optimization</h3>
-            <p className="text-sm text-[#6B6B68] dark:text-[#B0B0B0]">Dioptimasi sejak awal untuk mesin pencari dan performa web.</p>
+            <h3 className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">SEO Optimization</h3>
+            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">Dioptimasi sejak awal untuk mesin pencari dan performa web.</p>
           </div>
-          <div className="p-6 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] text-center">
-            <div className="w-12 h-12 rounded-xl bg-[#6D5BA0]/10 dark:bg-[#8B7BC4]/10 flex items-center justify-center mx-auto mb-4">
-              <Zap className="w-6 h-6 text-[#6D5BA0]" />
+          <div className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] text-center apple-card-hover">
+            <div className="w-12 h-12 rounded-xl bg-[#2997ff]/10 dark:bg-[#5BA3FF]/10 flex items-center justify-center mx-auto mb-4">
+              <Zap className="w-6 h-6 text-[#2997ff]" />
             </div>
-            <h3 className="font-semibold text-[#141413] dark:text-[#F0F0F0] mb-2">Delivery Cepat</h3>
-            <p className="text-sm text-[#6B6B68] dark:text-[#B0B0B0]">AI mempercepat proses pengembangan tanpa mengorbankan kualitas.</p>
+            <h3 className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">Delivery Cepat</h3>
+            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">AI mempercepat proses pengembangan tanpa mengorbankan kualitas.</p>
           </div>
         </div>
         <div className="mt-10 text-center">
-          <Link href="/portfolio/ai-agents" className="inline-flex items-center gap-2 text-[#6D5BA0] font-semibold text-sm hover:gap-3 transition-all">
+          <Link href="/portfolio/ai-agents" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all apple-link">
             Pelajari lebih lanjut tentang sistem AI kami <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -136,7 +136,7 @@ export function CaraKerjaSection() {
   );
 }
 
-export function TimKamiSection() {
+export function TimKamiSection({ className = '' }) {
   const agents = [
     // Tim Artikel (6)
     { emoji: '🌸', name: 'Hikari', role: 'Orchestrator', desc: 'Mengoordinasi semua agent dan mengelola alur kerja multi-agent.' },
@@ -159,7 +159,7 @@ export function TimKamiSection() {
   ];
 
   return (
-    <section className="py-24 md:py-32 bg-[#F8F7F4] dark:bg-[#0F0F10]" id="tim-kami">
+    <section className={`py-24 md:py-32 bg-[#f5f5f7] dark:bg-[#1d1d1f] ${className}`} id="tim-kami">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <SectionHeader
           overline="Tim Kami"
@@ -171,19 +171,19 @@ export function TimKamiSection() {
           {agents.map((agent) => (
             <div
               key={`${agent.name}-${agent.role}`}
-              className="p-6 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]"
+              className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] apple-card-hover hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]"
             >
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-2xl">{agent.emoji}</span>
-                <h3 className="text-lg font-semibold text-[#141413] dark:text-[#F0F0F0]">{agent.name}</h3>
+                <h3 className="text-lg font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">{agent.name}</h3>
               </div>
-              <p className="font-mono text-[11px] text-[#6D5BA0] uppercase tracking-[0.1em]">{agent.role}</p>
-              <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed">{agent.desc}</p>
+              <p className="font-mono text-[11px] text-[#2997ff] uppercase tracking-[0.1em]">{agent.role}</p>
+              <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#86868b] leading-relaxed">{agent.desc}</p>
             </div>
           ))}
         </div>
         <div className="mt-10 text-center">
-          <Link href="/portfolio/ai-agents" className="inline-flex items-center gap-2 text-[#6D5BA0] font-semibold text-sm hover:gap-3 transition-all">
+          <Link href="/portfolio/ai-agents" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all apple-link">
             Kenali seluruh tim <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -192,9 +192,9 @@ export function TimKamiSection() {
   );
 }
 
-export function PortfolioSection({ t }) {
+export function PortfolioSection({ t, className = '' }) {
   return (
-    <section className="py-24 md:py-32" id="portfolio">
+    <section className={`py-24 md:py-32 dark:bg-[#000000] ${className}`} id="portfolio">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
           <SectionHeader
@@ -204,7 +204,7 @@ export function PortfolioSection({ t }) {
           />
           <Link
             href="/portfolio"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-transparent text-[#141413] dark:text-[#F0F0F0] font-semibold text-sm border border-[#D1D0C9] dark:border-[#3A3A3D] hover:border-[#B0AFAA] dark:hover:border-[#4A4A4D] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-all duration-200 hover:-translate-y-0.5 shrink-0 self-start md:self-auto"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-transparent text-[#1d1d1f] dark:text-[#f5f5f7] font-semibold text-sm border border-[#D1D0C9] dark:border-[#3A3A3D] hover:border-[#B0AFAA] dark:hover:border-[#4A4A4D] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] apple-btn-hover shrink-0 self-start md:self-auto"
           >
             {t.portfolio.view_all} <ArrowRight className="w-4 h-4" />
           </Link>
@@ -232,9 +232,9 @@ export function PortfolioSection({ t }) {
   );
 }
 
-export function PhilosophySection({ t }) {
+export function PhilosophySection({ t, className = '' }) {
   return (
-    <section className="py-24 md:py-32 bg-[#F8F7F4] dark:bg-[#0F0F10]" id="filosofi">
+    <section className={`py-24 md:py-32 bg-[#f5f5f7] dark:bg-[#1d1d1f] ${className}`} id="filosofi">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <SectionHeader
           overline={t.philosophy.overline}

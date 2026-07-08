@@ -31,16 +31,16 @@ export const metadata = {
 
 function OtherProject({ item }) {
   return (
-    <div className="p-6 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]">
-      <p className="font-mono text-[10px] text-[#6D5BA0] dark:text-[#8B7BC4] uppercase tracking-[0.18em] font-medium mb-3">
+    <div className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]">
+      <p className="font-mono text-[10px] text-[#2997ff] dark:text-[#5BA3FF] uppercase tracking-[0.18em] font-medium mb-3">
         {(item.category || 'PROJECT').toUpperCase()}
       </p>
-      <h4 className="text-base font-semibold text-[#141413] dark:text-[#F0F0F0] tracking-[-0.01em]">{item.name}</h4>
-      <p className="mt-2 text-sm text-[#4A4A48] dark:text-[#B0B0B0] leading-relaxed">{item.description}</p>
+      <h4 className="text-base font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-[-0.01em]">{item.name}</h4>
+      <p className="mt-2 text-sm text-[#4A4A48] dark:text-[#86868b] leading-relaxed">{item.description}</p>
       {(item.stack || []).length > 0 && (
         <div className="mt-4 flex flex-wrap gap-1.5">
           {(item.stack || []).slice(0, 4).map(s => (
-            <span key={s} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6B6B68] dark:text-[#B0B0B0] bg-[#F4F3EE] dark:bg-[#2A2A2D] border border-[#E5E4E0] dark:border-[#2A2A2D]">
+            <span key={s} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6e6e73] dark:text-[#86868b] bg-[#F4F3EE] dark:bg-[#333336] border border-[#d2d2d7] dark:border-[#333336]">
               {s}
             </span>
           ))}
@@ -68,7 +68,7 @@ export default async function PortfolioPage() {
   const avalonUrl = 'https://avalon.vyuapp.my.id';
 
   return (
-    <main className="min-h-screen bg-[#FAFAF8] dark:bg-[#0F0F10]">
+    <main className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000]">
       <BreadcrumbJsonLd items={breadcrumbItems} />
       {main1 && <SoftwareAppJsonLd
         name={main1.name}
@@ -120,17 +120,17 @@ export default async function PortfolioPage() {
           />
           
           {/* Featured: AI Agents Case Study */}
-          <div className="mt-14 p-8 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] mb-8">
+          <div className="mt-14 p-8 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] mb-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div className="flex-1">
-                <p className="font-mono text-[10px] text-[#6D5BA0] dark:text-[#8B7BC4] uppercase tracking-[0.18em] font-medium mb-3">
+                <p className="font-mono text-[10px] text-[#2997ff] dark:text-[#5BA3FF] uppercase tracking-[0.18em] font-medium mb-3">
                   {t.caseStudy.overline}
                 </p>
-                <h3 className="text-xl font-semibold text-[#141413] dark:text-[#F0F0F0] mb-2">{t.caseStudy.title}</h3>
-                <p className="text-sm text-[#4A4A48] dark:text-[#B0B0B0] mb-4">{t.caseStudy.description}</p>
+                <h3 className="text-xl font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">{t.caseStudy.title}</h3>
+                <p className="text-sm text-[#4A4A48] dark:text-[#86868b] mb-4">{t.caseStudy.description}</p>
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {['AI', 'Multi-Agent', 'Automation', 'SEO'].map(tag => (
-                    <span key={tag} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6B6B68] dark:text-[#B0B0B0] bg-[#F4F3EE] dark:bg-[#2A2A2D] border border-[#E5E4E0] dark:border-[#2A2A2D]">
+                    <span key={tag} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6e6e73] dark:text-[#86868b] bg-[#F4F3EE] dark:bg-[#333336] border border-[#d2d2d7] dark:border-[#333336]">
                       {tag}
                     </span>
                   ))}
@@ -138,7 +138,7 @@ export default async function PortfolioPage() {
               </div>
               <Link
                 href="/portfolio/ai-agents"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#6D5BA0] text-white text-sm font-semibold hover:bg-[#574886] transition-all duration-200 hover:-translate-y-0.5 shrink-0"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#2997ff] text-white text-sm font-semibold hover:bg-[#0066cc] transition-all duration-200 hover:-translate-y-0.5 shrink-0"
               >
                 {t.caseStudy.cta} <ArrowRight className="w-4 h-4" />
               </Link>
@@ -148,14 +148,14 @@ export default async function PortfolioPage() {
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {(rest.length ? rest : FALLBACK_OTHER).map(item => <OtherProject key={item.id} item={item} />)}
           </div>
-          <div className="mt-12 p-8 md:p-10 rounded-2xl border border-[#E5E4E0] dark:border-[#2A2A2D] bg-white dark:bg-[#1A1A1D] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="mt-12 p-8 md:p-10 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
-              <h3 className="text-xl font-semibold text-[#141413] dark:text-[#F0F0F0]">{t.cta.title}</h3>
-              <p className="text-sm text-[#4A4A48] dark:text-[#B0B0B0] mt-2 max-w-xl">{t.cta.description}</p>
+              <h3 className="text-xl font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">{t.cta.title}</h3>
+              <p className="text-sm text-[#4A4A48] dark:text-[#86868b] mt-2 max-w-xl">{t.cta.description}</p>
             </div>
             <Link
               href="/#kontak"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#6D5BA0] text-white text-sm font-semibold hover:bg-[#574886] transition-all duration-200 hover:-translate-y-0.5 shrink-0"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#2997ff] text-white text-sm font-semibold hover:bg-[#0066cc] transition-all duration-200 hover:-translate-y-0.5 shrink-0"
             >
               {t.cta.button} <ArrowRight className="w-4 h-4" />
             </Link>
