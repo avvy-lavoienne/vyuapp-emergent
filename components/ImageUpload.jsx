@@ -49,7 +49,7 @@ export default function ImageUpload({ value, onChange, bucket = 'featured-images
       {value ? (
         <div className="relative rounded-lg overflow-hidden border border-[#d2d2d7]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={value} alt="featured" className="w-full h-40 object-cover" />
+          <img src={value} alt="Uploaded image preview" className="w-full h-40 object-cover" />
           <button type="button" onClick={() => onChange?.('')} className="absolute top-2 right-2 p-1.5 rounded-full bg-white/80 text-[#6e6e73] hover:text-red-500 border border-[#d2d2d7]">
             <X className="w-4 h-4" />
           </button>

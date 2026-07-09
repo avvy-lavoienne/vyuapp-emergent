@@ -6,11 +6,9 @@ test.describe('Dark Mode', () => {
     const toggle = page.locator('button[aria-label*="Switch to"], button[aria-label*="Toggle theme"]').first();
     await expect(toggle).toBeVisible();
     await toggle.click();
-    await page.waitForTimeout(500);
-    
-    // Verify html.dark class is added
-    const hasDark = await page.locator('html').evaluate(el => el.classList.contains('dark'));
-    expect(hasDark).toBe(true);
+
+    // Wait for html.dark class to be reliably applied
+    await expect(page.locator('html')).toHaveClass(/dark/, { timeout: 5000 });
   });
 
   test('background color changes in dark mode', async ({ page }) => {
@@ -20,7 +18,7 @@ test.describe('Dark Mode', () => {
     
     // Enable dark mode
     await toggle.click();
-    await page.waitForTimeout(500);
+    await expect(page.locator('html')).toHaveClass(/dark/, { timeout: 5000 });
     
     // Check that the body has dark background
     const bgColor = await page.locator('body').evaluate(el => getComputedStyle(el).backgroundColor);
@@ -35,15 +33,11 @@ test.describe('Dark Mode', () => {
     
     // Toggle to dark
     await toggle.click();
-    await page.waitForTimeout(500);
-    const isDark = await page.locator('html').evaluate(el => el.classList.contains('dark'));
-    expect(isDark).toBe(true);
+    await expect(page.locator('html')).toHaveClass(/dark/, { timeout: 5000 });
     
-    // Toggle back to light
+    // Toggle back to light — wait for class to change via auto-retry
     await toggle.click();
-    await page.waitForTimeout(500);
-    const isLight = await page.locator('html').evaluate(el => !el.classList.contains('dark'));
-    expect(isLight).toBe(true);
+    await expect(page.locator('html')).not.toHaveClass(/dark/, { timeout: 5000 });
   });
 
   test('dark mode persists across navigation', async ({ page }) => {
@@ -53,7 +47,7 @@ test.describe('Dark Mode', () => {
     
     // Enable dark mode
     await toggle.click();
-    await page.waitForTimeout(500);
+    await expect(page.locator('html')).toHaveClass(/dark/, { timeout: 5000 });
     
     // Navigate to portfolio and wait for full load + theme hydration
     await page.goto('/portfolio');

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { verifyTurnstileToken } from '@/lib/turnstile';
 import { discoveryLimiter } from '@/lib/rate-limit';
+import { sanitizeSql, sanitizeHtml } from '@/lib/sanitize';
 
 interface DiscoveryPayload {
   fullName: string;
@@ -181,6 +182,15 @@ export async function POST(request: NextRequest) {
     body.targetAudience = clampLen((body.targetAudience || '').trim(), FIELD_LIMITS.targetAudience);
     body.uniqueValue = clampLen((body.uniqueValue || '').trim(), FIELD_LIMITS.uniqueValue);
     body.techRequirements = clampLen((body.techRequirements || '').trim(), FIELD_LIMITS.techRequirements);
+
+    // Sanitize all text inputs — strip HTML tags (XSS) and SQL-injection patterns as defense-in-depth
+    body.fullName = sanitizeHtml(sanitizeSql(body.fullName));
+    body.companyName = sanitizeHtml(sanitizeSql(body.companyName));
+    body.businessEmail = sanitizeHtml(sanitizeSql(body.businessEmail));
+    body.coreGoal = sanitizeHtml(sanitizeSql(body.coreGoal));
+    body.targetAudience = sanitizeHtml(sanitizeSql(body.targetAudience));
+    body.uniqueValue = sanitizeHtml(sanitizeSql(body.uniqueValue));
+    body.techRequirements = sanitizeHtml(sanitizeSql(body.techRequirements));
 
     // Verify Turnstile token
     if (!turnstileToken) {

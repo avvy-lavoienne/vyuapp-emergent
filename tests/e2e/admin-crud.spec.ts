@@ -1,16 +1,28 @@
 import { test, expect } from '@playwright/test';
 
 // Admin credentials: read from env or use fallbacks
+// global-setup.ts loads .env / .env.local into process.env before tests run.
 const ADMIN_EMAIL = process.env.SUPABASE_ADMIN_EMAIL || 'admin@vyuapp.my.id';
 const ADMIN_PASSWORD = process.env.SUPABASE_ADMIN_DEFAULT_PASSWORD || 'admin123';
 
 /** Helper: login and wait for admin dashboard */
 async function loginAs(page: any, email: string, password: string) {
   await page.goto('/admin/login');
+  // Wait for form to be fully rendered
+  await page.locator('input[name="email"]').waitFor({ state: 'visible' });
   await page.locator('input[name="email"]').fill(email);
   await page.locator('input[name="password"]').fill(password);
+
+  // Use waitForNavigation for reliable redirect detection
+  const navigationPromise = page.waitForNavigation({
+    timeout: 25000,
+    waitUntil: 'domcontentloaded',
+  });
   await page.locator('button[type="submit"]').click();
-  await page.waitForURL('**/admin', { timeout: 15000 });
+  await navigationPromise;
+
+  // Wait for URL to settle on /admin
+  await page.waitForURL('**/admin', { timeout: 25000, waitUntil: 'domcontentloaded' });
   // Wait for dashboard to fully load
   await expect(page.locator('text=Manajemen Artikel').first()).toBeVisible({ timeout: 10000 });
 }

@@ -1,31 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { sanitizeSql, sanitizeHtml } from '@/lib/sanitize';
+import { chatLimiter } from '@/lib/rate-limit';
 
 const CS_MODEL_BASE = process.env.CS_MODEL_BASE_URL || '';
 const CS_MODEL = process.env.CS_MODEL_NAME || 'nara/mimo-v2.5-pro';
 const CS_API_KEY = process.env.CS_API_KEY || '';
-const RATE_LIMIT = 100;
 const ADMIN_PASSWORD = process.env.CHAT_ADMIN_PASSWORD || 'AkuWibuGanteng';
 const ADMIN_DURATION = 5 * 60 * 1000;
 
 // In-memory stores (per serverless instance)
-const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
 const adminStore = new Map<string, number>();
 
 function getVisitorId(request: NextRequest): string {
   const forwarded = request.headers.get('x-forwarded-for');
   return forwarded?.split(',')[0]?.trim() || 'unknown';
-}
-
-function checkRateLimit(key: string, max: number, windowMs: number): { allowed: boolean; remaining: number } {
-  const now = Date.now();
-  const entry = rateLimitStore.get(key);
-  if (!entry || now > entry.resetAt) {
-    rateLimitStore.set(key, { count: 1, resetAt: now + windowMs });
-    return { allowed: true, remaining: max - 1 };
-  }
-  entry.count++;
-  const remaining = Math.max(0, max - entry.count);
-  return { allowed: entry.count <= max, remaining };
 }
 
 function setAdmin(id: string) { adminStore.set(id, Date.now() + ADMIN_DURATION); }
@@ -63,7 +51,7 @@ Platform tata kelola untuk instansi pemerintah (Disdukcapil).
 
 **Fitur:**
 - Scrum Framework Management — dasbor sprint real-time
-- AI Pre-Auditor — deteksi otomatis ketidaksinkronan laporan (80% kurangi waktu koreksi)
+- AI Pre-Auditor — deteksi otomatis ketidaksinksonan laporan (80% kurangi waktu koreksi)
 - Document Validation — NLP pengecekan kepatuhan dokumen
 - Duplicate Operator Detection — algoritma deteksi entri duplikat
 - SIAK Integration — Sistem Informasi Administrasi Kependudukan
@@ -114,7 +102,7 @@ Platform intelijen pasar enterprise untuk e-commerce Indonesia (Shopee).
 - 49 + 35 = 84 tests, 100% passing
 
 ## KEBIJAKAN CHAT
-- Rate limit: 20 pesan/jam per pengunjung
+- Rate limit: 10 pesan/menit per pengunjung
 - Bahasa: Ikuti pengunjung (ID/EN)
 - Panjang: Maks 5 kalimat, 200 kata
 - Akhiri dengan CTA: vyuapp@proton.me atau https://www.vyuapp.my.id/#kontak
@@ -144,7 +132,7 @@ async function handleChat(message: string, history: ChatMessage[]): Promise<{ re
 
   const sanitized = Array.isArray(history)
     ? history.filter(h => h && (h.role === 'user' || h.role === 'assistant') && typeof h.content === 'string')
-        .map(h => ({ role: h.role, content: h.content.slice(0, 2000) }))
+        .map(h => ({ role: h.role, content: sanitizeHtml(sanitizeSql(h.content.slice(0, 2000))) }))
         .slice(-6)
     : [];
 
@@ -222,6 +210,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Message too long (max 500)' }, { status: 400 });
     }
 
+    // Sanitize message — strip HTML tags (XSS) and SQL-injection patterns as defense-in-depth
+    const safeMessage = sanitizeHtml(sanitizeSql(message.trim()));
+
     const visitorId = getVisitorId(request);
 
     // Admin mode
@@ -233,28 +224,52 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    // Rate limit (skip if admin)
+    // Rate limit via Upstash Redis (skip if admin)
     if (!getAdmin(visitorId)) {
-      const { allowed, remaining } = checkRateLimit(`chat:${visitorId}`, RATE_LIMIT, 60 * 60 * 1000);
-      if (!allowed) {
-        return NextResponse.json({
-          reply: `⏳ Batas ${RATE_LIMIT} pesan/jam tercapai. Hubungi vyuapp@proton.me`,
-          rateLimited: true,
-          remaining: 0,
-        });
+      const { success, limit, remaining, reset } = await chatLimiter.limit(`chat:${visitorId}`);
+
+      if (!success) {
+        const retryAfterSeconds = Math.ceil((reset - Date.now()) / 1000);
+        return NextResponse.json(
+          {
+            reply: `⏳ Batas 10 pesan/menit tercapai. Silakan coba lagi dalam ${retryAfterSeconds} detik.`,
+            rateLimited: true,
+            remaining: 0,
+          },
+          {
+            status: 429,
+            headers: {
+              'X-RateLimit-Limit': String(limit),
+              'X-RateLimit-Remaining': '0',
+              'X-RateLimit-Reset': String(Math.ceil(reset / 1000)),
+              'Retry-After': String(retryAfterSeconds),
+            },
+          }
+        );
       }
-      const response = await handleChat(message, history || []);
-      return NextResponse.json({ ...response, remaining });
+
+      const response = await handleChat(safeMessage, history || []);
+      return NextResponse.json(
+        { ...response, remaining },
+        {
+          headers: {
+            'X-RateLimit-Limit': String(limit),
+            'X-RateLimit-Remaining': String(remaining),
+            'X-RateLimit-Reset': String(Math.ceil(reset / 1000)),
+          },
+        }
+      );
     }
 
     // Admin path — no rate limit
-    const response = await handleChat(message, history || []);
-    return NextResponse.json({ ...response, remaining: RATE_LIMIT });
+    const response = await handleChat(safeMessage, history || []);
+    return NextResponse.json({ ...response, remaining: -1 });
 
   } catch (err: any) {
     console.error('Chat API error:', err);
-    return NextResponse.json({
-      reply: 'Maaf, terjadi kesalahan internal. Hubungi vyuapp@proton.me 📧',
-    });
+    return NextResponse.json(
+      { reply: 'Maaf, terjadi kesalahan internal. Hubungi vyuapp@proton.me 📧' },
+      { status: 500 }
+    );
   }
 }

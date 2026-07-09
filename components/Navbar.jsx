@@ -47,7 +47,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 md:px-10 h-[72px] flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
           <span className="w-9 h-9 rounded-lg bg-white dark:bg-[#1d1d1f] border border-[#d2d2d7] dark:border-[#333336] flex items-center justify-center overflow-hidden p-1">
-            <Image src="/images/vyu-removebg.png" alt="" width={36} height={36} className="w-full h-full object-contain" priority />
+            <Image src="/images/vyu-removebg.png" alt="VyuApp logo" width={36} height={36} className="w-full h-full object-contain" priority />
           </span>
           <span className="font-sans font-bold text-lg tracking-tight text-[#1d1d1f] dark:text-[#f5f5f7]">
             Vyu<span className="text-[#2997ff]">App</span>
@@ -99,6 +99,7 @@ export default function Navbar() {
             onClick={() => setOpen(v => !v)}
             className="p-2 text-[#6e6e73] dark:text-[#86868b] hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] transition-colors"
             aria-label="menu"
+            data-testid="mobile-menu-toggle"
           >
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -106,7 +107,7 @@ export default function Navbar() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-[#d2d2d7] dark:border-[#333336] bg-white/95 dark:bg-[#000000]/95 backdrop-blur-xl">
+        <nav className="md:hidden border-t border-[#d2d2d7] dark:border-[#333336] bg-white/95 dark:bg-[#000000]/95 backdrop-blur-xl" aria-label="Mobile navigation" data-testid="mobile-nav-panel">
           <div className="px-6 py-6 flex flex-col gap-4">
             {LINKS.map(l => (
               <Link
@@ -126,7 +127,7 @@ export default function Navbar() {
               {isLanding ? t.nav.contact : 'Hubungi Kami'}
             </a>
           </div>
-        </div>
+        </nav>
       )}
     </header>
   );

@@ -12,12 +12,16 @@ export async function loginAction(prevState, formData) {
 
   if (!email || !password) return { error: 'Email dan password wajib diisi.' };
 
-  // Rate limiting by IP
-  const headersList = await headers();
-  const ip = headersList.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1';
-  const { success } = await loginLimiter.limit(`login:${ip}`);
-  if (!success) {
-    return { error: 'Terlalu banyak percobaan login. Coba lagi nanti.' };
+  // Rate limiting by IP (fail-open: if Redis is down, allow login)
+  try {
+    const headersList = await headers();
+    const ip = headersList.get('x-forwarded-for')?.split(',')[0]?.trim() || '127.0.0.1';
+    const { success } = await loginLimiter.limit(`login:${ip}`);
+    if (!success) {
+      return { error: 'Terlalu banyak percobaan login. Coba lagi nanti.' };
+    }
+  } catch {
+    // Rate limiter unavailable (Redis down) — fail-open, allow login
   }
 
   const supabase = await getServerSupabase();

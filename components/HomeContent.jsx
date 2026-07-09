@@ -127,8 +127,8 @@ export default function HomeContent() {
             </div>
           </div>
           <div className="mt-10 text-center">
-            <Link href="/portfolio/ai-agents" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all">
-              Pelajari lebih lanjut tentang sistem AI kami <ArrowRight className="w-4 h-4" />
+            <Link href="/portfolio/hikari-os" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all">
+              Pelajari lebih lanjut tentang Hikari OS <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -139,7 +139,7 @@ export default function HomeContent() {
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <SectionHeader
             overline="Tim Kami"
-            title="15 AI Agent, 1 Visi"
+            title="17 AI Agent, 1 Visi"
             description="Setiap agent memiliki peran spesifik. Bersama, mereka membentuk tim digital yang bekerja tanpa henti untuk proyek Anda."
             align="center"
           />
@@ -178,7 +178,7 @@ export default function HomeContent() {
             ))}
           </div>
           <div className="mt-10 text-center">
-            <Link href="/portfolio/ai-agents" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all">
+            <Link href="/portfolio/hikari-os" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all">
               Kenali seluruh tim <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

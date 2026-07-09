@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { verifyTurnstileToken } from '@/lib/turnstile';
 import { contactLimiter } from '@/lib/rate-limit';
+import { sanitizeSql, sanitizeHtml } from '@/lib/sanitize';
 
 interface ContactPayload {
   name: string;
@@ -70,6 +71,20 @@ export async function POST(request: NextRequest) {
     company = clampLen((company || '').trim(), LIMITS.company);
     projectType = clampLen((projectType || '').trim(), LIMITS.projectType);
     message = clampLen((message || '').trim(), LIMITS.message);
+
+    // Sanitize inputs — strip SQL-injection patterns and HTML as defense-in-depth
+    name = sanitizeSql(name);
+    email = sanitizeSql(email);
+    company = sanitizeSql(company);
+    projectType = sanitizeSql(projectType);
+    message = sanitizeSql(message);
+
+    // Additional HTML sanitization — strip any HTML tags from user input
+    name = sanitizeHtml(name);
+    email = sanitizeHtml(email);
+    company = sanitizeHtml(company);
+    projectType = sanitizeHtml(projectType);
+    message = sanitizeHtml(message);
 
     if (!name || !email || !projectType || !message) {
       return NextResponse.json({ error: 'Semua field wajib harus diisi.' }, { status: 400 });

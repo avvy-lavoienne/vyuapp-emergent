@@ -193,7 +193,15 @@ test.describe('Discovery Form', () => {
   // G5. Turnstile required – submit without token → 403
   // ────────────────────────────────────────────────────────────────────────
   test('G5 – submit without Turnstile token returns 403', async ({ page }) => {
-    // Intercept the API and verify the token is missing
+    // Mock Turnstile as a no-op that never invokes the verify callback
+    // This simulates the token never being set
+    await page.addInitScript(() => {
+      (window as any).turnstile = {
+        render: () => 'mock-no-verify',
+        remove: () => {},
+      };
+    });
+
     let interceptedBody: Record<string, unknown> | null = null;
     await page.route('**/api/discovery', async (route) => {
       interceptedBody = route.request().postDataJSON();

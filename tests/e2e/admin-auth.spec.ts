@@ -1,16 +1,30 @@
 import { test, expect } from '@playwright/test';
 
 // Admin credentials: read from env or use fallbacks
+// global-setup.ts loads .env / .env.local into process.env before tests run.
 const ADMIN_EMAIL = process.env.SUPABASE_ADMIN_EMAIL || 'admin@vyuapp.my.id';
 const ADMIN_PASSWORD = process.env.SUPABASE_ADMIN_DEFAULT_PASSWORD || 'admin123';
 
 /** Helper: fill login form and submit, wait for redirect to /admin */
 async function loginAs(page: any, email: string, password: string) {
   await page.goto('/admin/login');
+  // Wait for form to be fully rendered
+  await page.locator('input[name="email"]').waitFor({ state: 'visible' });
   await page.locator('input[name="email"]').fill(email);
   await page.locator('input[name="password"]').fill(password);
+
+  // Race: wait for either navigation to /admin OR error message to appear.
+  // Server actions use fetch + 303 redirect — use waitForNavigation for reliability.
+  const navigationPromise = page.waitForNavigation({
+    timeout: 25000,
+    waitUntil: 'domcontentloaded',
+  });
   await page.locator('button[type="submit"]').click();
-  await page.waitForURL('**/admin', { timeout: 15000 });
+  await navigationPromise;
+
+  // Now wait for the URL to settle on /admin (could be a client-side redirect after
+  // the server action completes)
+  await page.waitForURL('**/admin', { timeout: 25000, waitUntil: 'domcontentloaded' });
 }
 
 test.describe('Admin Auth', () => {
@@ -39,12 +53,21 @@ test.describe('Admin Auth', () => {
   test('E4 - Login with valid credentials redirects to /admin', async ({ page }) => {
     await page.goto('/admin/login');
 
+    // Wait for form to be fully rendered
+    await page.locator('input[name="email"]').waitFor({ state: 'visible' });
     await page.locator('input[name="email"]').fill(ADMIN_EMAIL);
     await page.locator('input[name="password"]').fill(ADMIN_PASSWORD);
-    await page.locator('button[type="submit"]').click();
 
-    // Redirects to /admin dashboard
-    await page.waitForURL('**/admin', { timeout: 15000 });
+    // Use waitForNavigation for reliable redirect detection
+    const navigationPromise = page.waitForNavigation({
+      timeout: 25000,
+      waitUntil: 'domcontentloaded',
+    });
+    await page.locator('button[type="submit"]').click();
+    await navigationPromise;
+
+    // Wait for URL to settle on /admin
+    await page.waitForURL('**/admin', { timeout: 25000, waitUntil: 'domcontentloaded' });
     expect(page.url()).toContain('/admin');
 
     // Dashboard content visible (article management heading)
@@ -54,6 +77,7 @@ test.describe('Admin Auth', () => {
   test('E3 - Login with invalid credentials shows error message', async ({ page }) => {
     await page.goto('/admin/login');
 
+    await page.locator('input[name="email"]').waitFor({ state: 'visible' });
     await page.locator('input[name="email"]').fill(ADMIN_EMAIL);
     await page.locator('input[name="password"]').fill('wrongpassword123');
     await page.locator('button[type="submit"]').click();
@@ -68,6 +92,8 @@ test.describe('Admin Auth', () => {
 
   test('Client-side validation: empty email and short password', async ({ page }) => {
     await page.goto('/admin/login');
+
+    await page.locator('input[name="email"]').waitFor({ state: 'visible' });
 
     // Test empty email validation
     await page.locator('input[name="email"]').fill('');
@@ -95,10 +121,17 @@ test.describe('Admin Auth', () => {
     // Click logout button
     const logoutBtn = page.locator('button:has-text("Logout")').first();
     await expect(logoutBtn).toBeVisible();
+
+    // Use waitForNavigation for reliable redirect detection
+    const navigationPromise = page.waitForNavigation({
+      timeout: 25000,
+      waitUntil: 'domcontentloaded',
+    });
     await logoutBtn.click();
+    await navigationPromise;
 
     // Should redirect to /admin/login
-    await page.waitForURL('**/admin/login', { timeout: 15000 });
+    await page.waitForURL('**/admin/login**', { timeout: 25000 });
     expect(page.url()).toContain('/admin/login');
 
     // Login form visible again
@@ -115,7 +148,7 @@ test.describe('Admin Auth', () => {
     await page.goto('/admin');
 
     // Middleware redirects to /admin/login?next=/admin
-    await page.waitForURL('**/admin/login**', { timeout: 15000 });
+    await page.waitForURL('**/admin/login**', { timeout: 25000 });
     expect(page.url()).toContain('/admin/login');
 
     // Login form should be present

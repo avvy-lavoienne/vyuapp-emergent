@@ -10,7 +10,7 @@ test.describe('Responsive Design', () => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto('/');
 
-    const hamburger = page.getByRole('button', { name: 'menu' });
+    const hamburger = page.getByTestId('mobile-menu-toggle');
     await expect(hamburger).toBeVisible();
 
     // Desktop nav links should be hidden at this width
@@ -27,17 +27,15 @@ test.describe('Responsive Design', () => {
     await page.setViewportSize({ width: 375, height: 812 });
     await page.goto('/');
 
-    const hamburger = page.getByRole('button', { name: 'menu' });
+    const hamburger = page.getByTestId('mobile-menu-toggle');
     await hamburger.click();
 
     // After clicking, the mobile nav panel should appear.
-    // The Navbar renders a div with md:hidden containing nav links.
-    // The open state shows links inside a dropdown.
-    const mobileNav = page.locator('header').locator('.md\\:hidden').last();
+    const mobileNav = page.getByTestId('mobile-nav-panel');
     await expect(mobileNav).toBeVisible();
 
     // Nav links should be visible inside the mobile panel
-    await expect(page.locator('header nav a').first()).toBeVisible();
+    await expect(mobileNav.locator('a').first()).toBeVisible();
   });
 
   // ────────────────────────────────────────────────────────────────────────
@@ -50,15 +48,15 @@ test.describe('Responsive Design', () => {
     await page.goto('/');
 
     // Open the menu
-    const hamburger = page.getByRole('button', { name: 'menu' });
+    const hamburger = page.getByTestId('mobile-menu-toggle');
     await hamburger.click();
 
     // Wait for mobile menu to open
-    const mobilePanel = page.locator('header').locator('.md\\:hidden').last();
+    const mobilePanel = page.getByTestId('mobile-nav-panel');
     await expect(mobilePanel).toBeVisible();
 
     // Click the "Portfolio" link in the mobile menu
-    const portfolioLink = page.locator('header').locator('a[href="/portfolio"]').last();
+    const portfolioLink = mobilePanel.locator('a[href="/portfolio"]');
     await expect(portfolioLink).toBeVisible();
     await portfolioLink.click();
 

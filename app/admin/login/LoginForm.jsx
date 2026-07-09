@@ -36,7 +36,8 @@ export default function LoginForm({ next = '/admin' }) {
     const err = validate(email, password);
     if (err) { e.preventDefault(); setClientError(err); return; }
     setClientError('');
-    formAction(new FormData(e.target));
+    // Let the form action={formAction} handle submission natively.
+    // Don't call formAction() manually — that causes double server action calls.
   };
 
   return (
@@ -55,7 +56,7 @@ export default function LoginForm({ next = '/admin' }) {
         <h1 className="mt-3 text-2xl font-sans font-semibold text-[#1d1d1f] tracking-[-0.02em]">Masuk ke Dasbor</h1>
         <p className="mt-2 text-sm text-[#6e6e73]">Otentikasi diverifikasi server-side via Supabase Auth.</p>
 
-        <form action={loginAction} onSubmit={onSubmit} className="mt-7 space-y-4">
+        <form action={formAction} onSubmit={onSubmit} className="mt-7 space-y-4">
           <input type="hidden" name="next" value={next} />
           <div>
             <label className="block font-mono text-[10px] text-[#2997ff] uppercase tracking-[0.18em] font-medium mb-2">Email</label>

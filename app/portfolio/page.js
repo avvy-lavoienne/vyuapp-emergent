@@ -137,7 +137,7 @@ export default async function PortfolioPage() {
                 </div>
               </div>
               <Link
-                href="/portfolio/ai-agents"
+                href="/portfolio/hikari-os"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#2997ff] text-white text-sm font-semibold hover:bg-[#0066cc] transition-all duration-200 hover:-translate-y-0.5 shrink-0"
               >
                 {t.caseStudy.cta} <ArrowRight className="w-4 h-4" />

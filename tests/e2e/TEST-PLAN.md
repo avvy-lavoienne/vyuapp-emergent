@@ -17,7 +17,7 @@
 | `/about` | Static | No | About page |
 | `/portfolio` | Static | No | Portfolio listing |
 | `/portfolio/[slug]` | Dynamic | No | Portfolio detail |
-| `/portfolio/ai-agents` | Static | No | AI Agents showcase |
+| `/portfolio/hikari-os` | Static | No | Hikari OS showcase |
 | `/insights` | Dynamic | No | Articles listing |
 | `/insights/[slug]` | Dynamic | No | Article detail |
 | `/category/[slug]` | Dynamic | No | Category filtering |
@@ -79,7 +79,7 @@
 | A9 | Article detail loads | Click first article | Article content visible |
 | A10 | Privacy page loads | `GET /privacy` | 200, policy text visible |
 | A11 | TOS page loads | `GET /tos` | 200, terms text visible |
-| A12 | AI Agents page loads | `GET /portfolio/ai-agents` | 200, agent cards visible |
+| A12 | Hikari OS page loads | `GET /portfolio/hikari-os` | 200, agent cards visible |
 | A13 | RSS feed valid | `GET /feed.xml` | 200, valid XML with `<item>`, `<link>`, `<pubDate>` |
 | A14 | Category page loads | `GET /category/technology` | 200, filtered articles shown |
 | A15 | 404 handling | `GET /insights/nonexistent-slug` | 404 page displayed |

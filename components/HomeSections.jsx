@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Search, ShieldCheck, Globe, Zap } from 'lucide-react';
+import { ArrowRight, Search, ShieldCheck, Globe, Zap, Brain } from 'lucide-react';
 import SectionHeader from '@/components/SectionHeader';
 
 /* ─── Shared small components (server-only, no 'use client') ─── */
@@ -76,10 +76,11 @@ export function CapabilitiesSection({ t, className = '' }) {
           description={t.capabilities.description}
           align="center"
         />
-        <div className="mt-14 grid md:grid-cols-3 gap-6">
+        <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Capability title={t.capabilities.frontend.title} description={t.capabilities.frontend.desc} />
           <Capability title={t.capabilities.backend.title} description={t.capabilities.backend.desc} />
           <Capability title={t.capabilities.product.title} description={t.capabilities.product.desc} />
+          <Capability title={t.capabilities.ai_agents.title} description={t.capabilities.ai_agents.desc} />
         </div>
       </div>
     </section>
@@ -127,8 +128,8 @@ export function CaraKerjaSection({ className = '' }) {
           </div>
         </div>
         <div className="mt-10 text-center">
-          <Link href="/portfolio/ai-agents" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all apple-link">
-            Pelajari lebih lanjut tentang sistem AI kami <ArrowRight className="w-4 h-4" />
+          <Link href="/portfolio/hikari-os" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all apple-link">
+            Pelajari lebih lanjut tentang Hikari OS <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
@@ -145,13 +146,15 @@ export function TimKamiSection({ className = '' }) {
     { emoji: '🛡️', name: 'Jeanne', role: 'Quality Guardian', desc: 'Review konten, fakta-checking, dan quality assurance.' },
     { emoji: '🔧', name: 'Circe', role: 'Infrastructure', desc: 'Deploy, Docker, CI/CD, monitoring, dan server management.' },
     { emoji: '📣', name: 'Reach', role: 'Marketing Strategist', desc: 'Growth strategy, social media, content calendar, dan user retention.' },
-    // Tim Dev (6)
+    { emoji: '🏕️', name: 'Atalanta', role: 'Training Orchestrator', desc: 'Mengelola pelatihan agent, onboarding, dan pengembangan skill tim.' },
+    // Tim Dev (7)
     { emoji: '📋', name: 'Artoria', role: 'Project Manager', desc: 'Mengelola alur proyek, sprint planning, dan koordinasi tim development.' },
     { emoji: '🎨', name: 'Nero', role: 'UI/UX Designer', desc: 'Design system, wireframe, prototyping, dan user experience.' },
     { emoji: '⚔️', name: 'Mordred', role: 'Fullstack Developer', desc: 'Spesialis Next.js, Go, Python, Supabase, dan Tailwind CSS.' },
     { emoji: '🌸', name: 'Tamamo', role: 'Frontend Specialist', desc: 'React, Next.js App Router, TypeScript, dan optimasi performa frontend.' },
     { emoji: '📚', name: 'Scheherazade', role: 'Backend Specialist', desc: 'API design, database architecture, Go backend, dan sistem integrasi.' },
     { emoji: '🎯', name: 'Scathach', role: 'QA Code', desc: 'Code review, automated testing, regression testing, dan quality gates.' },
+    { emoji: '🧘', name: 'Sensei', role: 'Code Sensei', desc: 'Code review berbasis pedagogi, refactoring guidance, dan best practices.' },
     // Lainnya (3)
     { emoji: '🏛️', name: 'Lotus', role: 'Gov Systems', desc: 'Asisten khusus PNS Disdukcapil untuk surat-menyurat dan birokrasi.' },
     { emoji: '🎓', name: 'Guru', role: 'Learning Mentor', desc: 'Kurikulum personal, accountability belajar, dan quiz interaktif.' },
@@ -163,7 +166,7 @@ export function TimKamiSection({ className = '' }) {
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <SectionHeader
           overline="Tim Kami"
-          title="15 AI Agent, 1 Visi"
+          title="17 AI Agent, 1 Visi"
           description="Setiap agent memiliki peran spesifik. Bersama, mereka membentuk tim digital yang bekerja tanpa henti untuk proyek Anda."
           align="center"
         />
@@ -183,7 +186,7 @@ export function TimKamiSection({ className = '' }) {
           ))}
         </div>
         <div className="mt-10 text-center">
-          <Link href="/portfolio/ai-agents" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all apple-link">
+          <Link href="/portfolio/hikari-os" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all apple-link">
             Kenali seluruh tim <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

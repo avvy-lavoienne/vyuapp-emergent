@@ -18,6 +18,7 @@ const nextConfig = {
       allowedOrigins: [
         'vyuapp.my.id',
         'localhost:3000',
+        'localhost:3780',
       ],
     },
   },

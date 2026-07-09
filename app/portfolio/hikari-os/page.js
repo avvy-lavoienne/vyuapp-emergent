@@ -1,7 +1,7 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
-import { ArrowRight, Search, ShieldCheck, Globe, Zap, Brain, FileText, Code, TestTube, Server, Megaphone, Building2, GraduationCap, ChevronRight, Headphones } from 'lucide-react';
+import { ArrowRight, Search, ShieldCheck, Globe, Zap, Brain, FileText, Code, TestTube, Server, Megaphone, Building2, GraduationCap, ChevronRight, Headphones, Dumbbell, User } from 'lucide-react';
 import { BreadcrumbJsonLd } from '@/components/JsonLd';
 
 export const revalidate = 3600;
@@ -10,18 +10,18 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE
 
 export const metadata = {
   title: 'VyuApp Multi-Agent System — Tim AI Agent',
-  description: 'Kenali 15 AI agent VyuApp: Hikari, Helena, Artoria, Jeanne, Circe, Reach, Mordred, Nero, Tamamo, Scheherazade, Scathach, Lotus, Guru, dan Hana.',
+  description: 'Kenali 17 AI agent VyuApp: Hikari, Helena, Artoria, Jeanne, Circe, Reach, Atalanta, Mordred, Nero, Tamamo, Scheherazade, Scathach, Sensei, Lotus, Guru, dan Hana.',
   openGraph: {
     title: 'VyuApp Multi-Agent System — Tim AI Agent',
-    description: 'Kenali 15 AI agent yang membentuk tim digital VyuApp.',
+    description: 'Kenali 17 AI agent yang membentuk tim digital VyuApp.',
     images: [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'VyuApp Multi-Agent System — Tim AI Agent',
-    description: 'Kenali 15 AI agent yang membentuk tim digital VyuApp.',
+    description: 'Kenali 17 AI agent yang membentuk tim digital VyuApp.',
   },
-  alternates: { canonical: `${baseUrl}/portfolio/ai-agents` },
+  alternates: { canonical: `${baseUrl}/portfolio/hikari-os` },
 };
 
 const agentGroups = [
@@ -81,6 +81,14 @@ const agentGroups = [
         description: 'Growth strategy, social media, content calendar, user retention. Prioritas utama: membangun kepercayaan komunitas jangka panjang.',
         capabilities: ['Growth strategy', 'Social media management', 'Content calendar planning', 'Community trust building'],
       },
+      {
+        emoji: '🏕️',
+        name: 'Atalanta',
+        role: 'Training Orchestrator',
+        icon: Dumbbell,
+        description: 'Mengelola pelatihan agent, onboarding, dan pengembangan skill tim. Memastikan setiap agent terus berkembang dan perform.',
+        capabilities: ['Agent training programs', 'Skill development', 'Onboarding workflows', 'Performance tracking'],
+      },
     ],
   },
   {
@@ -133,6 +141,14 @@ const agentGroups = [
         icon: TestTube,
         description: 'Code review, automated testing, regression testing, dan quality gates. Memastikan setiap baris kode memenuhi standar produksi.',
         capabilities: ['Code review', 'Automated testing', 'Regression testing', 'Quality gates'],
+      },
+      {
+        emoji: '🧘',
+        name: 'Sensei',
+        role: 'Code Sensei',
+        icon: User,
+        description: 'Code review berbasis pedagogi, refactoring guidance, dan best practices. Membantu developer tumbuh melalui kode berkualitas.',
+        capabilities: ['Pedagogical code review', 'Refactoring guidance', 'Best practices mentorship', 'Code quality education'],
       },
     ],
   },
@@ -229,10 +245,10 @@ const processSteps = [
 const breadcrumbItems = [
   { name: 'Beranda', url: `${baseUrl}/` },
   { name: 'Portfolio', url: `${baseUrl}/portfolio` },
-  { name: 'Multi-Agent System', url: `${baseUrl}/portfolio/ai-agents` },
+  { name: 'Multi-Agent System', url: `${baseUrl}/portfolio/hikari-os` },
 ];
 
-export default function AIAgentsPage() {
+export default function HikariOSPage() {
   return (
     <main className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000]">
       <BreadcrumbJsonLd items={breadcrumbItems} />
@@ -290,7 +306,7 @@ export default function AIAgentsPage() {
             Mengenal Setiap Agent
           </h2>
           <p className="mt-4 text-base text-[#4A4A48] dark:text-[#86868b] leading-relaxed max-w-2xl">
-            15 AI agent dengan spesialisasi masing-masing, bekerja secara terkoordinasi untuk menghasilkan website berkualitas tinggi.
+            17 AI agent dengan spesialisasi masing-masing, bekerja secara terkoordinasi untuk menghasilkan website berkualitas tinggi.
           </p>
 
           {agentGroups.map((group) => (

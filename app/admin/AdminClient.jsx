@@ -181,7 +181,7 @@ function ArticleEditor({ article, onClose, onSaved }) {
             <div className="vyu-card overflow-hidden">
               {form.cover && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={form.cover} alt="" className="w-full h-44 object-cover opacity-90" />
+                <img src={form.cover} alt={form.title || 'Article cover image'} className="w-full h-44 object-cover opacity-90" />
               )}
               <div className="p-6">
                 <p className="vyu-overline">// {form.category}</p>
@@ -350,7 +350,7 @@ function PortfolioEditor({ item, onClose, onSaved }) {
           <div className="vyu-card overflow-hidden">
             {form.cover && (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={form.cover} alt="" className="w-full h-40 object-cover opacity-90" />
+              <img src={form.cover} alt={form.name || 'Product cover image'} className="w-full h-40 object-cover opacity-90" />
             )}
             <div className="p-6">
               <p className="vyu-overline">// {form.category}</p>

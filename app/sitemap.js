@@ -13,7 +13,7 @@ export default async function sitemap() {
     { url: `${base}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${base}/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${base}/tos`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${base}/portfolio/ai-agents`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${base}/portfolio/hikari-os`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },
   ];
 
   // Category pages

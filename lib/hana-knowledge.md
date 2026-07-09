@@ -18,29 +18,31 @@
 - Tagline: "Membangun sistem yang tahan lama"
 - Filosofi: Setiap proyek = produk yang bertanggung jawab atas keberlangsungan operasionalnya
 
-## Tim AI (15 Agent)
-VyuApp mengoperasikan 15 AI agent 24/7:
+## Tim AI (17 Agent)
+VyuApp mengoperasikan 17 AI agent 24/7:
 
-### Tim Artikel (6)
+### Tim Artikel (7)
 1. **Hikari** (Orchestrator) — Koordinasi dan manajemen seluruh tim
 2. **Helena** (Research Specialist) — Riset & analisis pasar mendalam
 3. **Artoria** (Content Creator) — Penulisan konten SEO-optimized & dokumentasi teknis
 4. **Jeanne** (Quality Guardian) — Review konten, fakta-checking, dan QA
 5. **Circe** (Infrastructure) — Deploy, Docker, CI/CD, monitoring, dan server management
 6. **Reach** (Marketing Strategist) — Growth strategy, social media, content calendar
+7. **Atalanta** (Training Orchestrator) — Pelatihan agent, onboarding, pengembangan skill
 
-### Tim Dev (6)
-7. **Artoria** (Project Manager) — Sprint planning, koordinasi tim development
-8. **Nero** (UI/UX Designer) — Design system, wireframe, prototyping
-9. **Mordred** (Fullstack Developer) — Next.js, Go, Python, Supabase, Tailwind CSS
-10. **Tamamo** (Frontend Specialist) — React, Next.js App Router, TypeScript
-11. **Scheherazade** (Backend Specialist) — API design, database architecture, Go backend
-12. **Scathach** (QA Code) — Code review, automated testing, regression testing
+### Tim Dev (8)
+8. **Artoria** (Project Manager) — Sprint planning, koordinasi tim development
+9. **Nero** (UI/UX Designer) — Design system, wireframe, prototyping
+10. **Mordred** (Fullstack Developer) — Next.js, Go, Python, Supabase, Tailwind CSS
+11. **Tamamo** (Frontend Specialist) — React, Next.js App Router, TypeScript
+12. **Scheherazade** (Backend Specialist) — API design, database architecture, Go backend
+13. **Scathach** (QA Code) — Code review, automated testing, regression testing
+14. **Sensei** (Code Sensei) — Code review pedagogi, refactoring guidance, best practices
 
-### Lainnya (3)
-13. **Lotus** — Sistem pemerintahan (Disdukcapil specialist)
-14. **Guru** — Edukasi & mentoring
-15. **Hana** — Customer service real-time
+### Lainnya (2)
+15. **Lotus** — Sistem pemerintahan (Disdukcapil specialist)
+16. **Guru** — Edukasi & mentoring
+17. **Hana** — Customer service real-time
 
 ## Produk Unggulan
 

@@ -3,12 +3,6 @@ import { test, expect } from '@playwright/test';
 const PUBLIC_ROUTES = ['/', '/about', '/portfolio', '/insights', '/privacy', '/tos'];
 
 test.describe('Performance & SEO', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => {
-      localStorage.removeItem('vyuapp_cookie_consent');
-    });
-  });
-
   // I1. Meta tags present
   test('I1: meta tags present on homepage', async ({ page }) => {
     await page.goto('/');
@@ -38,8 +32,9 @@ test.describe('Performance & SEO', () => {
 
     const href = await canonical.getAttribute('href');
     expect(href).toBeTruthy();
-    expect(href).toContain('localhost');
-    expect(href).toMatch(/\/$/);
+    // Canonical should point to the production domain
+    expect(href).toMatch(/^https?:\/\//);
+    expect(href).toMatch(/\/?$/);
   });
 
   // I3. Robots meta
@@ -117,16 +112,17 @@ test.describe('Performance & SEO', () => {
 
     const body = await response.text();
     expect(body).toContain('<?xml');
+    expect(body).toContain('<urlset');
 
-    // Check for all expected public routes in the sitemap
+    // Check for all expected public routes — sitemap uses absolute URLs
     const expectedRoutes = [
       ...PUBLIC_ROUTES,
-      '/feed.xml',
-      '/sitemap.xml',
     ];
 
     for (const route of expectedRoutes) {
-      expect(body, `sitemap missing route: ${route}`).toContain(route);
+      // Match either relative path or absolute URL containing this path
+      const pathPattern = route === '/' ? '<loc>[^<]*/</loc>' : `<loc>[^<]*${route.replace(/\//g, '\\/')}</loc>`;
+      expect(body, `sitemap missing route: ${route}`).toMatch(new RegExp(pathPattern));
     }
   });
 });

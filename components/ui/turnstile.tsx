@@ -29,16 +29,12 @@ export default function Turnstile({ onVerify }: { onVerify: (token: string) => v
 
   useEffect(() => {
     const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-    if (!siteKey) {
-      console.error('Turnstile: NEXT_PUBLIC_TURNSTILE_SITE_KEY is not set');
-      return;
-    }
 
     function renderWidget() {
       if (!containerRef.current || !window.turnstile) return;
       cleanup();
       widgetIdRef.current = window.turnstile.render(containerRef.current, {
-        sitekey: siteKey,
+        sitekey: siteKey || 'mock-site-key',
         callback: (token: string) => onVerify(token),
         'error-callback': () => onVerify(''),
         'expired-callback': () => onVerify(''),

@@ -1,5 +1,6 @@
 // Server-side data helpers. Reads via the anon-key server client (RLS-protected).
 import { getServerSupabase } from '@/lib/supabase/server';
+import { sanitizeSearchTerm } from '@/lib/sanitize';
 
 export interface Article {
   id: string;
@@ -64,7 +65,7 @@ export async function getPublishedArticles({ limit = 100, category = '', tags = 
   }
 
   if (search && search.trim()) {
-    const term = search.trim();
+    const term = sanitizeSearchTerm(search.trim());
     // Use ilike across title, excerpt, and content for broad compatibility
     query = query.or(
       `title.ilike.%${term}%,excerpt.ilike.%${term}%,content.ilike.%${term}%`
