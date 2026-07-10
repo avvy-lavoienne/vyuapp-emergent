@@ -1,9 +1,11 @@
 'use client';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/components/LocaleProvider';
+import WordReveal from '@/components/WordReveal';
 
 /**
  * Client Component — reads locale from context for reactive language toggle.
+ * Hero headline uses WordReveal for blur + translateY stagger animation.
  */
 export default function Hero() {
   const { t } = useLocale();
@@ -12,14 +14,15 @@ export default function Hero() {
     <section className="relative pt-36 pb-28 md:pt-44 md:pb-36 overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-6 md:px-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.5rem] leading-[1.04] font-sans font-semibold tracking-[-0.03em] text-[#1d1d1f] dark:text-[#f5f5f7]">
-            {t.hero.headline.split(' ').slice(0, -1).join(' ')}{' '}
-            <span className="relative text-[#2997ff]">
-              {t.hero.headline.split(' ').slice(-1)[0].replace('.', '')}
-              <span className="absolute -bottom-1.5 left-0 right-0 h-[2px] bg-gradient-to-r from-[#2997ff]/60 to-[#2997ff]/10 rounded-full" />
-            </span>
-            .
-          </h1>
+          <WordReveal
+            text={t.hero.headline}
+            tag="h1"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.5rem] leading-[1.04] font-sans font-semibold tracking-[-0.03em] text-[#1d1d1f] dark:text-[#f5f5f7]"
+            highlightLast={true}
+            highlightClassName="text-[#2997ff]"
+            staggerDelay={100}
+            animationDelay={400}
+          />
 
           <p className="mt-5 text-base md:text-lg text-[#6e6e73] dark:text-[#8A8A8A] font-medium tracking-wide">
             {t.hero.tagline}

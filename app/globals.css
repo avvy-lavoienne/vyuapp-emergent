@@ -60,6 +60,26 @@ html { scroll-behavior: smooth; }
   opacity: 1;
 }
 
+/* ================================================
+   CARD STAGGER ENTRY — 100ms cascade per card
+   ================================================ */
+.stagger-child {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.stagger-visible .stagger-child {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: calc(var(--stagger-index, 0) * 100ms);
+}
+/* Prevent layout shift: reserve space immediately */
+.stagger-child > * {
+  will-change: auto;
+}
+
 /* Legacy animation classes (keep for backward compat) */
 @keyframes fade-up-keyframe {
   from { opacity: 0; transform: translateY(24px); }
@@ -74,6 +94,161 @@ html { scroll-behavior: smooth; }
 }
 .animate-fade-in {
   animation: fade-in-keyframe 0.6s ease both;
+}
+
+/* ================================================
+   HERO WORD REVEAL — Blur + TranslateY Stagger
+   ================================================ */
+
+.word-reveal-word {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.word-reveal-inner {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(100%);
+  will-change: opacity, filter, transform;
+}
+
+.word-reveal-inner.animate {
+  animation: word-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes word-reveal {
+  0% {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(100%);
+  }
+  50% {
+    filter: blur(2px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0);
+  }
+}
+
+/* ================================================
+   SECTION HEADLINE SLIDE-IN — Staggered Reveal
+   ================================================ */
+
+/* Overline: slide in from left */
+.section-headline-overline {
+  opacity: 0;
+  transform: translateX(-20px);
+  will-change: opacity, transform;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section-headline-overline.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Title: slide up from bottom */
+.section-headline-title {
+  opacity: 0;
+  transform: translateY(32px);
+  will-change: opacity, transform;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section-headline-title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Description: slide up from bottom, lighter */
+.section-headline-desc {
+  opacity: 0;
+  transform: translateY(20px);
+  will-change: opacity, transform;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.section-headline-desc.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ================================================
+   WCAG 2.3.3 — prefers-reduced-motion: reduce
+   Disables ALL animations + transitions globally
+   ================================================ */
+@media (prefers-reduced-motion: reduce) {
+  /* Global: disable smooth scroll */
+  html { scroll-behavior: auto !important; }
+
+  /* Kill ALL keyframe animations */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Section headline slide-in transitions */
+  .section-headline-overline,
+  .section-headline-title,
+  .section-headline-desc {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  /* Hero word-reveal: show immediately */
+  .hero-word {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+
+  /* Apple design micro-interactions — no hover transforms */
+  .apple-btn-hover:hover,
+  .apple-card-hover:hover,
+  .vyu-card:hover,
+  .vyu-btn-primary:hover,
+  .vyu-btn-secondary:hover,
+  .anth-card:hover,
+  .anth-btn-primary:hover,
+  .anth-btn-secondary:hover {
+    transform: none !important;
+  }
+
+  /* Apple link underline: show immediately */
+  .apple-link::after {
+    width: 100% !important;
+    transition: none !important;
+  }
+
+  /* Stagger delays: remove */
+  .stagger-delay-1,
+  .stagger-delay-2,
+  .stagger-delay-3,
+  .stagger-delay-4,
+  .stagger-delay-5 {
+    transition-delay: 0ms !important;
+  }
+
+  /* Parallax: fixed at scale(1) */
+  .parallax-image-inner {
+    transform: scale(1) !important;
+    transition: none !important;
+  }
+}
+
+/* Center-aligned overline: slide down from top instead */
+.section-headline-center .section-headline-overline {
+  transform: translateY(-12px);
+}
+.section-headline-center .section-headline-overline.visible {
+  transform: translateY(0);
 }
 
 /* ================================================
@@ -542,3 +717,28 @@ html { scroll-behavior: smooth; }
   color: #f5f5f7;
   border-color: #333336;
 }
+
+/* ================================================
+   PARALLAX IMAGE — Scroll-Linked Scale
+   ================================================ */
+
+.parallax-image-container {
+  position: relative;
+  border-radius: inherit;
+}
+
+.parallax-image-inner {
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  transition: transform 0.05s linear;
+}
+
+/* Ensure images inside parallax fill the container */
+.parallax-image-inner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+

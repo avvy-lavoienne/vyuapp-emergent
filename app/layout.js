@@ -6,6 +6,7 @@ import AdSenseScript from '@/components/AdSenseScript';
 import ChatWidget from '@/components/ChatWidget';
 import CookieConsent from '@/components/CookieConsent';
 import NavigationLoader from '@/components/NavigationLoader';
+import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
 import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from '@/components/JsonLd';
 
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', display: 'swap' });
@@ -103,6 +104,7 @@ export default function RootLayout({ children }) {
         <LocalBusinessJsonLd />
         <AdSenseScript />
         <NavigationLoader />
+        <ScrollProgressIndicator />
         <ChatWidget />
         <CookieConsent />
         {children}

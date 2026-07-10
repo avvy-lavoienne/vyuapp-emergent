@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { ArrowRight, Search, ShieldCheck, Globe, Zap, Brain } from 'lucide-react';
 import SectionHeader from '@/components/SectionHeader';
+import StaggerGroup from '@/components/StaggerGroup';
+import ParallaxCard from '@/components/ParallaxCard';
 
 /* ─── Shared small components (server-only, no 'use client') ─── */
 
@@ -76,12 +78,12 @@ export function CapabilitiesSection({ t, className = '' }) {
           description={t.capabilities.description}
           align="center"
         />
-        <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StaggerGroup className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Capability title={t.capabilities.frontend.title} description={t.capabilities.frontend.desc} />
           <Capability title={t.capabilities.backend.title} description={t.capabilities.backend.desc} />
           <Capability title={t.capabilities.product.title} description={t.capabilities.product.desc} />
           <Capability title={t.capabilities.ai_agents.title} description={t.capabilities.ai_agents.desc} />
-        </div>
+        </StaggerGroup>
       </div>
     </section>
   );
@@ -97,7 +99,7 @@ export function CaraKerjaSection({ className = '' }) {
           description="Di balik setiap proyek, ada tim AI yang bekerja secara otonom untuk memastikan hasil terbaik."
           align="center"
         />
-        <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <StaggerGroup className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] text-center apple-card-hover">
             <div className="w-12 h-12 rounded-xl bg-[#2997ff]/10 dark:bg-[#5BA3FF]/10 flex items-center justify-center mx-auto mb-4">
               <Search className="w-6 h-6 text-[#2997ff]" />
@@ -126,7 +128,7 @@ export function CaraKerjaSection({ className = '' }) {
             <h3 className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">Delivery Cepat</h3>
             <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">AI mempercepat proses pengembangan tanpa mengorbankan kualitas.</p>
           </div>
-        </div>
+        </StaggerGroup>
         <div className="mt-10 text-center">
           <Link href="/portfolio/hikari-os" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all apple-link">
             Pelajari lebih lanjut tentang Hikari OS <ArrowRight className="w-4 h-4" />
@@ -170,7 +172,7 @@ export function TimKamiSection({ className = '' }) {
           description="Setiap agent memiliki peran spesifik. Bersama, mereka membentuk tim digital yang bekerja tanpa henti untuk proyek Anda."
           align="center"
         />
-        <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
+        <StaggerGroup className="mt-14 grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
           {agents.map((agent) => (
             <div
               key={`${agent.name}-${agent.role}`}
@@ -184,7 +186,7 @@ export function TimKamiSection({ className = '' }) {
               <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#86868b] leading-relaxed">{agent.desc}</p>
             </div>
           ))}
-        </div>
+        </StaggerGroup>
         <div className="mt-10 text-center">
           <Link href="/portfolio/hikari-os" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all apple-link">
             Kenali seluruh tim <ArrowRight className="w-4 h-4" />
@@ -212,24 +214,28 @@ export function PortfolioSection({ t, className = '' }) {
             {t.portfolio.view_all} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-        <div className="grid lg:grid-cols-2 gap-7">
-          <ProductCard
-            name="Sellica"
-            tagline={t.portfolio.sellica.tagline}
-            description={t.portfolio.sellica.desc}
-            features={t.portfolio.sellica.features}
-            href="/portfolio"
-            ctaLabel={t.portfolio.sellica.cta}
-          />
-          <ProductCard
-            name="The Avalon Project"
-            tagline={t.portfolio.avalon.tagline}
-            description={t.portfolio.avalon.desc}
-            features={t.portfolio.avalon.features}
-            href="https://avalon.vyuapp.my.id/"
-            ctaLabel={t.portfolio.avalon.cta}
-          />
-        </div>
+        <StaggerGroup className="grid lg:grid-cols-2 gap-7">
+          <ParallaxCard>
+            <ProductCard
+              name="Sellica"
+              tagline={t.portfolio.sellica.tagline}
+              description={t.portfolio.sellica.desc}
+              features={t.portfolio.sellica.features}
+              href="/portfolio"
+              ctaLabel={t.portfolio.sellica.cta}
+            />
+          </ParallaxCard>
+          <ParallaxCard>
+            <ProductCard
+              name="The Avalon Project"
+              tagline={t.portfolio.avalon.tagline}
+              description={t.portfolio.avalon.desc}
+              features={t.portfolio.avalon.features}
+              href="https://avalon.vyuapp.my.id/"
+              ctaLabel={t.portfolio.avalon.cta}
+            />
+          </ParallaxCard>
+        </StaggerGroup>
       </div>
     </section>
   );
@@ -244,11 +250,11 @@ export function PhilosophySection({ t, className = '' }) {
           title={t.philosophy.title}
           align="center"
         />
-        <div className="mt-14 grid md:grid-cols-3 gap-6">
+        <StaggerGroup className="mt-14 grid md:grid-cols-3 gap-6">
           {t.philosophy.items.map((item, i) => (
             <PhilosophyItem key={i} title={item.title} description={item.desc} />
           ))}
-        </div>
+        </StaggerGroup>
       </div>
     </section>
   );
