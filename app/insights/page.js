@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import SectionHeader from '@/components/SectionHeader';
 import ArticleFilters from '@/components/ArticleFilters';
 import ArticleSearch from '@/components/ArticleSearch';
+import Pagination from '@/components/Pagination';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import Image from 'next/image';
@@ -86,11 +87,17 @@ export default async function InsightsPage({ searchParams }) {
   const category = params?.category || '';
   const tags = params?.tags || '';
   const q = params?.q || '';
+  const page = Math.max(1, parseInt(params?.page, 10) || 1);
+  const perPage = 9;
 
-  const [articles, allArticles] = await Promise.all([
-    getPublishedArticles({ category, tags, search: q }),
+  const [articles, allArticles, totalCountAll] = await Promise.all([
+    getPublishedArticles({ category, tags, search: q, page, limit: perPage }),
     getPublishedArticles(),
+    getPublishedArticles({ category, tags, search: q, limit: 9999 }),
   ]);
+
+  const totalFiltered = totalCountAll.length;
+  const totalPages = Math.ceil(totalFiltered / perPage);
 
   const availableTags = [...new Set(allArticles.flatMap(a => a.tags || []))].sort();
 
@@ -149,12 +156,13 @@ export default async function InsightsPage({ searchParams }) {
             <>
               {q && (
                 <p className="mb-5 text-sm text-[#6e6e73] dark:text-[#8A8A88]">
-                  {articles.length} hasil untuk &ldquo;{q}&rdquo;
+                  {totalFiltered} hasil untuk &ldquo;{q}&rdquo;
                 </p>
               )}
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7" key={`${category}-${tags}-${q}`}>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7" key={`${category}-${tags}-${q}-${page}`}>
                 {articles.map((a, i) => <ArticleCard key={a.id} a={a} featured={i === 0} index={i} />)}
               </div>
+              <Pagination currentPage={page} totalPages={totalPages} />
             </>
           )}
         </div>

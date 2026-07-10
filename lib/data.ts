@@ -37,18 +37,22 @@ export interface PortfolioItem {
 
 interface GetArticlesOptions {
   limit?: number;
+  page?: number;
+  offset?: number;
   category?: string;
   tags?: string;
   search?: string;
 }
 
-export async function getPublishedArticles({ limit = 100, category = '', tags = '', search = '' }: GetArticlesOptions = {}): Promise<Article[]> {
+export async function getPublishedArticles({ limit = 100, page = 1, offset, category = '', tags = '', search = '' }: GetArticlesOptions = {}): Promise<Article[]> {
   const supabase = await getServerSupabase();
+  const computedOffset = offset ?? (page - 1) * limit;
   let query = supabase
     .from('articles')
     .select('id, slug, title, excerpt, cover, category, tags, published_at, updated_at, content')
     .eq('status', 'published')
     .order('published_at', { ascending: false })
+    .range(computedOffset, computedOffset + limit - 1)
     .limit(limit);
 
   if (category) {

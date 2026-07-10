@@ -17,7 +17,7 @@ export default function Hero() {
           <WordReveal
             text={t.hero.headline}
             tag="h1"
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.5rem] leading-[1.04] font-sans font-semibold tracking-[-0.03em] text-[#1d1d1f] dark:text-[#f5f5f7]"
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.5rem] leading-[1.12] font-sans font-semibold tracking-[-0.03em] text-[#1d1d1f] dark:text-[#f5f5f7]"
             highlightLast={true}
             highlightClassName="text-[#2997ff]"
             staggerDelay={100}
