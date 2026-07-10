@@ -61,6 +61,9 @@ export const metadata = {
     shortcut: { url: '/favicon/favicon.ico', type: 'image/x-icon' },
   },
   manifest: '/favicon/site.webmanifest',
+  verification: {
+    google: 'iXj8r3xIA1yNXkmopuNR9oVhNShAMLrRa7MD_YEHyz0',
+  },
   other: {
     ...(adsenseClient ? { 'google-adsense-account': adsenseClient } : {}),
     'theme-color': '#f5f5f7',
