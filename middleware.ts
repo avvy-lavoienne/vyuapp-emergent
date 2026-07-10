@@ -2,6 +2,13 @@ import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  
+  // Skip middleware for static files in public/
+  if (pathname === '/sitemap.xml' || pathname === '/feed.xml' || pathname === '/robots.txt') {
+    return NextResponse.next();
+  }
+  
   let response = NextResponse.next({ request: { headers: request.headers } });
 
   const supabase = createServerClient(
@@ -26,7 +33,6 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  const { pathname } = request.nextUrl;
   const isLoginRoute = pathname === '/admin/login';
   const isAdminRoute = pathname === '/admin' || pathname.startsWith('/admin/');
 
