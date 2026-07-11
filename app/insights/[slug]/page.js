@@ -12,9 +12,20 @@ import ArticleNav from '@/components/ArticleNav';
 
 import { BreadcrumbJsonLd, ArticleJsonLd, FAQPageJsonLd } from '@/components/JsonLd';
 import sanitizeHtml from 'sanitize-html';
+import { getPublicSupabase } from '@/lib/supabase/public';
 
 // ISR: cache rendered pages for 1 hour, serve stale while revalidating
 export const revalidate = 3600;
+
+export async function generateStaticParams() {
+  const supabase = getPublicSupabase();
+  const { data } = await supabase
+    .from('articles')
+    .select('slug')
+    .eq('status', 'published')
+    .limit(200);
+  return (data || []).map((a) => ({ slug: a.slug }));
+}
 
 function extractFAQs(html) {
   if (!html) return [];
