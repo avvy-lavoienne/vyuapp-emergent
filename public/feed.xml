@@ -5,7 +5,7 @@
     <link>https://www.vyuapp.my.id/insights</link>
     <description>Esai teknis tentang rekayasa web, data intelligence, dan filosofi studio dari VyuApp.</description>
     <language>id</language>
-    <lastBuildDate>Sat, 11 Jul 2026 08:35:52 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 11 Jul 2026 08:59:23 GMT</lastBuildDate>
     <atom:link href="https://www.vyuapp.my.id/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Pola Caching Redis untuk Aplikasi Web yang Skalabel</title>
