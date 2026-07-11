@@ -13,7 +13,7 @@ import ArticleNav from '@/components/ArticleNav';
 import { BreadcrumbJsonLd, ArticleJsonLd, FAQPageJsonLd } from '@/components/JsonLd';
 import sanitizeHtml from 'sanitize-html';
 
-// ISR: Revalidate every hour (3600s)
+// ISR: cache rendered pages for 1 hour, serve stale while revalidating
 export const revalidate = 3600;
 
 function extractFAQs(html) {
