@@ -13,6 +13,9 @@ import ArticleNav from '@/components/ArticleNav';
 import { BreadcrumbJsonLd, ArticleJsonLd, FAQPageJsonLd } from '@/components/JsonLd';
 import sanitizeHtml from 'sanitize-html';
 
+// ISR: Revalidate every hour (3600s)
+export const revalidate = 3600;
+
 function extractFAQs(html) {
   if (!html) return [];
   const faqs = [];
@@ -33,8 +36,6 @@ function extractFAQs(html) {
   }
   return faqs;
 }
-
-export const revalidate = 3600;
 
 function sanitizeHtmlContent(html) {
   if (!html) return '';
@@ -104,11 +105,11 @@ export default async function ArticlePage({ params }) {
   const article = await getArticlesWithAutoLinks(slug);
   if (!article || article.status !== 'published') notFound();
 
-  // Smart related articles (Feature 1)
-  const related = await getRelatedArticles(slug, article.category, article.tags || [], 3);
-
-  // Previous/Next navigation (Feature 2)
-  const { prev: prevArticle, next: nextArticle } = await getAdjacentArticles(article.published_at);
+  // Fetch related articles AND adjacent articles in parallel
+  const [related, { prev: prevArticle, next: nextArticle }] = await Promise.all([
+    getRelatedArticles(slug, article.category, article.tags || [], 3),
+    getAdjacentArticles(article.published_at),
+  ]);
 
   const linkedContent = article.content; // already auto-linked
   const [c1, c2, c3] = splitHTMLByParagraphs(linkedContent);

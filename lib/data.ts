@@ -90,8 +90,29 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
 }
 
 export async function getRelatedArticles(currentSlug: string, category: string, tags: string[], limit: number = 3): Promise<Article[]> {
-  const all = await getPublishedArticles({ limit: 100 });
-  const others = all.filter(a => a.slug !== currentSlug);
+  const supabase = await getServerSupabase();
+
+  // Fetch articles with same category OR overlapping tags (but not the current one)
+  // Use a single query with or() filter for efficiency
+  let query = supabase
+    .from('articles')
+    .select('id, slug, title, excerpt, cover, category, tags, published_at, updated_at')
+    .eq('status', 'published')
+    .neq('slug', currentSlug)
+    .order('published_at', { ascending: false })
+    .limit(50); // reasonable upper bound
+
+  if (category && tags.length > 0) {
+    // Match same category OR any shared tag
+    query = query.or(`category.eq.${category},tags.overlaps.{${tags.join(',')}}`);
+  } else if (category) {
+    query = query.eq('category', category);
+  } else if (tags.length > 0) {
+    query = query.overlaps('tags', tags);
+  }
+
+  const { data: candidates } = await query;
+  const others = (candidates as Article[]) || [];
 
   // Score: same category +10, each shared tag +3
   const scored = others.map(a => {
@@ -115,45 +136,50 @@ export async function getAdjacentArticles(publishedAt: string | null): Promise<{
   if (!publishedAt) return { prev: null, next: null };
   const supabase = await getServerSupabase();
 
-  // Article published just BEFORE this one (older)
-  const { data: prevData } = await supabase
-    .from('articles')
-    .select('id, slug, title, excerpt, cover, category, tags, published_at, updated_at')
-    .eq('status', 'published')
-    .lt('published_at', publishedAt)
-    .order('published_at', { ascending: false })
-    .limit(1)
-    .maybeSingle();
-
-  // Article published just AFTER this one (newer)
-  const { data: nextData } = await supabase
-    .from('articles')
-    .select('id, slug, title, excerpt, cover, category, tags, published_at, updated_at')
-    .eq('status', 'published')
-    .gt('published_at', publishedAt)
-    .order('published_at', { ascending: true })
-    .limit(1)
-    .maybeSingle();
+  // Fetch prev and next articles in parallel
+  const [prevResult, nextResult] = await Promise.all([
+    supabase
+      .from('articles')
+      .select('id, slug, title, excerpt, cover, category, tags, published_at, updated_at')
+      .eq('status', 'published')
+      .lt('published_at', publishedAt)
+      .order('published_at', { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+    supabase
+      .from('articles')
+      .select('id, slug, title, excerpt, cover, category, tags, published_at, updated_at')
+      .eq('status', 'published')
+      .gt('published_at', publishedAt)
+      .order('published_at', { ascending: true })
+      .limit(1)
+      .maybeSingle(),
+  ]);
 
   return {
-    prev: (prevData as Article) || null,
-    next: (nextData as Article) || null,
+    prev: (prevResult.data as Article) || null,
+    next: (nextResult.data as Article) || null,
   };
 }
 
 export async function getArticlesWithAutoLinks(slug: string): Promise<Article | null> {
   const { autoLinkContent } = await import('@/lib/auto-link');
-  const article = await getArticleBySlug(slug);
+  const supabase = await getServerSupabase();
+
+  // Fetch article AND all other article titles in parallel
+  const [articleResult, allArticlesResult] = await Promise.all([
+    supabase.from('articles').select('*').eq('slug', slug).maybeSingle(),
+    supabase
+      .from('articles')
+      .select('title, slug')
+      .eq('status', 'published')
+      .neq('slug', slug),
+  ]);
+
+  const article = articleResult.data as Article | null;
   if (!article) return null;
 
-  // Fetch all other published articles (just title + slug for efficiency)
-  const supabase = await getServerSupabase();
-  const { data: allArticles } = await supabase
-    .from('articles')
-    .select('title, slug')
-    .eq('status', 'published')
-    .neq('slug', slug);
-
+  const allArticles = allArticlesResult.data;
   if (!allArticles || allArticles.length === 0) return article;
 
   const linkedContent = autoLinkContent(article.content, allArticles as { title: string; slug: string }[]);
