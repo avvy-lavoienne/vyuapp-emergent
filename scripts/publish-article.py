@@ -13,14 +13,14 @@ Usage:
 
 Flow:
     1. Read article data (JSON or args)
-    2. Upsert to Supabase articles table (status=published)
+    2. Upsert to Supabase articles table (status=published) with retry
     3. Send Telegram notification: "Artikel siap review: {title}"
     4. Output article ID + slug
 
 Exit codes:
     0 = success
     1 = validation error
-    2 = Supabase error
+    2 = Supabase error (after retries exhausted)
     3 = Telegram error (article still published)
 """
 
@@ -30,7 +30,17 @@ import json
 import argparse
 import urllib.request
 import urllib.error
+import time
+import logging
 from datetime import datetime, timezone
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+log = logging.getLogger('publish-article')
 
 # Load .env from project root
 def load_dotenv(path):
@@ -79,8 +89,13 @@ def validate_article(data: dict) -> list[str]:
     return errors
 
 
-def supabase_upsert(article: dict) -> dict:
-    """Upsert article to Supabase. Returns response data."""
+def supabase_upsert(article: dict, max_retries: int = 3) -> dict:
+    """Upsert article to Supabase with retry logic. Returns response data.
+
+    Retries up to max_retries times with exponential backoff (1s, 2s, 4s).
+    Only retries on transient errors (timeout, connection, 5xx).
+    Raises ValueError on permanent failure after all retries exhausted.
+    """
     if not SUPABASE_URL or not SUPABASE_KEY:
         raise ValueError('Supabase credentials not configured')
 
@@ -105,28 +120,60 @@ def supabase_upsert(article: dict) -> dict:
         'status': 'published',
     }
 
-    # Upsert on slug conflict
+    # Upsert on slug conflict — with retry
     data = json.dumps([payload]).encode('utf-8')
-    req = urllib.request.Request(
-        url,
-        data=data,
-        headers=headers,
-        method='POST'
-    )
+    last_error = None
 
-    try:
-        with urllib.request.urlopen(req, timeout=30) as resp:
-            body = json.loads(resp.read().decode('utf-8'))
-            return body[0] if body else payload
-    except urllib.error.HTTPError as e:
-        error_body = e.read().decode('utf-8') if e.fp else str(e)
-        raise ValueError(f'Supabase HTTP {e.code}: {error_body}')
+    for attempt in range(1, max_retries + 1):
+        req = urllib.request.Request(
+            url,
+            data=data,
+            headers=headers,
+            method='POST'
+        )
+
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                body = json.loads(resp.read().decode('utf-8'))
+                result = body[0] if body else payload
+                log.info(f'Supabase upsert OK (attempt {attempt}): slug={slug}, id={result.get("id", "unknown")}')
+                return result
+
+        except urllib.error.HTTPError as e:
+            error_body = e.read().decode('utf-8') if e.fp else str(e)
+            last_error = f'Supabase HTTP {e.code}: {error_body}'
+            log.warning(f'Supabase upsert FAILED (attempt {attempt}/{max_retries}): {last_error}')
+
+            # Don't retry on client errors (4xx except 429)
+            if 400 <= e.code < 500 and e.code != 429:
+                raise ValueError(f'Supabase client error (no retry): {last_error}')
+
+        except urllib.error.URLError as e:
+            last_error = f'Supabase connection error: {e.reason}'
+            log.warning(f'Supabase upsert FAILED (attempt {attempt}/{max_retries}): {last_error}')
+
+        except TimeoutError:
+            last_error = 'Supabase request timed out (30s)'
+            log.warning(f'Supabase upsert FAILED (attempt {attempt}/{max_retries}): {last_error}')
+
+        except Exception as e:
+            last_error = f'Unexpected error: {type(e).__name__}: {e}'
+            log.warning(f'Supabase upsert FAILED (attempt {attempt}/{max_retries}): {last_error}')
+
+        # Backoff before retry (1s, 2s, 4s)
+        if attempt < max_retries:
+            backoff = 2 ** (attempt - 1)
+            log.info(f'Retrying in {backoff}s...')
+            time.sleep(backoff)
+
+    # All retries exhausted
+    raise ValueError(f'Supabase upsert FAILED after {max_retries} attempts. Last error: {last_error}')
 
 
 def send_telegram_notification(title: str, slug: str, article_id: str = ''):
     """Send Telegram notification about new published article."""
     if not BOT_TOKEN or not CHAT_ID:
-        print('WARNING: Telegram credentials not set, skipping notification', file=sys.stderr)
+        log.warning('Telegram credentials not set, skipping notification')
         return False
 
     preview_url = f'https://vyuapp.my.id/insights/{slug}'
@@ -160,7 +207,7 @@ def send_telegram_notification(title: str, slug: str, article_id: str = ''):
             result = json.loads(resp.read().decode('utf-8'))
             return result.get('ok', False)
     except Exception as e:
-        print(f'WARNING: Telegram notification failed: {e}', file=sys.stderr)
+        log.warning(f'Telegram notification failed: {e}')
         return False
 
 
@@ -218,17 +265,17 @@ def main():
                 parser.print_help()
                 sys.exit(1)
     except json.JSONDecodeError as e:
-        print(f'ERROR: Invalid JSON: {e}', file=sys.stderr)
+        log.error(f'Invalid JSON: {e}')
         sys.exit(1)
     except Exception as e:
-        print(f'ERROR: Failed to read input: {e}', file=sys.stderr)
+        log.error(f'Failed to read input: {e}')
         sys.exit(1)
 
     # 2. Validate
     errors = validate_article(article)
     if errors:
         for err in errors:
-            print(f'ERROR: {err}', file=sys.stderr)
+            log.error(err)
         sys.exit(1)
 
     # Generate slug if missing
@@ -243,31 +290,33 @@ def main():
         print(json.dumps(article, indent=2, ensure_ascii=False))
         sys.exit(0)
 
-    # 4. Publish to Supabase
+    # 4. Publish to Supabase (with retry)
+    log.info(f'Publishing article: slug={slug}, title={title}')
     try:
         result = supabase_upsert(article)
         article_id = result.get('id', '')
+        log.info(f'Published OK: id={article_id}, slug={slug}')
         print(f'OK: Published as published')
         print(f'ID: {article_id}')
         print(f'Slug: {slug}')
         print(f'Title: {title}')
     except Exception as e:
-        print(f'ERROR: Supabase publish failed: {e}', file=sys.stderr)
+        log.error(f'Supabase publish FAILED after retries: {e}')
         sys.exit(2)
 
-    # 5. Telegram notification
+    # 5. Telegram notification (non-blocking — article already published)
     if not args.no_notify:
         try:
             sent = send_telegram_notification(title, slug, article_id)
             if sent:
-                print('OK: Telegram notification sent')
+                log.info('Telegram notification sent')
             else:
-                print('WARNING: Telegram notification not sent (check credentials)', file=sys.stderr)
+                log.warning('Telegram notification not sent (check credentials)')
         except Exception as e:
-            print(f'WARNING: Telegram error: {e}', file=sys.stderr)
+            log.warning(f'Telegram error: {e}')
             # Don't exit with error — article was published successfully
     else:
-        print('SKIP: Telegram notification (--no-notify)')
+        log.info('Telegram notification skipped (--no-notify)')
 
     # 6. Output result as JSON (for pipeline consumption)
     result_data = {

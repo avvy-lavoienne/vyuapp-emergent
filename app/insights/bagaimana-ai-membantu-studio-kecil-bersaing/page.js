@@ -23,7 +23,6 @@ export const metadata = {
     authors: ['VyuApp Studio'],
     section: 'Strategy',
     tags: ['AI development', 'studio web Indonesia', 'web agency', 'kompetisi digital'],
-    images: [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',

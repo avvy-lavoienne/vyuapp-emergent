@@ -1,0 +1,183 @@
+{
+  "platforms": {
+    "instagram": {
+      "name": "Instagram",
+      "post_types": {
+        "carousel": {
+          "label": "Carousel (Multiple Images)",
+          "max_images": 10,
+          "recommended_images": 5,
+          "image_specs": {
+            "aspect_ratio": "1:1",
+            "resolution": "1080x1080",
+            "format": "jpg/png",
+            "max_size_mb": 30
+          }
+        },
+        "single": {
+          "label": "Single Image Post",
+          "max_images": 1,
+          "image_specs": {
+            "aspect_ratios": ["1:1", "4:5", "16:9"],
+            "resolution": "1080x1080 / 1080x1350 / 1080x608",
+            "format": "jpg/png"
+          }
+        },
+        "story": {
+          "label": "Instagram Story",
+          "duration_max_seconds": 15,
+          "video_specs": {
+            "aspect_ratio": "9:16",
+            "resolution": "1080x1920",
+            "format": "jpg/png/mp4"
+          }
+        },
+        "reel": {
+          "label": "Reel (Short Video)",
+          "duration_options": ["15s", "30s", "60s", "90s"],
+          "video_specs": {
+            "aspect_ratio": "9:16",
+            "resolution": "1080x1920",
+            "format": "mp4",
+            "max_size_mb": 250
+          }
+        }
+      },
+      "limits": {
+        "caption_limit": 2200,
+        "hashtag_limit": 30,
+        "max_hashtag_length": 30
+      },
+      "best_times": {
+        "timezone": "Asia/Jakarta",
+        "peak_hours": ["07:00-09:00", "12:00-13:00", "18:00-21:00"],
+        "best_days": ["Tuesday", "Wednesday", "Thursday"],
+        "notes": "Indonesian audience peak during commute & evening"
+      },
+      "strategy": {
+        "optimal_frequency": "3-5 posts/week + daily stories",
+        "engagement_tips": [
+          "Use first 125 characters for hook",
+          "Add CTA in caption",
+          "Reply to comments within 1 hour",
+          "Use carousel for higher engagement"
+        ]
+      }
+    },
+    "x": {
+      "name": "X (Twitter)",
+      "post_types": {
+        "tweet": {
+          "label": "Standard Tweet",
+          "max_images": 4,
+          "image_specs": {
+            "aspect_ratios": ["16:9", "1:1"],
+            "resolution": "1200x675 / 1200x1200",
+            "format": "jpg/png/gif"
+          }
+        },
+        "thread": {
+          "label": "Thread (Multiple Tweets)",
+          "max_tweets": 25,
+          "recommended": 3,
+          "notes": "First tweet is most important - hook matters"
+        },
+        "poll": {
+          "label": "Tweet Poll",
+          "max_options": 4,
+          "min_options": 2,
+          "duration_options": ["5 min", "15 min", "1 hour", "3 hours", "1 day", "3 days", "7 days"]
+        }
+      },
+      "limits": {
+        "char_limit": 280,
+        "hashtag_limit": 3,
+        "max_images_per_tweet": 4,
+        "poll_options_max": 4
+      },
+      "best_times": {
+        "timezone": "Asia/Jakarta",
+        "peak_hours": ["08:00-10:00", "12:00-13:00", "17:00-19:00"],
+        "best_days": ["Tuesday", "Wednesday", "Thursday"],
+        "notes": "Developer & tech audience active during work hours"
+      },
+      "strategy": {
+        "optimal_frequency": "1-3 tweets/day + threads weekly",
+        "engagement_tips": [
+          "Hook in first tweet",
+          "Thread for storytelling",
+          "Engage with replies quickly",
+          "Use images for 150% more engagement"
+        ]
+      }
+    },
+    "facebook": {
+      "name": "Facebook",
+      "post_types": {
+        "post": {
+          "label": "Standard Post",
+          "max_images": 10,
+          "image_specs": {
+            "aspect_ratios": ["1:1", "16:9", "4:3"],
+            "resolution": "1200x630 / 1200x675",
+            "format": "jpg/png/gif"
+          }
+        },
+        "link": {
+          "label": "Link Share",
+          "image_specs": {
+            "resolution": "1200x630",
+            "format": "jpg/png"
+          },
+          "notes": "Include UTM parameters for tracking"
+        },
+        "event": {
+          "label": "Facebook Event",
+          "image_specs": {
+            "resolution": "1200x628",
+            "format": "jpg/png"
+          },
+          "fields": ["name", "start_time", "end_time", "location", "description"]
+        }
+      },
+      "limits": {
+        "caption_limit": 63206,
+        "hashtag_limit": 5,
+        "max_images_per_post": 10,
+        "video_max_duration": 240,
+        "live_max_duration": 180
+      },
+      "best_times": {
+        "timezone": "Asia/Jakarta",
+        "peak_hours": ["09:00-11:00", "13:00-15:00", "19:00-21:00"],
+        "best_days": ["Wednesday", "Thursday", "Friday"],
+        "notes": "Broader audience, peaks during lunch & evening"
+      },
+      "strategy": {
+        "optimal_frequency": "3-5 posts/week",
+        "engagement_tips": [
+          "Use video for 2x reach",
+          "Ask questions for engagement",
+          "Include clear CTA",
+          "Use Facebook Insights for analytics"
+        ]
+      }
+    }
+  },
+  "general": {
+    "hashtag_strategy": {
+      "instagram": ["mix of popular (1M+), medium (100K-1M), niche (<100K)", "use location hashtags for local reach"],
+      "x": ["max 3 hashtags", "place at end of tweet or naturally in text"],
+      "facebook": ["max 5 hashtags", "focus on brand hashtags"]
+    },
+    "content_calendar": {
+      "frequency": "3-5 posts per platform per week",
+      "batch_creation": "Create content in batches, schedule ahead",
+      "repurpose": "Adapt content across platforms with different formats"
+    },
+    "analytics": {
+      "track": ["engagement_rate", "reach", "impressions", "click_through_rate", "follower_growth"],
+      "tools": ["Platform native analytics", "Google Analytics for website traffic"]
+    }
+  }
+}

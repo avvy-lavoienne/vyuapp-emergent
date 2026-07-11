@@ -38,12 +38,13 @@ export async function generateMetadata({ params }) {
   return {
     title: `${meta.title} — VyuApp Insights`,
     description: meta.description,
+    robots: { index: true, follow: true },
     openGraph: {
       title: meta.title,
       description: meta.description,
       url: `${baseUrl}/category/${encodeURIComponent(category)}`,
-      images: [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
     },
+    twitter: { card: 'summary_large_image', title: meta.title, description: meta.description },
     alternates: { canonical: `${baseUrl}/category/${encodeURIComponent(category)}` },
   };
 }

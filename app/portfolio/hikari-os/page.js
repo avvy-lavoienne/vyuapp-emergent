@@ -14,7 +14,6 @@ export const metadata = {
   openGraph: {
     title: 'VyuApp Multi-Agent System — Tim AI Agent',
     description: 'Kenali 17 AI agent yang membentuk tim digital VyuApp.',
-    images: [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',

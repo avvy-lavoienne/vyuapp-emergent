@@ -42,13 +42,11 @@ export const metadata = {
     siteName: 'VyuApp',
     title: 'VyuApp — Bespoke Web Engineering & Market Intelligence',
     description: 'Studio rekayasa web premium dari Garut. Kami membangun produk digital presisi tinggi: Sellica (financial intelligence) dan The Avalon Project.',
-    images: [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'VyuApp — Bespoke Web Engineering & Market Intelligence',
     description: 'Studio rekayasa web premium dari Garut.',
-    images: [`${baseUrl}/opengraph-image.png`],
   },
   icons: {
     icon: [
@@ -98,6 +96,7 @@ export default function RootLayout({ children }) {
         <link rel="me" href="https://github.com/avvy-lavoienne" />
         <link rel="me" href="https://www.linkedin.com/in/frmnfird" />
         <link rel="alternate" type="application/rss+xml" title="VyuApp Insights" href="/feed.xml" />
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         {adsenseClient && <link rel="preconnect" href="https://pagead2.googlesyndication.com" />}
       </head>
       <body className="bg-[#f5f5f7] dark:bg-[#000000] text-[#1d1d1f] dark:text-[#f5f5f7] antialiased font-sans selection:bg-[#2997ff]/20 selection:text-[#1d1d1f] dark:selection:bg-[#5BA3FF]/30 dark:selection:text-[#f5f5f7]">

@@ -5,17 +5,17 @@
     <link>https://www.vyuapp.my.id/insights</link>
     <description>Esai teknis tentang rekayasa web, data intelligence, dan filosofi studio dari VyuApp.</description>
     <language>id</language>
-    <lastBuildDate>Fri, 10 Jul 2026 18:29:09 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 11 Jul 2026 07:33:03 GMT</lastBuildDate>
     <atom:link href="https://www.vyuapp.my.id/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
-      <title>Lanskap Model AI Juli 2026: Dua Klaim Berbeda</title>
-      <link>https://www.vyuapp.my.id/insights/grok-4-5-vs-gpt-5-6-sol</link>
-      <description>Lanskap Model AI Juli 2026: Dua Klaim Berbeda
+      <title>Pola Caching Redis untuk Aplikasi Web yang Skalabel</title>
+      <link>https://www.vyuapp.my.id/insights/redis-caching-patterns-for-scalable-web-apps</link>
+      <description>Pola Caching Redis untuk Aplikasi Web yang Skalabel
 
-Dua raksasa AI merilis model terbaru dalam kurun waktu 24 jam. SpaceXAI mengumumkan Grok 4.5 pada 8 Juli 2026, di</description>
+Kecepatan respons menjadi penentu keberhasilan aplikasi web modern. Ketika pengguna menunggu lebih dari tig</description>
       <pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate>
-      <category>AI &amp; ML</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/grok-4-5-vs-gpt-5-6-sol</guid>
+      <category>Engineering</category>
+      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/redis-caching-patterns-for-scalable-web-apps</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
@@ -29,14 +29,23 @@ Biaya akses model AI besar melonjak tajam sejak awal 2025. OpenAI menaikkan harg
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
-      <title>Pola Caching Redis untuk Aplikasi Web yang Skalabel</title>
-      <link>https://www.vyuapp.my.id/insights/redis-caching-patterns-for-scalable-web-apps</link>
-      <description>Pola Caching Redis untuk Aplikasi Web yang Skalabel
+      <title>Lanskap Model AI Juli 2026: Dua Klaim Berbeda</title>
+      <link>https://www.vyuapp.my.id/insights/grok-4-5-vs-gpt-5-6-sol</link>
+      <description>Lanskap Model AI Juli 2026: Dua Klaim Berbeda
 
-Kecepatan respons menjadi penentu keberhasilan aplikasi web modern. Ketika pengguna menunggu lebih dari tig</description>
+Dua raksasa AI merilis model terbaru dalam kurun waktu 24 jam. SpaceXAI mengumumkan Grok 4.5 pada 8 Juli 2026, di</description>
       <pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate>
-      <category>Engineering</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/redis-caching-patterns-for-scalable-web-apps</guid>
+      <category>AI &amp; ML</category>
+      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/grok-4-5-vs-gpt-5-6-sol</guid>
+      <author>vyuapp@proton.me (VyuApp Studio)</author>
+    </item>
+    <item>
+      <title>Panduan Lengkap Web3 dApp Development dengan ethers.js dan Hardhat</title>
+      <link>https://www.vyuapp.my.id/insights/web3-dapp-development-with-ethers-js-and-hardhat</link>
+      <description>Panduan komprehensif membangun decentralized application (dApp) menggunakan Hardhat sebagai development environment dan ethers.js sebagai library interaksi blockchain. Mencakup arsitektur dApp, konfig</description>
+      <pubDate>Sat, 11 Jul 2026 04:51:41 GMT</pubDate>
+      <category>Blockchain &amp; Web3</category>
+      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/web3-dapp-development-with-ethers-js-and-hardhat</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
@@ -181,15 +190,6 @@ Kecepatan respons menjadi penentu keberhasilan aplikasi web modern. Ketika pengg
       <pubDate>Tue, 30 Jun 2026 04:12:35 GMT</pubDate>
       <category>AI &amp; Teknologi</category>
       <guid isPermaLink="true">https://www.vyuapp.my.id/insights/hermes-agent-di-balik-layar-9-ai-agent-vyuapp</guid>
-      <author>vyuapp@proton.me (VyuApp Studio)</author>
-    </item>
-    <item>
-      <title>Perbedaan MiMo V2.5 vs MiMo V2.5 Pro: Benchmark, Performa, dan Harga 2026</title>
-      <link>https://www.vyuapp.my.id/insights/perbedaan-mimo-v2-5-vs-mimo-v2-5-pro-benchmark-performa-dan-harga-2026</link>
-      <description>Analisis lengkap perbedaan antara Xiaomi MiMo-V2.5 dan MiMo-V2.5-Pro: arsitektur, benchmark coding, pricing, dan rekomendasi penggunaan untuk developer Indonesi</description>
-      <pubDate>Tue, 30 Jun 2026 03:10:55 GMT</pubDate>
-      <category>AI &amp; Teknologi</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/perbedaan-mimo-v2-5-vs-mimo-v2-5-pro-benchmark-performa-dan-harga-2026</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
   </channel>

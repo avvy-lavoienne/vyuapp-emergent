@@ -70,9 +70,9 @@ export async function generateMetadata({ params }) {
       authors: ['VyuApp Studio'],
       section: article.category,
       tags: article.tags || [],
-      images: article.cover ? [{ url: article.cover, width: 1200, height: 630, alt: article.title }] : [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
+      images: article.cover ? [{ url: article.cover, width: 1200, height: 630, alt: article.title }] : [],
     },
-    twitter: { card: 'summary_large_image', title: article.title, description: article.excerpt, images: article.cover ? [article.cover] : [`${baseUrl}/opengraph-image.png`] },
+    twitter: { card: 'summary_large_image', title: article.title, description: article.excerpt, images: article.cover ? [article.cover] : [] },
     alternates: { canonical: url },
   };
 }

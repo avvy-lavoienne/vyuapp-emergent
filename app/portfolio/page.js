@@ -19,7 +19,6 @@ export const metadata = {
   openGraph: {
     title: 'Portfolio — VyuApp',
     description: 'Produk inti VyuApp: Sellica dan The Avalon Project — dua produk hidup yang dipelihara oleh tangan yang sama.',
-    images: [{ url: `${baseUrl}/opengraph-image.png`, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
