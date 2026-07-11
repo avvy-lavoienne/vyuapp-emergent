@@ -1,5 +1,5 @@
-// Server-side data helpers. Reads via the anon-key server client (RLS-protected).
-import { getServerSupabase } from '@/lib/supabase/server';
+// Server-side data helpers. Uses public client (no cookies) for ISR caching.
+import { getPublicSupabase } from '@/lib/supabase/public';
 import { sanitizeSearchTerm } from '@/lib/sanitize';
 
 export interface Article {
@@ -45,7 +45,7 @@ interface GetArticlesOptions {
 }
 
 export async function getPublishedArticles({ limit = 100, page = 1, offset, category = '', tags = '', search = '' }: GetArticlesOptions = {}): Promise<Article[]> {
-  const supabase = await getServerSupabase();
+  const supabase = getPublicSupabase();
   const computedOffset = offset ?? (page - 1) * limit;
   let query = supabase
     .from('articles')
@@ -82,7 +82,7 @@ export async function getPublishedArticles({ limit = 100, page = 1, offset, cate
 }
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
-  const supabase = await getServerSupabase();
+  const supabase = getPublicSupabase();
   const { data, error } = await supabase
     .from('articles').select('*').eq('slug', slug).maybeSingle();
   if (error) { console.error('getArticleBySlug:', error.message); return null; }
@@ -90,7 +90,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
 }
 
 export async function getRelatedArticles(currentSlug: string, category: string, tags: string[], limit: number = 3): Promise<Article[]> {
-  const supabase = await getServerSupabase();
+  const supabase = getPublicSupabase();
 
   // Fetch articles with same category OR overlapping tags (but not the current one)
   // Use a single query with or() filter for efficiency
@@ -134,7 +134,7 @@ export async function getRelatedArticles(currentSlug: string, category: string, 
 
 export async function getAdjacentArticles(publishedAt: string | null): Promise<{ prev: Article | null; next: Article | null }> {
   if (!publishedAt) return { prev: null, next: null };
-  const supabase = await getServerSupabase();
+  const supabase = getPublicSupabase();
 
   // Fetch prev and next articles in parallel
   const [prevResult, nextResult] = await Promise.all([
@@ -164,7 +164,7 @@ export async function getAdjacentArticles(publishedAt: string | null): Promise<{
 
 export async function getArticlesWithAutoLinks(slug: string): Promise<Article | null> {
   const { autoLinkContent } = await import('@/lib/auto-link');
-  const supabase = await getServerSupabase();
+  const supabase = getPublicSupabase();
 
   // Fetch article AND all other article titles in parallel
   const [articleResult, allArticlesResult] = await Promise.all([
@@ -187,7 +187,7 @@ export async function getArticlesWithAutoLinks(slug: string): Promise<Article | 
 }
 
 export async function getPublishedPortfolio(): Promise<PortfolioItem[]> {
-  const supabase = await getServerSupabase();
+  const supabase = getPublicSupabase();
   const { data, error } = await supabase
     .from('portfolio_items').select('*').eq('status', 'published')
     .order('position', { ascending: true });
@@ -196,7 +196,7 @@ export async function getPublishedPortfolio(): Promise<PortfolioItem[]> {
 }
 
 export async function getPortfolioBySlug(slug: string): Promise<PortfolioItem | null> {
-  const supabase = await getServerSupabase();
+  const supabase = getPublicSupabase();
   const { data, error } = await supabase
     .from('portfolio_items').select('*').eq('slug', slug).eq('status', 'published').maybeSingle();
   if (data) return data as PortfolioItem;
