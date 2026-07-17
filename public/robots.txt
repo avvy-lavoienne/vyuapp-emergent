@@ -7,3 +7,4 @@ User-agent: Mediapartners-Google
 Allow: /
 
 Sitemap: https://www.vyuapp.my.id/sitemap.xml
+Sitemap: https://www.vyuapp.my.id/feed.xml
