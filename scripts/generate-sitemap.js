@@ -6,7 +6,7 @@
 import { writeFileSync } from 'fs';
 import { join } from 'path';
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://www.vyuapp.my.id';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://vyuapp.my.id';
 const TODAY = new Date().toISOString().split('T')[0];
 
 // Static routes

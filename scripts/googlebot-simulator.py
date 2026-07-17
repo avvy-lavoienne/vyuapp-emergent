@@ -34,8 +34,8 @@ GOOGLEBOT_USER_AGENTS = {
 }
 
 # ── Config ──
-SITEMAP_URL = "https://www.vyuapp.my.id/sitemap.xml"
-ROBOTS_URL = "https://www.vyuapp.my.id/robots.txt"
+SITEMAP_URL = "https://vyuapp.my.id/sitemap.xml"
+ROBOTS_URL = "https://vyuapp.my.id/robots.txt"
 CONCURRENCY = 5
 TIMEOUT = 10  # Googlebot timeout ~5-10s
 SESSION = requests.Session()
@@ -286,7 +286,7 @@ def print_results(results, crawl_time):
     if all_issues:
         print(f"\n  {C.BOLD}Issues Found ({len(all_issues)}):{C.RESET}")
         for url, issue in all_issues:
-            short_url = url.replace('https://www.vyuapp.my.id', '')
+            short_url = url.replace('https://vyuapp.my.id', '')
             print(f"    {C.YELLOW}•{C.RESET} {short_url}: {issue}")
     else:
         print(f"\n  {C.GREEN}🎉 No issues found! Perfect crawl.{C.RESET}")
@@ -336,7 +336,7 @@ def main():
             # Progress indicator
             status = result['verdict']
             time_ms = result['response_time'] or 0
-            short_url = result['url'].replace('https://www.vyuapp.my.id', '') or '/'
+            short_url = result['url'].replace('https://vyuapp.my.id', '') or '/'
             
             if status == 'OK':
                 color = C.GREEN
