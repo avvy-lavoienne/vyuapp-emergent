@@ -2,194 +2,194 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>VyuApp Insights</title>
-    <link>https://www.vyuapp.my.id/insights</link>
+    <link>https://vyuapp.my.id/insights</link>
     <description>Esai teknis tentang rekayasa web, data intelligence, dan filosofi studio dari VyuApp.</description>
     <language>id</language>
     <lastBuildDate>Sat, 11 Jul 2026 08:59:23 GMT</lastBuildDate>
-    <atom:link href="https://www.vyuapp.my.id/feed.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://vyuapp.my.id/feed.xml" rel="self" type="application/rss+xml"/>
     <item>
       <title>Pola Caching Redis untuk Aplikasi Web yang Skalabel</title>
-      <link>https://www.vyuapp.my.id/insights/redis-caching-patterns-for-scalable-web-apps</link>
+      <link>https://vyuapp.my.id/insights/redis-caching-patterns-for-scalable-web-apps</link>
       <description>Pola Caching Redis untuk Aplikasi Web yang Skalabel
 
 Kecepatan respons menjadi penentu keberhasilan aplikasi web modern. Ketika pengguna menunggu lebih dari tig</description>
       <pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate>
       <category>Engineering</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/redis-caching-patterns-for-scalable-web-apps</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/redis-caching-patterns-for-scalable-web-apps</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Model AI yang Ramah di Dompet namun Berkualitas: Panduan Lengkap 2026</title>
-      <link>https://www.vyuapp.my.id/insights/model-ai-yang-ramah-di-dompet-namun-berkualitas</link>
+      <link>https://vyuapp.my.id/insights/model-ai-yang-ramah-di-dompet-namun-berkualitas</link>
       <description>Model AI yang Ramah di Dompet namun Berkualitas: Panduan Lengkap 2026
 Biaya akses model AI besar melonjak tajam sejak awal 2025. OpenAI menaikkan harga GPT-5 be</description>
       <pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate>
       <category>AI &amp; ML</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/model-ai-yang-ramah-di-dompet-namun-berkualitas</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/model-ai-yang-ramah-di-dompet-namun-berkualitas</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Lanskap Model AI Juli 2026: Dua Klaim Berbeda</title>
-      <link>https://www.vyuapp.my.id/insights/grok-4-5-vs-gpt-5-6-sol</link>
+      <link>https://vyuapp.my.id/insights/grok-4-5-vs-gpt-5-6-sol</link>
       <description>Lanskap Model AI Juli 2026: Dua Klaim Berbeda
 
 Dua raksasa AI merilis model terbaru dalam kurun waktu 24 jam. SpaceXAI mengumumkan Grok 4.5 pada 8 Juli 2026, di</description>
       <pubDate>Thu, 01 Jan 1970 00:00:00 GMT</pubDate>
       <category>AI &amp; ML</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/grok-4-5-vs-gpt-5-6-sol</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/grok-4-5-vs-gpt-5-6-sol</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Panduan Lengkap Web3 dApp Development dengan ethers.js dan Hardhat</title>
-      <link>https://www.vyuapp.my.id/insights/web3-dapp-development-with-ethers-js-and-hardhat</link>
+      <link>https://vyuapp.my.id/insights/web3-dapp-development-with-ethers-js-and-hardhat</link>
       <description>Panduan komprehensif membangun decentralized application (dApp) menggunakan Hardhat sebagai development environment dan ethers.js sebagai library interaksi blockchain. Mencakup arsitektur dApp, konfig</description>
       <pubDate>Sat, 11 Jul 2026 04:51:41 GMT</pubDate>
       <category>Blockchain &amp; Web3</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/web3-dapp-development-with-ethers-js-and-hardhat</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/web3-dapp-development-with-ethers-js-and-hardhat</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Deep Insight GPT 5.6 Sol</title>
-      <link>https://www.vyuapp.my.id/insights/deep-insight-gpt-5-6-sol</link>
+      <link>https://vyuapp.my.id/insights/deep-insight-gpt-5-6-sol</link>
       <description>OpenAI merilis GPT-5.6 Sol pada 26 Juni 2026 sebagai model flagship terbaru yang dirancang untuk menyelesaikan masalah paling kompleks — dari coding skala besar hingga riset keamanan siber. Dengan tig</description>
       <pubDate>Thu, 09 Jul 2026 12:19:51 GMT</pubDate>
       <category>Engineering</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/deep-insight-gpt-5-6-sol</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/deep-insight-gpt-5-6-sol</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Grok 4.5 Resmi Dirilis: Model AI Coding dari SpaceXAI dan Cursor</title>
-      <link>https://www.vyuapp.my.id/insights/grok-4-5-rilis-hari-ini</link>
+      <link>https://vyuapp.my.id/insights/grok-4-5-rilis-hari-ini</link>
       <description>SpaceXAI dan Cursor merilis Grok 4.5 pada 8 Juli 2026 — model coding-first berbasis mixture-of-experts yang dilatih di ribuan GPU NVIDIA GB300. Harga $2/$6 per juta token, kecepatan 80 TPS, dan token efficiency 4.2x lebih hemat dari Opus 4.8.</description>
       <pubDate>Thu, 09 Jul 2026 11:46:59 GMT</pubDate>
       <category>Artificial Intelligence</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/grok-4-5-rilis-hari-ini</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/grok-4-5-rilis-hari-ini</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Vite Untuk Pemula</title>
-      <link>https://www.vyuapp.my.id/insights/vite-untuk-pemula</link>
+      <link>https://vyuapp.my.id/insights/vite-untuk-pemula</link>
       <description>Panduan lengkap menggunakan Vite untuk pemula</description>
       <pubDate>Thu, 09 Jul 2026 08:05:50 GMT</pubDate>
       <category>Engineering</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/vite-untuk-pemula</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/vite-untuk-pemula</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Next.js vs Remix: Perbandingan Lengkap 2026</title>
-      <link>https://www.vyuapp.my.id/insights/next-js-vs-remix-perbandingan-lengkap-2026</link>
+      <link>https://vyuapp.my.id/insights/next-js-vs-remix-perbandingan-lengkap-2026</link>
       <description>Perbandingan lengkap Next.js vs Remix di tahun 2026: arsitektur, performa, developer experience, deployment, dan ekosistem.</description>
       <pubDate>Thu, 09 Jul 2026 07:05:38 GMT</pubDate>
       <category>Engineering</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/next-js-vs-remix-perbandingan-lengkap-2026</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/next-js-vs-remix-perbandingan-lengkap-2026</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Apache Kafka untuk Arsitektur Microservices: Panduan Lengkap Event-Driven Architecture</title>
-      <link>https://www.vyuapp.my.id/insights/apache-kafka-microservices-panduan-lengkap</link>
+      <link>https://vyuapp.my.id/insights/apache-kafka-microservices-panduan-lengkap</link>
       <description>Pelajari cara membangun arsitektur microservices yang scalable dengan Apache Kafka. Panduan lengkap event-driven architecture, async communication, dan best practices 2026.</description>
       <pubDate>Tue, 07 Jul 2026 03:00:00 GMT</pubDate>
       <category>Engineering</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/apache-kafka-microservices-panduan-lengkap</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/apache-kafka-microservices-panduan-lengkap</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Redis Streams: Panduan Lengkap untuk Developer Indonesia</title>
-      <link>https://www.vyuapp.my.id/insights/redis-streams-panduan-lengkap-untuk-developer-indonesia</link>
+      <link>https://vyuapp.my.id/insights/redis-streams-panduan-lengkap-untuk-developer-indonesia</link>
       <description>Pelajari Redis Streams dari dasar hingga implementasi: commands, consumer groups, use cases, perbandingan dengan Kafka, dan best practices untuk production.</description>
       <pubDate>Sat, 04 Jul 2026 03:00:00 GMT</pubDate>
       <category>Engineering</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/redis-streams-panduan-lengkap-untuk-developer-indonesia</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/redis-streams-panduan-lengkap-untuk-developer-indonesia</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Arsitektur Hikari 4.0: Sistem Multi-Agent dengan 16 Agen Beridentitas Fate Grand Order</title>
-      <link>https://www.vyuapp.my.id/insights/arsitektur-hikari-4-0-sistem-multi-agent-dengan-16-agen-beridentitas-fate-grand-order</link>
+      <link>https://vyuapp.my.id/insights/arsitektur-hikari-4-0-sistem-multi-agent-dengan-16-agen-beridentitas-fate-grand-order</link>
       <description>Eksplorasi mendalam arsitektur Hikari 4.0, sistem multi-agent revolusioner yang mengadopsi 16 identitas karakter Fate Grand Order sebagai persona agen AI. Mengu</description>
       <pubDate>Fri, 03 Jul 2026 07:36:03 GMT</pubDate>
       <category>AI &amp; Technology</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/arsitektur-hikari-4-0-sistem-multi-agent-dengan-16-agen-beridentitas-fate-grand-order</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/arsitektur-hikari-4-0-sistem-multi-agent-dengan-16-agen-beridentitas-fate-grand-order</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Hermes Agent untuk Lanjut: Arsitektur, Security, Enterprise, dan Performance</title>
-      <link>https://www.vyuapp.my.id/insights/hermes-agent-untuk-lanjut-arsitektur-security-enterprise-dan-performance</link>
+      <link>https://vyuapp.my.id/insights/hermes-agent-untuk-lanjut-arsitektur-security-enterprise-dan-performance</link>
       <description>Level: Advanced / Expert | Bahasa: Indonesia | Prerequisites: Artikel Pemula dan Menengah</description>
       <pubDate>Fri, 03 Jul 2026 03:57:42 GMT</pubDate>
       <category>Engineering</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/hermes-agent-untuk-lanjut-arsitektur-security-enterprise-dan-performance</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/hermes-agent-untuk-lanjut-arsitektur-security-enterprise-dan-performance</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Hermes Agent untuk Menengah: Skill, Plugin, Multi-Agent, dan Automation</title>
-      <link>https://www.vyuapp.my.id/insights/hermes-agent-untuk-menengah-skill-plugin-multi-agent-dan-automation</link>
+      <link>https://vyuapp.my.id/insights/hermes-agent-untuk-menengah-skill-plugin-multi-agent-dan-automation</link>
       <description>Panduan ini ditujukan bagi Anda yang sudah memahami dasar-dasar Hermes Agent — seperti cara menjalankan sesi, menggunakan tool dasar, dan berinteraksi melalui C</description>
       <pubDate>Fri, 03 Jul 2026 02:29:36 GMT</pubDate>
       <category>Engineering</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/hermes-agent-untuk-menengah-skill-plugin-multi-agent-dan-automation</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/hermes-agent-untuk-menengah-skill-plugin-multi-agent-dan-automation</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Hermes Agent untuk Pemula: Panduan Lengkap Memulai AI Assistant Pribadi</title>
-      <link>https://www.vyuapp.my.id/insights/hermes-agent-untuk-pemula-panduan-lengkap-memulai-ai-assistant-pribadi</link>
+      <link>https://vyuapp.my.id/insights/hermes-agent-untuk-pemula-panduan-lengkap-memulai-ai-assistant-pribadi</link>
       <description>Panduan lengkap memulai Hermes Agent untuk pemula. Pelajari cara install, fitur utama, use cases, dan perbedaan dengan ChatGPT/Claude.</description>
       <pubDate>Fri, 03 Jul 2026 01:53:44 GMT</pubDate>
       <category>Engineering</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/hermes-agent-untuk-pemula-panduan-lengkap-memulai-ai-assistant-pribadi</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/hermes-agent-untuk-pemula-panduan-lengkap-memulai-ai-assistant-pribadi</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Fiber Golang Ultrafast HTTP Server: Panduan Lengkap Framework Web Go Tercepat</title>
-      <link>https://www.vyuapp.my.id/insights/fiber-golang-ultrafast-http-server-guide</link>
+      <link>https://vyuapp.my.id/insights/fiber-golang-ultrafast-http-server-guide</link>
       <description>Pelajari Fiber, framework web Go yang terinspirasi Express.js dan dibangun di atas Fasthttp. Panduan lengkap mencakup instalasi, routing, middleware, optimasi performa, hingga deployment production de</description>
       <pubDate>Thu, 02 Jul 2026 02:20:46 GMT</pubDate>
       <category>Backend Development</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/fiber-golang-ultrafast-http-server-guide</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/fiber-golang-ultrafast-http-server-guide</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Supply Chain Security untuk Paket npm dan PyPI: Panduan Lengkap 2026</title>
-      <link>https://www.vyuapp.my.id/insights/supply-chain-security-for-npm-and-pypi-packages</link>
+      <link>https://vyuapp.my.id/insights/supply-chain-security-for-npm-and-pypi-packages</link>
       <description>Serangan supply chain pada ekosistem npm dan PyPI meningkat drastis di 2025-2026. Dari worm Shai-Hulud yang menular otomatis hingga kampanye Hades yang mencuri cloud credentials, pelajari ancaman terk</description>
       <pubDate>Wed, 01 Jul 2026 13:33:17 GMT</pubDate>
       <category>Cybersecurity</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/supply-chain-security-for-npm-and-pypi-packages</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/supply-chain-security-for-npm-and-pypi-packages</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Kotlin Multiplatform Shared Business Logic Tutorial: Panduan Lengkap 2026</title>
-      <link>https://www.vyuapp.my.id/insights/kotlin-multiplatform-shared-business-logic-tutorial</link>
+      <link>https://vyuapp.my.id/insights/kotlin-multiplatform-shared-business-logic-tutorial</link>
       <description>Pelajari cara berbagi business logic antar platform menggunakan Kotlin Multiplatform (KMP). Tutorial lengkap mencakup arsitektur expect/actual, Ktor untuk networking, SQLDelight untuk database, dan Ko</description>
       <pubDate>Wed, 01 Jul 2026 11:56:56 GMT</pubDate>
       <category>Engineering</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/kotlin-multiplatform-shared-business-logic-tutorial</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/kotlin-multiplatform-shared-business-logic-tutorial</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Claude Sonnet 5: Model AI Terbaru Anthropic yang Dirilis 30 Juni 2026</title>
-      <link>https://www.vyuapp.my.id/insights/claude-sonnet-5-rilis-hari-ini</link>
+      <link>https://vyuapp.my.id/insights/claude-sonnet-5-rilis-hari-ini</link>
       <description>Anthropic resmi merilis Claude Sonnet 5 pada 30 Juni 2026, model AI agentic terbaru yang menawarkan performa mendekati Opus 4.8 dengan harga lebih terjangkau. Model ini menjadi default untuk pengguna </description>
       <pubDate>Wed, 01 Jul 2026 11:32:41 GMT</pubDate>
       <category>Teknologi AI</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/claude-sonnet-5-rilis-hari-ini</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/claude-sonnet-5-rilis-hari-ini</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Hana: AI Customer Service Bukan Sekadar Chatbot Biasa</title>
-      <link>https://www.vyuapp.my.id/insights/hana-ai-customer-service-bukan-sekadar-chatbot-biasa</link>
+      <link>https://vyuapp.my.id/insights/hana-ai-customer-service-bukan-sekadar-chatbot-biasa</link>
       <description>Hana: AI Customer Service Bukan Sekadar Chatbot Biasa</description>
       <pubDate>Tue, 30 Jun 2026 07:36:01 GMT</pubDate>
       <category>Engineering</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/hana-ai-customer-service-bukan-sekadar-chatbot-biasa</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/hana-ai-customer-service-bukan-sekadar-chatbot-biasa</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
     <item>
       <title>Hermes Agent: Di Balik Layar 9 AI Agent VyuApp</title>
-      <link>https://www.vyuapp.my.id/insights/hermes-agent-di-balik-layar-9-ai-agent-vyuapp</link>
+      <link>https://vyuapp.my.id/insights/hermes-agent-di-balik-layar-9-ai-agent-vyuapp</link>
       <description>Mengenal Hermes Agent oleh Nous Research dan bagaimana VyuApp mengoperasikan 9 AI agent dalam arsitektur multi-agent production yang otomatis.</description>
       <pubDate>Tue, 30 Jun 2026 04:12:35 GMT</pubDate>
       <category>AI &amp; Teknologi</category>
-      <guid isPermaLink="true">https://www.vyuapp.my.id/insights/hermes-agent-di-balik-layar-9-ai-agent-vyuapp</guid>
+      <guid isPermaLink="true">https://vyuapp.my.id/insights/hermes-agent-di-balik-layar-9-ai-agent-vyuapp</guid>
       <author>vyuapp@proton.me (VyuApp Studio)</author>
     </item>
   </channel>
