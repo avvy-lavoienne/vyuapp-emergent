@@ -38,8 +38,8 @@ def load_dotenv(path):
     return env
 
 
-_env = load_dotenv('/root/vyuapp-emergent/.env')
-PROJECT_ROOT = '/root/vyuapp-emergent'
+_env = load_dotenv('/root/vyuapp/.env')
+PROJECT_ROOT = '/root/vyuapp'
 ARTICLE_TMP_DIR = '/tmp'
 
 

@@ -17,8 +17,8 @@ test.describe('Sitemap', () => {
     const body = await response.text();
     
     // Should contain main pages
-    expect(body).toContain('https://www.vyuapp.my.id/');
-    expect(body).toContain('https://www.vyuapp.my.id/portfolio');
-    expect(body).toContain('https://www.vyuapp.my.id/insights');
+    expect(body).toContain('https://vyuapp.my.id/');
+    expect(body).toContain('https://vyuapp.my.id/portfolio');
+    expect(body).toContain('https://vyuapp.my.id/insights');
   });
 });

@@ -25,7 +25,7 @@ import re
 from datetime import datetime
 
 BOARD = os.environ.get('HERMES_KANBAN_BOARD', 'tim-artikel-hore')
-SCRIPTS_DIR = '/root/vyuapp-emergent/scripts'
+SCRIPTS_DIR = '/root/vyuapp/scripts'
 
 
 def slugify(text: str, max_len: int = 50) -> str:

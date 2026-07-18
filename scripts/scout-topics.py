@@ -5,9 +5,9 @@ import os, json, requests
 from datetime import datetime
 from dotenv import load_dotenv
 
-load_dotenv('/root/vyuapp-emergent/.env')
+load_dotenv('/root/vyuapp/.env')
 
-STATE_FILE = '/root/vyuapp-emergent/scripts/scout-state.json'
+STATE_FILE = '/root/vyuapp/scripts/scout-state.json'
 
 TOPIC_POOLS = [
     ["Next.js 16 Server Components best practices", "Next.js middleware patterns 2026", "Next.js image optimization guide", "Next.js 16 caching strategies", "App Router vs Pages Router migration"],

@@ -1,4 +1,4 @@
-# VyuApp Emergent — Blackbox Testing Plan (API-Level)
+# VyuApp — Blackbox Testing Plan (API-Level)
 
 **Date:** 2026-07-08  
 **Server:** http://localhost:3780  
@@ -845,7 +845,7 @@ Each error response must:
 ```json
 {
   "info": {
-    "name": "VyuApp Emergent — Blackbox API Tests",
+    "name": "VyuApp — Blackbox API Tests",
     "description": "API-level blackbox tests for all 4 endpoints",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },

@@ -22,18 +22,18 @@ from dotenv import load_dotenv
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
 
-load_dotenv('/root/vyuapp-emergent/.env')
+load_dotenv('/root/vyuapp/.env')
 
 BOT_TOKEN = os.getenv('VYUAPP_WRITER_BOT_TOKEN', '')
 CHAT_ID = int(os.getenv('VYUAPP_WRITER_CHAT_ID', '0'))
-STATE_FILE = '/root/vyuapp-emergent/scripts/scout-state.json'
-REPO_PATH = '/root/vyuapp-emergent'
+STATE_FILE = '/root/vyuapp/scripts/scout-state.json'
+REPO_PATH = '/root/vyuapp'
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger('vyuapp-writer')
 
 # Import topics from scout-topics.py (local, no subprocess)
-_spec = importlib.util.spec_from_file_location('scout_topics', '/root/vyuapp-emergent/scripts/scout-topics.py')
+_spec = importlib.util.spec_from_file_location('scout_topics', '/root/vyuapp/scripts/scout-topics.py')
 _scout_mod = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_scout_mod)
 find_topics = _scout_mod.find_topics
@@ -146,7 +146,7 @@ async def cmd_artikel(update: Update, ctx: ContextTypes.DEFAULT_TYPE):
     # Call kanban-pipeline.py to create task
     try:
         result = subprocess.run(
-            [sys.executable, '/root/vyuapp-emergent/scripts/kanban-pipeline.py', topic],
+            [sys.executable, '/root/vyuapp/scripts/kanban-pipeline.py', topic],
             capture_output=True, text=True, timeout=60
         )
         if result.returncode == 0:

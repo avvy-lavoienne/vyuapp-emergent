@@ -1,4 +1,4 @@
-# VyuApp Emergent — QA Plan (Visual, UX, Accessibility, Performance)
+# VyuApp — QA Plan (Visual, UX, Accessibility, Performance)
 
 **Date:** 2026-07-08  
 **Server:** http://localhost:3780  

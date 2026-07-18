@@ -62,7 +62,7 @@ def load_dotenv(path):
     return env
 
 # Load env
-_env = load_dotenv('/root/vyuapp-emergent/.env')
+_env = load_dotenv('/root/vyuapp/.env')
 SUPABASE_URL = _env.get('NEXT_PUBLIC_SUPABASE_URL', os.getenv('NEXT_PUBLIC_SUPABASE_URL', ''))
 SUPABASE_KEY = _env.get('SUPABASE_SERVICE_ROLE_KEY', os.getenv('SUPABASE_SERVICE_ROLE_KEY', ''))
 BOT_TOKEN=_env.get('VYUAPP_WRITER_BOT_TOKEN', os.getenv('VYUAPP_WRITER_BOT_TOKEN', ''))

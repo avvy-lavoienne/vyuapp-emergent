@@ -3,7 +3,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import os
 
-OUTPUT = '/root/vyuapp-emergent/public/opengraph-image.png'
+OUTPUT = '/root/vyuapp/public/opengraph-image.png'
 WIDTH, HEIGHT = 1200, 630
 
 # Create gradient background (dark blue to black)
@@ -33,7 +33,7 @@ except:
 # Draw text
 draw.text((60, 300), 'VyuApp', fill='#f5f5f7', font=font_title)
 draw.text((60, 390), 'Bespoke Web Engineering & Market Intelligence', fill='#86868b', font=font_sub)
-draw.text((60, 440), 'www.vyuapp.my.id', fill='#2997ff', font=font_tag)
+draw.text((60, 440), 'vyuapp.my.id', fill='#2997ff', font=font_tag)
 
 # Draw small logo indicator
 draw.rectangle([(60, 200), (64, 270)], fill='#2997ff')

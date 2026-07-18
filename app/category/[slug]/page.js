@@ -9,7 +9,7 @@ import { notFound } from 'next/navigation';
 
 export const revalidate = 3600;
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.vyuapp.my.id';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://vyuapp.my.id';
 
 const CATEGORY_META = {
   'AI': { title: 'Artikel AI & Kecerdasan Buatan', description: 'Esai tentang AI, machine learning, dan kecerdasan buatan dari VyuApp Studio.' },

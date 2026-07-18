@@ -16,7 +16,7 @@
 
 ## What Was Done
 
-1. **Created** `/root/vyuapp-emergent/scripts/sm-pipeline.py` (262 lines)
+1. **Created** `/root/vyuapp/scripts/sm-pipeline.py` (262 lines)
 2. **Static analysis** of both pipeline scripts
 3. **Verified** agent profiles exist
 4. **Documented** findings

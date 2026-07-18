@@ -28,8 +28,8 @@ import traceback
 from datetime import datetime
 from pathlib import Path
 
-SCRIPTS_DIR = '/root/vyuapp-emergent/scripts'
-TESTS_DIR = '/root/vyuapp-emergent/tests'
+SCRIPTS_DIR = '/root/vyuapp/scripts'
+TESTS_DIR = '/root/vyuapp/tests'
 RESULTS = []
 
 

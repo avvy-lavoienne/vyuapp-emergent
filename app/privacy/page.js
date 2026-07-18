@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 export const metadata = {
   title: 'Kebijakan Privasi',
   description: 'Kebijakan privasi VyuApp — bagaimana kami melindungi data Anda.',
-  alternates: { canonical: 'https://www.vyuapp.my.id/privacy' },
+  alternates: { canonical: 'https://vyuapp.my.id/privacy' },
 };
 
 export default function PrivacyPage() {

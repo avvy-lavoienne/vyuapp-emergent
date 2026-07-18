@@ -1,15 +1,15 @@
-# vyuapp-emergent — Project Memory
+# vyuapp — Project Memory
 
 ## Project Identity
 - **Name:** VyuApp (vyuapp.my.id)
 - **Type:** Portfolio/agency website with article publishing
 - **Stack:** Next.js 16, React 19, Tailwind CSS 3, Supabase, Vercel
 - **Branch:** `dev` = production (auto-deploys to Vercel)
-- **Domain:** www.vyuapp.my.id (301 non-www → www)
+- **Domain:** vyuapp.my.id (non-www)
 
 ## Architecture
 ```
-vyuapp-emergent/
+vyuapp/
 ├── app/                    # Next.js App Router
 │   ├── page.js             # Homepage (Client Component)
 │   ├── layout.js           # Root layout (Server Component)
@@ -77,7 +77,7 @@ vyuapp-emergent/
 
 ## Build & Deploy
 ```bash
-cd /root/vyuapp-emergent
+cd /root/vyuapp
 npm run build          # Build check
 npm run dev            # Local dev (port 3000)
 git add -A && git commit -m "type: message" && git push origin dev  # Deploy

@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 export const metadata = {
   title: 'Syarat & Ketentuan',
   description: 'Syarat dan ketentuan penggunaan layanan VyuApp — ketentuan kerja sama, pembayaran, dan hak kekayaan intelektual.',
-  alternates: { canonical: 'https://www.vyuapp.my.id/tos' },
+  alternates: { canonical: 'https://vyuapp.my.id/tos' },
 };
 
 export default function TosPage() {

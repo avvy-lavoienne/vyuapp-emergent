@@ -1,4 +1,4 @@
-# VyuApp Emergent — E2E Testing Plan (v2 — Validated)
+# VyuApp — E2E Testing Plan (v2 — Validated)
 
 **Date:** 2026-07-08
 **Branch:** dev (commit 49e4de5)
@@ -329,7 +329,7 @@ const discoveryData = {
 
 ```bash
 # Install Playwright
-cd /root/vyuapp-emergent
+cd /root/vyuapp
 npm init playwright@latest
 
 # Run all tests
