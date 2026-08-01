@@ -22,7 +22,26 @@
   --border: #333336;
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+@media (max-width: 768px) {
+  input, select, textarea { font-size: 16px !important; }
+}
+
+@layer utilities {
+  .h-dvh { height: 100dvh; }
+  .min-h-dvh { min-height: 100dvh; }
+  .pt-safe { padding-top: env(safe-area-inset-top); }
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+  .pl-safe { padding-left: env(safe-area-inset-left); }
+  .pr-safe { padding-right: env(safe-area-inset-right); }
+}
+
+.prose-light table {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
 ::selection {
   background: rgba(41, 151, 255, 0.15);
@@ -589,7 +608,7 @@ html { scroll-behavior: smooth; }
 .prose-light pre code .operator { color: #89DCEB; }
 /* Language label */
 
-/* Article tables */
+/* Article tables — responsive scroll container */
 .prose-light table {
   width: 100%;
   border-collapse: separate;
@@ -599,6 +618,9 @@ html { scroll-behavior: smooth; }
   overflow: hidden;
   margin: 2rem 0;
   font-size: 0.95rem;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .prose-light thead {
   background: #2997ff;

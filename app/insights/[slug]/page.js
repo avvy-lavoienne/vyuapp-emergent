@@ -188,7 +188,7 @@ export default async function ArticlePage({ params }) {
           <div className="mt-12 prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtmlContent(c1) }} />
           <AdSenseSlot slot={SLOT_TOP} format="auto" />
           <div className="prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtmlContent(c2) }} />
-          <AdSenseSlot slot={SLOT_MID} format="rectangle" style={{ display: 'block', minHeight: 250, maxWidth: 336, margin: '0 auto' }} />
+          <AdSenseSlot slot={SLOT_MID} format="rectangle" style={{ display: 'block', minHeight: 250, maxWidth: '100%', margin: '0 auto' }} />
           <div className="prose-light" dangerouslySetInnerHTML={{ __html: sanitizeHtmlContent(c3) }} />
           <AdSenseSlot slot={SLOT_END} format="auto" />
           <div className="mt-12 p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">

@@ -25,6 +25,16 @@ const satoshi = localFont({
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE_URL || 'https://vyuapp.my.id';
 const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f5f5f7' },
+    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+  ],
+};
+
 export const metadata = {
   metadataBase: new URL(baseUrl),
   title: {
@@ -62,9 +72,8 @@ export const metadata = {
   verification: {
     google: 'iXj8r3xIA1yNXkmopuNR9oVhNShAMLrRa7MD_YEHyz0',
   },
-  other: {
+   other: {
     ...(adsenseClient ? { 'google-adsense-account': adsenseClient } : {}),
-    'theme-color': '#f5f5f7',
   },
   alternates: {
     canonical: baseUrl,

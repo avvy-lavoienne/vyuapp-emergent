@@ -516,8 +516,8 @@ export default function AdminClient({ user }) {
                   className="w-full bg-white border border-[#d2d2d7] rounded-lg pl-9 pr-4 py-2.5 text-sm text-[#1d1d1f] placeholder:text-[#737370] focus:border-[#2997ff] outline-none transition-all" />
               </div>
 
-              <div className="vyu-card overflow-hidden">
-                <table className="w-full text-sm">
+              <div className="vyu-card overflow-hidden overflow-x-auto">
+                <table className="w-full text-sm min-w-[640px]">
                   <thead className="bg-[#F8F7F4] border-b border-[#d2d2d7]">
                     <tr className="text-left">
                       <th className="px-5 py-3 vyu-overline">// Judul</th>
