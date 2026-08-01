@@ -26,6 +26,10 @@ tests/e2e/.auth/
 next-env.d.ts
 *.tsbuildinfo
 
+# Generated sitemap/feed (generated at build time)
+public/sitemap.xml
+public/feed.xml
+
 # Production builds
 /build
 dist/
