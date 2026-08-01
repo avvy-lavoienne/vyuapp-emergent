@@ -1,7 +1,7 @@
 'use client';
 import { ArrowRight } from 'lucide-react';
 import { useLocale } from '@/components/LocaleProvider';
-import WordReveal from '@/components/WordReveal';
+import RotatingHeadline from '@/components/RotatingHeadline';
 
 /**
  * Client Component — reads locale from context for reactive language toggle.
@@ -14,14 +14,13 @@ export default function Hero() {
     <section className="relative pt-36 pb-28 md:pt-44 md:pb-36 overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-6 md:px-10">
         <div className="max-w-4xl mx-auto text-center">
-          <WordReveal
-            text={t.hero.headline}
+          <RotatingHeadline
+            staticText={t.hero.staticHeadline}
+            rotatingTexts={t.hero.rotatingHeadlines}
             tag="h1"
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.5rem] leading-[1.12] font-sans font-semibold tracking-[-0.03em] text-[#1d1d1f] dark:text-[#f5f5f7]"
-            highlightLast={true}
-            highlightClassName="text-[#2997ff]"
-            staggerDelay={100}
-            animationDelay={400}
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.5rem] leading-[1.12] font-sans font-semibold tracking-[-0.03em]"
+            rotationInterval={2500}
+            animationDuration={500}
           />
 
           <p className="mt-5 text-base md:text-lg text-[#6e6e73] dark:text-[#8A8A8A] font-medium tracking-wide">
