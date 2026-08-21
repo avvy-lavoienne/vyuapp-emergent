@@ -19,8 +19,8 @@ export default function Hero() {
             rotatingTexts={t.hero.rotatingHeadlines}
             tag="h1"
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.5rem] leading-[1.12] font-sans font-semibold tracking-[-0.03em]"
-            rotationInterval={2500}
-            animationDuration={500}
+            rotationInterval={2000}
+            animationDuration={250}
           />
 
           <p className="mt-5 text-base md:text-lg text-[#6e6e73] dark:text-[#8A8A8A] font-medium tracking-wide">

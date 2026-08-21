@@ -73,11 +73,11 @@ export default function RotatingHeadline({
           }}
         >
           <span
-            className={`inline-block transition-all duration-${animationDuration} ease-out ${
+            className={`inline-block transition-all ease-out ${
               isAnimating ? 'opacity-0 translate-y-full' : 'opacity-100 translate-y-0'
             } ${rotatingClassName}`}
             style={{
-              animationDuration: `${animationDuration}ms`,
+              transitionDuration: `${animationDuration}ms`,
             }}
           >
             {currentRotatingText}

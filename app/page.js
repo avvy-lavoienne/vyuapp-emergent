@@ -5,6 +5,7 @@ import { LocaleProvider } from '@/components/LocaleProvider';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
+import AuroraBackground from '@/components/AuroraBackground';
 import {
   AboutSection,
   CapabilitiesSection,
@@ -26,6 +27,8 @@ export default async function HomePage() {
 
   return (
     <main>
+      <AuroraBackground />
+
       {/* Client components that need reactive locale context */}
       <LocaleProvider initialLocale={locale}>
         <Navbar />
