@@ -10,11 +10,9 @@ import {
   AboutSection,
   CapabilitiesSection,
   CaraKerjaSection,
-  TimKamiSection,
   PortfolioSection,
   PhilosophySection,
 } from '@/components/HomeSections';
-import StatsSection from '@/components/StatsSection';
 import SectionHeader from '@/components/SectionHeader';
 
 // ContactForm is client-only — dynamic import keeps it out of the SSR HTML
@@ -37,10 +35,8 @@ export default async function HomePage() {
 
       {/* Server-rendered static sections */}
       <AboutSection summary={t.summary} />
-      <StatsSection />
       <CapabilitiesSection t={t} />
       <CaraKerjaSection />
-      <TimKamiSection />
       <PortfolioSection t={t} />
       <PhilosophySection t={t} />
 

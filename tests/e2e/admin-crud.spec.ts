@@ -152,11 +152,11 @@ test.describe('Admin CRUD', () => {
     await expect(page.locator('h1:has-text("Portfolio Baru")')).toBeVisible();
 
     // Fill name
-    const nameInput = page.locator('input[placeholder="Sellica"]');
+    const nameInput = page.locator('input[placeholder="Tafsha Farm"]');
     await nameInput.fill('E2E Test Portfolio');
 
     // Slug should auto-generate
-    const slugInput = page.locator('input[placeholder="sellica"]');
+    const slugInput = page.locator('input[placeholder="tafsha-farm"]');
     await expect(slugInput).toHaveValue('e2e-test-portfolio');
 
     // Fill tagline
@@ -194,7 +194,7 @@ test.describe('Admin CRUD', () => {
     await expect(page.locator('h1:has-text("Edit Portfolio")')).toBeVisible();
 
     // Modify the name
-    const nameInput = page.locator('input[placeholder="Sellica"]');
+    const nameInput = page.locator('input[placeholder="Tafsha Farm"]');
     await nameInput.clear();
     await nameInput.fill('E2E Test Portfolio Updated');
 

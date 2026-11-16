@@ -55,7 +55,7 @@ export default async function PortfolioDetailPage({ params }) {
     { name: item.name, url },
   ];
 
-  const productUrl = item.slug === 'avalon' ? 'https://avalon.vyuapp.my.id' : url;
+  const productUrl = item.href && item.href.startsWith('http') ? item.href : url;
 
   return (
     <main className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000]">

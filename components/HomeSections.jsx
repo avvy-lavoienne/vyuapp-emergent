@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ArrowRight, Search, ShieldCheck, Globe, Zap, Brain } from 'lucide-react';
+import { ArrowRight, Search, ShieldCheck, Globe, Zap } from 'lucide-react';
 import SectionHeader from '@/components/SectionHeader';
 import StaggerGroup from '@/components/StaggerGroup';
 import ParallaxCard from '@/components/ParallaxCard';
@@ -96,7 +96,7 @@ export function CaraKerjaSection({ className = '' }) {
         <SectionHeader
           overline="Metode Kami"
           title="Cara Kami Bekerja"
-          description="Di balik setiap proyek, ada tim AI yang bekerja secara otonom untuk memastikan hasil terbaik."
+          description="Di balik setiap proyek, ada proses yang terukur — dari riset hingga rilis."
           align="center"
         />
         <StaggerGroup className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -105,14 +105,14 @@ export function CaraKerjaSection({ className = '' }) {
               <Search className="w-6 h-6 text-[#2997ff]" />
             </div>
             <h3 className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">Riset Mendalam</h3>
-            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">AI agent melakukan riset komprehensif untuk setiap konten dan fitur.</p>
+            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">Riset komprehensif untuk setiap konten dan fitur sebelum dikerjakan.</p>
           </div>
           <div className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] text-center apple-card-hover">
             <div className="w-12 h-12 rounded-xl bg-[#2997ff]/10 dark:bg-[#5BA3FF]/10 flex items-center justify-center mx-auto mb-4">
               <ShieldCheck className="w-6 h-6 text-[#2997ff]" />
             </div>
             <h3 className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">Kode Berkualitas</h3>
-            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">QA agent memastikan setiap baris kode memenuhi standar kualitas.</p>
+            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">Setiap baris kode melewati review dan pengujian sebelum dirilis.</p>
           </div>
           <div className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] text-center apple-card-hover">
             <div className="w-12 h-12 rounded-xl bg-[#2997ff]/10 dark:bg-[#5BA3FF]/10 flex items-center justify-center mx-auto mb-4">
@@ -126,72 +126,9 @@ export function CaraKerjaSection({ className = '' }) {
               <Zap className="w-6 h-6 text-[#2997ff]" />
             </div>
             <h3 className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">Delivery Cepat</h3>
-            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">AI mempercepat proses pengembangan tanpa mengorbankan kualitas.</p>
+            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">Proses pengembangan yang cepat tanpa mengorbankan kualitas.</p>
           </div>
         </StaggerGroup>
-        <div className="mt-10 text-center">
-          <Link href="/portfolio/hikari-os" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all apple-link">
-            Pelajari lebih lanjut tentang Hikari OS <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function TimKamiSection({ className = '' }) {
-  const agents = [
-    // Tim Artikel (6)
-    { emoji: '🌸', name: 'Hikari', role: 'Orchestrator', desc: 'Mengoordinasi semua agent dan mengelola alur kerja multi-agent.' },
-    { emoji: '🦅', name: 'Helena', role: 'Research Specialist', desc: 'Riset komprehensif, analisis kompetitor, dan investigasi data.' },
-    { emoji: '✍️', name: 'Artoria', role: 'Content Creator', desc: 'Menulis artikel SEO-optimized, dokumentasi teknis, dan panduan.' },
-    { emoji: '🛡️', name: 'Jeanne', role: 'Quality Guardian', desc: 'Review konten, fakta-checking, dan quality assurance.' },
-    { emoji: '🔧', name: 'Circe', role: 'Infrastructure', desc: 'Deploy, Docker, CI/CD, monitoring, dan server management.' },
-    { emoji: '📣', name: 'Reach', role: 'Marketing Strategist', desc: 'Growth strategy, social media, content calendar, dan user retention.' },
-    { emoji: '🏕️', name: 'Atalanta', role: 'Training Orchestrator', desc: 'Mengelola pelatihan agent, onboarding, dan pengembangan skill tim.' },
-    // Tim Dev (7)
-    { emoji: '📋', name: 'Artoria', role: 'Project Manager', desc: 'Mengelola alur proyek, sprint planning, dan koordinasi tim development.' },
-    { emoji: '🎨', name: 'Nero', role: 'UI/UX Designer', desc: 'Design system, wireframe, prototyping, dan user experience.' },
-    { emoji: '⚔️', name: 'Mordred', role: 'Fullstack Developer', desc: 'Spesialis Next.js, Go, Python, Supabase, dan Tailwind CSS.' },
-    { emoji: '🌸', name: 'Tamamo', role: 'Frontend Specialist', desc: 'React, Next.js App Router, TypeScript, dan optimasi performa frontend.' },
-    { emoji: '📚', name: 'Scheherazade', role: 'Backend Specialist', desc: 'API design, database architecture, Go backend, dan sistem integrasi.' },
-    { emoji: '🎯', name: 'Scathach', role: 'QA Code', desc: 'Code review, automated testing, regression testing, dan quality gates.' },
-    { emoji: '🧘', name: 'Sensei', role: 'Code Sensei', desc: 'Code review berbasis pedagogi, refactoring guidance, dan best practices.' },
-    // Lainnya (3)
-    { emoji: '🏛️', name: 'Lotus', role: 'Gov Systems', desc: 'Asisten khusus PNS Disdukcapil untuk surat-menyurat dan birokrasi.' },
-    { emoji: '🎓', name: 'Guru', role: 'Learning Mentor', desc: 'Kurikulum personal, accountability belajar, dan quiz interaktif.' },
-    { emoji: '🎧', name: 'Hana', role: 'Customer Service', desc: 'Melayani pengunjung website secara real-time dengan kecerdasan dan keanggunan.' },
-  ];
-
-  return (
-    <section className={`py-24 md:py-32 bg-[#f5f5f7] dark:bg-[#1d1d1f] ${className}`} id="tim-kami">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <SectionHeader
-          overline="Tim Kami"
-          title="17 AI Agent, 1 Visi"
-          description="Setiap agent memiliki peran spesifik. Bersama, mereka membentuk tim digital yang bekerja tanpa henti untuk proyek Anda."
-          align="center"
-        />
-        <StaggerGroup className="mt-14 grid sm:grid-cols-2 lg:grid-cols-5 gap-5">
-          {agents.map((agent) => (
-            <div
-              key={`${agent.name}-${agent.role}`}
-              className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] apple-card-hover hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]"
-            >
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-2xl">{agent.emoji}</span>
-                <h3 className="text-lg font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">{agent.name}</h3>
-              </div>
-              <p className="font-mono text-[11px] text-[#2997ff] uppercase tracking-[0.1em]">{agent.role}</p>
-              <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#86868b] leading-relaxed">{agent.desc}</p>
-            </div>
-          ))}
-        </StaggerGroup>
-        <div className="mt-10 text-center">
-          <Link href="/portfolio/hikari-os" className="inline-flex items-center gap-2 text-[#2997ff] font-semibold text-sm hover:gap-3 transition-all apple-link">
-            Kenali seluruh tim <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
       </div>
     </section>
   );
@@ -214,25 +151,15 @@ export function PortfolioSection({ t, className = '' }) {
             {t.portfolio.view_all} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-        <StaggerGroup className="grid lg:grid-cols-2 gap-7">
+        <StaggerGroup className="max-w-3xl mx-auto">
           <ParallaxCard>
             <ProductCard
-              name="Sellica"
-              tagline={t.portfolio.sellica.tagline}
-              description={t.portfolio.sellica.desc}
-              features={t.portfolio.sellica.features}
-              href="/portfolio"
-              ctaLabel={t.portfolio.sellica.cta}
-            />
-          </ParallaxCard>
-          <ParallaxCard>
-            <ProductCard
-              name="The Avalon Project"
-              tagline={t.portfolio.avalon.tagline}
-              description={t.portfolio.avalon.desc}
-              features={t.portfolio.avalon.features}
-              href="https://avalon.vyuapp.my.id/"
-              ctaLabel={t.portfolio.avalon.cta}
+              name="Tafsha Farm"
+              tagline={t.portfolio.tafsha.tagline}
+              description={t.portfolio.tafsha.desc}
+              features={t.portfolio.tafsha.features}
+              href="https://tafsha.vyuapp.my.id/"
+              ctaLabel={t.portfolio.tafsha.cta}
             />
           </ParallaxCard>
         </StaggerGroup>
@@ -258,9 +185,4 @@ export function PhilosophySection({ t, className = '' }) {
       </div>
     </section>
   );
-}
-
-export function ContactSection({ t, locale }) {
-  // ContactForm is a client component — dynamically imported at the page level
-  return null;
 }

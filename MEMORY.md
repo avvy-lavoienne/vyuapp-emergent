@@ -14,9 +14,6 @@ vyuapp/
 │   ├── page.js             # Homepage (Client Component)
 │   ├── layout.js           # Root layout (Server Component)
 │   ├── globals.css         # Satoshi font + Tailwind
-│   ├── insights/           # Articles (SSR + ISR)
-│   │   ├── page.js         # Article listing
-│   │   └── [slug]/page.js  # Article detail (Server Component)
 │   ├── portfolio/          # Portfolio pages
 │   └── api/                # API routes (contact, discovery, admin)
 ├── components/             # React components

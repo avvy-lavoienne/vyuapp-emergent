@@ -41,8 +41,8 @@ export const metadata = {
     default: 'VyuApp — Bespoke Web Engineering & Market Intelligence',
     template: '%s — VyuApp',
   },
-  description: 'Studio rekayasa web premium dari Garut. Kami membangun produk digital presisi tinggi: Sellica (financial intelligence) dan The Avalon Project.',
-  keywords: ['VyuApp', 'Sellica', 'Avalon', 'web engineering Indonesia', 'data intelligence', 'Next.js studio', 'Garut', 'bespoke web development'],
+  description: 'Studio rekayasa web premium dari Garut. Kami membangun produk digital presisi tinggi yang dirancang untuk bertahan lama.',
+  keywords: ['VyuApp', 'web engineering Indonesia', 'Next.js studio', 'Garut', 'bespoke web development', 'agritech', 'Tafsha Farm'],
   authors: [{ name: 'VyuApp Studio' }],
   robots: { index: true, follow: true },
   openGraph: {
@@ -51,7 +51,7 @@ export const metadata = {
     url: baseUrl,
     siteName: 'VyuApp',
     title: 'VyuApp — Bespoke Web Engineering & Market Intelligence',
-    description: 'Studio rekayasa web premium dari Garut. Kami membangun produk digital presisi tinggi: Sellica (financial intelligence) dan The Avalon Project.',
+    description: 'Studio rekayasa web premium dari Garut. Kami membangun produk digital presisi tinggi yang dirancang untuk bertahan lama.',
   },
   twitter: {
     card: 'summary_large_image',
@@ -104,7 +104,6 @@ export default function RootLayout({ children }) {
         <meta name="format-detection" content="telephone=no, email=no" />
         <link rel="me" href="https://github.com/avvy-lavoienne" />
         <link rel="me" href="https://www.linkedin.com/in/frmnfird" />
-        <link rel="alternate" type="application/rss+xml" title="VyuApp Insights" href="/feed.xml" />
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         {adsenseClient && <link rel="preconnect" href="https://pagead2.googlesyndication.com" />}
       </head>

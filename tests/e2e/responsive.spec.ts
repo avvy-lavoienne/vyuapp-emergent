@@ -122,7 +122,6 @@ test.describe('Responsive Design', () => {
       '#tentang',
       '#kapabilitas',
       '#cara-kerja',
-      '#tim-kami',
       '#portfolio',
       '#filosofi',
       '#kontak',

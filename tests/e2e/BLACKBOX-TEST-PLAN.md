@@ -273,12 +273,12 @@ curl -s -w "\nHTTP_STATUS: %{http_code}\n" \
   -X POST "$BASE/api/chat" \
   -H "Content-Type: application/json" \
   -d '{
-    "message": "Ceritakan lebih lanjut tentang Sellica",
+    "message": "Ceritakan lebih lanjut tentang Tafsha Farm",
     "history": [
       {"role": "user", "content": "Halo"},
       {"role": "assistant", "content": "Halo! 🌸 VyuApp membangun sistem digital yang tahan lama."},
       {"role": "user", "content": "Apa produk kalian?"},
-      {"role": "assistant", "content": "Kami punya Sellica dan Avalon. Mau tahu mana?"}
+      {"role": "assistant", "content": "Kami punya Tafsha Farm, proyek yang sedang berjalan. Mau tahu lebih lanjut?"}
     ]
   }'
 

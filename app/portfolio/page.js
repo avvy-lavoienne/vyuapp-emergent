@@ -15,15 +15,15 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.NEXT_PUBLIC_BASE
 
 export const metadata = {
   title: 'Portfolio — VyuApp',
-  description: 'Produk inti VyuApp: Sellica (financial intelligence untuk trader aset digital) dan The Avalon Project (enterprise market intelligence & price surveillance untuk e-commerce).',
+  description: 'Produk inti VyuApp: Tafsha Farm — aplikasi manajemen kebun untuk mencatat siklus tanam, rawat, dan panen.',
   openGraph: {
     title: 'Portfolio — VyuApp',
-    description: 'Produk inti VyuApp: Sellica dan The Avalon Project — dua produk hidup yang dipelihara oleh tangan yang sama.',
+    description: 'Produk inti VyuApp: Tafsha Farm — proyek yang sedang berjalan, dibangun dan dioperasikan oleh tangan yang sama.',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Portfolio — VyuApp',
-    description: 'Produk inti VyuApp: Sellica dan The Avalon Project — dua produk hidup yang dipelihara oleh tangan yang sama.',
+    description: 'Produk inti VyuApp: Tafsha Farm — proyek yang sedang berjalan, dibangun dan dioperasikan oleh tangan yang sama.',
   },
   alternates: { canonical: `${baseUrl}/portfolio` },
 };
@@ -54,7 +54,7 @@ export default async function PortfolioPage() {
   const locale = cookieStore.get('vyu-locale')?.value === 'en' ? 'en' : 'id';
   const t = locales[locale].portfolioPage;
 
-  const [main1, main2] = DEFAULT_MAIN;
+  const [main1] = DEFAULT_MAIN;
   const dbItems = await getPublishedPortfolio();
   const rest = dbItems.length > 0 ? dbItems : FALLBACK_OTHER;
 
@@ -63,8 +63,7 @@ export default async function PortfolioPage() {
     { name: t.breadcrumb.portfolio, url: `${baseUrl}/portfolio` },
   ];
 
-  const sellicaUrl = `${baseUrl}/portfolio/sellica`;
-  const avalonUrl = 'https://avalon.vyuapp.my.id';
+  const main1Url = main1?.href || `${baseUrl}/portfolio`;
 
   return (
     <main className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000]">
@@ -72,13 +71,7 @@ export default async function PortfolioPage() {
       {main1 && <SoftwareAppJsonLd
         name={main1.name}
         description={main1.description}
-        url={sellicaUrl}
-        applicationCategory="BusinessApplication"
-      />}
-      {main2 && <SoftwareAppJsonLd
-        name={main2.name}
-        description={main2.description}
-        url={avalonUrl}
+        url={main1Url}
         applicationCategory="BusinessApplication"
       />}
       <Navbar />
@@ -102,14 +95,6 @@ export default async function PortfolioPage() {
         </section>
       )}
 
-      {main2 && (
-        <section className="py-8 md:py-12">
-          <div className="max-w-7xl mx-auto px-6 md:px-10">
-            <DetailedProduct item={main2} />
-          </div>
-        </section>
-      )}
-
       <section className="py-24 md:py-32">
         <div className="max-w-7xl mx-auto px-6 md:px-10">
           <SectionHeader
@@ -117,33 +102,6 @@ export default async function PortfolioPage() {
             title={t.otherWork.title}
             description={t.otherWork.description}
           />
-          
-          {/* Featured: AI Agents Case Study */}
-          <div className="mt-14 p-8 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] mb-8">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-              <div className="flex-1">
-                <p className="font-mono text-[10px] text-[#2997ff] dark:text-[#5BA3FF] uppercase tracking-[0.18em] font-medium mb-3">
-                  {t.caseStudy.overline}
-                </p>
-                <h3 className="text-xl font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">{t.caseStudy.title}</h3>
-                <p className="text-sm text-[#4A4A48] dark:text-[#86868b] mb-4">{t.caseStudy.description}</p>
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {['AI', 'Multi-Agent', 'Automation', 'SEO'].map(tag => (
-                    <span key={tag} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium text-[#6e6e73] dark:text-[#86868b] bg-[#F4F3EE] dark:bg-[#333336] border border-[#d2d2d7] dark:border-[#333336]">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <Link
-                href="/portfolio/hikari-os"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#2997ff] text-white text-sm font-semibold hover:bg-[#0066cc] transition-all duration-200 hover:-translate-y-0.5 shrink-0"
-              >
-                {t.caseStudy.cta} <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-
           <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {(rest.length ? rest : FALLBACK_OTHER).map(item => <OtherProject key={item.id} item={item} />)}
           </div>

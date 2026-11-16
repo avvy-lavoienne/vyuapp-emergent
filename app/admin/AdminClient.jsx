@@ -291,11 +291,11 @@ function PortfolioEditor({ item, onClose, onSaved }) {
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className="block vyu-overline mb-2">// Nama Produk</label>
-                <input value={form.name} onChange={(e) => set('name', e.target.value)} className={inputCls} placeholder="Sellica" />
+                <input value={form.name} onChange={(e) => set('name', e.target.value)} className={inputCls} placeholder="Tafsha Farm" />
               </div>
               <div>
                 <label className="block vyu-overline mb-2">// Slug</label>
-                <input value={form.slug} onChange={(e) => set('slug', slugify(e.target.value))} className={inputCls} placeholder="sellica" />
+                <input value={form.slug} onChange={(e) => set('slug', slugify(e.target.value))} className={inputCls} placeholder="tafsha-farm" />
               </div>
             </div>
             <div>

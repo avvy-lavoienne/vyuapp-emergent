@@ -38,7 +38,6 @@ export default function Footer({ isLanding = false }) {
             <ul className="space-y-2.5 text-sm text-[#6e6e73] dark:text-[#86868b]">
               <li><Link href="/" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] transition-colors apple-link">{text ? text.nav.home : 'Beranda'}</Link></li>
               <li><Link href="/portfolio" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] transition-colors apple-link">{text ? text.nav.portfolio : 'Portfolio'}</Link></li>
-              <li><Link href="/insights" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] transition-colors apple-link">{text ? text.nav.insights : 'Insights'}</Link></li>
               <li><a href="/#kontak" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] transition-colors apple-link">{text ? text.nav.contact : 'Kontak'}</a></li>
               <li><Link href="/about" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] transition-colors apple-link">Tentang Kami</Link></li>
               <li><Link href="/privacy" className="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] transition-colors apple-link">Kebijakan Privasi</Link></li>

@@ -25,23 +25,18 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/insights/tren-web-development-2026-bagaimana-ai-mengubah-cara-kita-membangun-website',
-        destination: '/insights/tren-web-development-2026-ai-mengubah-cara-membangun-website',
+        source: '/insights',
+        destination: '/',
         permanent: true,
       },
       {
-        source: '/insights/hana-ai-customer-service-agent-vyuapp',
-        destination: '/insights/hana-ai-customer-service-bukan-sekadar-chatbot-biasa',
+        source: '/insights/:path*',
+        destination: '/',
         permanent: true,
       },
       {
-        source: '/insights/redis-caching-patterns-untuk-web-apps-skala-besar',
-        destination: '/insights/redis-caching-patterns-for-scalable-web-apps-dari-dasar-hingga',
-        permanent: true,
-      },
-      {
-        source: '/insights/vyuapp-platform-documentation-membangun-sistem-ai-powered-content-creation-denga',
-        destination: '/insights/vyuapp-platform-documentation',
+        source: '/category/:path*',
+        destination: '/',
         permanent: true,
       },
     ];
@@ -55,13 +50,6 @@ const nextConfig = {
           { key: "CDN-Cache-Control", value: "max-age=86400" },
           { key: "Vercel-CDN-Cache-Control", value: "max-age=86400" },
           { key: "X-Robots-Tag", value: "index, follow" },
-        ],
-      },
-      {
-        source: "/feed.xml",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800" },
-          { key: "CDN-Cache-Control", value: "max-age=86400" },
         ],
       },
       {

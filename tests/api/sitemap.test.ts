@@ -19,6 +19,5 @@ test.describe('Sitemap', () => {
     // Should contain main pages
     expect(body).toContain('https://vyuapp.my.id/');
     expect(body).toContain('https://vyuapp.my.id/portfolio');
-    expect(body).toContain('https://vyuapp.my.id/insights');
   });
 });

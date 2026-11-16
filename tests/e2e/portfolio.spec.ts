@@ -7,14 +7,9 @@ test.describe('Portfolio', () => {
     await expect(page.locator('h1').first()).toBeVisible();
   });
 
-  test('Sellica product is visible', async ({ page }) => {
+  test('Tafsha Farm product is visible', async ({ page }) => {
     await page.goto('/portfolio');
-    await expect(page.locator('text=Sellica').first()).toBeVisible({ timeout: 10000 });
-  });
-
-  test('Avalon product is visible', async ({ page }) => {
-    await page.goto('/portfolio');
-    await expect(page.locator('text=Avalon').first()).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('text=Tafsha Farm').first()).toBeVisible({ timeout: 10000 });
   });
 
   test('dark mode toggle works on portfolio', async ({ page }) => {

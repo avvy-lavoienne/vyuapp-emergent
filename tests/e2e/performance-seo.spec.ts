@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const PUBLIC_ROUTES = ['/', '/about', '/portfolio', '/insights', '/privacy', '/tos'];
+const PUBLIC_ROUTES = ['/', '/about', '/portfolio', '/privacy', '/tos'];
 
 test.describe('Performance & SEO', () => {
   // I1. Meta tags present

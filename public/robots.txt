@@ -2,9 +2,10 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /api/
+Disallow: /insights
+Disallow: /category
 
 User-agent: Mediapartners-Google
 Allow: /
 
 Sitemap: https://vyuapp.my.id/sitemap.xml
-Sitemap: https://vyuapp.my.id/feed.xml

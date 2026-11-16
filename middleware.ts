@@ -5,7 +5,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
   // Skip middleware for static files in public/
-  if (pathname === '/sitemap.xml' || pathname === '/feed.xml' || pathname === '/robots.txt') {
+  if (pathname === '/sitemap.xml' || pathname === '/robots.txt') {
     return NextResponse.next();
   }
   

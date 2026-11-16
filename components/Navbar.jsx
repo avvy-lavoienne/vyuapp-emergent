@@ -10,7 +10,6 @@ import { useLocale } from '@/components/LocaleProvider';
 const LINKS = [
   { href: '/', localeKey: 'home' },
   { href: '/portfolio', localeKey: 'portfolio' },
-  { href: '/insights', localeKey: 'insights' },
 ];
 
 export default function Navbar() {

@@ -32,10 +32,9 @@ export default function AboutPage() {
                 <h2 className="text-xl font-semibold text-[#1d1d1f] dark:text-[#f5f5f7]">Pengalaman & Keahlian</h2>
               </div>
               <div className="text-[#4A4A48] dark:text-[#86868b] text-sm leading-relaxed space-y-3">
-                <p>Didirikan pada tahun 2024, VyuApp telah mengembangkan dua produk utama yang berjalan di produksi:</p>
+                <p>Didirikan pada tahun 2024, VyuApp membangun dan mengoperasikan produk digitalnya sendiri, dengan Tafsha Farm sebagai proyek yang sedang berjalan:</p>
                 <ul className="list-disc pl-5 space-y-1">
-                  <li><strong>Sellica</strong> — Platform intelijen pasar untuk trader aset digital, menggabungkan pipeline data real-time, model statistik, dan UI minimalis.</li>
-                  <li><strong>The Avalon Project</strong> — Design system internal yang menerapkan Swiss minimalism bertemu cyberpunk utility di setiap produk.</li>
+                  <li><strong>Tafsha Farm</strong> — Aplikasi manajemen kebun untuk mencatat siklus tanam, rawat, dan panen per petak, dibangun sebagai PWA offline-first.</li>
                 </ul>
                 <p>Stack teknis kami: <strong>Next.js</strong>, <strong>Supabase</strong> (PostgreSQL), <strong>TypeScript</strong>, <strong>Tailwind CSS</strong>, dan <strong>Python</strong> untuk backend computational.</p>
               </div>

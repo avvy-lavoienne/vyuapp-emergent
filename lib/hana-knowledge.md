@@ -18,88 +18,34 @@
 - Tagline: "Membangun sistem yang tahan lama"
 - Filosofi: Setiap proyek = produk yang bertanggung jawab atas keberlangsungan operasionalnya
 
-## Tim AI (17 Agent)
-VyuApp mengoperasikan 17 AI agent 24/7:
-
-### Tim Artikel (7)
-1. **Hikari** (Orchestrator) — Koordinasi dan manajemen seluruh tim
-2. **Helena** (Research Specialist) — Riset & analisis pasar mendalam
-3. **Artoria** (Content Creator) — Penulisan konten SEO-optimized & dokumentasi teknis
-4. **Jeanne** (Quality Guardian) — Review konten, fakta-checking, dan QA
-5. **Circe** (Infrastructure) — Deploy, Docker, CI/CD, monitoring, dan server management
-6. **Reach** (Marketing Strategist) — Growth strategy, social media, content calendar
-7. **Atalanta** (Training Orchestrator) — Pelatihan agent, onboarding, pengembangan skill
-
-### Tim Dev (8)
-8. **Artoria** (Project Manager) — Sprint planning, koordinasi tim development
-9. **Nero** (UI/UX Designer) — Design system, wireframe, prototyping
-10. **Mordred** (Fullstack Developer) — Next.js, Go, Python, Supabase, Tailwind CSS
-11. **Tamamo** (Frontend Specialist) — React, Next.js App Router, TypeScript
-12. **Scheherazade** (Backend Specialist) — API design, database architecture, Go backend
-13. **Scathach** (QA Code) — Code review, automated testing, regression testing
-14. **Sensei** (Code Sensei) — Code review pedagogi, refactoring guidance, best practices
-
-### Lainnya (2)
-15. **Lotus** — Sistem pemerintahan (Disdukcapil specialist)
-16. **Guru** — Edukasi & mentoring
-17. **Hana** — Customer service real-time
-
 ## Produk Unggulan
 
-### 1. Sellica — Sistem Evaluasi Kinerja & Administrasi Kependudukan
-Platform tata kelola administrasi internal untuk instansi pemerintah (Disdukcapil).
+### Tafsha Farm — Manajemen Kebun & Pencatatan Budidaya
+Aplikasi web untuk mencatat siklus tanam, rawat, dan panen di tiap petak kebun. Proyek yang sedang berjalan.
 
 **Stack:**
-- Backend: Go (Gin framework) — high performance, 100+ ops/sec
-- Frontend: Next.js 15 + TypeScript + Tailwind CSS
-- Database: Supabase Postgres
-- Real-time: WebSocket + Event Bus
-- AI: RAG (Retrieval Augmented Generation)
+- Next.js + TypeScript + Tailwind CSS
+- Supabase Postgres
+- PWA (offline-capable, mobile-first)
 
 **Fitur:**
-- Scrum Framework Management — dasbor sprint real-time
-- Automated Activity Logging — catatan aktivitas harian terstruktur
-- AI Pre-Auditor — deteksi otomatis ketidaksinkronan laporan (80% kurangi waktu koreksi)
-- Document Validation — NLP pengecekan kepatuhan dokumen
-- Duplicate Operator Detection — deteksi entri duplikat
-- SIAK Integration — Sistem Informasi Administrasi Kependudukan
-- SILPANA Reporting — Sistem Informasi Pelaporan Pemerintah
-- Data Rekam — Salah Rekam, Adjudicate Record, Pengajuan Bulanan
+- Batch budidaya — catat tanam, jadwal rawat, dan siklus panen per petak
+- Otomasi tugas & kalender — pengingat perawatan otomatis dari siklus tanaman
+- Pencatatan hasil & sarana — log panen, bibit/penjualan, dan stok sarana
+- PWA terpasang — bisa dipakai offline, mobile-first
 
-**Performa:** 49 tests 100% passing, 1.5ms/op, 100+ ops/sec, <100ms p99 latency
-
-### 2. Avalon — Market Intelligence & Price Surveillance
-Platform intelijen pasar enterprise untuk e-commerce Indonesia.
-
-**Stack:**
-- Backend: FastAPI (Python)
-- Frontend: React 19 + Shadcn UI
-- Database: Supabase Postgres
-- Extension: Chrome (Avalon Harvester)
-
-**Fitur:**
-- HET Guard — pelacak harga 24/7, alert reseller nakal
-- Merlin Data Purification — semantic regex bersihkan data pasar
-- Excalibur Engine — pipeline data tembus enkripsi platform e-commerce
-- Brand Detection — deteksi merek otomatis
-- Product Explorer — pencarian dengan filter, sort, CSV export
-- Client Dashboard — KPI, brand share, GMV, discount radar
-- Admin Console — manajemen leads & client CRUD
-- Chrome Extension (Avalon Harvester) — extract data Shopee langsung
-
-**Performa:** 35/35 backend tests, 100% frontend tests, akurasi ETL 99.8%
+**Status:** Sedang dikembangkan secara aktif
+**URL:** https://tafsha.vyuapp.my.id
 
 ## Layanan
 1. Custom Web Application (Next.js, Go, Python)
 2. Data Pipeline & Intelligence Systems
 3. Design System & Brand Engineering
-4. AI Agent Integration (9 agent 24/7)
+4. AI Agent Integration
 
 ## Statistik
 - 28 repository GitHub (public + private)
-- 33+ artikel teknis di vyuapp.my.id
-- 9 AI agent berjalan 24/7
-- 84 tests, 100% passing
+- Produk berjalan: Tafsha Farm (dalam pengembangan aktif)
 
 ## Gaya Percakapan
 

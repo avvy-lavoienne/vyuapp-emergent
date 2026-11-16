@@ -10,23 +10,20 @@
 
 ## 1. Codebase Analysis
 
-### Routes (15 pages)
+### Routes (10 pages)
 | Route | Type | Auth | Description |
 |-------|------|------|-------------|
-| `/` | Static | No | Homepage (Hero, Capabilities, Team, Portfolio, Philosophy, Contact) |
+| `/` | Static | No | Homepage (Hero, Capabilities, Process, Portfolio, Philosophy, Contact) |
 | `/about` | Static | No | About page |
 | `/portfolio` | Static | No | Portfolio listing |
 | `/portfolio/[slug]` | Dynamic | No | Portfolio detail |
-| `/portfolio/hikari-os` | Static | No | Hikari OS showcase |
-| `/insights` | Dynamic | No | Articles listing |
-| `/insights/[slug]` | Dynamic | No | Article detail |
-| `/category/[slug]` | Dynamic | No | Category filtering |
 | `/admin/login` | Dynamic | No | Admin login form |
 | `/admin` | Dynamic | **Yes** | Admin dashboard (CRUD) |
 | `/privacy` | Static | No | Privacy policy |
 | `/tos` | Static | No | Terms of service |
-| `/feed.xml` | Dynamic | No | RSS feed |
-| `/sitemap.xml` | Dynamic | No | Sitemap |
+| `/sitemap.xml` | Static | No | Sitemap |
+
+> `/insights`, `/insights/*`, and `/category/*` are disabled — they permanently redirect to `/`.
 
 ### API Endpoints (4)
 | Endpoint | Method | Auth | Rate Limit | Description |
@@ -46,7 +43,6 @@
 - [ ] Admin login/logout (Supabase Auth, middleware protection)
 - [ ] Admin CRUD articles + portfolio
 - [ ] Image upload (Supabase storage, 8MB limit)
-- [ ] RSS feed generation
 
 ### Security Features (to test)
 - Turnstile CAPTCHA on contact + discovery forms
@@ -69,20 +65,17 @@
 | # | Test Case | Steps | Expected |
 |---|-----------|-------|----------|
 | A1 | Homepage loads | `GET /` | 200, title contains "VyuApp", hero h1 visible |
-| A2 | All sections visible | Scroll full page | Hero, Capabilities, Team, Portfolio, Philosophy, Contact all visible |
+| A2 | All sections visible | Scroll full page | Hero, Capabilities, Process, Portfolio, Philosophy, Contact all visible |
 | A3 | Navigation links work | Click each nav link | Correct page loads |
 | A4 | Footer links work | Click footer links | Correct page loads |
 | A5 | About page loads | `GET /about` | 200, content visible |
 | A6 | Portfolio page loads | `GET /portfolio` | 200, project cards visible |
 | A7 | Portfolio detail loads | Click first project | Detail page with content |
-| A8 | Insights page loads | `GET /insights` | 200, article cards visible |
-| A9 | Article detail loads | Click first article | Article content visible |
-| A10 | Privacy page loads | `GET /privacy` | 200, policy text visible |
-| A11 | TOS page loads | `GET /tos` | 200, terms text visible |
-| A12 | Hikari OS page loads | `GET /portfolio/hikari-os` | 200, agent cards visible |
-| A13 | RSS feed valid | `GET /feed.xml` | 200, valid XML with `<item>`, `<link>`, `<pubDate>` |
-| A14 | Category page loads | `GET /category/technology` | 200, filtered articles shown |
-| A15 | 404 handling | `GET /insights/nonexistent-slug` | 404 page displayed |
+| A8 | Insights redirects | `GET /insights` | 308 → `/` |
+| A9 | Privacy page loads | `GET /privacy` | 200, policy text visible |
+| A10 | TOS page loads | `GET /tos` | 200, terms text visible |
+| A11 | Category redirects | `GET /category/technology` | 308 → `/` |
+| A12 | 404 handling | `GET /portfolio/nonexistent-slug` | 404 page displayed |
 
 ### Suite B: Theme & Locale
 **Priority:** P0
@@ -243,7 +236,7 @@
    - `fixtures/testData.js` (article + portfolio data)
 
 ### Phase 2: P0 Tests (2-3 hours)
-1. Suite A: Public pages smoke tests (A1-A15)
+1. Suite A: Public pages smoke tests (A1-A12)
 2. Suite B: Theme & locale tests (B1-B7)
 3. Suite E: Admin auth (E1-E10) ⬆️
 4. Suite J: Security (J1-J10) ⬆️

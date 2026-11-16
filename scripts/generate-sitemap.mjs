@@ -81,45 +81,20 @@ async function generateSitemap() {
   const staticRoutes = [
     { path: '/', changefreq: 'weekly', priority: 1.0 },
     { path: '/portfolio', changefreq: 'weekly', priority: 0.9 },
-    { path: '/insights', changefreq: 'daily', priority: 0.9 },
     { path: '/about', changefreq: 'monthly', priority: 0.8 },
     { path: '/privacy', changefreq: 'yearly', priority: 0.3 },
     { path: '/tos', changefreq: 'yearly', priority: 0.3 },
-    { path: '/portfolio/hikari-os', changefreq: 'weekly', priority: 0.6 },
+    { path: '/portfolio/tafsha-farm', changefreq: 'weekly', priority: 0.6 },
   ];
 
   for (const route of staticRoutes) {
     urls.push(generateUrl(`${BASE_URL}${route.path}`, now, route.changefreq, route.priority));
   }
 
-  // Category routes
-  const categories = ['AI', 'Engineering', 'DevOps', 'Cloud', 'Security', 'Productivity', 'Design', 'Mobile', 'Backend', 'Database', 'Testing', 'Career', 'Web3', 'Performance', 'IndoTech'];
-  for (const cat of categories) {
-    urls.push(generateUrl(`${BASE_URL}/category/${encodeURIComponent(cat)}`, now, 'weekly', 0.7));
-  }
-
-  // Articles from Supabase REST API
-  try {
-    const articles = await supabaseQuery('articles', 'slug, published_at, updated_at', {
-      'order': 'published_at.desc',
-    });
-    if (articles) {
-      for (const a of articles) {
-        const daysSincePublished = (new Date() - new Date(a.published_at)) / (1000 * 60 * 60 * 24);
-        const priority = daysSincePublished < 7 ? 0.8 : daysSincePublished < 30 ? 0.7 : daysSincePublished < 90 ? 0.65 : 0.6;
-        const lastmod = (a.updated_at || a.published_at || now).split('T')[0];
-        urls.push(generateUrl(`${BASE_URL}/insights/${a.slug}`, lastmod, 'monthly', priority));
-      }
-      console.log(`✓ Articles: ${articles.length}`);
-    }
-  } catch (e) {
-    console.error('⚠ Failed to fetch articles:', e.message);
-  }
-
   // Portfolio from Supabase REST API
   try {
     const portfolio = await supabaseQuery('portfolio_items', 'slug, updated_at');
-    const defaultPortfolios = ['sellica', 'avalon'];
+    const defaultPortfolios = ['tafsha-farm'];
     const allSlugs = [...defaultPortfolios, ...(portfolio?.map(p => p.slug) || [])];
     const uniqueSlugs = [...new Set(allSlugs)];
     for (const slug of uniqueSlugs) {
