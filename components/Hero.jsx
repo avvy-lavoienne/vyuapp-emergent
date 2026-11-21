@@ -1,50 +1,71 @@
 'use client';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { useLocale } from '@/components/LocaleProvider';
-import RotatingHeadline from '@/components/RotatingHeadline';
 
 /**
  * Client Component — reads locale from context for reactive language toggle.
- * Hero headline uses WordReveal for blur + translateY stagger animation.
+ * Editorial hero: asymmetric 12-column grid, serif display headline,
+ * one clay accent phrase, hairline meta strip. No rotating text.
  */
 export default function Hero() {
   const { t } = useLocale();
+  const accent = (t.hero.rotatingHeadlines?.[0] || '').trim();
 
   return (
-    <section className="relative pt-36 pb-28 md:pt-44 md:pb-36 overflow-hidden">
-      <div className="relative max-w-7xl mx-auto px-6 md:px-10">
-        <div className="max-w-4xl mx-auto text-center">
-          <RotatingHeadline
-            staticText={t.hero.staticHeadline}
-            rotatingTexts={t.hero.rotatingHeadlines}
-            tag="h1"
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[5.5rem] leading-[1.12] font-sans font-semibold tracking-[-0.03em]"
-            rotationInterval={2000}
-            animationDuration={250}
-          />
+    <section className="relative pt-36 md:pt-44 pb-10 border-b border-rule overflow-hidden">
+      <div className="max-w-page mx-auto px-6 md:px-10">
+        <div className="flex items-center justify-between gap-6">
+          <p className="eyebrow">01 — Studio Rekayasa Web</p>
+          <p className="eyebrow hidden sm:block">Garut, Jawa Barat — 7.21°S</p>
+        </div>
 
-          <p className="mt-5 text-base md:text-lg text-[#6e6e73] dark:text-[#8A8A8A] font-medium tracking-wide">
-            {t.hero.tagline}
-          </p>
-
-          <p className="mt-8 text-[#4A4A48] dark:text-[#86868b] text-base md:text-lg leading-relaxed max-w-2xl mx-auto">
-            {t.hero.description}
-          </p>
-
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a
-              href="#kapabilitas"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#2997ff] text-white text-sm font-semibold hover:bg-[#0066cc] apple-btn-hover"
-            >
-              {t.hero.cta_primary} <ArrowRight className="w-4 h-4" />
-            </a>
-            <a
-              href="#kontak"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-transparent text-[#1d1d1f] dark:text-[#f5f5f7] font-semibold text-sm border border-[#D1D0C9] dark:border-[#3A3A3D] hover:border-[#B0AFAA] dark:hover:border-[#4A4A4D] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] apple-btn-hover"
-            >
-              {t.hero.cta_secondary}
-            </a>
+        <div className="mt-10 md:mt-14 grid grid-cols-12 gap-y-12 gap-x-6 md:gap-x-10">
+          <div className="col-span-12 lg:col-span-8">
+            <h1 className="display text-[clamp(2.75rem,7.4vw,6rem)] leading-[0.94] text-ink">
+              <span className="block first-letter:uppercase">{t.hero.staticHeadline}</span>
+              <span className="block italic text-clay mt-1">{accent}</span>
+            </h1>
           </div>
+
+          <aside className="col-span-12 lg:col-span-4 flex flex-col justify-end lg:pl-8 lg:border-l border-rule">
+            <p className="eyebrow text-clay">{t.hero.tagline}</p>
+            <p className="mt-5 text-base leading-relaxed text-ink2">
+              {t.hero.description}
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <a
+                href="#kapabilitas"
+                className="field-btn inline-flex items-center justify-between gap-3 px-5 py-3 rounded-sm bg-ink text-paper text-[0.7rem] font-mono uppercase tracking-[0.16em] hover:bg-clay"
+              >
+                {t.hero.cta_primary} <ArrowUpRight className="w-4 h-4" />
+              </a>
+              <a
+                href="#kontak"
+                className="field-btn inline-flex items-center justify-between gap-3 px-5 py-3 rounded-sm border border-ink text-ink text-[0.7rem] font-mono uppercase tracking-[0.16em] hover:bg-ink hover:text-paper"
+              >
+                {t.hero.cta_secondary}
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <div className="max-w-page mx-auto px-6 md:px-10 mt-20 md:mt-28">
+        <div className="grid grid-cols-2 md:grid-cols-4 border-t border-rule">
+          {[
+            ['Disiplin', 'Next.js · TypeScript'],
+            ['Data', 'Supabase · Observability'],
+            ['Otomasi', 'AI Agent Systems'],
+            ['Produk', 'Tafsha Farm · Live'],
+          ].map(([label, value], i) => (
+            <div
+              key={label}
+              className={`py-4 pr-4 ${i > 0 ? 'md:border-l md:border-rule md:pl-6' : ''} ${i % 2 === 1 ? 'border-l border-rule pl-6 md:pl-6' : ''}`}
+            >
+              <p className="eyebrow">{label}</p>
+              <p className="mt-2 text-xs text-ink2 font-mono">{value}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

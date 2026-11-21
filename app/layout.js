@@ -1,4 +1,4 @@
-import { JetBrains_Mono } from 'next/font/google';
+import { JetBrains_Mono, Instrument_Serif } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 import ThemeProvider from '@/components/ThemeProvider';
@@ -10,6 +10,14 @@ import ScrollProgressIndicator from '@/components/ScrollProgressIndicator';
 import { OrganizationJsonLd, WebSiteJsonLd, LocalBusinessJsonLd } from '@/components/JsonLd';
 
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', display: 'swap' });
+
+const display = Instrument_Serif({
+  subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
+  variable: '--font-display',
+  display: 'swap',
+});
 
 const satoshi = localFont({
   src: [
@@ -30,8 +38,8 @@ export const viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#f5f5f7' },
-    { media: '(prefers-color-scheme: dark)', color: '#000000' },
+    { media: '(prefers-color-scheme: light)', color: '#F4F1EA' },
+    { media: '(prefers-color-scheme: dark)', color: '#121210' },
   ],
 };
 
@@ -83,7 +91,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="id" className={`${satoshi.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html lang="id" className={`${satoshi.variable} ${mono.variable} ${display.variable}`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -107,7 +115,7 @@ export default function RootLayout({ children }) {
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         {adsenseClient && <link rel="preconnect" href="https://pagead2.googlesyndication.com" />}
       </head>
-      <body className="bg-[#f5f5f7] dark:bg-[#000000] text-[#1d1d1f] dark:text-[#f5f5f7] antialiased font-sans selection:bg-[#2997ff]/20 selection:text-[#1d1d1f] dark:selection:bg-[#5BA3FF]/30 dark:selection:text-[#f5f5f7]">
+      <body className="bg-paper text-ink antialiased font-sans">
         <ThemeProvider>
         <OrganizationJsonLd />
         <WebSiteJsonLd />

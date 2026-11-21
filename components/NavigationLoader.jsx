@@ -53,19 +53,18 @@ function NavigationLoaderInner() {
         <div style={{
           width: '48px',
           height: '48px',
-          borderRadius: '12px',
-          backgroundColor: '#fff',
-          border: '1.5px solid #d2d2d7',
+          borderRadius: '2px',
+          backgroundColor: 'var(--surface, #FBFAF6)',
+          border: '1px solid var(--rule, #D6D0BF)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           animation: 'navSpin 1s linear infinite',
-          boxShadow: '0 4px 12px rgba(109, 91, 160, 0.15)',
         }}>
           <span style={{
             fontSize: '20px',
             fontWeight: 700,
-            color: '#2997ff',
+            color: 'var(--clay, #A8452A)',
             fontFamily: 'Satoshi, system-ui, sans-serif',
           }}>V</span>
         </div>
@@ -73,19 +72,19 @@ function NavigationLoaderInner() {
         <div style={{ display: 'flex', gap: '4px' }}>
           <span style={{
             width: '6px', height: '6px', borderRadius: '50%',
-            backgroundColor: '#2997ff',
+            backgroundColor: 'var(--clay, #A8452A)',
             animation: 'navDot 1.2s infinite',
             animationDelay: '0s',
           }} />
           <span style={{
             width: '6px', height: '6px', borderRadius: '50%',
-            backgroundColor: '#2997ff',
+            backgroundColor: 'var(--clay, #A8452A)',
             animation: 'navDot 1.2s infinite',
             animationDelay: '0.2s',
           }} />
           <span style={{
             width: '6px', height: '6px', borderRadius: '50%',
-            backgroundColor: '#2997ff',
+            backgroundColor: 'var(--clay, #A8452A)',
             animation: 'navDot 1.2s infinite',
             animationDelay: '0.4s',
           }} />

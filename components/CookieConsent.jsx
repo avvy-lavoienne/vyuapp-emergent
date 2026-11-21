@@ -59,7 +59,7 @@ export default function CookieConsent() {
           </ul>
           <p style={{ fontSize: '11px', color: 'var(--text-secondary, #6e6e73)', margin: '6px 0 0 0' }}>
             Dengan melanjutkan, Anda menyetujui penggunaan cookie sesuai{' '}
-            <a href="/privacy" style={{ color: '#2997ff', textDecoration: 'underline' }}>Kebijakan Privasi</a> kami.
+            <a href="/privacy" style={{ color: 'var(--clay, #A8452A)', textDecoration: 'underline' }}>Kebijakan Privasi</a> kami.
           </p>
         </div>
         <div style={{ display: 'flex', gap: '8px', flexShrink: 0, alignSelf: 'center' }}>
@@ -87,15 +87,15 @@ export default function CookieConsent() {
               padding: '8px 20px',
               borderRadius: '8px',
               border: 'none',
-              backgroundColor: '#2997ff',
+              backgroundColor: 'var(--clay, #A8452A)',
               color: '#fff',
               fontSize: '12px',
               fontWeight: 600,
               cursor: 'pointer',
               transition: 'all 0.2s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#0066cc'; }}
-            onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#2997ff'; }}
+            onMouseEnter={e => { e.currentTarget.style.backgroundColor = 'var(--clay-strong, #8A3520)'; }}
+            onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'var(--clay, #A8452A)'; }}
           >
             Terima Semua
           </button>

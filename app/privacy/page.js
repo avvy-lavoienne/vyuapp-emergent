@@ -7,59 +7,98 @@ export const metadata = {
   alternates: { canonical: 'https://vyuapp.my.id/privacy' },
 };
 
+const linkClass = 'text-clay underline underline-offset-4 hover:text-clayStrong transition-colors';
+
+const SECTIONS = [
+  {
+    title: 'Pengumpulan Informasi',
+    body: (
+      <>
+        <p>VyuApp mengumpulkan informasi yang Anda berikan secara langsung melalui formulir kontak dan formulir discovery, termasuk nama, alamat email, nama perusahaan, dan pesan yang dikirimkan.</p>
+        <p className="mt-3">Kami juga mengumpulkan data teknis secara otomatis seperti alamat IP, jenis browser, dan halaman yang dikunjungi untuk keperluan analisis dan peningkatan layanan.</p>
+      </>
+    ),
+  },
+  {
+    title: 'Penggunaan Informasi',
+    body: (
+      <>
+        <p>Informasi yang dikumpulkan digunakan untuk:</p>
+        <ul className="mt-3 list-disc pl-5 space-y-1.5 marker:text-clay">
+          <li>Merespons pertanyaan dan permintaan kolaborasi Anda</li>
+          <li>Mengirimkan proposal dan penawaran layanan</li>
+          <li>Meningkatkan kualitas situs dan layanan kami</li>
+          <li>Menganalisis trafik dan perilaku pengunjung</li>
+        </ul>
+      </>
+    ),
+  },
+  {
+    title: 'Penyimpanan Data',
+    body: (
+      <p>Data Anda disimpan di server Supabase yang aman dan dienkripsi. Kami tidak menjual, menukar, atau mentransfer informasi pribadi Anda kepada pihak ketiga tanpa persetujuan Anda.</p>
+    ),
+  },
+  {
+    title: 'Cookie',
+    body: (
+      <p>Situs ini menggunakan cookie yang diperlukan untuk autentikasi admin dan preferensi sesi. Kami juga menggunakan Google AdSense yang dapat menggunakan cookie untuk personalisasi iklan.</p>
+    ),
+  },
+  {
+    title: 'Hak Anda',
+    body: (
+      <p>
+        Anda berhak untuk meminta akses, perubahan, atau penghapusan data pribadi Anda. Untuk pertanyaan terkait privasi, hubungi kami di{' '}
+        <a href="mailto:vyuapp@proton.me" className={linkClass}>vyuapp@proton.me</a>.
+      </p>
+    ),
+  },
+  {
+    title: 'Kontak',
+    body: (
+      <p>
+        VyuApp Studio — Garut, Jawa Barat, Indonesia<br />
+        Email: <a href="mailto:vyuapp@proton.me" className={linkClass}>vyuapp@proton.me</a>
+      </p>
+    ),
+  },
+];
+
 export default function PrivacyPage() {
   return (
-    <main className="min-h-screen bg-[#f5f5f7] dark:bg-[#000000]">
+    <main className="min-h-screen bg-paper">
+      <div className="paper-canvas" aria-hidden="true" />
       <Navbar />
-      <article className="pt-32 pb-20">
-        <div className="max-w-3xl mx-auto px-6 md:px-10">
-          <p className="font-mono text-xs text-[#2997ff] dark:text-[#5BA3FF] uppercase tracking-[0.15em] font-medium">Legal</p>
-          <h1 className="mt-4 text-3xl md:text-4xl font-sans font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-[-0.02em]">
-            Kebijakan Privasi
-          </h1>
-          <p className="mt-3 text-sm text-[#6e6e73] dark:text-[#8A8A8A]">Terakhir diperbarui: 28 Juni 2026</p>
 
-          <div className="mt-10 space-y-8 text-[#4A4A48] dark:text-[#86868b] text-sm leading-relaxed">
-            <section>
-              <h2 className="text-lg font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">1. Pengumpulan Informasi</h2>
-              <p>VyuApp mengumpulkan informasi yang Anda berikan secara langsung melalui formulir kontak dan formulir discovery, termasuk nama, alamat email, nama perusahaan, dan pesan yang dikirimkan.</p>
-              <p className="mt-2">Kami juga mengumpulkan data teknis secara otomatis seperti alamat IP, jenis browser, dan halaman yang dikunjungi untuk keperluan analisis dan peningkatan layanan.</p>
-            </section>
+      <article className="pt-36 md:pt-44 pb-24 md:pb-32">
+        <div className="max-w-page mx-auto px-6 md:px-10">
+          <header className="border-b border-rule pb-8">
+            <p className="eyebrow text-clay">Legal — Privasi</p>
+            <div className="mt-5 flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <h1 className="display text-[clamp(2.4rem,4.6vw,3.9rem)] leading-[1.02] text-ink">
+                Kebijakan Privasi
+              </h1>
+              <p className="eyebrow whitespace-nowrap">Diperbarui 28 Juni 2026</p>
+            </div>
+          </header>
 
-            <section>
-              <h2 className="text-lg font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">2. Penggunaan Informasi</h2>
-              <p>Informasi yang dikumpulkan digunakan untuk:</p>
-              <ul className="list-disc pl-5 mt-2 space-y-1">
-                <li>Merespons pertanyaan dan permintaan kolaborasi Anda</li>
-                <li>Mengirimkan proposal dan penawaran layanan</li>
-                <li>Meningkatkan kualitas situs dan layanan kami</li>
-                <li>Menganalisis trafik dan perilaku pengunjung</li>
-              </ul>
-            </section>
-
-            <section>
-              <h2 className="text-lg font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">3. Penyimpanan Data</h2>
-              <p>Data Anda disimpan di server Supabase yang aman dan dienkripsi. Kami tidak menjual, menukar, atau mentransfer informasi pribadi Anda kepada pihak ketiga tanpa persetujuan Anda.</p>
-            </section>
-
-            <section>
-              <h2 className="text-lg font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">4. Cookie</h2>
-              <p>Situs ini menggunakan cookie yang diperlukan untuk autentikasi admin dan preferensi sesi. Kami juga menggunakan Google AdSense yang dapat menggunakan cookie untuk personalisasi iklan.</p>
-            </section>
-
-            <section>
-              <h2 className="text-lg font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">5. Hak Anda</h2>
-              <p>Anda berhak untuk meminta akses, perubahan, atau penghapusan data pribadi Anda. Untuk pertanyaan terkait privasi, hubungi kami di <a href="mailto:vyuapp@proton.me" className="text-[#2997ff] dark:text-[#5BA3FF] hover:text-[#0066cc] dark:hover:text-[#2997ff]">vyuapp@proton.me</a>.</p>
-            </section>
-
-            <section>
-              <h2 className="text-lg font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-3">6. Kontak</h2>
-              <p>VyuApp Studio — Garut, Jawa Barat, Indonesia<br />
-              Email: <a href="mailto:vyuapp@proton.me" className="text-[#2997ff] dark:text-[#5BA3FF] hover:text-[#0066cc] dark:hover:text-[#2997ff]">vyuapp@proton.me</a></p>
-            </section>
+          <div className="max-w-4xl">
+            {SECTIONS.map((section, i) => (
+              <section key={section.title} className="grid grid-cols-12 gap-x-6 border-b border-rule py-8">
+                <p className="index-mark col-span-2 md:col-span-1">{String(i + 1).padStart(2, '0')}</p>
+                <div className="col-span-10 md:col-span-11">
+                  <h2 className="display text-2xl leading-tight text-ink">{section.title}</h2>
+                  <div className="mt-3 text-[0.95rem] leading-[1.85] text-ink2">
+                    {section.body}
+                  </div>
+                </div>
+              </section>
+            ))}
           </div>
         </div>
       </article>
+
       <Footer />
     </main>
   );

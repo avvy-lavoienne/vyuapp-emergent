@@ -1,16 +1,18 @@
 import Link from 'next/link';
-import { ArrowRight, Search, ShieldCheck, Globe, Zap } from 'lucide-react';
+import { ArrowUpRight, Search, ShieldCheck, Globe, Zap } from 'lucide-react';
 import SectionHeader from '@/components/SectionHeader';
 import StaggerGroup from '@/components/StaggerGroup';
-import ParallaxCard from '@/components/ParallaxCard';
 
 /* ─── Shared small components (server-only, no 'use client') ─── */
 
-function Capability({ title, description }) {
+function Capability({ index, title, description }) {
   return (
-    <div className="p-8 md:p-10 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] apple-card-hover hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]">
-      <h3 className="text-lg font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-[-0.01em]">{title}</h3>
-      <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#86868b] leading-relaxed">{description}</p>
+    <div className="group border-t border-rule pt-6">
+      <p className="index-mark">{index}</p>
+      <h3 className="mt-6 display text-2xl leading-tight text-ink group-hover:text-clay transition-colors duration-200">
+        {title}
+      </h3>
+      <p className="mt-3 text-sm leading-relaxed text-ink2">{description}</p>
     </div>
   );
 }
@@ -19,37 +21,41 @@ function ProductCard({ name, tagline, description, features, href, ctaLabel }) {
   const isExternal = href.startsWith('http');
   const Tag = isExternal ? 'a' : Link;
   const extraProps = isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+
   return (
-    <div className="p-8 md:p-10 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] apple-card-hover hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D] flex flex-col">
-      <p className="text-xs text-[#2997ff] font-medium uppercase tracking-[0.12em]">{tagline}</p>
-      <h3 className="mt-2 text-xl font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-[-0.02em]">{name}</h3>
-      <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#86868b] leading-relaxed">{description}</p>
-      <ul className="mt-6 space-y-2">
-        {features.map((f) => (
-          <li key={f} className="flex items-start gap-2.5 text-sm text-[#4A4A48] dark:text-[#86868b]">
-            <span className="w-1 h-1 rounded-full bg-[#2997ff] mt-2 flex-shrink-0" />
-            {f}
-          </li>
-        ))}
-      </ul>
-      <div className="mt-8">
+    <article className="border-y border-rule grid lg:grid-cols-12">
+      <div className="lg:col-span-4 py-8 lg:pr-8 lg:border-r border-rule">
+        <p className="eyebrow">01 — Produk Live</p>
+        <p className="mt-4 eyebrow text-clay">{tagline}</p>
+        <h3 className="mt-4 display text-4xl md:text-5xl leading-[0.95] text-ink">{name}</h3>
         <Tag
           href={href}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#2997ff] text-white text-sm font-semibold hover:bg-[#0066cc] apple-btn-hover"
+          className="mt-8 inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.14em] text-ink border-b border-ink pb-1 hover:text-clay hover:border-clay transition-colors"
           {...extraProps}
         >
-          {ctaLabel} <ArrowRight className="w-4 h-4" />
+          {ctaLabel} <ArrowUpRight className="w-3.5 h-3.5" />
         </Tag>
       </div>
-    </div>
+      <div className="lg:col-span-8 py-8 lg:pl-10 lg:border-t-0 border-t border-rule">
+        <p className="text-base leading-relaxed text-ink2 max-w-2xl">{description}</p>
+        <ul className="mt-8 grid sm:grid-cols-2 gap-x-8">
+          {features.map((f) => (
+            <li key={f} className="border-t border-rule py-3.5 text-sm leading-relaxed text-ink2">
+              {f}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </article>
   );
 }
 
-function PhilosophyItem({ title, description }) {
+function PhilosophyItem({ index, title, description }) {
   return (
-    <div className="p-8 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] apple-card-hover hover:border-[#D1D0C9] dark:hover:border-[#3A3A3D]">
-      <h3 className="text-base font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] tracking-[-0.01em]">{title}</h3>
-      <p className="mt-3 text-sm text-[#4A4A48] dark:text-[#86868b] leading-relaxed">{description}</p>
+    <div className="border-t border-rule pt-6">
+      <p className="index-mark">{index}</p>
+      <h3 className="mt-6 display text-2xl leading-tight text-ink">{title}</h3>
+      <p className="mt-3 text-sm leading-relaxed text-ink2">{description}</p>
     </div>
   );
 }
@@ -58,9 +64,10 @@ function PhilosophyItem({ title, description }) {
 
 export function AboutSection({ summary, className = '' }) {
   return (
-    <section className={`py-24 md:py-32 dark:bg-[#000000] ${className}`} id="tentang">
-      <div className="max-w-4xl mx-auto px-6 md:px-10">
-        <p className="text-[#4A4A48] dark:text-[#86868b] text-base md:text-lg leading-relaxed text-center max-w-3xl mx-auto">
+    <section className={`py-24 md:py-32 border-t border-rule ${className}`} id="tentang">
+      <div className="max-w-page mx-auto px-6 md:px-10 grid grid-cols-12 gap-8 md:gap-12">
+        <p className="eyebrow col-span-12 md:col-span-3">00 — Ringkasan</p>
+        <p className="col-span-12 md:col-span-9 display text-[clamp(1.4rem,2.6vw,2.1rem)] leading-[1.35] text-ink2">
           {summary}
         </p>
       </div>
@@ -69,20 +76,31 @@ export function AboutSection({ summary, className = '' }) {
 }
 
 export function CapabilitiesSection({ t, className = '' }) {
+  const items = [
+    t.capabilities.frontend,
+    t.capabilities.backend,
+    t.capabilities.product,
+    t.capabilities.ai_agents,
+  ];
+
   return (
-    <section className={`py-24 md:py-32 bg-[#f5f5f7] dark:bg-[#1d1d1f] ${className}`} id="kapabilitas">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
+    <section className={`py-24 md:py-32 border-t border-rule ${className}`} id="kapabilitas">
+      <div className="max-w-page mx-auto px-6 md:px-10">
         <SectionHeader
           overline={t.capabilities.overline}
           title={t.capabilities.title}
           description={t.capabilities.description}
-          align="center"
+          index="02"
         />
-        <StaggerGroup className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Capability title={t.capabilities.frontend.title} description={t.capabilities.frontend.desc} />
-          <Capability title={t.capabilities.backend.title} description={t.capabilities.backend.desc} />
-          <Capability title={t.capabilities.product.title} description={t.capabilities.product.desc} />
-          <Capability title={t.capabilities.ai_agents.title} description={t.capabilities.ai_agents.desc} />
+        <StaggerGroup className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+          {items.map((item, i) => (
+            <Capability
+              key={item.title}
+              index={String(i + 1).padStart(2, '0')}
+              title={item.title}
+              description={item.desc}
+            />
+          ))}
         </StaggerGroup>
       </div>
     </section>
@@ -90,44 +108,33 @@ export function CapabilitiesSection({ t, className = '' }) {
 }
 
 export function CaraKerjaSection({ className = '' }) {
+  const steps = [
+    { icon: Search, title: 'Riset Mendalam', desc: 'Riset komprehensif untuk setiap konten dan fitur sebelum dikerjakan.' },
+    { icon: ShieldCheck, title: 'Kode Berkualitas', desc: 'Setiap baris kode melewati review dan pengujian sebelum dirilis.' },
+    { icon: Globe, title: 'SEO Optimization', desc: 'Dioptimasi sejak awal untuk mesin pencari dan performa web.' },
+    { icon: Zap, title: 'Delivery Cepat', desc: 'Proses pengembangan yang cepat tanpa mengorbankan kualitas.' },
+  ];
+
   return (
-    <section className={`py-24 md:py-32 dark:bg-[#000000] ${className}`} id="cara-kerja">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
+    <section className={`py-24 md:py-32 border-t border-rule ${className}`} id="cara-kerja">
+      <div className="max-w-page mx-auto px-6 md:px-10">
         <SectionHeader
           overline="Metode Kami"
           title="Cara Kami Bekerja"
           description="Di balik setiap proyek, ada proses yang terukur — dari riset hingga rilis."
-          align="center"
+          index="03"
         />
-        <StaggerGroup className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] text-center apple-card-hover">
-            <div className="w-12 h-12 rounded-xl bg-[#2997ff]/10 dark:bg-[#5BA3FF]/10 flex items-center justify-center mx-auto mb-4">
-              <Search className="w-6 h-6 text-[#2997ff]" />
+        <StaggerGroup className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+          {steps.map(({ icon: Icon, title, desc }, i) => (
+            <div key={title} className="border-t border-rule pt-6">
+              <div className="flex items-baseline justify-between">
+                <span className="display text-4xl text-clay leading-none">0{i + 1}</span>
+                <Icon className="w-4 h-4 text-muted" strokeWidth={1.5} />
+              </div>
+              <h3 className="mt-8 text-base font-semibold text-ink tracking-[-0.01em]">{title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink2">{desc}</p>
             </div>
-            <h3 className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">Riset Mendalam</h3>
-            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">Riset komprehensif untuk setiap konten dan fitur sebelum dikerjakan.</p>
-          </div>
-          <div className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] text-center apple-card-hover">
-            <div className="w-12 h-12 rounded-xl bg-[#2997ff]/10 dark:bg-[#5BA3FF]/10 flex items-center justify-center mx-auto mb-4">
-              <ShieldCheck className="w-6 h-6 text-[#2997ff]" />
-            </div>
-            <h3 className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">Kode Berkualitas</h3>
-            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">Setiap baris kode melewati review dan pengujian sebelum dirilis.</p>
-          </div>
-          <div className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] text-center apple-card-hover">
-            <div className="w-12 h-12 rounded-xl bg-[#2997ff]/10 dark:bg-[#5BA3FF]/10 flex items-center justify-center mx-auto mb-4">
-              <Globe className="w-6 h-6 text-[#2997ff]" />
-            </div>
-            <h3 className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">SEO Optimization</h3>
-            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">Dioptimasi sejak awal untuk mesin pencari dan performa web.</p>
-          </div>
-          <div className="p-6 rounded-2xl border border-[#d2d2d7] dark:border-[#333336] bg-white dark:bg-[#1d1d1f] text-center apple-card-hover">
-            <div className="w-12 h-12 rounded-xl bg-[#2997ff]/10 dark:bg-[#5BA3FF]/10 flex items-center justify-center mx-auto mb-4">
-              <Zap className="w-6 h-6 text-[#2997ff]" />
-            </div>
-            <h3 className="font-semibold text-[#1d1d1f] dark:text-[#f5f5f7] mb-2">Delivery Cepat</h3>
-            <p className="text-sm text-[#6e6e73] dark:text-[#86868b]">Proses pengembangan yang cepat tanpa mengorbankan kualitas.</p>
-          </div>
+          ))}
         </StaggerGroup>
       </div>
     </section>
@@ -136,32 +143,31 @@ export function CaraKerjaSection({ className = '' }) {
 
 export function PortfolioSection({ t, className = '' }) {
   return (
-    <section className={`py-24 md:py-32 dark:bg-[#000000] ${className}`} id="portfolio">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
+    <section className={`py-24 md:py-32 border-t border-rule ${className}`} id="portfolio">
+      <div className="max-w-page mx-auto px-6 md:px-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-14">
           <SectionHeader
             overline={t.portfolio.overline}
             title={t.portfolio.title}
             description={t.portfolio.description}
+            index="04"
           />
           <Link
             href="/portfolio"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-transparent text-[#1d1d1f] dark:text-[#f5f5f7] font-semibold text-sm border border-[#D1D0C9] dark:border-[#3A3A3D] hover:border-[#B0AFAA] dark:hover:border-[#4A4A4D] hover:bg-black/[0.02] dark:hover:bg-white/[0.02] apple-btn-hover shrink-0 self-start md:self-auto"
+            className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.14em] text-ink border-b border-ink pb-1 hover:text-clay hover:border-clay transition-colors shrink-0 self-start md:self-auto"
           >
-            {t.portfolio.view_all} <ArrowRight className="w-4 h-4" />
+            {t.portfolio.view_all} <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
         </div>
-        <StaggerGroup className="max-w-3xl mx-auto">
-          <ParallaxCard>
-            <ProductCard
-              name="Tafsha Farm"
-              tagline={t.portfolio.tafsha.tagline}
-              description={t.portfolio.tafsha.desc}
-              features={t.portfolio.tafsha.features}
-              href="https://tafsha.vyuapp.my.id/"
-              ctaLabel={t.portfolio.tafsha.cta}
-            />
-          </ParallaxCard>
+        <StaggerGroup>
+          <ProductCard
+            name="Tafsha Farm"
+            tagline={t.portfolio.tafsha.tagline}
+            description={t.portfolio.tafsha.desc}
+            features={t.portfolio.tafsha.features}
+            href="https://tafsha.vyuapp.my.id/"
+            ctaLabel={t.portfolio.tafsha.cta}
+          />
         </StaggerGroup>
       </div>
     </section>
@@ -170,16 +176,21 @@ export function PortfolioSection({ t, className = '' }) {
 
 export function PhilosophySection({ t, className = '' }) {
   return (
-    <section className={`py-24 md:py-32 bg-[#f5f5f7] dark:bg-[#1d1d1f] ${className}`} id="filosofi">
-      <div className="max-w-7xl mx-auto px-6 md:px-10">
+    <section className={`py-24 md:py-32 border-t border-rule ${className}`} id="filosofi">
+      <div className="max-w-page mx-auto px-6 md:px-10">
         <SectionHeader
           overline={t.philosophy.overline}
           title={t.philosophy.title}
-          align="center"
+          index="05"
         />
-        <StaggerGroup className="mt-14 grid md:grid-cols-3 gap-6">
+        <StaggerGroup className="mt-16 grid md:grid-cols-3 gap-x-8 gap-y-12">
           {t.philosophy.items.map((item, i) => (
-            <PhilosophyItem key={i} title={item.title} description={item.desc} />
+            <PhilosophyItem
+              key={i}
+              index={String(i + 1).padStart(2, '0')}
+              title={item.title}
+              description={item.desc}
+            />
           ))}
         </StaggerGroup>
       </div>
